@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSC Cost Control", "PSC Cost Control\PSC Cost Control.csproj", "{32F73603-6FF7-40B9-8506-C38C61851D9C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32F73603-6FF7-40B9-8506-C38C61851D9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32F73603-6FF7-40B9-8506-C38C61851D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32F73603-6FF7-40B9-8506-C38C61851D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32F73603-6FF7-40B9-8506-C38C61851D9C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3CEE116E-4C67-4902-A7B7-CCBD3430AC18}
+	EndGlobalSection
+EndGlobal

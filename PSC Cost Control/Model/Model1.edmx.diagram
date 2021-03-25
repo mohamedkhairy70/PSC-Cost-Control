@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a6f0e8fd6c0d42db932dffe2ce608f5e" Name="Diagram1">
+        <EntityTypeShape EntityType="PSC_COST2Model.C_Cost_Direct_Project_Codes_Summerizng" Width="1.5" PointX="9.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.C_Cost_Indirect_Project_Code_Summerizing" Width="1.5" PointX="7.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.C_Cost_Project_Code_Categories" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.C_Cost_Project_Codes" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.C_Cost_Project_Codes_Items" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.C_Cost_Unified_Code_Category" Width="1.5" PointX="1.5" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.C_Cost_Unified_Codes" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.BOQ_Items" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.BOQ" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.BreakdownItemType" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.IndirectCostItem" Width="1.5" PointX="5.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.Item_Breakdowns" Width="1.5" PointX="10.5" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.Project" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PSC_COST2Model.Unit" Width="1.5" PointX="3" PointY="17.25" IsExpanded="true" />
+        <AssociationConnector Association="PSC_COST2Model.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK___Cost_Ind__Indir__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK___Cost_Ind__Projc__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.C_Cost_Project_Code_Categories__Cost_Project_Codes" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.C_Cost_Unified_Codes_Cost_Project_Codes" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK_Cost_Project_Codes__Cost_Project_Codes_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.Projects__Cost_Project_Codes" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK_BOQ_Items__Cost_Project_Codes_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.C_Cost_Unified_Code_Category_Cost_Unified_Codes" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK_BOQ_Items_BOQ_Items3" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK_BOQ_Items_BOQs" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK_BOQ_Items_Units" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK_Item_Breakdowns_BOQ_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK_BOQs_Contracts" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK_IndirectCostItems_BOQs" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK_Item_Breakdowns_BreakdownItemType" ManuallyRouted="false" />
+        <AssociationConnector Association="PSC_COST2Model.FK_IndirectCostItems_IndirectCostItems" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PSC_COST2Model.View_Cost_Project_Codes" Width="1.5" PointX="0.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

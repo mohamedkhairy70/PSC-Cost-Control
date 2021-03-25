@@ -1,0 +1,1141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PSC_COST2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="_Cost_Direct_Project_Codes_Summerizng">
+          <Key>
+            <PropertyRef Name="Project_Code_Id" />
+            <PropertyRef Name="Boq_Item_Id" />
+            <PropertyRef Name="Break_Down_Type_Id" />
+          </Key>
+          <Property Name="Project_Code_Id" Type="int" Nullable="false" />
+          <Property Name="Boq_Item_Id" Type="int" Nullable="false" />
+          <Property Name="Break_Down_Type_Id" Type="smallint" Nullable="false" />
+          <Property Name="Planned_Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Ref_Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="_Cost_Indirect_Project_Code_Summerizing">
+          <Key>
+            <PropertyRef Name="Projcet_Code_Id" />
+            <PropertyRef Name="Indirect_Cost_Item_Id" />
+          </Key>
+          <Property Name="Projcet_Code_Id" Type="int" Nullable="false" />
+          <Property Name="Indirect_Cost_Item_Id" Type="int" Nullable="false" />
+          <Property Name="Planned_Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Ref_Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="_Cost_Project_Code_Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'Node' in the table 'PSC_COST2.dbo._Cost_Project_Codes' was excluded.-->
+        <EntityType Name="_Cost_Project_Codes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Unified_Code_Id" Type="int" />
+          <Property Name="Category_Id" Type="int" />
+          <Property Name="Project_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="_Cost_Project_Codes_Items">
+          <Key>
+            <PropertyRef Name="Project_Code_Id" />
+            <PropertyRef Name="Boq_Item_Id" />
+          </Key>
+          <Property Name="Project_Code_Id" Type="int" Nullable="false" />
+          <Property Name="Boq_Item_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="_Cost_Unified_Code_Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'Node' in the table 'PSC_COST2.dbo._Cost_Unified_Codes' was excluded.-->
+        <EntityType Name="_Cost_Unified_Codes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Category_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="BOQ_Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BOQId" Type="int" Nullable="false" />
+          <Property Name="Unit" Type="int" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="BOQRef" Type="nvarchar" MaxLength="50" />
+          <Property Name="PlanedUnitPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="HierarcyType" Type="smallint" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PlanedUnitPriceWithoutProfit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BOQs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rev" Type="smallint" Nullable="false" />
+          <Property Name="RevDate" Type="date" Nullable="false" />
+          <Property Name="ContractId" Type="int" />
+        </EntityType>
+        <EntityType Name="BreakdownItemType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="TranslateName" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IndirectCostItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BOQId" Type="int" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
+        </EntityType>
+        <EntityType Name="Item_Breakdowns">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="12" Scale="3" Nullable="false" />
+          <Property Name="BOQ_Items_Id" Type="int" Nullable="false" />
+          <Property Name="TypeId" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="ContractId" />
+          </Key>
+          <Property Name="ContractId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Units">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PSC_COST2.dbo.View_Cost_Project_Codes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Cost_Project_Codes">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Description" />
+            <PropertyRef Name="NameCategories" />
+            <PropertyRef Name="NameProjects" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Unified_Code" Type="int" />
+          <Property Name="NameCategories" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Node" Type="nvarchar" MaxLength="4000" />
+          <Property Name="GetLevelNode" Type="smallint" />
+          <Property Name="NameProjects" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="_Cost_Project_Code_Categories__Cost_Project_Codes">
+          <End Role="_Cost_Project_Code_Categories" Type="Self._Cost_Project_Code_Categories" Multiplicity="0..1" />
+          <End Role="_Cost_Project_Codes" Type="Self._Cost_Project_Codes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="_Cost_Project_Code_Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="_Cost_Project_Codes">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="_Cost_Unified_Code_Category_Cost_Unified_Codes">
+          <End Role="_Cost_Unified_Code_Category" Type="Self._Cost_Unified_Code_Category" Multiplicity="0..1" />
+          <End Role="_Cost_Unified_Codes" Type="Self._Cost_Unified_Codes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="_Cost_Unified_Code_Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="_Cost_Unified_Codes">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="_Cost_Unified_Codes_Cost_Project_Codes">
+          <End Role="_Cost_Unified_Codes" Type="Self._Cost_Unified_Codes" Multiplicity="0..1" />
+          <End Role="_Cost_Project_Codes" Type="Self._Cost_Project_Codes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="_Cost_Unified_Codes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="_Cost_Project_Codes">
+              <PropertyRef Name="Unified_Code_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK___Cost_Ind__Indir__3D5E1FD2">
+          <End Role="IndirectCostItems" Type="Self.IndirectCostItems" Multiplicity="1" />
+          <End Role="_Cost_Indirect_Project_Code_Summerizing" Type="Self._Cost_Indirect_Project_Code_Summerizing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IndirectCostItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="_Cost_Indirect_Project_Code_Summerizing">
+              <PropertyRef Name="Indirect_Cost_Item_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK___Cost_Ind__Projc__3C69FB99">
+          <End Role="_Cost_Project_Codes" Type="Self._Cost_Project_Codes" Multiplicity="1" />
+          <End Role="_Cost_Indirect_Project_Code_Summerizing" Type="Self._Cost_Indirect_Project_Code_Summerizing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="_Cost_Project_Codes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="_Cost_Indirect_Project_Code_Summerizing">
+              <PropertyRef Name="Projcet_Code_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng">
+          <End Role="_Cost_Project_Codes_Items" Type="Self._Cost_Project_Codes_Items" Multiplicity="1" />
+          <End Role="_Cost_Direct_Project_Codes_Summerizng" Type="Self._Cost_Direct_Project_Codes_Summerizng" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="_Cost_Project_Codes_Items">
+              <PropertyRef Name="Project_Code_Id" />
+              <PropertyRef Name="Boq_Item_Id" />
+            </Principal>
+            <Dependent Role="_Cost_Direct_Project_Codes_Summerizng">
+              <PropertyRef Name="Project_Code_Id" />
+              <PropertyRef Name="Boq_Item_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BOQ_Items__Cost_Project_Codes_Items">
+          <End Role="BOQ_Items" Type="Self.BOQ_Items" Multiplicity="1" />
+          <End Role="_Cost_Project_Codes_Items" Type="Self._Cost_Project_Codes_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOQ_Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="_Cost_Project_Codes_Items">
+              <PropertyRef Name="Boq_Item_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BOQ_Items_BOQ_Items3">
+          <End Role="BOQ_Items" Type="Self.BOQ_Items" Multiplicity="0..1" />
+          <End Role="BOQ_Items1" Type="Self.BOQ_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOQ_Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BOQ_Items1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BOQ_Items_BOQs">
+          <End Role="BOQs" Type="Self.BOQs" Multiplicity="1" />
+          <End Role="BOQ_Items" Type="Self.BOQ_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOQs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BOQ_Items">
+              <PropertyRef Name="BOQId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BOQ_Items_Units">
+          <End Role="Units" Type="Self.Units" Multiplicity="0..1" />
+          <End Role="BOQ_Items" Type="Self.BOQ_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BOQ_Items">
+              <PropertyRef Name="Unit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BOQs_Contracts">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="BOQs" Type="Self.BOQs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ContractId" />
+            </Principal>
+            <Dependent Role="BOQs">
+              <PropertyRef Name="ContractId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng">
+          <End Role="BreakdownItemType" Type="Self.BreakdownItemType" Multiplicity="1" />
+          <End Role="_Cost_Direct_Project_Codes_Summerizng" Type="Self._Cost_Direct_Project_Codes_Summerizng" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BreakdownItemType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="_Cost_Direct_Project_Codes_Summerizng">
+              <PropertyRef Name="Break_Down_Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cost_Project_Codes__Cost_Project_Codes_Items">
+          <End Role="_Cost_Project_Codes" Type="Self._Cost_Project_Codes" Multiplicity="1" />
+          <End Role="_Cost_Project_Codes_Items" Type="Self._Cost_Project_Codes_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="_Cost_Project_Codes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="_Cost_Project_Codes_Items">
+              <PropertyRef Name="Project_Code_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IndirectCostItems_BOQs">
+          <End Role="BOQs" Type="Self.BOQs" Multiplicity="1" />
+          <End Role="IndirectCostItems" Type="Self.IndirectCostItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOQs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IndirectCostItems">
+              <PropertyRef Name="BOQId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IndirectCostItems_IndirectCostItems">
+          <End Role="IndirectCostItems" Type="Self.IndirectCostItems" Multiplicity="0..1" />
+          <End Role="IndirectCostItems1" Type="Self.IndirectCostItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IndirectCostItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IndirectCostItems1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Breakdowns_BOQ_Items">
+          <End Role="BOQ_Items" Type="Self.BOQ_Items" Multiplicity="1" />
+          <End Role="Item_Breakdowns" Type="Self.Item_Breakdowns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOQ_Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item_Breakdowns">
+              <PropertyRef Name="BOQ_Items_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Breakdowns_BreakdownItemType">
+          <End Role="BreakdownItemType" Type="Self.BreakdownItemType" Multiplicity="1" />
+          <End Role="Item_Breakdowns" Type="Self.Item_Breakdowns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BreakdownItemType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item_Breakdowns">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Projects__Cost_Project_Codes">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="_Cost_Project_Codes" Type="Self._Cost_Project_Codes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ContractId" />
+            </Principal>
+            <Dependent Role="_Cost_Project_Codes">
+              <PropertyRef Name="Project_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PSC_COST2ModelStoreContainer">
+          <EntitySet Name="_Cost_Direct_Project_Codes_Summerizng" EntityType="Self._Cost_Direct_Project_Codes_Summerizng" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="_Cost_Indirect_Project_Code_Summerizing" EntityType="Self._Cost_Indirect_Project_Code_Summerizing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="_Cost_Project_Code_Categories" EntityType="Self._Cost_Project_Code_Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="_Cost_Project_Codes" EntityType="Self._Cost_Project_Codes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="_Cost_Project_Codes_Items" EntityType="Self._Cost_Project_Codes_Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="_Cost_Unified_Code_Category" EntityType="Self._Cost_Unified_Code_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="_Cost_Unified_Codes" EntityType="Self._Cost_Unified_Codes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BOQ_Items" EntityType="Self.BOQ_Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BOQs" EntityType="Self.BOQs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BreakdownItemType" EntityType="Self.BreakdownItemType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IndirectCostItems" EntityType="Self.IndirectCostItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item_Breakdowns" EntityType="Self.Item_Breakdowns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_Cost_Project_Codes" EntityType="Self.View_Cost_Project_Codes" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Cost_Project_Codes].[Id] AS [Id], 
+    [View_Cost_Project_Codes].[Description] AS [Description], 
+    [View_Cost_Project_Codes].[Unified_Code] AS [Unified_Code], 
+    [View_Cost_Project_Codes].[NameCategories] AS [NameCategories], 
+    [View_Cost_Project_Codes].[Node] AS [Node], 
+    [View_Cost_Project_Codes].[GetLevelNode] AS [GetLevelNode], 
+    [View_Cost_Project_Codes].[NameProjects] AS [NameProjects]
+    FROM [dbo].[View_Cost_Project_Codes] AS [View_Cost_Project_Codes]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="_Cost_Project_Code_Categories__Cost_Project_Codes" Association="Self._Cost_Project_Code_Categories__Cost_Project_Codes">
+            <End Role="_Cost_Project_Code_Categories" EntitySet="_Cost_Project_Code_Categories" />
+            <End Role="_Cost_Project_Codes" EntitySet="_Cost_Project_Codes" />
+          </AssociationSet>
+          <AssociationSet Name="_Cost_Unified_Code_Category_Cost_Unified_Codes" Association="Self._Cost_Unified_Code_Category_Cost_Unified_Codes">
+            <End Role="_Cost_Unified_Code_Category" EntitySet="_Cost_Unified_Code_Category" />
+            <End Role="_Cost_Unified_Codes" EntitySet="_Cost_Unified_Codes" />
+          </AssociationSet>
+          <AssociationSet Name="_Cost_Unified_Codes_Cost_Project_Codes" Association="Self._Cost_Unified_Codes_Cost_Project_Codes">
+            <End Role="_Cost_Unified_Codes" EntitySet="_Cost_Unified_Codes" />
+            <End Role="_Cost_Project_Codes" EntitySet="_Cost_Project_Codes" />
+          </AssociationSet>
+          <AssociationSet Name="FK___Cost_Ind__Indir__3D5E1FD2" Association="Self.FK___Cost_Ind__Indir__3D5E1FD2">
+            <End Role="IndirectCostItems" EntitySet="IndirectCostItems" />
+            <End Role="_Cost_Indirect_Project_Code_Summerizing" EntitySet="_Cost_Indirect_Project_Code_Summerizing" />
+          </AssociationSet>
+          <AssociationSet Name="FK___Cost_Ind__Projc__3C69FB99" Association="Self.FK___Cost_Ind__Projc__3C69FB99">
+            <End Role="_Cost_Project_Codes" EntitySet="_Cost_Project_Codes" />
+            <End Role="_Cost_Indirect_Project_Code_Summerizing" EntitySet="_Cost_Indirect_Project_Code_Summerizing" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng" Association="Self.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng">
+            <End Role="_Cost_Project_Codes_Items" EntitySet="_Cost_Project_Codes_Items" />
+            <End Role="_Cost_Direct_Project_Codes_Summerizng" EntitySet="_Cost_Direct_Project_Codes_Summerizng" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BOQ_Items__Cost_Project_Codes_Items" Association="Self.FK_BOQ_Items__Cost_Project_Codes_Items">
+            <End Role="BOQ_Items" EntitySet="BOQ_Items" />
+            <End Role="_Cost_Project_Codes_Items" EntitySet="_Cost_Project_Codes_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BOQ_Items_BOQ_Items3" Association="Self.FK_BOQ_Items_BOQ_Items3">
+            <End Role="BOQ_Items" EntitySet="BOQ_Items" />
+            <End Role="BOQ_Items1" EntitySet="BOQ_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BOQ_Items_BOQs" Association="Self.FK_BOQ_Items_BOQs">
+            <End Role="BOQs" EntitySet="BOQs" />
+            <End Role="BOQ_Items" EntitySet="BOQ_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BOQ_Items_Units" Association="Self.FK_BOQ_Items_Units">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="BOQ_Items" EntitySet="BOQ_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BOQs_Contracts" Association="Self.FK_BOQs_Contracts">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="BOQs" EntitySet="BOQs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng" Association="Self.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng">
+            <End Role="BreakdownItemType" EntitySet="BreakdownItemType" />
+            <End Role="_Cost_Direct_Project_Codes_Summerizng" EntitySet="_Cost_Direct_Project_Codes_Summerizng" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cost_Project_Codes__Cost_Project_Codes_Items" Association="Self.FK_Cost_Project_Codes__Cost_Project_Codes_Items">
+            <End Role="_Cost_Project_Codes" EntitySet="_Cost_Project_Codes" />
+            <End Role="_Cost_Project_Codes_Items" EntitySet="_Cost_Project_Codes_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IndirectCostItems_BOQs" Association="Self.FK_IndirectCostItems_BOQs">
+            <End Role="BOQs" EntitySet="BOQs" />
+            <End Role="IndirectCostItems" EntitySet="IndirectCostItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IndirectCostItems_IndirectCostItems" Association="Self.FK_IndirectCostItems_IndirectCostItems">
+            <End Role="IndirectCostItems" EntitySet="IndirectCostItems" />
+            <End Role="IndirectCostItems1" EntitySet="IndirectCostItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Breakdowns_BOQ_Items" Association="Self.FK_Item_Breakdowns_BOQ_Items">
+            <End Role="BOQ_Items" EntitySet="BOQ_Items" />
+            <End Role="Item_Breakdowns" EntitySet="Item_Breakdowns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Breakdowns_BreakdownItemType" Association="Self.FK_Item_Breakdowns_BreakdownItemType">
+            <End Role="BreakdownItemType" EntitySet="BreakdownItemType" />
+            <End Role="Item_Breakdowns" EntitySet="Item_Breakdowns" />
+          </AssociationSet>
+          <AssociationSet Name="Projects__Cost_Project_Codes" Association="Self.Projects__Cost_Project_Codes">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="_Cost_Project_Codes" EntitySet="_Cost_Project_Codes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PSC_COST2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C_Cost_Direct_Project_Codes_Summerizng">
+          <Key>
+            <PropertyRef Name="Project_Code_Id" />
+            <PropertyRef Name="Boq_Item_Id" />
+            <PropertyRef Name="Break_Down_Type_Id" />
+          </Key>
+          <Property Name="Project_Code_Id" Type="Int32" Nullable="false" />
+          <Property Name="Boq_Item_Id" Type="Int32" Nullable="false" />
+          <Property Name="Break_Down_Type_Id" Type="Int16" Nullable="false" />
+          <Property Name="Planned_Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Ref_Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="C_Cost_Project_Codes_Items" Relationship="Self.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng" FromRole="C_Cost_Direct_Project_Codes_Summerizng" ToRole="C_Cost_Project_Codes_Items" />
+          <NavigationProperty Name="BreakdownItemType" Relationship="Self.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng" FromRole="C_Cost_Direct_Project_Codes_Summerizng" ToRole="BreakdownItemType" />
+        </EntityType>
+        <EntityType Name="C_Cost_Indirect_Project_Code_Summerizing">
+          <Key>
+            <PropertyRef Name="Projcet_Code_Id" />
+            <PropertyRef Name="Indirect_Cost_Item_Id" />
+          </Key>
+          <Property Name="Projcet_Code_Id" Type="Int32" Nullable="false" />
+          <Property Name="Indirect_Cost_Item_Id" Type="Int32" Nullable="false" />
+          <Property Name="Planned_Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Ref_Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="IndirectCostItem" Relationship="Self.FK___Cost_Ind__Indir__3D5E1FD2" FromRole="C_Cost_Indirect_Project_Code_Summerizing" ToRole="IndirectCostItems" />
+          <NavigationProperty Name="C_Cost_Project_Codes" Relationship="Self.FK___Cost_Ind__Projc__3C69FB99" FromRole="C_Cost_Indirect_Project_Code_Summerizing" ToRole="C_Cost_Project_Codes" />
+        </EntityType>
+        <EntityType Name="C_Cost_Project_Code_Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="C_Cost_Project_Codes" Relationship="Self.C_Cost_Project_Code_Categories__Cost_Project_Codes" FromRole="C_Cost_Project_Code_Categories" ToRole="C_Cost_Project_Codes" />
+        </EntityType>
+        <EntityType Name="C_Cost_Project_Codes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Unified_Code_Id" Type="Int32" />
+          <Property Name="Category_Id" Type="Int32" />
+          <Property Name="Project_Id" Type="Int32" />
+          <NavigationProperty Name="C_Cost_Indirect_Project_Code_Summerizing" Relationship="Self.FK___Cost_Ind__Projc__3C69FB99" FromRole="C_Cost_Project_Codes" ToRole="C_Cost_Indirect_Project_Code_Summerizing" />
+          <NavigationProperty Name="C_Cost_Project_Code_Categories" Relationship="Self.C_Cost_Project_Code_Categories__Cost_Project_Codes" FromRole="C_Cost_Project_Codes" ToRole="C_Cost_Project_Code_Categories" />
+          <NavigationProperty Name="C_Cost_Unified_Codes" Relationship="Self.C_Cost_Unified_Codes_Cost_Project_Codes" FromRole="C_Cost_Project_Codes" ToRole="C_Cost_Unified_Codes" />
+          <NavigationProperty Name="C_Cost_Project_Codes_Items" Relationship="Self.FK_Cost_Project_Codes__Cost_Project_Codes_Items" FromRole="C_Cost_Project_Codes" ToRole="C_Cost_Project_Codes_Items" />
+          <NavigationProperty Name="Project" Relationship="Self.Projects__Cost_Project_Codes" FromRole="C_Cost_Project_Codes" ToRole="Projects" />
+        </EntityType>
+        <EntityType Name="C_Cost_Project_Codes_Items">
+          <Key>
+            <PropertyRef Name="Project_Code_Id" />
+            <PropertyRef Name="Boq_Item_Id" />
+          </Key>
+          <Property Name="Project_Code_Id" Type="Int32" Nullable="false" />
+          <Property Name="Boq_Item_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="C_Cost_Direct_Project_Codes_Summerizng" Relationship="Self.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng" FromRole="C_Cost_Project_Codes_Items" ToRole="C_Cost_Direct_Project_Codes_Summerizng" />
+          <NavigationProperty Name="C_Cost_Project_Codes" Relationship="Self.FK_Cost_Project_Codes__Cost_Project_Codes_Items" FromRole="C_Cost_Project_Codes_Items" ToRole="C_Cost_Project_Codes" />
+          <NavigationProperty Name="BOQ_Items" Relationship="Self.FK_BOQ_Items__Cost_Project_Codes_Items" FromRole="C_Cost_Project_Codes_Items" ToRole="BOQ_Items" />
+        </EntityType>
+        <EntityType Name="C_Cost_Unified_Code_Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="C_Cost_Unified_Codes" Relationship="Self.C_Cost_Unified_Code_Category_Cost_Unified_Codes" FromRole="C_Cost_Unified_Code_Category" ToRole="C_Cost_Unified_Codes" />
+        </EntityType>
+        <EntityType Name="C_Cost_Unified_Codes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Category_Id" Type="Int32" />
+          <NavigationProperty Name="C_Cost_Project_Codes" Relationship="Self.C_Cost_Unified_Codes_Cost_Project_Codes" FromRole="C_Cost_Unified_Codes" ToRole="C_Cost_Project_Codes" />
+          <NavigationProperty Name="C_Cost_Unified_Code_Category" Relationship="Self.C_Cost_Unified_Code_Category_Cost_Unified_Codes" FromRole="C_Cost_Unified_Codes" ToRole="C_Cost_Unified_Code_Category" />
+        </EntityType>
+        <EntityType Name="BOQ_Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BOQId" Type="Int32" Nullable="false" />
+          <Property Name="Unit" Type="Int32" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="BOQRef" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PlanedUnitPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="HierarcyType" Type="Int16" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PlanedUnitPriceWithoutProfit" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="C_Cost_Project_Codes_Items" Relationship="Self.FK_BOQ_Items__Cost_Project_Codes_Items" FromRole="BOQ_Items" ToRole="C_Cost_Project_Codes_Items" />
+          <NavigationProperty Name="BOQ_Items1" Relationship="Self.FK_BOQ_Items_BOQ_Items3" FromRole="BOQ_Items" ToRole="BOQ_Items1" />
+          <NavigationProperty Name="BOQ_Items2" Relationship="Self.FK_BOQ_Items_BOQ_Items3" FromRole="BOQ_Items1" ToRole="BOQ_Items" />
+          <NavigationProperty Name="BOQ" Relationship="Self.FK_BOQ_Items_BOQs" FromRole="BOQ_Items" ToRole="BOQs" />
+          <NavigationProperty Name="Unit1" Relationship="Self.FK_BOQ_Items_Units" FromRole="BOQ_Items" ToRole="Units" />
+          <NavigationProperty Name="Item_Breakdowns" Relationship="Self.FK_Item_Breakdowns_BOQ_Items" FromRole="BOQ_Items" ToRole="Item_Breakdowns" />
+        </EntityType>
+        <EntityType Name="BOQ">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rev" Type="Int16" Nullable="false" />
+          <Property Name="RevDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ContractId" Type="Int32" />
+          <NavigationProperty Name="BOQ_Items" Relationship="Self.FK_BOQ_Items_BOQs" FromRole="BOQs" ToRole="BOQ_Items" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_BOQs_Contracts" FromRole="BOQs" ToRole="Projects" />
+          <NavigationProperty Name="IndirectCostItems" Relationship="Self.FK_IndirectCostItems_BOQs" FromRole="BOQs" ToRole="IndirectCostItems" />
+        </EntityType>
+        <EntityType Name="BreakdownItemType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TranslateName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="C_Cost_Direct_Project_Codes_Summerizng" Relationship="Self.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng" FromRole="BreakdownItemType" ToRole="C_Cost_Direct_Project_Codes_Summerizng" />
+          <NavigationProperty Name="Item_Breakdowns" Relationship="Self.FK_Item_Breakdowns_BreakdownItemType" FromRole="BreakdownItemType" ToRole="Item_Breakdowns" />
+        </EntityType>
+        <EntityType Name="IndirectCostItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BOQId" Type="Int32" Nullable="false" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" />
+          <NavigationProperty Name="C_Cost_Indirect_Project_Code_Summerizing" Relationship="Self.FK___Cost_Ind__Indir__3D5E1FD2" FromRole="IndirectCostItems" ToRole="C_Cost_Indirect_Project_Code_Summerizing" />
+          <NavigationProperty Name="BOQ" Relationship="Self.FK_IndirectCostItems_BOQs" FromRole="IndirectCostItems" ToRole="BOQs" />
+          <NavigationProperty Name="IndirectCostItems1" Relationship="Self.FK_IndirectCostItems_IndirectCostItems" FromRole="IndirectCostItems" ToRole="IndirectCostItems1" />
+          <NavigationProperty Name="IndirectCostItem1" Relationship="Self.FK_IndirectCostItems_IndirectCostItems" FromRole="IndirectCostItems1" ToRole="IndirectCostItems" />
+        </EntityType>
+        <EntityType Name="Item_Breakdowns">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+          <Property Name="BOQ_Items_Id" Type="Int32" Nullable="false" />
+          <Property Name="TypeId" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="BOQ_Items" Relationship="Self.FK_Item_Breakdowns_BOQ_Items" FromRole="Item_Breakdowns" ToRole="BOQ_Items" />
+          <NavigationProperty Name="BreakdownItemType" Relationship="Self.FK_Item_Breakdowns_BreakdownItemType" FromRole="Item_Breakdowns" ToRole="BreakdownItemType" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ContractId" />
+          </Key>
+          <Property Name="ContractId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="C_Cost_Project_Codes" Relationship="Self.Projects__Cost_Project_Codes" FromRole="Projects" ToRole="C_Cost_Project_Codes" />
+          <NavigationProperty Name="BOQs" Relationship="Self.FK_BOQs_Contracts" FromRole="Projects" ToRole="BOQs" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="BOQ_Items" Relationship="Self.FK_BOQ_Items_Units" FromRole="Units" ToRole="BOQ_Items" />
+        </EntityType>
+        <Association Name="FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng">
+          <End Role="C_Cost_Project_Codes_Items" Type="Self.C_Cost_Project_Codes_Items" Multiplicity="1" />
+          <End Role="C_Cost_Direct_Project_Codes_Summerizng" Type="Self.C_Cost_Direct_Project_Codes_Summerizng" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_Cost_Project_Codes_Items">
+              <PropertyRef Name="Project_Code_Id" />
+              <PropertyRef Name="Boq_Item_Id" />
+            </Principal>
+            <Dependent Role="C_Cost_Direct_Project_Codes_Summerizng">
+              <PropertyRef Name="Project_Code_Id" />
+              <PropertyRef Name="Boq_Item_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng">
+          <End Role="BreakdownItemType" Type="Self.BreakdownItemType" Multiplicity="1" />
+          <End Role="C_Cost_Direct_Project_Codes_Summerizng" Type="Self.C_Cost_Direct_Project_Codes_Summerizng" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BreakdownItemType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="C_Cost_Direct_Project_Codes_Summerizng">
+              <PropertyRef Name="Break_Down_Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK___Cost_Ind__Indir__3D5E1FD2">
+          <End Role="IndirectCostItems" Type="Self.IndirectCostItem" Multiplicity="1" />
+          <End Role="C_Cost_Indirect_Project_Code_Summerizing" Type="Self.C_Cost_Indirect_Project_Code_Summerizing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IndirectCostItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="C_Cost_Indirect_Project_Code_Summerizing">
+              <PropertyRef Name="Indirect_Cost_Item_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK___Cost_Ind__Projc__3C69FB99">
+          <End Role="C_Cost_Project_Codes" Type="Self.C_Cost_Project_Codes" Multiplicity="1" />
+          <End Role="C_Cost_Indirect_Project_Code_Summerizing" Type="Self.C_Cost_Indirect_Project_Code_Summerizing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_Cost_Project_Codes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="C_Cost_Indirect_Project_Code_Summerizing">
+              <PropertyRef Name="Projcet_Code_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="C_Cost_Project_Code_Categories__Cost_Project_Codes">
+          <End Role="C_Cost_Project_Code_Categories" Type="Self.C_Cost_Project_Code_Categories" Multiplicity="0..1" />
+          <End Role="C_Cost_Project_Codes" Type="Self.C_Cost_Project_Codes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_Cost_Project_Code_Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="C_Cost_Project_Codes">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="C_Cost_Unified_Codes_Cost_Project_Codes">
+          <End Role="C_Cost_Unified_Codes" Type="Self.C_Cost_Unified_Codes" Multiplicity="0..1" />
+          <End Role="C_Cost_Project_Codes" Type="Self.C_Cost_Project_Codes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_Cost_Unified_Codes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="C_Cost_Project_Codes">
+              <PropertyRef Name="Unified_Code_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cost_Project_Codes__Cost_Project_Codes_Items">
+          <End Role="C_Cost_Project_Codes" Type="Self.C_Cost_Project_Codes" Multiplicity="1" />
+          <End Role="C_Cost_Project_Codes_Items" Type="Self.C_Cost_Project_Codes_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_Cost_Project_Codes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="C_Cost_Project_Codes_Items">
+              <PropertyRef Name="Project_Code_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Projects__Cost_Project_Codes">
+          <End Role="Projects" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="C_Cost_Project_Codes" Type="Self.C_Cost_Project_Codes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ContractId" />
+            </Principal>
+            <Dependent Role="C_Cost_Project_Codes">
+              <PropertyRef Name="Project_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BOQ_Items__Cost_Project_Codes_Items">
+          <End Role="BOQ_Items" Type="Self.BOQ_Items" Multiplicity="1" />
+          <End Role="C_Cost_Project_Codes_Items" Type="Self.C_Cost_Project_Codes_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOQ_Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="C_Cost_Project_Codes_Items">
+              <PropertyRef Name="Boq_Item_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="C_Cost_Unified_Code_Category_Cost_Unified_Codes">
+          <End Role="C_Cost_Unified_Code_Category" Type="Self.C_Cost_Unified_Code_Category" Multiplicity="0..1" />
+          <End Role="C_Cost_Unified_Codes" Type="Self.C_Cost_Unified_Codes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_Cost_Unified_Code_Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="C_Cost_Unified_Codes">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BOQ_Items_BOQ_Items3">
+          <End Role="BOQ_Items" Type="Self.BOQ_Items" Multiplicity="0..1" />
+          <End Role="BOQ_Items1" Type="Self.BOQ_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOQ_Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BOQ_Items1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BOQ_Items_BOQs">
+          <End Role="BOQs" Type="Self.BOQ" Multiplicity="1" />
+          <End Role="BOQ_Items" Type="Self.BOQ_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOQs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BOQ_Items">
+              <PropertyRef Name="BOQId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BOQ_Items_Units">
+          <End Role="Units" Type="Self.Unit" Multiplicity="0..1" />
+          <End Role="BOQ_Items" Type="Self.BOQ_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BOQ_Items">
+              <PropertyRef Name="Unit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Breakdowns_BOQ_Items">
+          <End Role="BOQ_Items" Type="Self.BOQ_Items" Multiplicity="1" />
+          <End Role="Item_Breakdowns" Type="Self.Item_Breakdowns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOQ_Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item_Breakdowns">
+              <PropertyRef Name="BOQ_Items_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BOQs_Contracts">
+          <End Role="Projects" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="BOQs" Type="Self.BOQ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ContractId" />
+            </Principal>
+            <Dependent Role="BOQs">
+              <PropertyRef Name="ContractId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IndirectCostItems_BOQs">
+          <End Role="BOQs" Type="Self.BOQ" Multiplicity="1" />
+          <End Role="IndirectCostItems" Type="Self.IndirectCostItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOQs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IndirectCostItems">
+              <PropertyRef Name="BOQId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Breakdowns_BreakdownItemType">
+          <End Role="BreakdownItemType" Type="Self.BreakdownItemType" Multiplicity="1" />
+          <End Role="Item_Breakdowns" Type="Self.Item_Breakdowns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BreakdownItemType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item_Breakdowns">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IndirectCostItems_IndirectCostItems">
+          <End Role="IndirectCostItems" Type="Self.IndirectCostItem" Multiplicity="0..1" />
+          <End Role="IndirectCostItems1" Type="Self.IndirectCostItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IndirectCostItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IndirectCostItems1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PSC_COST2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C_Cost_Direct_Project_Codes_Summerizng" EntityType="Self.C_Cost_Direct_Project_Codes_Summerizng" />
+          <EntitySet Name="C_Cost_Indirect_Project_Code_Summerizing" EntityType="Self.C_Cost_Indirect_Project_Code_Summerizing" />
+          <EntitySet Name="C_Cost_Project_Code_Categories" EntityType="Self.C_Cost_Project_Code_Categories" />
+          <EntitySet Name="C_Cost_Project_Codes" EntityType="Self.C_Cost_Project_Codes" />
+          <EntitySet Name="C_Cost_Project_Codes_Items" EntityType="Self.C_Cost_Project_Codes_Items" />
+          <EntitySet Name="C_Cost_Unified_Code_Category" EntityType="Self.C_Cost_Unified_Code_Category" />
+          <EntitySet Name="C_Cost_Unified_Codes" EntityType="Self.C_Cost_Unified_Codes" />
+          <EntitySet Name="BOQ_Items" EntityType="Self.BOQ_Items" />
+          <EntitySet Name="BOQs" EntityType="Self.BOQ" />
+          <EntitySet Name="BreakdownItemTypes" EntityType="Self.BreakdownItemType" />
+          <EntitySet Name="IndirectCostItems" EntityType="Self.IndirectCostItem" />
+          <EntitySet Name="Item_Breakdowns" EntityType="Self.Item_Breakdowns" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="Units" EntityType="Self.Unit" />
+          <AssociationSet Name="FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng" Association="Self.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng">
+            <End Role="C_Cost_Project_Codes_Items" EntitySet="C_Cost_Project_Codes_Items" />
+            <End Role="C_Cost_Direct_Project_Codes_Summerizng" EntitySet="C_Cost_Direct_Project_Codes_Summerizng" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng" Association="Self.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng">
+            <End Role="BreakdownItemType" EntitySet="BreakdownItemTypes" />
+            <End Role="C_Cost_Direct_Project_Codes_Summerizng" EntitySet="C_Cost_Direct_Project_Codes_Summerizng" />
+          </AssociationSet>
+          <AssociationSet Name="FK___Cost_Ind__Indir__3D5E1FD2" Association="Self.FK___Cost_Ind__Indir__3D5E1FD2">
+            <End Role="IndirectCostItems" EntitySet="IndirectCostItems" />
+            <End Role="C_Cost_Indirect_Project_Code_Summerizing" EntitySet="C_Cost_Indirect_Project_Code_Summerizing" />
+          </AssociationSet>
+          <AssociationSet Name="FK___Cost_Ind__Projc__3C69FB99" Association="Self.FK___Cost_Ind__Projc__3C69FB99">
+            <End Role="C_Cost_Project_Codes" EntitySet="C_Cost_Project_Codes" />
+            <End Role="C_Cost_Indirect_Project_Code_Summerizing" EntitySet="C_Cost_Indirect_Project_Code_Summerizing" />
+          </AssociationSet>
+          <AssociationSet Name="C_Cost_Project_Code_Categories__Cost_Project_Codes" Association="Self.C_Cost_Project_Code_Categories__Cost_Project_Codes">
+            <End Role="C_Cost_Project_Code_Categories" EntitySet="C_Cost_Project_Code_Categories" />
+            <End Role="C_Cost_Project_Codes" EntitySet="C_Cost_Project_Codes" />
+          </AssociationSet>
+          <AssociationSet Name="C_Cost_Unified_Codes_Cost_Project_Codes" Association="Self.C_Cost_Unified_Codes_Cost_Project_Codes">
+            <End Role="C_Cost_Unified_Codes" EntitySet="C_Cost_Unified_Codes" />
+            <End Role="C_Cost_Project_Codes" EntitySet="C_Cost_Project_Codes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cost_Project_Codes__Cost_Project_Codes_Items" Association="Self.FK_Cost_Project_Codes__Cost_Project_Codes_Items">
+            <End Role="C_Cost_Project_Codes" EntitySet="C_Cost_Project_Codes" />
+            <End Role="C_Cost_Project_Codes_Items" EntitySet="C_Cost_Project_Codes_Items" />
+          </AssociationSet>
+          <AssociationSet Name="Projects__Cost_Project_Codes" Association="Self.Projects__Cost_Project_Codes">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="C_Cost_Project_Codes" EntitySet="C_Cost_Project_Codes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BOQ_Items__Cost_Project_Codes_Items" Association="Self.FK_BOQ_Items__Cost_Project_Codes_Items">
+            <End Role="BOQ_Items" EntitySet="BOQ_Items" />
+            <End Role="C_Cost_Project_Codes_Items" EntitySet="C_Cost_Project_Codes_Items" />
+          </AssociationSet>
+          <AssociationSet Name="C_Cost_Unified_Code_Category_Cost_Unified_Codes" Association="Self.C_Cost_Unified_Code_Category_Cost_Unified_Codes">
+            <End Role="C_Cost_Unified_Code_Category" EntitySet="C_Cost_Unified_Code_Category" />
+            <End Role="C_Cost_Unified_Codes" EntitySet="C_Cost_Unified_Codes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BOQ_Items_BOQ_Items3" Association="Self.FK_BOQ_Items_BOQ_Items3">
+            <End Role="BOQ_Items" EntitySet="BOQ_Items" />
+            <End Role="BOQ_Items1" EntitySet="BOQ_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BOQ_Items_BOQs" Association="Self.FK_BOQ_Items_BOQs">
+            <End Role="BOQs" EntitySet="BOQs" />
+            <End Role="BOQ_Items" EntitySet="BOQ_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BOQ_Items_Units" Association="Self.FK_BOQ_Items_Units">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="BOQ_Items" EntitySet="BOQ_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Breakdowns_BOQ_Items" Association="Self.FK_Item_Breakdowns_BOQ_Items">
+            <End Role="BOQ_Items" EntitySet="BOQ_Items" />
+            <End Role="Item_Breakdowns" EntitySet="Item_Breakdowns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BOQs_Contracts" Association="Self.FK_BOQs_Contracts">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="BOQs" EntitySet="BOQs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IndirectCostItems_BOQs" Association="Self.FK_IndirectCostItems_BOQs">
+            <End Role="BOQs" EntitySet="BOQs" />
+            <End Role="IndirectCostItems" EntitySet="IndirectCostItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Breakdowns_BreakdownItemType" Association="Self.FK_Item_Breakdowns_BreakdownItemType">
+            <End Role="BreakdownItemType" EntitySet="BreakdownItemTypes" />
+            <End Role="Item_Breakdowns" EntitySet="Item_Breakdowns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IndirectCostItems_IndirectCostItems" Association="Self.FK_IndirectCostItems_IndirectCostItems">
+            <End Role="IndirectCostItems" EntitySet="IndirectCostItems" />
+            <End Role="IndirectCostItems1" EntitySet="IndirectCostItems" />
+          </AssociationSet>
+          <EntitySet Name="View_Cost_Project_Codes" EntityType="PSC_COST2Model.View_Cost_Project_Codes" />
+        </EntityContainer>
+        <EntityType Name="View_Cost_Project_Codes">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Description" />
+            <PropertyRef Name="NameCategories" />
+            <PropertyRef Name="NameProjects" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Unified_Code" Type="Int32" />
+          <Property Name="NameCategories" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Node" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="GetLevelNode" Type="Int16" />
+          <Property Name="NameProjects" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PSC_COST2ModelStoreContainer" CdmEntityContainer="PSC_COST2Entities">
+          <EntitySetMapping Name="C_Cost_Direct_Project_Codes_Summerizng">
+            <EntityTypeMapping TypeName="PSC_COST2Model.C_Cost_Direct_Project_Codes_Summerizng">
+              <MappingFragment StoreEntitySet="_Cost_Direct_Project_Codes_Summerizng">
+                <ScalarProperty Name="Project_Code_Id" ColumnName="Project_Code_Id" />
+                <ScalarProperty Name="Boq_Item_Id" ColumnName="Boq_Item_Id" />
+                <ScalarProperty Name="Break_Down_Type_Id" ColumnName="Break_Down_Type_Id" />
+                <ScalarProperty Name="Planned_Price" ColumnName="Planned_Price" />
+                <ScalarProperty Name="Ref_Price" ColumnName="Ref_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_Cost_Indirect_Project_Code_Summerizing">
+            <EntityTypeMapping TypeName="PSC_COST2Model.C_Cost_Indirect_Project_Code_Summerizing">
+              <MappingFragment StoreEntitySet="_Cost_Indirect_Project_Code_Summerizing">
+                <ScalarProperty Name="Projcet_Code_Id" ColumnName="Projcet_Code_Id" />
+                <ScalarProperty Name="Indirect_Cost_Item_Id" ColumnName="Indirect_Cost_Item_Id" />
+                <ScalarProperty Name="Planned_Price" ColumnName="Planned_Price" />
+                <ScalarProperty Name="Ref_Price" ColumnName="Ref_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_Cost_Project_Code_Categories">
+            <EntityTypeMapping TypeName="PSC_COST2Model.C_Cost_Project_Code_Categories">
+              <MappingFragment StoreEntitySet="_Cost_Project_Code_Categories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_Cost_Project_Codes">
+            <EntityTypeMapping TypeName="PSC_COST2Model.C_Cost_Project_Codes">
+              <MappingFragment StoreEntitySet="_Cost_Project_Codes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Unified_Code_Id" ColumnName="Unified_Code_Id" />
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Project_Id" ColumnName="Project_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_Cost_Project_Codes_Items">
+            <EntityTypeMapping TypeName="PSC_COST2Model.C_Cost_Project_Codes_Items">
+              <MappingFragment StoreEntitySet="_Cost_Project_Codes_Items">
+                <ScalarProperty Name="Project_Code_Id" ColumnName="Project_Code_Id" />
+                <ScalarProperty Name="Boq_Item_Id" ColumnName="Boq_Item_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_Cost_Unified_Code_Category">
+            <EntityTypeMapping TypeName="PSC_COST2Model.C_Cost_Unified_Code_Category">
+              <MappingFragment StoreEntitySet="_Cost_Unified_Code_Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_Cost_Unified_Codes">
+            <EntityTypeMapping TypeName="PSC_COST2Model.C_Cost_Unified_Codes">
+              <MappingFragment StoreEntitySet="_Cost_Unified_Codes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BOQ_Items">
+            <EntityTypeMapping TypeName="PSC_COST2Model.BOQ_Items">
+              <MappingFragment StoreEntitySet="BOQ_Items">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BOQId" ColumnName="BOQId" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="BOQRef" ColumnName="BOQRef" />
+                <ScalarProperty Name="PlanedUnitPrice" ColumnName="PlanedUnitPrice" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="HierarcyType" ColumnName="HierarcyType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PlanedUnitPriceWithoutProfit" ColumnName="PlanedUnitPriceWithoutProfit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BOQs">
+            <EntityTypeMapping TypeName="PSC_COST2Model.BOQ">
+              <MappingFragment StoreEntitySet="BOQs">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Rev" ColumnName="Rev" />
+                <ScalarProperty Name="RevDate" ColumnName="RevDate" />
+                <ScalarProperty Name="ContractId" ColumnName="ContractId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BreakdownItemTypes">
+            <EntityTypeMapping TypeName="PSC_COST2Model.BreakdownItemType">
+              <MappingFragment StoreEntitySet="BreakdownItemType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TranslateName" ColumnName="TranslateName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IndirectCostItems">
+            <EntityTypeMapping TypeName="PSC_COST2Model.IndirectCostItem">
+              <MappingFragment StoreEntitySet="IndirectCostItems">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BOQId" ColumnName="BOQId" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item_Breakdowns">
+            <EntityTypeMapping TypeName="PSC_COST2Model.Item_Breakdowns">
+              <MappingFragment StoreEntitySet="Item_Breakdowns">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="BOQ_Items_Id" ColumnName="BOQ_Items_Id" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="PSC_COST2Model.Project">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="ContractId" ColumnName="ContractId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="PSC_COST2Model.Unit">
+              <MappingFragment StoreEntitySet="Units">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Cost_Project_Codes">
+            <EntityTypeMapping TypeName="PSC_COST2Model.View_Cost_Project_Codes">
+              <MappingFragment StoreEntitySet="View_Cost_Project_Codes">
+                <ScalarProperty Name="NameProjects" ColumnName="NameProjects" />
+                <ScalarProperty Name="GetLevelNode" ColumnName="GetLevelNode" />
+                <ScalarProperty Name="Node" ColumnName="Node" />
+                <ScalarProperty Name="NameCategories" ColumnName="NameCategories" />
+                <ScalarProperty Name="Unified_Code" ColumnName="Unified_Code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
