@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PSC_Cost_Control.Model
+namespace PSC_Cost_Control.Models
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace PSC_Cost_Control.Model
         public decimal Planned_Price { get; set; }
         public decimal Ref_Price { get; set; }
     
-        public virtual IndirectCostItem IndirectCostItem { get; set; }
+        public virtual IndirectCostItems IndirectCostItems { get; set; }
         public virtual C_Cost_Project_Codes C_Cost_Project_Codes { get; set; }
     }
 }

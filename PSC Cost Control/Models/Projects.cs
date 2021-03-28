@@ -7,27 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PSC_Cost_Control.Model
+namespace PSC_Cost_Control.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class BreakdownItemType
+    public partial class Projects
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BreakdownItemType()
+        public Projects()
         {
-            this.C_Cost_Direct_Project_Codes_Summerizng = new HashSet<C_Cost_Direct_Project_Codes_Summerizng>();
-            this.Item_Breakdowns = new HashSet<Item_Breakdowns>();
+            this.C_Cost_Project_Codes = new HashSet<C_Cost_Project_Codes>();
+            this.BOQs = new HashSet<BOQs>();
         }
     
-        public short Id { get; set; }
+        public int ContractId { get; set; }
         public string Name { get; set; }
-        public string TranslateName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C_Cost_Direct_Project_Codes_Summerizng> C_Cost_Direct_Project_Codes_Summerizng { get; set; }
+        public virtual ICollection<C_Cost_Project_Codes> C_Cost_Project_Codes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item_Breakdowns> Item_Breakdowns { get; set; }
+        public virtual ICollection<BOQs> BOQs { get; set; }
     }
 }

@@ -7,29 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PSC_Cost_Control.Model
+namespace PSC_Cost_Control.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class BOQ
+    public partial class C_Cost_Unified_Code_Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BOQ()
+        public C_Cost_Unified_Code_Category()
         {
-            this.BOQ_Items = new HashSet<BOQ_Items>();
-            this.IndirectCostItems = new HashSet<IndirectCostItem>();
+            this.C_Cost_Unified_Codes = new HashSet<C_Cost_Unified_Codes>();
         }
     
         public int Id { get; set; }
-        public short Rev { get; set; }
-        public System.DateTime RevDate { get; set; }
-        public Nullable<int> ContractId { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BOQ_Items> BOQ_Items { get; set; }
-        public virtual Project Project { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IndirectCostItem> IndirectCostItems { get; set; }
+        public virtual ICollection<C_Cost_Unified_Codes> C_Cost_Unified_Codes { get; set; }
     }
 }

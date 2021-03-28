@@ -7,23 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PSC_Cost_Control.Model
+namespace PSC_Cost_Control.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Unit
+    public partial class Item_Breakdowns
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Unit()
-        {
-            this.BOQ_Items = new HashSet<BOQ_Items>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
+        public decimal TotalPrice { get; set; }
+        public int BOQ_Items_Id { get; set; }
+        public short TypeId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BOQ_Items> BOQ_Items { get; set; }
+        public virtual BOQ_Items BOQ_Items { get; set; }
+        public virtual BreakdownItemType BreakdownItemType { get; set; }
     }
 }

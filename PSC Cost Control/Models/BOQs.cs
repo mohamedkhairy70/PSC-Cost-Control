@@ -7,25 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PSC_Cost_Control.Model
+namespace PSC_Cost_Control.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class C_Cost_Project_Codes_Items
+    public partial class BOQs
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public C_Cost_Project_Codes_Items()
+        public BOQs()
         {
-            this.C_Cost_Direct_Project_Codes_Summerizng = new HashSet<C_Cost_Direct_Project_Codes_Summerizng>();
+            this.BOQ_Items = new HashSet<BOQ_Items>();
+            this.IndirectCostItems = new HashSet<IndirectCostItems>();
         }
     
-        public int Project_Code_Id { get; set; }
-        public int Boq_Item_Id { get; set; }
+        public int Id { get; set; }
+        public short Rev { get; set; }
+        public System.DateTime RevDate { get; set; }
+        public Nullable<int> ContractId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C_Cost_Direct_Project_Codes_Summerizng> C_Cost_Direct_Project_Codes_Summerizng { get; set; }
-        public virtual C_Cost_Project_Codes C_Cost_Project_Codes { get; set; }
-        public virtual BOQ_Items BOQ_Items { get; set; }
+        public virtual ICollection<BOQ_Items> BOQ_Items { get; set; }
+        public virtual Projects Projects { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IndirectCostItems> IndirectCostItems { get; set; }
     }
 }

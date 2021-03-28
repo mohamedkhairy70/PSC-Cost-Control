@@ -7,25 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PSC_Cost_Control.Model
+namespace PSC_Cost_Control.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class C_Cost_Unified_Codes
+    public partial class BreakdownItemType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public C_Cost_Unified_Codes()
+        public BreakdownItemType()
         {
-            this.C_Cost_Project_Codes = new HashSet<C_Cost_Project_Codes>();
+            this.C_Cost_Direct_Project_Codes_Summerizng = new HashSet<C_Cost_Direct_Project_Codes_Summerizng>();
+            this.Item_Breakdowns = new HashSet<Item_Breakdowns>();
         }
     
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public Nullable<int> Category_Id { get; set; }
+        public short Id { get; set; }
+        public string Name { get; set; }
+        public string TranslateName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C_Cost_Project_Codes> C_Cost_Project_Codes { get; set; }
-        public virtual C_Cost_Unified_Code_Category C_Cost_Unified_Code_Category { get; set; }
+        public virtual ICollection<C_Cost_Direct_Project_Codes_Summerizng> C_Cost_Direct_Project_Codes_Summerizng { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Item_Breakdowns> Item_Breakdowns { get; set; }
     }
 }

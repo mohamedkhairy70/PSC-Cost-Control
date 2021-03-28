@@ -7,40 +7,37 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PSC_Cost_Control.Model
+namespace PSC_Cost_Control.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class BOQ_Items
+    public partial class C_Cost_Project_Codes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BOQ_Items()
+        public C_Cost_Project_Codes()
         {
+            this.C_Cost_Indirect_Project_Code_Summerizing = new HashSet<C_Cost_Indirect_Project_Code_Summerizing>();
+            this.C_Cost_Project_Codes1 = new HashSet<C_Cost_Project_Codes>();
             this.C_Cost_Project_Codes_Items = new HashSet<C_Cost_Project_Codes_Items>();
-            this.BOQ_Items1 = new HashSet<BOQ_Items>();
-            this.Item_Breakdowns = new HashSet<Item_Breakdowns>();
         }
     
         public int Id { get; set; }
-        public int BOQId { get; set; }
-        public Nullable<int> Unit { get; set; }
-        public decimal Quantity { get; set; }
-        public string BOQRef { get; set; }
-        public decimal PlanedUnitPrice { get; set; }
-        public Nullable<int> ParentId { get; set; }
-        public short HierarcyType { get; set; }
         public string Description { get; set; }
-        public decimal PlanedUnitPriceWithoutProfit { get; set; }
+        public Nullable<int> Unified_Code_Id { get; set; }
+        public Nullable<int> Category_Id { get; set; }
+        public Nullable<int> Project_Id { get; set; }
+        public Nullable<int> Parent { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C_Cost_Indirect_Project_Code_Summerizing> C_Cost_Indirect_Project_Code_Summerizing { get; set; }
+        public virtual C_Cost_Project_Code_Categories C_Cost_Project_Code_Categories { get; set; }
+        public virtual C_Cost_Unified_Codes C_Cost_Unified_Codes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C_Cost_Project_Codes> C_Cost_Project_Codes1 { get; set; }
+        public virtual C_Cost_Project_Codes C_Cost_Project_Codes2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C_Cost_Project_Codes_Items> C_Cost_Project_Codes_Items { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BOQ_Items> BOQ_Items1 { get; set; }
-        public virtual BOQ_Items BOQ_Items2 { get; set; }
-        public virtual BOQ BOQ { get; set; }
-        public virtual Unit Unit1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item_Breakdowns> Item_Breakdowns { get; set; }
+        public virtual Projects Projects { get; set; }
     }
 }

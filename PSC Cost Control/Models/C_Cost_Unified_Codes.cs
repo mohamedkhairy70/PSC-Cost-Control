@@ -7,32 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PSC_Cost_Control.Model
+namespace PSC_Cost_Control.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class C_Cost_Project_Codes
+    public partial class C_Cost_Unified_Codes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public C_Cost_Project_Codes()
+        public C_Cost_Unified_Codes()
         {
-            this.C_Cost_Indirect_Project_Code_Summerizing = new HashSet<C_Cost_Indirect_Project_Code_Summerizing>();
-            this.C_Cost_Project_Codes_Items = new HashSet<C_Cost_Project_Codes_Items>();
+            this.C_Cost_Project_Codes = new HashSet<C_Cost_Project_Codes>();
+            this.C_Cost_Unified_Codes1 = new HashSet<C_Cost_Unified_Codes>();
         }
     
         public int Id { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> Unified_Code_Id { get; set; }
+        public string Title { get; set; }
         public Nullable<int> Category_Id { get; set; }
-        public Nullable<int> Project_Id { get; set; }
+        public Nullable<int> Parent { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C_Cost_Indirect_Project_Code_Summerizing> C_Cost_Indirect_Project_Code_Summerizing { get; set; }
-        public virtual C_Cost_Project_Code_Categories C_Cost_Project_Code_Categories { get; set; }
-        public virtual C_Cost_Unified_Codes C_Cost_Unified_Codes { get; set; }
+        public virtual ICollection<C_Cost_Project_Codes> C_Cost_Project_Codes { get; set; }
+        public virtual C_Cost_Unified_Code_Category C_Cost_Unified_Code_Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C_Cost_Project_Codes_Items> C_Cost_Project_Codes_Items { get; set; }
-        public virtual Project Project { get; set; }
+        public virtual ICollection<C_Cost_Unified_Codes> C_Cost_Unified_Codes1 { get; set; }
+        public virtual C_Cost_Unified_Codes C_Cost_Unified_Codes2 { get; set; }
     }
 }

@@ -7,16 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PSC_Cost_Control.Model
+namespace PSC_Cost_Control.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
-    public partial class PSC_COST2Entities : DbContext
+    public partial class PSC_COST3Entities : DbContext
     {
-        public PSC_COST2Entities()
-            : base("name=PSC_COST2Entities")
+        public PSC_COST3Entities()
+            : base("name=PSC_COST3Entities")
         {
         }
     
@@ -33,12 +35,21 @@ namespace PSC_Cost_Control.Model
         public virtual DbSet<C_Cost_Unified_Code_Category> C_Cost_Unified_Code_Category { get; set; }
         public virtual DbSet<C_Cost_Unified_Codes> C_Cost_Unified_Codes { get; set; }
         public virtual DbSet<BOQ_Items> BOQ_Items { get; set; }
-        public virtual DbSet<BOQ> BOQs { get; set; }
-        public virtual DbSet<BreakdownItemType> BreakdownItemTypes { get; set; }
-        public virtual DbSet<IndirectCostItem> IndirectCostItems { get; set; }
+        public virtual DbSet<BOQs> BOQs { get; set; }
+        public virtual DbSet<BreakdownItemType> BreakdownItemType { get; set; }
+        public virtual DbSet<IndirectCostItems> IndirectCostItems { get; set; }
         public virtual DbSet<Item_Breakdowns> Item_Breakdowns { get; set; }
-        public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<Unit> Units { get; set; }
-        public virtual DbSet<View_Cost_Project_Codes> View_Cost_Project_Codes { get; set; }
+        public virtual DbSet<Projects> Projects { get; set; }
+        public virtual DbSet<Units> Units { get; set; }
+    
+        public virtual int f_Cost_SP_Insert_Project_Codes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_SP_Insert_Project_Codes");
+        }
+    
+        public virtual int f_Cost_SP_Insert_Unified_Codes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_SP_Insert_Unified_Codes");
+        }
     }
 }

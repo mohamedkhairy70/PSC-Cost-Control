@@ -7,18 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PSC_Cost_Control.Model
+namespace PSC_Cost_Control.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class IndirectCostItem
+    public partial class IndirectCostItems
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public IndirectCostItem()
+        public IndirectCostItems()
         {
             this.C_Cost_Indirect_Project_Code_Summerizing = new HashSet<C_Cost_Indirect_Project_Code_Summerizing>();
-            this.IndirectCostItems1 = new HashSet<IndirectCostItem>();
+            this.IndirectCostItems1 = new HashSet<IndirectCostItems>();
         }
     
         public int Id { get; set; }
@@ -29,9 +29,9 @@ namespace PSC_Cost_Control.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C_Cost_Indirect_Project_Code_Summerizing> C_Cost_Indirect_Project_Code_Summerizing { get; set; }
-        public virtual BOQ BOQ { get; set; }
+        public virtual BOQs BOQs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IndirectCostItem> IndirectCostItems1 { get; set; }
-        public virtual IndirectCostItem IndirectCostItem1 { get; set; }
+        public virtual ICollection<IndirectCostItems> IndirectCostItems1 { get; set; }
+        public virtual IndirectCostItems IndirectCostItems2 { get; set; }
     }
 }
