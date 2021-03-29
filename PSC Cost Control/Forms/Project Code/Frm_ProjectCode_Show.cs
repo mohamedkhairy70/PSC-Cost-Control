@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PSC_Cost_Control.Model;
+using PSC_Cost_Control.Models;
 using PSC_Cost_Control.Helper;
 using System.Data.Entity;
 using DevExpress.XtraBars.Docking2010;
@@ -25,16 +25,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
     {
         readonly Static st = new Static();
 
-        private readonly PSC_COST2Entities context = new PSC_COST2Entities();
-
-        public List<C_Cost_Project_Codes> _Cost_Project_Codes = new List<C_Cost_Project_Codes>();
-        public List<C_Cost_Project_Code_Categories> _Categories = new List<C_Cost_Project_Code_Categories>();
-        public List<Project> _Projects = new List<Project>();
-        public List<View_Cost_Project_Codes> _View_Cost_Project_Codes = new List<View_Cost_Project_Codes>();
-
-        public List<BOQ_Items> _Boq_Items = new List<BOQ_Items>();
-        public List<IndirectCostItem> _IndirectCostItems = new List<IndirectCostItem>();
-
 
 
         public Frm_ProjectCode_Show()
@@ -43,8 +33,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             
         }
        
-
-
         private void windowsUIButtonPanel1_ButtonClick(object sender, ButtonEventArgs e)
         {
             WindowsUIButton btn = e.Button as WindowsUIButton;
@@ -59,21 +47,20 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
 
         }
-
         private void Frm_ProjectCode_Show_Load(object sender, EventArgs e)
         {
-            CreateColumns(treeList1);
+            CreateColumns(tree_ProjectCode);
+
             //CreateNodes(treeList1);
-            UseNewItemRowToAddNodes(treeList1);
-            AppendingNodes(treeList1);
-            RemovingNode(treeList1);
-            RemovingSelectedNodes(treeList1);
-            treeList1.ExpandAll();
+            AppendingNodes(tree_ProjectCode);
+            RemovingNode(tree_ProjectCode);
+            RemovingSelectedNodes(tree_ProjectCode);
+            tree_ProjectCode.ExpandAll();
             DragDropManager.Default.DragOver += OnDragOver;
             DragDropManager.Default.DragDrop += OnDragDrop;
             
         }
-        public static void AppendingNodes(TreeList treeList)
+        public void AppendingNodes(TreeList treeList)
         {
             SimpleButton appendNodeButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Append node" };
             // UI Binding
@@ -130,7 +117,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             e.Handled = true;
             if (e.Action == DragDropActions.None || e.InsertType == InsertType.None)
                 return;
-            if (e.Target == treeList1)
+            if (e.Target == tree_ProjectCode)
                 OnTreeListDrop(e);
 
             Cursor.Current = Cursors.Default;
@@ -160,26 +147,26 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 return;
             var destNode = GetDestNode(e.Location);
             int index = CalcDestNodeIndex(e, destNode);
-            treeList1.BeginUpdate();
-            treeList1.Selection.UnselectAll();
+            tree_ProjectCode.BeginUpdate();
+            tree_ProjectCode.Selection.UnselectAll();
             List<object> _items = new List<object>(items);
             foreach (object _item in _items)
             {
                 DataRowView rowView = _item as DataRowView;
-                TreeListNode node = treeList1.AppendNode(rowView.Row.ItemArray, index == -1000 ? destNode : null);
+                TreeListNode node = tree_ProjectCode.AppendNode(rowView.Row.ItemArray, index == -1000 ? destNode : null);
                 if (index > -1)
                 {
-                    treeList1.MoveNode(node, destNode.ParentNode, true, index);
+                    tree_ProjectCode.MoveNode(node, destNode.ParentNode, true, index);
                     index++;
                 }
                 if (e.Action != DragDropActions.Copy)
 
-                treeList1.SelectNode(node);
+                tree_ProjectCode.SelectNode(node);
                 if (node.ParentNode != null)
                     node.ParentNode.Expand();
             }
 
-            treeList1.EndUpdate();
+            tree_ProjectCode.EndUpdate();
         }
         int CalcDestNodeIndex(DragDropEventArgs e, TreeListNode destNode)
         {
@@ -187,7 +174,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 return -1;
             if (e.InsertType == InsertType.AsChild)
                 return -1000;
-            var nodes = destNode.ParentNode == null ? treeList1.Nodes : destNode.ParentNode.Nodes;
+            var nodes = destNode.ParentNode == null ? tree_ProjectCode.Nodes : destNode.ParentNode.Nodes;
             int index = nodes.IndexOf(destNode);
             if (e.InsertType == InsertType.After)
                 return ++index;
@@ -195,14 +182,14 @@ namespace PSC_Cost_Control.Forms.Project_Code
         }
         TreeListNode GetDestNode(Point hitPoint)
         {
-            Point pt = treeList1.PointToClient(hitPoint);
-            DevExpress.XtraTreeList.TreeListHitInfo ht = treeList1.CalcHitInfo(pt);
+            Point pt = tree_ProjectCode.PointToClient(hitPoint);
+            DevExpress.XtraTreeList.TreeListHitInfo ht = tree_ProjectCode.CalcHitInfo(pt);
             TreeListNode destNode = ht.Node;
             if (destNode is TreeListAutoFilterNode)
                 return null;
             return destNode;
         }
-        public static void RemovingSelectedNodes(TreeList treeList)
+        public void RemovingSelectedNodes(TreeList treeList)
         {
             SimpleButton deleteButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Delete selected nodes" };
             // Enable multi-selection
@@ -221,7 +208,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 }
             };
         }
-        public static void RemovingNode(TreeList treeList)
+        public void RemovingNode(TreeList treeList)
         {
             SimpleButton deleteButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Delete focused node" };
             // Delete node action with confirmation
@@ -246,30 +233,31 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 deleteNodeWithConfirmation(treeList.FocusedNode);
             };
         }
-        //[DefaultValue(NewItemRowPosition.None)]
-        //[XtraSerializableProperty]
-        //public virtual NewItemRowPosition NewItemRowPosition { get; set; }
-        public enum NewItemRowPosition
-        public void UseNewItemRowToAddNodes(TreeList treeList)
+        public void ClearAllData()
         {
+            cm_Categories.DataSource = null;
+            cm_Categories.SelectedItem = -1;
+            cm_Categories.Enabled = false;
 
-    ////        treeList1.OptionsView.NewItemRowPosition = NewItemRowPosition.Top;
 
-    ////        Handle the InitNewRow event to initialize newly added rows.To initialize row cells use the SetRowCellValue method
-    ////        treeList1.InitNewRow += (s, e) =>
-    ////        {
-    ////            GridView view = s as GridView;
-    ////    Set the new row cell value
-    ////   view.SetRowCellValue(e.RowHandle, view.Columns["RecordDate"], DateTime.Today);
-    ////    view.SetRowCellValue(e.RowHandle, view.Columns["Name"], "CustomName");
-    ////             Obtain the new row cell value
-    ////            int newRowID = Convert.ToInt32(view.GetRowCellValue(e.RowHandle, "ID"));
-    ////    view.SetRowCellValue(e.RowHandle, view.Columns["Notes"], string.Format("Row ID: {0}", newRowID));
-    ////        };
+            txt_Description.Text = "";
+            txt_Description.Enabled = false;
 
-    ////treeList.OptionsBehavior.Editable = true;
-    ////         Display a New Item Row to add nodes to the TreeList.
-    ////        treeList.OptionsView.NewItemRowPosition = TreeListNewItemRowPosition.Top; // Available modes: Top, Bottom, None
+            cm_Projects.Enabled = true;
+            cm_Projects.SelectedItem = -1;
+
+            tree_ProjectCode.DataSource = null;
+        }
+
+
+        private void cm_Projects_DropDownClosed(object sender, EventArgs e)
+        {
+            try
+            {
+                string NameProject = cm_Projects.SelectedText.ToString();
+
+            }
+            catch { }
         }
     }
 }
