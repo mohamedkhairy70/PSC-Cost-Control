@@ -28,6 +28,7 @@ namespace PSC_Cost_Control.Models
         public Nullable<int> Category_Id { get; set; }
         public Nullable<int> Project_Id { get; set; }
         public Nullable<int> Parent { get; set; }
+        public string Code { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C_Cost_Indirect_Project_Code_Summerizing> C_Cost_Indirect_Project_Code_Summerizing { get; set; }

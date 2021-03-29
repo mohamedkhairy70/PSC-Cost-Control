@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PSC_COST3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PSC_COST3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="_Cost_Direct_Project_Codes_Summerizng">
           <Key>
             <PropertyRef Name="Project_Code_Id" />
@@ -46,6 +46,7 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="Category_Id" Type="int" />
           <Property Name="Project_Id" Type="int" />
           <Property Name="Parent" Type="int" />
+          <Property Name="Code" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="_Cost_Project_Codes_Items">
           <Key>
@@ -72,6 +73,7 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Category_Id" Type="int" />
           <Property Name="Parent" Type="int" />
+          <Property Name="Code" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="BOQ_Items">
           <Key>
@@ -138,30 +140,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <Association Name="_Cost_Project_Code_Categories__Cost_Project_Codes">
-          <End Role="_Cost_Project_Code_Categories" Type="Self._Cost_Project_Code_Categories" Multiplicity="0..1" />
-          <End Role="_Cost_Project_Codes" Type="Self._Cost_Project_Codes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="_Cost_Project_Code_Categories">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="_Cost_Project_Codes">
-              <PropertyRef Name="Category_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="_Cost_Unified_Code_Category_Cost_Unified_Codes">
-          <End Role="_Cost_Unified_Code_Category" Type="Self._Cost_Unified_Code_Category" Multiplicity="0..1" />
-          <End Role="_Cost_Unified_Codes" Type="Self._Cost_Unified_Codes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="_Cost_Unified_Code_Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="_Cost_Unified_Codes">
-              <PropertyRef Name="Category_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="_Cost_Unified_Codes_Cost_Project_Codes">
           <End Role="_Cost_Unified_Codes" Type="Self._Cost_Unified_Codes" Multiplicity="0..1" />
           <End Role="_Cost_Project_Codes" Type="Self._Cost_Project_Codes" Multiplicity="*" />
@@ -368,18 +346,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Projects__Cost_Project_Codes">
-          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
-          <End Role="_Cost_Project_Codes" Type="Self._Cost_Project_Codes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Projects">
-              <PropertyRef Name="ContractId" />
-            </Principal>
-            <Dependent Role="_Cost_Project_Codes">
-              <PropertyRef Name="Project_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="f_Cost_SP_Insert_Project_Codes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_SP_Insert_Project_Codes" />
         <Function Name="f_Cost_SP_Insert_Unified_Codes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_SP_Insert_Unified_Codes" />
         <EntityContainer Name="PSC_COST3ModelStoreContainer">
@@ -397,14 +363,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <EntitySet Name="Item_Breakdowns" EntityType="Self.Item_Breakdowns" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="_Cost_Project_Code_Categories__Cost_Project_Codes" Association="Self._Cost_Project_Code_Categories__Cost_Project_Codes">
-            <End Role="_Cost_Project_Code_Categories" EntitySet="_Cost_Project_Code_Categories" />
-            <End Role="_Cost_Project_Codes" EntitySet="_Cost_Project_Codes" />
-          </AssociationSet>
-          <AssociationSet Name="_Cost_Unified_Code_Category_Cost_Unified_Codes" Association="Self._Cost_Unified_Code_Category_Cost_Unified_Codes">
-            <End Role="_Cost_Unified_Code_Category" EntitySet="_Cost_Unified_Code_Category" />
-            <End Role="_Cost_Unified_Codes" EntitySet="_Cost_Unified_Codes" />
-          </AssociationSet>
           <AssociationSet Name="_Cost_Unified_Codes_Cost_Project_Codes" Association="Self._Cost_Unified_Codes_Cost_Project_Codes">
             <End Role="_Cost_Unified_Codes" EntitySet="_Cost_Unified_Codes" />
             <End Role="_Cost_Project_Codes" EntitySet="_Cost_Project_Codes" />
@@ -473,13 +431,8 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
             <End Role="BreakdownItemType" EntitySet="BreakdownItemType" />
             <End Role="Item_Breakdowns" EntitySet="Item_Breakdowns" />
           </AssociationSet>
-          <AssociationSet Name="Projects__Cost_Project_Codes" Association="Self.Projects__Cost_Project_Codes">
-            <End Role="Projects" EntitySet="Projects" />
-            <End Role="_Cost_Project_Codes" EntitySet="_Cost_Project_Codes" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PSC_COST3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -534,6 +487,7 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <NavigationProperty Name="C_Cost_Project_Codes2" Relationship="Self.FK___Cost_Pro__Paren__66603565" FromRole="C_Cost_Project_Codes1" ToRole="C_Cost_Project_Codes" />
           <NavigationProperty Name="C_Cost_Project_Codes_Items" Relationship="Self.FK_Cost_Project_Codes__Cost_Project_Codes_Items" FromRole="C_Cost_Project_Codes" ToRole="C_Cost_Project_Codes_Items" />
           <NavigationProperty Name="Projects" Relationship="Self.Projects__Cost_Project_Codes" FromRole="C_Cost_Project_Codes" ToRole="Projects" />
+          <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="C_Cost_Project_Codes_Items">
           <Key>
@@ -566,6 +520,7 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <NavigationProperty Name="C_Cost_Unified_Code_Category" Relationship="Self.C_Cost_Unified_Code_Category_Cost_Unified_Codes" FromRole="C_Cost_Unified_Codes" ToRole="C_Cost_Unified_Code_Category" />
           <NavigationProperty Name="C_Cost_Unified_Codes1" Relationship="Self.FK___Cost_Uni__Paren__656C112C" FromRole="C_Cost_Unified_Codes" ToRole="C_Cost_Unified_Codes1" />
           <NavigationProperty Name="C_Cost_Unified_Codes2" Relationship="Self.FK___Cost_Uni__Paren__656C112C" FromRole="C_Cost_Unified_Codes1" ToRole="C_Cost_Unified_Codes" />
+          <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="BOQ_Items">
           <Key>
@@ -1030,6 +985,7 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <EntitySetMapping Name="C_Cost_Project_Codes">
             <EntityTypeMapping TypeName="PSC_COST3Model.C_Cost_Project_Codes">
               <MappingFragment StoreEntitySet="_Cost_Project_Codes">
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Unified_Code_Id" ColumnName="Unified_Code_Id" />
@@ -1058,6 +1014,7 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <EntitySetMapping Name="C_Cost_Unified_Codes">
             <EntityTypeMapping TypeName="PSC_COST3Model.C_Cost_Unified_Codes">
               <MappingFragment StoreEntitySet="_Cost_Unified_Codes">
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />

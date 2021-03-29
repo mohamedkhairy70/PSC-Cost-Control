@@ -25,6 +25,7 @@ namespace PSC_Cost_Control.Models
         public string Title { get; set; }
         public Nullable<int> Category_Id { get; set; }
         public Nullable<int> Parent { get; set; }
+        public string Code { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C_Cost_Project_Codes> C_Cost_Project_Codes { get; set; }
