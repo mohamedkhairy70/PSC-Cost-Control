@@ -346,8 +346,25 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="f_Cost_Add_Project_Codes_Category" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_Add_Project_Codes_Category">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="f_Cost_Add_Unified_Codes_Category" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_Add_Unified_Codes_Category">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="f_COST_Delete_By_Id" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_COST_Delete_By_Id">
+          <Parameter Name="table" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="f_Cost_SP_Insert_Project_Codes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_SP_Insert_Project_Codes" />
         <Function Name="f_Cost_SP_Insert_Unified_Codes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_SP_Insert_Unified_Codes" />
+        <Function Name="f_COST_Update_Project_Code" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_COST_Update_Project_Code">
+          <Parameter Name="forId" Type="int" Mode="In" />
+          <Parameter Name="description" Type="nvarchar" Mode="In" />
+          <Parameter Name="unifiedCode_Id" Type="int" Mode="In" />
+          <Parameter Name="CategoryId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="f_COST_Update_Project_Codes_Hireachy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_COST_Update_Project_Codes_Hireachy" />
         <EntityContainer Name="PSC_COST3ModelStoreContainer">
           <EntitySet Name="_Cost_Direct_Project_Codes_Summerizng" EntityType="Self._Cost_Direct_Project_Codes_Summerizng" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="_Cost_Indirect_Project_Code_Summerizing" EntityType="Self._Cost_Indirect_Project_Code_Summerizing" Schema="dbo" store:Type="Tables" />
@@ -946,6 +963,23 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           </AssociationSet>
           <FunctionImport Name="f_Cost_SP_Insert_Project_Codes" />
           <FunctionImport Name="f_Cost_SP_Insert_Unified_Codes" />
+          <FunctionImport Name="f_Cost_Add_Project_Codes_Category">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="f_Cost_Add_Unified_Codes_Category">
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="f_COST_Delete_By_Id">
+            <Parameter Name="table" Mode="In" Type="String" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="f_COST_Update_Project_Code">
+            <Parameter Name="forId" Mode="In" Type="Int32" />
+            <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="unifiedCode_Id" Mode="In" Type="Int32" />
+            <Parameter Name="CategoryId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="f_COST_Update_Project_Codes_Hireachy" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -1096,6 +1130,11 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="f_Cost_SP_Insert_Project_Codes" FunctionName="PSC_COST3Model.Store.f_Cost_SP_Insert_Project_Codes" />
           <FunctionImportMapping FunctionImportName="f_Cost_SP_Insert_Unified_Codes" FunctionName="PSC_COST3Model.Store.f_Cost_SP_Insert_Unified_Codes" />
+          <FunctionImportMapping FunctionImportName="f_Cost_Add_Project_Codes_Category" FunctionName="PSC_COST3Model.Store.f_Cost_Add_Project_Codes_Category" />
+          <FunctionImportMapping FunctionImportName="f_Cost_Add_Unified_Codes_Category" FunctionName="PSC_COST3Model.Store.f_Cost_Add_Unified_Codes_Category" />
+          <FunctionImportMapping FunctionImportName="f_COST_Delete_By_Id" FunctionName="PSC_COST3Model.Store.f_COST_Delete_By_Id" />
+          <FunctionImportMapping FunctionImportName="f_COST_Update_Project_Code" FunctionName="PSC_COST3Model.Store.f_COST_Update_Project_Code" />
+          <FunctionImportMapping FunctionImportName="f_COST_Update_Project_Codes_Hireachy" FunctionName="PSC_COST3Model.Store.f_COST_Update_Project_Codes_Hireachy" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
