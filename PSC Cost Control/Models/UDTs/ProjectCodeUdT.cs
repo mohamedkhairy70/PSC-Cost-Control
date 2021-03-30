@@ -27,7 +27,7 @@ namespace PSC_Cost_Control.Models.UDFs
         /// string represention for  SQL HireachyId Type
         /// </summary>
         [UserDefinedTableTypeColumn(5)]
-        public string Node { set; get; }
+        public string Code { set; get; }
 
         [UserDefinedTableTypeColumn(6)]
         public int ProjectId { set; get; } 

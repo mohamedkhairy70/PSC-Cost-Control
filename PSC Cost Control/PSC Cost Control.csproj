@@ -156,6 +156,8 @@
     <Compile Include="Models\Projects.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SPs\ProjectCodesInserion.cs" />
+    <Compile Include="Models\SPs\UnifiedCodeInsertion.cs" />
     <Compile Include="Models\UDTs\ProjectCodeUdT.cs" />
     <Compile Include="Models\UDTs\UnifiedCodeUDT.cs" />
     <Compile Include="Models\Units.cs">
@@ -211,7 +213,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\SPs\" />
     <Folder Include="Repositories\PersistantReposotories\NewFolder1\" />
     <Folder Include="Services\" />
   </ItemGroup>

@@ -9,7 +9,6 @@
 
 namespace PSC_Cost_Control.Models
 {
-    using PSC_Cost_Control.Helper.Interfaces;
     using System;
     using System.Collections.Generic;
     
@@ -41,6 +40,5 @@ namespace PSC_Cost_Control.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C_Cost_Project_Codes_Items> C_Cost_Project_Codes_Items { get; set; }
         public virtual Projects Projects { get; set; }
-
     }
 }

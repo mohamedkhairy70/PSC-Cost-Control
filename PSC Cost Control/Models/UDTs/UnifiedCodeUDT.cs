@@ -22,6 +22,6 @@ namespace PSC_Cost_Control.Models.UDFs
         /// Node is a string represention for SQL hirearchyId type
         /// </summary>
         [UserDefinedTableTypeColumn(4)]
-        public string Node { set; get; }
+        public string Code { set; get; }
     }
 }

@@ -51,5 +51,62 @@ namespace PSC_Cost_Control.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_SP_Insert_Unified_Codes");
         }
+    
+        public virtual int f_Cost_Add_Project_Codes_Category(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_Add_Project_Codes_Category", nameParameter);
+        }
+    
+        public virtual int f_Cost_Add_Unified_Codes_Category(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_Add_Unified_Codes_Category", nameParameter);
+        }
+    
+        public virtual int f_COST_Delete_By_Id(string table, Nullable<int> id)
+        {
+            var tableParameter = table != null ?
+                new ObjectParameter("table", table) :
+                new ObjectParameter("table", typeof(string));
+    
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_COST_Delete_By_Id", tableParameter, idParameter);
+        }
+    
+        public virtual int f_COST_Update_Project_Code(Nullable<int> forId, string description, Nullable<int> unifiedCode_Id, Nullable<int> categoryId)
+        {
+            var forIdParameter = forId.HasValue ?
+                new ObjectParameter("forId", forId) :
+                new ObjectParameter("forId", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            var unifiedCode_IdParameter = unifiedCode_Id.HasValue ?
+                new ObjectParameter("unifiedCode_Id", unifiedCode_Id) :
+                new ObjectParameter("unifiedCode_Id", typeof(int));
+    
+            var categoryIdParameter = categoryId.HasValue ?
+                new ObjectParameter("CategoryId", categoryId) :
+                new ObjectParameter("CategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_COST_Update_Project_Code", forIdParameter, descriptionParameter, unifiedCode_IdParameter, categoryIdParameter);
+        }
+    
+        public virtual int f_COST_Update_Project_Codes_Hireachy()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_COST_Update_Project_Codes_Hireachy");
+        }
     }
 }
