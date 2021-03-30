@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PSC_Cost_Control.Models;
+using PSC_Cost_Control.Repositories.Helpers.Enums;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories
 {
@@ -14,6 +15,8 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
         {
 
         }
+
+        protected override TablesEnum Table => TablesEnum._Cost_Project_Codes;
 
         public async Task<IEnumerable<C_Cost_Project_Codes>> GetProjectCodesAsync(int projectId)
         {
