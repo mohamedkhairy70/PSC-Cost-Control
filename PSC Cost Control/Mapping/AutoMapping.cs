@@ -12,7 +12,6 @@ namespace PSC_Cost_Control.Mapping
     {
        public static void UseAutoMapper(this Application application)
         {
-            Mapper m = new Mapper()
         }
     }
 }

@@ -30,7 +30,7 @@ namespace PSC_Cost_Control
 
             /**Dependency Injection Resolving*/
             var builder = new ContainerBuilder();
-            //start Registeration of services
+               //start Registeration of services
             builder.RegisterType<Mapper>().As<IMapper>();
 
             //end of registeration of service 

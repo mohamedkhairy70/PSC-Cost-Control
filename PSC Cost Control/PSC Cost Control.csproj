@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BussinessLogics\HirearchyIdGenerator\HireachyIdGenerator.cs" />
     <Compile Include="Forms\Project Code\Frm_ProjectCode_Add.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +99,7 @@
     <Compile Include="Frm_Cost_Main.Designer.cs">
       <DependentUpon>Frm_Cost_Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Interfaces\HasCode.cs" />
     <Compile Include="Helper\Static.cs" />
     <Compile Include="Mapping\AutoMapping.cs" />
     <Compile Include="Models\BOQs.cs">
@@ -161,7 +163,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\InMemoryRepositories\InMemoryRepo.cs" />
+    <Compile Include="Repositories\InMemoryRepositories\InMemoryHireachyRepo.cs" />
+    <Compile Include="Repositories\PersistantReposotories\BaseRepo.cs" />
+    <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\IProjectCodesRepo.cs" />
+    <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\ProjectCodesCategoriesRepo.cs" />
+    <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\ProjectCodesRepo.cs" />
+    <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifedCodeRepo.cs" />
+    <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifiedCodeCategoriesRepo.cs" />
     <EmbeddedResource Include="Forms\Project Code\Frm_ProjectCode_Show.resx">
       <DependentUpon>Frm_ProjectCode_Show.cs</DependentUpon>
     </EmbeddedResource>
@@ -204,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\SPs\" />
+    <Folder Include="Repositories\PersistantReposotories\NewFolder1\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
