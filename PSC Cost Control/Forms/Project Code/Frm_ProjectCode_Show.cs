@@ -18,6 +18,7 @@ using DevExpress.XtraTreeList.Nodes;
 using DevExpress.Utils.DragDrop;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.Utils.Serializing;
+using PSC_Cost_Control.Models.UDFs;
 
 namespace PSC_Cost_Control.Forms.Project_Code
 {
@@ -52,9 +53,9 @@ namespace PSC_Cost_Control.Forms.Project_Code
             CreateColumns(tree_ProjectCode);
 
             //CreateNodes(treeList1);
-            AppendingNodes(tree_ProjectCode);
-            RemovingNode(tree_ProjectCode);
-            RemovingSelectedNodes(tree_ProjectCode);
+            //AppendingNodes(tree_ProjectCode);
+            //RemovingNode(tree_ProjectCode);
+            //RemovingSelectedNodes(tree_ProjectCode);
             tree_ProjectCode.ExpandAll();
             DragDropManager.Default.DragOver += OnDragOver;
             DragDropManager.Default.DragDrop += OnDragDrop;
@@ -255,9 +256,107 @@ namespace PSC_Cost_Control.Forms.Project_Code
             try
             {
                 string NameProject = cm_Projects.SelectedText.ToString();
+                int Count = tree_ProjectCode.AllNodesCount;
+                List<ProjectCodeUdT> projectCodes = new List<ProjectCodeUdT>();
 
+                for (int i = 0; i < tree_ProjectCode.AllNodesCount; i++)
+                {
+                    int NodeCountx = tree_ProjectCode.Nodes[i].Nodes.Count;
+                    if (NodeCountx > 0)
+                    {
+                        TreeList tr1 = (TreeList)tree_ProjectCode.Nodes[i].TreeList;
+                        NodeCountx = tr1.AllNodesCount;
+                        if (NodeCountx == 1) 
+                        {
+                            for (int x = 0; x < NodeCountx; x++)
+                            {
+
+                            }
+                        }
+                        else if (NodeCountx == 2)
+                        {
+                            for (int x = 0; x < NodeCountx; x++)
+                            {
+                                int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
+                                for (int c = 0; c < NodeCountc; c++)
+                                {
+
+                                }
+                            }
+                        }
+                        else if (NodeCountx == 3)
+                        {
+                            for (int x = 0; x < NodeCountx; x++)
+                            {
+                                int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
+                                for (int c = 0; c < NodeCountc; c++)
+                                {
+                                    int NodeCountv = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes[NodeCountc].Nodes.Count;
+                                    for (int v = 0; v < NodeCountv; v++)
+                                    {
+
+                                    }
+                                }
+                            }
+                        }
+                        //else if (NodeCountx == 1)
+                        //{
+                        //    for (int x = 0; x < NodeCountx; x++)
+                        //    {
+                        //        int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
+                        //        for (int c = 0; c < NodeCountc; c++)
+                        //        {
+                        //            int NodeCountv = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes[NodeCountc].Nodes.Count;
+                        //            for (int v = 0; v < NodeCountv; v++)
+                        //            {
+                        //                int NodeCountb = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes[NodeCountc].Nodes[NodeCountv].Nodes.Count;
+                        //                for (int b = 0; b < NodeCountv; b++)
+                        //                {
+
+                        //                } 
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                        
+                    }
+                    else
+                    {
+
+                    }
+                }
+                
             }
             catch { }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(null, parentNode: null);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (tree_ProjectCode.FocusedNode != null)
+            {
+                if (tree_ProjectCode.FocusedNode.Level > 2)
+                {
+                    MessageBox.Show("This Node Level Maxminim 4");
+                }
+                else
+                {
+                    tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(null, tree_ProjectCode.FocusedNode);
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string msg = string.Format("The node {0} is about to be deleted. Do you want to proceed?", tree_ProjectCode.FocusedNode);
+            if (XtraMessageBox.Show(msg, "Deleting node", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (tree_ProjectCode.FocusedNode != null)
+                tree_ProjectCode.DeleteNode(tree_ProjectCode.FocusedNode);
+
         }
     }
 }

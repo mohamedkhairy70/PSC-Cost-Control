@@ -53,6 +53,9 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.tree_ProjectCode = new DevExpress.XtraTreeList.TreeList();
             this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             this.dragDropEvents1 = new DevExpress.Utils.DragDrop.DragDropEvents(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -78,8 +81,11 @@ namespace PSC_Cost_Control.Forms.Project_Code
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.groupControl2);
+            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.groupControl1);
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.windowsUIButtonPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(2, 2);
@@ -103,7 +109,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             // txt_Description
             // 
             this.txt_Description.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.txt_Description.Location = new System.Drawing.Point(605, 66);
+            this.txt_Description.Location = new System.Drawing.Point(601, 54);
             this.txt_Description.Name = "txt_Description";
             this.txt_Description.Size = new System.Drawing.Size(249, 26);
             this.txt_Description.TabIndex = 6;
@@ -112,7 +118,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             // 
             this.labelControl4.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.labelControl4.Appearance.Options.UseFont = true;
-            this.labelControl4.Location = new System.Drawing.Point(527, 68);
+            this.labelControl4.Location = new System.Drawing.Point(523, 56);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Size = new System.Drawing.Size(76, 19);
             this.labelControl4.TabIndex = 4;
@@ -125,7 +131,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.cm_Categories.Items.AddRange(new object[] {
             "Structure",
             "indirect"});
-            this.cm_Categories.Location = new System.Drawing.Point(111, 65);
+            this.cm_Categories.Location = new System.Drawing.Point(107, 53);
             this.cm_Categories.Name = "cm_Categories";
             this.cm_Categories.Size = new System.Drawing.Size(209, 27);
             this.cm_Categories.TabIndex = 3;
@@ -134,7 +140,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             // 
             this.labelControl2.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.labelControl2.Appearance.Options.UseFont = true;
-            this.labelControl2.Location = new System.Drawing.Point(30, 68);
+            this.labelControl2.Location = new System.Drawing.Point(26, 56);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(72, 19);
             this.labelControl2.TabIndex = 2;
@@ -197,7 +203,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("New Project Code", true, windowsUIButtonImageOptions6, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
             new DevExpress.XtraBars.Docking2010.WindowsUISeparator(),
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("copy from another Project", true, windowsUIButtonImageOptions7, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false)});
-            this.windowsUIButtonPanel1.Location = new System.Drawing.Point(10, 239);
+            this.windowsUIButtonPanel1.Location = new System.Drawing.Point(10, 224);
             this.windowsUIButtonPanel1.Name = "windowsUIButtonPanel1";
             this.windowsUIButtonPanel1.Size = new System.Drawing.Size(870, 92);
             this.windowsUIButtonPanel1.TabIndex = 0;
@@ -234,13 +240,45 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.tree_ProjectCode.KeyFieldName = "Id";
             this.tree_ProjectCode.Location = new System.Drawing.Point(0, 0);
             this.tree_ProjectCode.Name = "tree_ProjectCode";
-            this.tree_ProjectCode.OptionsBehavior.Editable = false;
             this.tree_ProjectCode.OptionsNavigation.AutoFocusNewNode = true;
             this.tree_ProjectCode.OptionsSelection.MultiSelect = true;
             this.tree_ProjectCode.OptionsView.AllowBandColumnsMultiRow = true;
             this.tree_ProjectCode.ParentFieldName = "GetLevelNode";
             this.tree_ProjectCode.Size = new System.Drawing.Size(890, 310);
             this.tree_ProjectCode.TabIndex = 0;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.button1.Location = new System.Drawing.Point(185, 318);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(191, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Add &Root";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.button2.Location = new System.Drawing.Point(382, 318);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(177, 23);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Add &Child";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.button3.Location = new System.Drawing.Point(565, 318);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(195, 23);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "&Delete";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Frm_ProjectCode_Show
             // 
@@ -288,5 +326,8 @@ namespace PSC_Cost_Control.Forms.Project_Code
         private DevExpress.XtraEditors.GroupControl groupControl1;
         private System.Windows.Forms.ComboBox cm_Projects;
         private DevExpress.XtraEditors.LabelControl labelControl1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }
