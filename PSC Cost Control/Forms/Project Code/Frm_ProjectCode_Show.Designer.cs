@@ -75,7 +75,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(894, 349);
+            this.panelControl1.Size = new System.Drawing.Size(1045, 349);
             this.panelControl1.TabIndex = 0;
             // 
             // panel1
@@ -86,7 +86,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(890, 345);
+            this.panel1.Size = new System.Drawing.Size(1041, 345);
             this.panel1.TabIndex = 0;
             // 
             // groupControl2
@@ -96,9 +96,9 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.groupControl2.Controls.Add(this.labelControl4);
             this.groupControl2.Controls.Add(this.cm_Categories);
             this.groupControl2.Controls.Add(this.labelControl2);
-            this.groupControl2.Location = new System.Drawing.Point(10, 90);
+            this.groupControl2.Location = new System.Drawing.Point(85, 94);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(870, 128);
+            this.groupControl2.Size = new System.Drawing.Size(870, 117);
             this.groupControl2.TabIndex = 2;
             this.groupControl2.Text = "Project Code";
             // 
@@ -147,7 +147,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.groupControl1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupControl1.Controls.Add(this.cm_Projects);
             this.groupControl1.Controls.Add(this.labelControl1);
-            this.groupControl1.Location = new System.Drawing.Point(167, 11);
+            this.groupControl1.Location = new System.Drawing.Point(242, 11);
             this.groupControl1.Name = "groupControl1";
             this.groupControl1.Size = new System.Drawing.Size(605, 73);
             this.groupControl1.TabIndex = 1;
@@ -203,9 +203,9 @@ namespace PSC_Cost_Control.Forms.Project_Code
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("New Project Code", true, windowsUIButtonImageOptions8, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
             new DevExpress.XtraBars.Docking2010.WindowsUISeparator(),
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("copy from another Project", true, windowsUIButtonImageOptions9, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false)});
-            this.windowsUIButtonPanel1.Location = new System.Drawing.Point(10, 224);
+            this.windowsUIButtonPanel1.Location = new System.Drawing.Point(10, 234);
             this.windowsUIButtonPanel1.Name = "windowsUIButtonPanel1";
-            this.windowsUIButtonPanel1.Size = new System.Drawing.Size(870, 92);
+            this.windowsUIButtonPanel1.Size = new System.Drawing.Size(1021, 92);
             this.windowsUIButtonPanel1.TabIndex = 0;
             this.windowsUIButtonPanel1.Text = "windowsUIButtonPanel1";
             this.windowsUIButtonPanel1.ButtonClick += new DevExpress.XtraBars.Docking2010.ButtonEventHandler(this.windowsUIButtonPanel1_ButtonClick);
@@ -216,7 +216,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.panelControl3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelControl3.Location = new System.Drawing.Point(0, 349);
             this.panelControl3.Name = "panelControl3";
-            this.panelControl3.Size = new System.Drawing.Size(894, 314);
+            this.panelControl3.Size = new System.Drawing.Size(1045, 314);
             this.panelControl3.TabIndex = 2;
             // 
             // panel2
@@ -225,7 +225,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(890, 310);
+            this.panel2.Size = new System.Drawing.Size(1041, 310);
             this.panel2.TabIndex = 1;
             // 
             // tree_ProjectCode
@@ -243,7 +243,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.tree_ProjectCode.OptionsSelection.MultiSelect = true;
             this.tree_ProjectCode.OptionsView.AllowBandColumnsMultiRow = true;
             this.tree_ProjectCode.ParentFieldName = "GetLevelNode";
-            this.tree_ProjectCode.Size = new System.Drawing.Size(890, 310);
+            this.tree_ProjectCode.Size = new System.Drawing.Size(1041, 310);
             this.tree_ProjectCode.TabIndex = 0;
             this.tree_ProjectCode.NodeChanged += new DevExpress.XtraTreeList.NodeChangedEventHandler(this.tree_ProjectCode_NodeChanged);
             // 
@@ -251,7 +251,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(894, 663);
+            this.ClientSize = new System.Drawing.Size(1045, 663);
             this.Controls.Add(this.panelControl3);
             this.Controls.Add(this.panelControl1);
             this.Name = "Frm_ProjectCode_Show";
