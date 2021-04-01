@@ -17,5 +17,56 @@ namespace PSC_Cost_Control.Forms.Project_Code
         {
             InitializeComponent();
         }
+
+
+
+        #region My Method for my From
+        void ClearAllData()
+        {
+            txt_Id.Clear();
+            txt_Name.Clear();
+        }
+        void GetDatabyId(int Id)
+        {
+
+        }
+        void GetAllData()
+        {
+
+        }
+        void AddData(string Neme)
+        {
+
+        }
+        void EditData(int Id ,string Name)
+        {
+
+        }
+        void DeleteData(int Id)
+        {
+
+        }
+        bool ValidationData()
+        {
+            if (string.IsNullOrWhiteSpace(txt_Name.Text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion My Method for my Form
+
+        private void windowsUIButtonPanel1_ButtonClick(object sender, DevExpress.XtraBars.Docking2010.ButtonEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
