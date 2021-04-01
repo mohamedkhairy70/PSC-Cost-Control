@@ -32,17 +32,17 @@ namespace PSC_Cost_Control.Forms.Project_Code
             DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions windowsUIButtonImageOptions3 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions();
             DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions windowsUIButtonImageOptions4 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.txt_Id = new System.Windows.Forms.TextBox();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.windowsUIButtonPanel1 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonPanel();
             this.txt_Name = new System.Windows.Forms.TextBox();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
-            this.windowsUIButtonPanel1 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Edit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txt_Id = new System.Windows.Forms.TextBox();
-            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -60,6 +60,63 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(577, 182);
             this.panel1.TabIndex = 0;
+            // 
+            // txt_Id
+            // 
+            this.txt_Id.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txt_Id.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.txt_Id.Location = new System.Drawing.Point(208, 10);
+            this.txt_Id.Name = "txt_Id";
+            this.txt_Id.Size = new System.Drawing.Size(249, 26);
+            this.txt_Id.TabIndex = 11;
+            this.txt_Id.Visible = false;
+            // 
+            // labelControl1
+            // 
+            this.labelControl1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.labelControl1.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.labelControl1.Appearance.Options.UseFont = true;
+            this.labelControl1.Location = new System.Drawing.Point(122, 13);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(80, 19);
+            this.labelControl1.TabIndex = 10;
+            this.labelControl1.Text = "Id Category :";
+            this.labelControl1.Visible = false;
+            // 
+            // windowsUIButtonPanel1
+            // 
+            this.windowsUIButtonPanel1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            windowsUIButtonImageOptions3.ImageUri.Uri = "Save;Size32x32;GrayScaled";
+            windowsUIButtonImageOptions4.ImageUri.Uri = "New;Size32x32;GrayScaled";
+            this.windowsUIButtonPanel1.Buttons.AddRange(new DevExpress.XtraEditors.ButtonPanel.IBaseButton[] {
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("Save", true, windowsUIButtonImageOptions3, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("New", true, windowsUIButtonImageOptions4, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false)});
+            this.windowsUIButtonPanel1.Location = new System.Drawing.Point(66, 84);
+            this.windowsUIButtonPanel1.Name = "windowsUIButtonPanel1";
+            this.windowsUIButtonPanel1.Size = new System.Drawing.Size(446, 92);
+            this.windowsUIButtonPanel1.TabIndex = 9;
+            this.windowsUIButtonPanel1.Text = "windowsUIButtonPanel1";
+            this.windowsUIButtonPanel1.ButtonClick += new DevExpress.XtraBars.Docking2010.ButtonEventHandler(this.windowsUIButtonPanel1_ButtonClick);
+            // 
+            // txt_Name
+            // 
+            this.txt_Name.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txt_Name.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.txt_Name.Location = new System.Drawing.Point(208, 42);
+            this.txt_Name.Name = "txt_Name";
+            this.txt_Name.Size = new System.Drawing.Size(249, 26);
+            this.txt_Name.TabIndex = 8;
+            // 
+            // labelControl4
+            // 
+            this.labelControl4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.labelControl4.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.labelControl4.Appearance.Options.UseFont = true;
+            this.labelControl4.Location = new System.Drawing.Point(98, 45);
+            this.labelControl4.Name = "labelControl4";
+            this.labelControl4.Size = new System.Drawing.Size(104, 19);
+            this.labelControl4.TabIndex = 7;
+            this.labelControl4.Text = "Name Category :";
             // 
             // panel2
             // 
@@ -87,40 +144,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(577, 247);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // txt_Name
-            // 
-            this.txt_Name.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txt_Name.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.txt_Name.Location = new System.Drawing.Point(208, 42);
-            this.txt_Name.Name = "txt_Name";
-            this.txt_Name.Size = new System.Drawing.Size(249, 26);
-            this.txt_Name.TabIndex = 8;
-            // 
-            // labelControl4
-            // 
-            this.labelControl4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.labelControl4.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.labelControl4.Appearance.Options.UseFont = true;
-            this.labelControl4.Location = new System.Drawing.Point(98, 45);
-            this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(104, 19);
-            this.labelControl4.TabIndex = 7;
-            this.labelControl4.Text = "Name Category :";
-            // 
-            // windowsUIButtonPanel1
-            // 
-            this.windowsUIButtonPanel1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            windowsUIButtonImageOptions3.ImageUri.Uri = "Save;Size32x32;GrayScaled";
-            windowsUIButtonImageOptions4.ImageUri.Uri = "New;Size32x32;GrayScaled";
-            this.windowsUIButtonPanel1.Buttons.AddRange(new DevExpress.XtraEditors.ButtonPanel.IBaseButton[] {
-            new DevExpress.XtraBars.Docking2010.WindowsUIButton("Save", true, windowsUIButtonImageOptions3, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
-            new DevExpress.XtraBars.Docking2010.WindowsUIButton("New", true, windowsUIButtonImageOptions4, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false)});
-            this.windowsUIButtonPanel1.Location = new System.Drawing.Point(66, 84);
-            this.windowsUIButtonPanel1.Name = "windowsUIButtonPanel1";
-            this.windowsUIButtonPanel1.Size = new System.Drawing.Size(446, 92);
-            this.windowsUIButtonPanel1.TabIndex = 9;
-            this.windowsUIButtonPanel1.Text = "windowsUIButtonPanel1";
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Edit
             // 
@@ -160,28 +184,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.Name.Name = "Name";
             this.Name.ReadOnly = true;
             // 
-            // txt_Id
-            // 
-            this.txt_Id.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txt_Id.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.txt_Id.Location = new System.Drawing.Point(208, 10);
-            this.txt_Id.Name = "txt_Id";
-            this.txt_Id.Size = new System.Drawing.Size(249, 26);
-            this.txt_Id.TabIndex = 11;
-            this.txt_Id.Visible = false;
-            // 
-            // labelControl1
-            // 
-            this.labelControl1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.labelControl1.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.labelControl1.Appearance.Options.UseFont = true;
-            this.labelControl1.Location = new System.Drawing.Point(122, 13);
-            this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(80, 19);
-            this.labelControl1.TabIndex = 10;
-            this.labelControl1.Text = "Id Category :";
-            this.labelControl1.Visible = false;
-            // 
             // Frm_Categories_ProjectCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -189,7 +191,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.ClientSize = new System.Drawing.Size(577, 429);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Name = "Frm_Categories_ProjectCode";
             this.Text = "Form Categories ProjectCode";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

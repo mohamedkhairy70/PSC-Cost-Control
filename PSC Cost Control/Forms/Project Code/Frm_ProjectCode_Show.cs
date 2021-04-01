@@ -19,6 +19,7 @@ using DevExpress.Utils.DragDrop;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.Utils.Serializing;
 using PSC_Cost_Control.Models.UDFs;
+using System.Collections;
 
 namespace PSC_Cost_Control.Forms.Project_Code
 {
@@ -325,7 +326,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
         void AddRootProjectCode(string Category, string Description)
         {
 
-            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(new object[] { "/" + tree_ProjectCode.Nodes.Count +1, Category, Description }, parentNode: null);
+            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(new object[] { "/" + (tree_ProjectCode.Nodes.Count +1), Category, Description }, parentNode: null);
         }
 
         void AddChildProjectCode(string Category, string Description)
@@ -339,50 +340,18 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 else
                 {
                     string IdNode = " ";
-                    if (tree_ProjectCode.FocusedNode.Level+1 == 1)
+                    if (tree_ProjectCode.FocusedNode.Level+1 > 0)
                     {
-                        IdNode = ((tree_ProjectCode.FocusedNode.Level +1).ToString()
+                        var vs = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.FocusedNode);
+                        IList objectList = vs as IList;
+                        string NodeCode = objectList[0].ToString();
+                        IdNode = (NodeCode
                             + "/"
                             + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
-                    }
-                    else if (tree_ProjectCode.FocusedNode.Level+1 == 2)
-                    {
-                        IdNode = (
-                            (tree_ProjectCode.FocusedNode.ParentNode.Level +1).ToString()
-                            + "/"
-                            +(tree_ProjectCode.FocusedNode.Level).ToString()
-                            + "/"
-                            + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
-                    }
-                    else if (tree_ProjectCode.FocusedNode.Level + 1 == 3)
-                    {
-                        IdNode = (
-                            (tree_ProjectCode.FocusedNode.ParentNode.ParentNode.Level +1).ToString()
-                            + "/"
-                            + (tree_ProjectCode.FocusedNode.ParentNode.Level).ToString()
-                            + "/"
-                            + (tree_ProjectCode.FocusedNode.Level -1).ToString()
-                            + "/"
-                            + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
-                    }
-                    else if (tree_ProjectCode.FocusedNode.Level + 1 == 4)
-                    {
-                        IdNode = (
-                            (tree_ProjectCode.FocusedNode.ParentNode.ParentNode.ParentNode.Level).ToString()
-                            + "/"
-                            + (tree_ProjectCode.FocusedNode.ParentNode.ParentNode.Level).ToString()
-                            + "/"
-                            + (tree_ProjectCode.FocusedNode.ParentNode.Level -1).ToString()
-                            + "/"
-                            + (tree_ProjectCode.FocusedNode.Level -2).ToString()
-                            + "/"
-                            + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
-                    }
-                    
-
-                    tree_ProjectCode.FocusedNode =
+                        tree_ProjectCode.FocusedNode =
                             tree_ProjectCode.AppendNode(
-                                new object[] {IdNode , Category, Description }, tree_ProjectCode.FocusedNode);
+                                new object[] { IdNode, Category, Description }, tree_ProjectCode.FocusedNode);
+                    }             
                 }
             }
         }
