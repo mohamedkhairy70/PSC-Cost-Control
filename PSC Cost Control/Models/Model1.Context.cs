@@ -224,5 +224,36 @@ namespace PSC_Cost_Control.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+    
+        public virtual int Clear_Project_Codes(Nullable<int> forProjectId)
+        {
+            var forProjectIdParameter = forProjectId.HasValue ?
+                new ObjectParameter("forProjectId", forProjectId) :
+                new ObjectParameter("forProjectId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Clear_Project_Codes", forProjectIdParameter);
+        }
+    
+        public virtual int f_Cost_SP_Insert_Direct_Project_Codes_Summerizng()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_SP_Insert_Direct_Project_Codes_Summerizng");
+        }
+    
+        public virtual int f_COST_Update_Unified_Code(Nullable<int> forId, string title, Nullable<int> categoryId)
+        {
+            var forIdParameter = forId.HasValue ?
+                new ObjectParameter("forId", forId) :
+                new ObjectParameter("forId", typeof(int));
+    
+            var titleParameter = title != null ?
+                new ObjectParameter("title", title) :
+                new ObjectParameter("title", typeof(string));
+    
+            var categoryIdParameter = categoryId.HasValue ?
+                new ObjectParameter("CategoryId", categoryId) :
+                new ObjectParameter("CategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_COST_Update_Unified_Code", forIdParameter, titleParameter, categoryIdParameter);
+        }
     }
 }

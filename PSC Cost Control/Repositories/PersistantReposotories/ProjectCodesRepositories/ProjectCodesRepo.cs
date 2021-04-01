@@ -12,7 +12,7 @@ using PSC_Cost_Control.Repositories.Helpers.Enums;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories
 {
-    public class ProjectCodesRepo : BaseRepo<C_Cost_Project_Codes>, IProjectCodesRepo
+    public class ProjectCodesRepo : HireachyRepo<C_Cost_Project_Codes>, IProjectCodesRepo
     {
         public ProjectCodesRepo(PSC_COST3Entities context) : base(context)
         {
@@ -46,6 +46,17 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
             await Context.Database.ExecuteStoredProcedureAsync<ProjectCodesInserion>(proc);
         }
 
-       // public async Task<C_Cost_Project_Codes>UpdateHireachy
+        public async Task UpdateProjectCodes(List<ProjectCodeUdT> codes,int projectId)
+        {
+            Context.Clear_Project_Codes(projectId);
+            await AddProjectCodes(codes);
+        }
+
+        public void UpdateNodeData(int codeId,ProjectCodeUdT code)
+        {
+            Context.f_COST_Update_Project_Code(codeId, code.Description, code.UnifiedCodeId, code.CategoryId);
+        }
+
+      
     }
 }

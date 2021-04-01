@@ -37,8 +37,8 @@ namespace UnitTestProject1.HelpersUnitTestings
         public void t1()
         {
             var h = new TreeListHandler();
-           var l= h.HandleProjectCodes(_tree);
-         //   Assert.That(l.Count, Is.EqualTo(5));
+            var l= h.HandleProjectCodes(_tree);
+            Assert.That(l.Count, Is.EqualTo(5));
            
         }
 

@@ -388,6 +388,7 @@
           <Parameter Name="table" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="f_Cost_SP_Insert_Direct_Project_Codes_Summerizng" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_SP_Insert_Direct_Project_Codes_Summerizng" />
         <Function Name="f_Cost_SP_Insert_Project_Codes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_SP_Insert_Project_Codes" />
         <Function Name="f_Cost_SP_Insert_Unified_Codes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_SP_Insert_Unified_Codes" />
         <Function Name="f_COST_Update_Project_Code" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_COST_Update_Project_Code">
@@ -397,6 +398,14 @@
           <Parameter Name="CategoryId" Type="int" Mode="In" />
         </Function>
         <Function Name="f_COST_Update_Project_Codes_Hireachy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_COST_Update_Project_Codes_Hireachy" />
+        <Function Name="f_COST_Update_Unified_Code" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_COST_Update_Unified_Code">
+          <Parameter Name="forId" Type="int" Mode="In" />
+          <Parameter Name="title" Type="nvarchar" Mode="In" />
+          <Parameter Name="CategoryId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Clear_Project_Codes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="forProjectId" Type="int" Mode="In" />
+        </Function>
         <Function Name="Delete_parent_With_HisChilds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="tableName" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="deletedId" Type="int" Mode="In" />
@@ -680,6 +689,15 @@
             <End Role="IndirectCostItems" EntitySet="IndirectCostItems" />
             <End Role="IndirectCostItems1" EntitySet="IndirectCostItems" />
           </AssociationSet>
+          <FunctionImport Name="Clear_Project_Codes">
+          <Parameter Name="forProjectId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="f_Cost_SP_Insert_Direct_Project_Codes_Summerizng" />
+          <FunctionImport Name="f_COST_Update_Unified_Code">
+            <Parameter Name="forId" Mode="In" Type="Int32" />
+            <Parameter Name="title" Mode="In" Type="String" />
+            <Parameter Name="CategoryId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="BOQ_Items">
           <Key>
@@ -1256,6 +1274,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Clear_Project_Codes" FunctionName="PSC_COST3Model.Store.Clear_Project_Codes" />
+          <FunctionImportMapping FunctionImportName="f_Cost_SP_Insert_Direct_Project_Codes_Summerizng" FunctionName="PSC_COST3Model.Store.f_Cost_SP_Insert_Direct_Project_Codes_Summerizng" />
+          <FunctionImportMapping FunctionImportName="f_COST_Update_Unified_Code" FunctionName="PSC_COST3Model.Store.f_COST_Update_Unified_Code" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

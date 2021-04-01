@@ -2,11 +2,12 @@
 using System.Data.Entity;
 using System.Threading.Tasks;
 using PSC_Cost_Control.Models;
+using PSC_Cost_Control.Models.UDFs;
 using PSC_Cost_Control.Repositories.Helpers.Enums;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories
 {
-    public class UnifiedCodeCategoriesRepo:BaseRepo<C_Cost_Unified_Code_Category>
+    public class UnifiedCodeCategoriesRepo: HireachyRepo<C_Cost_Unified_Code_Category>
     {
         protected override TablesEnum Table => TablesEnum._Cost_Unified_Code_Category;
 
@@ -22,5 +23,11 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
         {
             Context.f_Cost_Add_Unified_Codes_Category(category.Name);
         }
+
+        public void UpdateNodeData(int codeId, UnifiedCodeUDT code)
+        {
+            Context.f_COST_Update_Unified_Code(codeId, code.Title, code.CategoryId);
+        }
+      
     }
 }
