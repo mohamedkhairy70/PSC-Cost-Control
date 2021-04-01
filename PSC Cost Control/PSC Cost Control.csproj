@@ -175,6 +175,7 @@
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifedCodeRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifiedCodeCategoriesRepo.cs" />
     <Compile Include="Services\DependencyApis\ExternalAPI%27s.cs" />
+    <Compile Include="Services\ProjectCodesServices\ProjectCodeService.cs" />
     <EmbeddedResource Include="Forms\Project Code\Frm_Categories_ProjectCode.resx">
       <DependentUpon>Frm_Categories_ProjectCode.cs</DependentUpon>
     </EmbeddedResource>

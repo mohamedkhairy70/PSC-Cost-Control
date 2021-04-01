@@ -27,9 +27,9 @@ namespace PSC_Cost_Control.Models
         public string Description { get; set; }
         public Nullable<int> ParentId { get; set; }
     
+        public virtual BOQs BOQs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C_Cost_Indirect_Project_Code_Summerizing> C_Cost_Indirect_Project_Code_Summerizing { get; set; }
-        public virtual BOQs BOQs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IndirectCostItems> IndirectCostItems1 { get; set; }
         public virtual IndirectCostItems IndirectCostItems2 { get; set; }

@@ -17,16 +17,16 @@ namespace PSC_Cost_Control.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Projects()
         {
-            this.C_Cost_Project_Codes = new HashSet<C_Cost_Project_Codes>();
             this.BOQs = new HashSet<BOQs>();
+            this.C_Cost_Project_Codes = new HashSet<C_Cost_Project_Codes>();
         }
     
         public int ContractId { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C_Cost_Project_Codes> C_Cost_Project_Codes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOQs> BOQs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<C_Cost_Project_Codes> C_Cost_Project_Codes { get; set; }
     }
 }

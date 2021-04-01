@@ -5,40 +5,40 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8da339f7fc9e42a2b9bcaae539a88e99" Name="Diagram1">
-        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Direct_Project_Codes_Summerizng" Width="1.5" PointX="9.75" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Indirect_Project_Code_Summerizing" Width="1.5" PointX="7.5" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Project_Code_Categories" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Project_Codes" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Project_Codes_Items" Width="1.5" PointX="7.5" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Unified_Code_Category" Width="1.5" PointX="1.5" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Unified_Codes" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.BOQ_Items" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.BOQs" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.BreakdownItemType" Width="1.5" PointX="7.5" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.IndirectCostItems" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.Item_Breakdowns" Width="1.5" PointX="7.5" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.Projects" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PSC_COST3Model.Units" Width="1.5" PointX="3" PointY="17.75" IsExpanded="true" />
-        <AssociationConnector Association="PSC_COST3Model.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK___Cost_Ind__Indir__6477ECF3" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK___Cost_Ind__Projc__6383C8BA" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.C_Cost_Project_Code_Categories__Cost_Project_Codes" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.C_Cost_Unified_Codes_Cost_Project_Codes" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK___Cost_Pro__Paren__66603565" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK_Cost_Project_Codes__Cost_Project_Codes_Items" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.Projects__Cost_Project_Codes" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK_BOQ_Items__Cost_Project_Codes_Items" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.C_Cost_Unified_Code_Category_Cost_Unified_Codes" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK___Cost_Uni__Paren__656C112C" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK_BOQ_Items_BOQ_Items3" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK_BOQ_Items_BOQs" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK_BOQ_Items_Units" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK_Item_Breakdowns_BOQ_Items" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK_BOQs_Contracts" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK_IndirectCostItems_BOQs" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK_Item_Breakdowns_BreakdownItemType" ManuallyRouted="false" />
-        <AssociationConnector Association="PSC_COST3Model.FK_IndirectCostItems_IndirectCostItems" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PSC_COST3Model.BOQ_Items" Width="1.5" PointX="5.25" PointY="10.5" />
+        <EntityTypeShape EntityType="PSC_COST3Model.BOQs" Width="1.5" PointX="3" PointY="11.375" />
+        <EntityTypeShape EntityType="PSC_COST3Model.BreakdownItemType" Width="1.5" PointX="7.5" PointY="5.5" />
+        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Direct_Project_Codes_Summerizng" Width="1.5" PointX="9.75" PointY="8.25" />
+        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Indirect_Project_Code_Summerizing" Width="1.5" PointX="7.5" PointY="11.5" />
+        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Project_Code_Categories" Width="1.5" PointX="0.75" PointY="10.125" />
+        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Project_Codes" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Project_Codes_Items" Width="1.5" PointX="7.5" PointY="8.5" />
+        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Unified_Code_Category" Width="1.5" PointX="1.5" PointY="1.125" />
+        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Unified_Codes" Width="1.5" PointX="0.75" PointY="3.625" />
+        <EntityTypeShape EntityType="PSC_COST3Model.IndirectCostItems" Width="1.5" PointX="5.25" PointY="16" />
+        <EntityTypeShape EntityType="PSC_COST3Model.Item_Breakdowns" Width="1.5" PointX="7.5" PointY="14.5" />
+        <EntityTypeShape EntityType="PSC_COST3Model.Projects" Width="1.5" PointX="0.75" PointY="7.25" />
+        <EntityTypeShape EntityType="PSC_COST3Model.Units" Width="1.5" PointX="3" PointY="14.75" />
+        <AssociationConnector Association="PSC_COST3Model.FK_BOQ_Items__Cost_Project_Codes_Items" />
+        <AssociationConnector Association="PSC_COST3Model.FK_BOQ_Items_BOQ_Items3" />
+        <AssociationConnector Association="PSC_COST3Model.FK_BOQ_Items_BOQs" />
+        <AssociationConnector Association="PSC_COST3Model.FK_BOQ_Items_Units" />
+        <AssociationConnector Association="PSC_COST3Model.FK_Item_Breakdowns_BOQ_Items" />
+        <AssociationConnector Association="PSC_COST3Model.FK_BOQs_Contracts" />
+        <AssociationConnector Association="PSC_COST3Model.FK_IndirectCostItems_BOQs" />
+        <AssociationConnector Association="PSC_COST3Model.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng" />
+        <AssociationConnector Association="PSC_COST3Model.FK_Item_Breakdowns_BreakdownItemType" />
+        <AssociationConnector Association="PSC_COST3Model.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng" />
+        <AssociationConnector Association="PSC_COST3Model.FK___Cost_Ind__Indir__6477ECF3" />
+        <AssociationConnector Association="PSC_COST3Model.FK___Cost_Ind__Projc__6383C8BA" />
+        <AssociationConnector Association="PSC_COST3Model.FK_C_Cost_Project_Code_Categories__Cost_Project_Codes" />
+        <AssociationConnector Association="PSC_COST3Model.FK___Cost_Pro__Paren__66603565" />
+        <AssociationConnector Association="PSC_COST3Model.FK_C_Cost_Unified_Codes_Cost_Project_Codes" />
+        <AssociationConnector Association="PSC_COST3Model.FK_Cost_Project_Codes__Cost_Project_Codes_Items" />
+        <AssociationConnector Association="PSC_COST3Model.FK_Projects__Cost_Project_Codes" />
+        <AssociationConnector Association="PSC_COST3Model.FK_C_Cost_Unified_Code_Category_Cost_Unified_Codes" />
+        <AssociationConnector Association="PSC_COST3Model.FK___Cost_Uni__Paren__656C112C" />
+        <AssociationConnector Association="PSC_COST3Model.FK_IndirectCostItems_IndirectCostItems" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

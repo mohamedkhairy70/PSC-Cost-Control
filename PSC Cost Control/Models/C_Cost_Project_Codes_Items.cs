@@ -23,9 +23,9 @@ namespace PSC_Cost_Control.Models
         public int Project_Code_Id { get; set; }
         public int Boq_Item_Id { get; set; }
     
+        public virtual BOQ_Items BOQ_Items { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C_Cost_Direct_Project_Codes_Summerizng> C_Cost_Direct_Project_Codes_Summerizng { get; set; }
         public virtual C_Cost_Project_Codes C_Cost_Project_Codes { get; set; }
-        public virtual BOQ_Items BOQ_Items { get; set; }
     }
 }

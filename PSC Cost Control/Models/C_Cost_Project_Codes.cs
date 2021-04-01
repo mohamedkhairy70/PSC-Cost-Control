@@ -33,10 +33,10 @@ namespace PSC_Cost_Control.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C_Cost_Indirect_Project_Code_Summerizing> C_Cost_Indirect_Project_Code_Summerizing { get; set; }
         public virtual C_Cost_Project_Code_Categories C_Cost_Project_Code_Categories { get; set; }
-        public virtual C_Cost_Unified_Codes C_Cost_Unified_Codes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C_Cost_Project_Codes> C_Cost_Project_Codes1 { get; set; }
         public virtual C_Cost_Project_Codes C_Cost_Project_Codes2 { get; set; }
+        public virtual C_Cost_Unified_Codes C_Cost_Unified_Codes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C_Cost_Project_Codes_Items> C_Cost_Project_Codes_Items { get; set; }
         public virtual Projects Projects { get; set; }

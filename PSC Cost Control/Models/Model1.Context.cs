@@ -18,7 +18,7 @@ namespace PSC_Cost_Control.Models
     public partial class PSC_COST3Entities : DbContext
     {
         public PSC_COST3Entities()
-            : base("name=developement")
+            : base("name=PSC_COST3Entities")
         {
         }
     
@@ -27,6 +27,9 @@ namespace PSC_Cost_Control.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<BOQ_Items> BOQ_Items { get; set; }
+        public virtual DbSet<BOQs> BOQs { get; set; }
+        public virtual DbSet<BreakdownItemType> BreakdownItemType { get; set; }
         public virtual DbSet<C_Cost_Direct_Project_Codes_Summerizng> C_Cost_Direct_Project_Codes_Summerizng { get; set; }
         public virtual DbSet<C_Cost_Indirect_Project_Code_Summerizing> C_Cost_Indirect_Project_Code_Summerizing { get; set; }
         public virtual DbSet<C_Cost_Project_Code_Categories> C_Cost_Project_Code_Categories { get; set; }
@@ -34,9 +37,6 @@ namespace PSC_Cost_Control.Models
         public virtual DbSet<C_Cost_Project_Codes_Items> C_Cost_Project_Codes_Items { get; set; }
         public virtual DbSet<C_Cost_Unified_Code_Category> C_Cost_Unified_Code_Category { get; set; }
         public virtual DbSet<C_Cost_Unified_Codes> C_Cost_Unified_Codes { get; set; }
-        public virtual DbSet<BOQ_Items> BOQ_Items { get; set; }
-        public virtual DbSet<BOQs> BOQs { get; set; }
-        public virtual DbSet<BreakdownItemType> BreakdownItemType { get; set; }
         public virtual DbSet<IndirectCostItems> IndirectCostItems { get; set; }
         public virtual DbSet<Item_Breakdowns> Item_Breakdowns { get; set; }
         public virtual DbSet<Projects> Projects { get; set; }
@@ -107,6 +107,122 @@ namespace PSC_Cost_Control.Models
         public virtual int f_COST_Update_Project_Codes_Hireachy()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_COST_Update_Project_Codes_Hireachy");
+        }
+    
+        public virtual int Delete_parent_With_HisChilds(string tableName, Nullable<int> deletedId)
+        {
+            var tableNameParameter = tableName != null ?
+                new ObjectParameter("tableName", tableName) :
+                new ObjectParameter("tableName", typeof(string));
+    
+            var deletedIdParameter = deletedId.HasValue ?
+                new ObjectParameter("deletedId", deletedId) :
+                new ObjectParameter("deletedId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Delete_parent_With_HisChilds", tableNameParameter, deletedIdParameter);
+        }
+    
+        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     }
 }

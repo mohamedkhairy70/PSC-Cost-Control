@@ -191,10 +191,8 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.ClientSize = new System.Drawing.Size(577, 429);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-<<<<<<< HEAD
-          //  this.Name = "Frm_Categories_ProjectCode";
-=======
->>>>>>> 79963576d844d6026105e45334550211a5e55a3a
+      //      this.Name = "Frm_Categories_ProjectCode";
+
             this.Text = "Form Categories ProjectCode";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

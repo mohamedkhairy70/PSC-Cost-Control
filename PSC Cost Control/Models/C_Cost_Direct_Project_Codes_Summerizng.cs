@@ -20,7 +20,7 @@ namespace PSC_Cost_Control.Models
         public decimal Planned_Price { get; set; }
         public decimal Ref_Price { get; set; }
     
-        public virtual C_Cost_Project_Codes_Items C_Cost_Project_Codes_Items { get; set; }
         public virtual BreakdownItemType BreakdownItemType { get; set; }
+        public virtual C_Cost_Project_Codes_Items C_Cost_Project_Codes_Items { get; set; }
     }
 }
