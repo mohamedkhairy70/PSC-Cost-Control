@@ -27,7 +27,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
     {
         readonly Static st = new Static();
 
-
         public Frm_ProjectCode_Show()
         {
             InitializeComponent();
@@ -132,7 +131,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
         }
 
         #region Method for Create TreeList
-
         private void CreateColumns(TreeList tl)
         {
             // Create three columns.
@@ -255,7 +253,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 return null;
             return destNode;
         }
-
         #endregion Method for Create TreeList
 
         #region Methods For my Form
@@ -363,7 +360,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 if (tree_ProjectCode.FocusedNode != null)
                     tree_ProjectCode.DeleteNode(tree_ProjectCode.FocusedNode);
         }
-
         #endregion Methods For my Form
 
         #region My Old Method
@@ -423,6 +419,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 }
             }
         }
+
         public void AppendingNodes(TreeList treeList)
         {
             SimpleButton appendNodeButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Append node" };
@@ -439,6 +436,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 treeList.FocusedNode = newNode;
             };
         }
+
         public void RemovingSelectedNodes(TreeList treeList)
         {
             SimpleButton deleteButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Delete selected nodes" };
@@ -458,6 +456,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 }
             };
         }
+
         public void RemovingNode(TreeList treeList)
         {
             SimpleButton deleteButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Delete focused node" };
@@ -484,5 +483,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             };
         }
         #endregion My Old Method
+
     }
 }
