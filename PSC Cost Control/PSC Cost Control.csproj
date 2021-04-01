@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Helper\Interfaces\HasCode.cs" />
     <Compile Include="Helper\Static.cs" />
+    <Compile Include="Helper\TreeListHandler\TreeListHandler.cs" />
     <Compile Include="Mapping\AutoMapping.cs" />
     <Compile Include="Models\BOQs.cs">
       <DependentUpon>Model1.tt</DependentUpon>
