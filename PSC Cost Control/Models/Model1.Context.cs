@@ -18,7 +18,7 @@ namespace PSC_Cost_Control.Models
     public partial class PSC_COST3Entities : DbContext
     {
         public PSC_COST3Entities()
-            : base("name=PSC_COST3Entities")
+            : base("name=developement")
         {
         }
     

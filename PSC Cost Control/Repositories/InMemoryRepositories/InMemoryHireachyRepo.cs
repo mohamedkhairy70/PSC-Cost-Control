@@ -31,7 +31,7 @@ namespace PSC_Cost_Control.Repositories.InMemoryRepositories
             return element;
         }
 
-        public T Delete(T element)
+    /**    public T Delete(T element)
         {
             if (element.HCode is null)
                 throw new Exception("code is null!");
@@ -53,6 +53,6 @@ namespace PSC_Cost_Control.Repositories.InMemoryRepositories
         {
         }
     
-
+        **/
     }
 }
