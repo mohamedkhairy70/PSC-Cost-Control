@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace PSC_Cost_Control.Forms.Project_Code
 {
-    public partial class Frm_ProjectCode_Add : DevExpress.XtraEditors.XtraForm
+    public partial class Frm_Categories_ProjectCode : DevExpress.XtraEditors.XtraForm
     {
-        public Frm_ProjectCode_Add()
+        public Frm_Categories_ProjectCode()
         {
             InitializeComponent();
         }

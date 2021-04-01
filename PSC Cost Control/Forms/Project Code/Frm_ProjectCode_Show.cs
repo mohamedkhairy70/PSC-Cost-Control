@@ -27,7 +27,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
         readonly Static st = new Static();
 
 
-
         public Frm_ProjectCode_Show()
         {
             InitializeComponent();
@@ -37,22 +36,70 @@ namespace PSC_Cost_Control.Forms.Project_Code
         private void windowsUIButtonPanel1_ButtonClick(object sender, ButtonEventArgs e)
         {
             WindowsUIButton btn = e.Button as WindowsUIButton;
-            if (btn.Caption == "جديد")
+            if (btn.Caption == "New Project Code")
             {
+                //Clear all Data from Project Code Combobox Categore and text Description
+                ClearAllDataProjectCode();
+            }
+            else if (btn.Caption == "New Project")
+            {
+                //Clear all Data from Project Code Combobox Categore and text Description and Project
+                ClearAllDataProject();
+            }
+            else if (btn.Caption == "Add Root")
+            {
+                //Check if Project is Null
+                if (validationProjects())
+                {
+
+                    //Check if Category and description is Null
+                    if (validationProjectCode())
+                    {
+                        //Add Root Project Code To Treelist
+                        AddRootProjectCode(cm_Categories.SelectedText, txt_Description.Text);
+
+                        //Clear Combobox Categore and text Description
+                        ClearAllDataProjectCode();
+                    }
+                }
+            }
+            else if (btn.Caption == "Add Child")
+            {
+                //Check if Project is Null
+                if (validationProjects())
+                {
+
+                    //Check if Category and description is Null
+                    if (validationProjectCode())
+                    {
+                        //Add Child Project Code To Treelist
+                        AddChildProjectCode(cm_Categories.SelectedText, txt_Description.Text);
+
+                        //Clear Combobox Categore and text Description
+                        ClearAllDataProjectCode();
+                    }
+                }
                 
             }
+            else if (btn.Caption == "Delete")
+            {
+                //Check if Project is Null
+                if (validationProjects())
+                {
+                    //Add Project Code To Treelist
+                    DeleteProjectCode();
+
+                    //Clear Combobox Categore and text Description
+                    ClearAllDataProjectCode();
+                }
+            }
         }
-        private void windowsUIButtonPanel1_Click_1(object sender, EventArgs e)
-        {
 
-
-
-        }
         private void Frm_ProjectCode_Show_Load(object sender, EventArgs e)
         {
             CreateColumns(tree_ProjectCode);
 
-            //CreateNodes(treeList1);
+            //CreateNodes(tree_ProjectCode);
             //AppendingNodes(tree_ProjectCode);
             //RemovingNode(tree_ProjectCode);
             //RemovingSelectedNodes(tree_ProjectCode);
@@ -61,22 +108,30 @@ namespace PSC_Cost_Control.Forms.Project_Code
             DragDropManager.Default.DragDrop += OnDragDrop;
             
         }
-        public void AppendingNodes(TreeList treeList)
+
+        private void cm_Projects_DropDownClosed(object sender, EventArgs e)
         {
-            SimpleButton appendNodeButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Append node" };
-            // UI Binding
-            appendNodeButton.Click += (sender, e) => {
-                // Appending a new Node
-                TreeListNode newNode = treeList.AppendNode(
-                    nodeData: new object[] {
-                        "/"+((treeList.FocusedNode != null) ? treeList.FocusedNode.Id : -1)+ "/"+ treeList.AllNodesCount +"/", "Suyama, Michael", "Obere Str. 55"
-                    },
-                    parentNode: treeList.FocusedNode
-                );
-                // Using the newly added node
-                treeList.FocusedNode = newNode;
-            };
+            try
+            {
+                string NameProject = cm_Projects.SelectedText.ToString();
+                int Count = tree_ProjectCode.AllNodesCount;
+                List<ProjectCodeUdT> projectCodes = new List<ProjectCodeUdT>();
+
+                DevExpress.XtraTreeList.TreeList xtraTreeList = tree_ProjectCode;
+
+
+
+            }
+            catch { }
         }
+
+        private void tree_ProjectCode_NodeChanged(object sender, NodeChangedEventArgs e)
+        {
+
+        }
+
+        #region Method for Create TreeList
+
         private void CreateColumns(TreeList tl)
         {
             // Create three columns.
@@ -84,6 +139,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             TreeListColumn col1 = tl.Columns.Add();
             col1.Caption = "Code";
             col1.VisibleIndex = 0;
+
             TreeListColumn col2 = tl.Columns.Add();
             col2.Caption = "Discription";
             col2.VisibleIndex = 1;
@@ -92,25 +148,27 @@ namespace PSC_Cost_Control.Forms.Project_Code
             col3.VisibleIndex = 2;
             tl.EndUpdate();
         }
+
         private void CreateNodes(TreeList tl)
         {
             tl.BeginUnboundLoad();
             // Create a root node .
             TreeListNode parentForRootNodes = null;
             TreeListNode rootNode = tl.AppendNode(
-                new object[] { "/1/", "Alfreds Futterkiste", "Germany, Obere Str. 57" }, parentForRootNodes);
+                new object[] { "/1", "Alfreds Futterkiste", "Germany, Obere Str. 57" }, parentForRootNodes);
             TreeListNode rootNode2 = tl.AppendNode(
-               new object[] { "/2/", "Alfreds Futterkiste", "Germany, Obere Str. 57" }, parentForRootNodes);
+               new object[] { "/2", "Alfreds Futterkiste", "Germany, Obere Str. 57" }, parentForRootNodes);
 
             // Create a child of the rootNode
-            tl.AppendNode(new object[] { "/" + (rootNode.Id + 1).ToString() + "/1/", "Suyama, Michael", "Obere Str. 55" }, rootNode);
-            tl.AppendNode(new object[] { "/" + (rootNode.Id + 1).ToString() + "/2/", "Suyama, Michael", "Obere Str. 55" }, rootNode);
+            tl.AppendNode(new object[] { (rootNode[0]).ToString() + "/1", "Suyama, Michael", "Obere Str. 55" }, rootNode);
+            tl.AppendNode(new object[] { (rootNode[0]).ToString() + "/2", "Suyama, Michael", "Obere Str. 55" }, rootNode);
 
             // Create a child of the rootNode2
-            tl.AppendNode(new object[] { "/" + (rootNode2.Id + 1).ToString() + "/1/", "Suyama, Michael", "Obere Str. 55" }, rootNode2);
-            tl.AppendNode(new object[] { "/" + (rootNode2.Id + 1).ToString() + "/2/", "Suyama, Michael", "Obere Str. 55" }, rootNode2);
+            tl.AppendNode(new object[] { (rootNode2[0]).ToString() + "/1", "Suyama, Michael", "Obere Str. 55" }, rootNode2);
+            tl.AppendNode(new object[] { (rootNode2[0]).ToString() + "/2", "Suyama, Michael", "Obere Str. 55" }, rootNode2);
             tl.EndUnboundLoad();
         }
+
         private void OnDragDrop(object sender, DragDropEventArgs e)
         {
             if (object.ReferenceEquals(e.Source, e.Target))
@@ -123,6 +181,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
             Cursor.Current = Cursors.Default;
         }
+
         void OnDragOver(object sender, DragOverEventArgs e)
         {
             if (object.ReferenceEquals(e.Source, e.Target))
@@ -136,10 +195,12 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 current = Cursors.Default;
             e.Cursor = current;
         }
+
         bool IsCopy(DragDropKeyState key)
         {
             return (key & DragDropKeyState.Control) != 0;
         }
+
         void OnTreeListDrop(DragDropEventArgs e)
         {
 
@@ -157,18 +218,20 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 TreeListNode node = tree_ProjectCode.AppendNode(rowView.Row.ItemArray, index == -1000 ? destNode : null);
                 if (index > -1)
                 {
+
                     tree_ProjectCode.MoveNode(node, destNode.ParentNode, true, index);
                     index++;
                 }
                 if (e.Action != DragDropActions.Copy)
 
-                tree_ProjectCode.SelectNode(node);
+                    tree_ProjectCode.SelectNode(node);
                 if (node.ParentNode != null)
                     node.ParentNode.Expand();
             }
 
             tree_ProjectCode.EndUpdate();
         }
+
         int CalcDestNodeIndex(DragDropEventArgs e, TreeListNode destNode)
         {
             if (destNode == null)
@@ -181,6 +244,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 return ++index;
             return index;
         }
+
         TreeListNode GetDestNode(Point hitPoint)
         {
             Point pt = tree_ProjectCode.PointToClient(hitPoint);
@@ -189,6 +253,222 @@ namespace PSC_Cost_Control.Forms.Project_Code
             if (destNode is TreeListAutoFilterNode)
                 return null;
             return destNode;
+        }
+
+        #endregion Method for Create TreeList
+
+        #region Methods For my Form
+        void ClearAllDataProject()
+        {
+            cm_Categories.DataSource = null;
+            cm_Categories.SelectedItem = -1;
+            cm_Categories.Enabled = false;
+
+
+            txt_Description.Text = "";
+            txt_Description.Enabled = false;
+
+            cm_Projects.Enabled = true;
+            cm_Projects.SelectedItem = -1;
+
+            tree_ProjectCode.DataSource = null;
+        }
+
+        void ClearAllDataProjectCode()
+        {
+            cm_Categories.SelectedItem = -1;
+
+            txt_Description.Text = "";
+
+            cm_Projects.Enabled = false;
+        }
+
+        bool validationProjects()
+        {
+            bool result;
+            if(cm_Projects.SelectedIndex < 0)
+            {
+                MessageBox.Show("Please choose the project first.");
+                result = false;
+            }
+            else
+            {
+                result = true;
+            }
+            return result;
+        }
+
+        bool validationProjectCode()
+        {
+            bool result;
+            if (string.IsNullOrWhiteSpace(cm_Categories.SelectedText))
+            {
+                MessageBox.Show("Please choose the category to add the project code.");
+                return false;
+            }
+            else
+            {
+                result =  true;
+            }
+            if (string.IsNullOrWhiteSpace(txt_Description.Text))
+            {
+                MessageBox.Show("Please add the description of the project code to add the project code.");
+                return false;
+            }
+            else
+            {
+                result = true;
+            }
+            return result;
+        }
+
+        void AddRootProjectCode(string Category, string Description)
+        {
+
+            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(new object[] { "/" + tree_ProjectCode.Nodes.Count +1, Category, Description }, parentNode: null);
+        }
+
+        void AddChildProjectCode(string Category, string Description)
+        {
+            if (tree_ProjectCode.FocusedNode != null)
+            {
+                if (tree_ProjectCode.FocusedNode.Level > 2)
+                {
+                    MessageBox.Show("This Node Level Maxminim 4");
+                }
+                else
+                {
+                    string IdNode = " ";
+                    if (tree_ProjectCode.FocusedNode.Level+1 == 1)
+                    {
+                        IdNode = ((tree_ProjectCode.FocusedNode.Level +1).ToString()
+                            + "/"
+                            + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
+                    }
+                    else if (tree_ProjectCode.FocusedNode.Level+1 == 2)
+                    {
+                        IdNode = (
+                            (tree_ProjectCode.FocusedNode.ParentNode.Level +1).ToString()
+                            + "/"
+                            +(tree_ProjectCode.FocusedNode.Level).ToString()
+                            + "/"
+                            + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
+                    }
+                    else if (tree_ProjectCode.FocusedNode.Level + 1 == 3)
+                    {
+                        IdNode = (
+                            (tree_ProjectCode.FocusedNode.ParentNode.ParentNode.Level +1).ToString()
+                            + "/"
+                            + (tree_ProjectCode.FocusedNode.ParentNode.Level).ToString()
+                            + "/"
+                            + (tree_ProjectCode.FocusedNode.Level -1).ToString()
+                            + "/"
+                            + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
+                    }
+                    else if (tree_ProjectCode.FocusedNode.Level + 1 == 4)
+                    {
+                        IdNode = (
+                            (tree_ProjectCode.FocusedNode.ParentNode.ParentNode.ParentNode.Level).ToString()
+                            + "/"
+                            + (tree_ProjectCode.FocusedNode.ParentNode.ParentNode.Level).ToString()
+                            + "/"
+                            + (tree_ProjectCode.FocusedNode.ParentNode.Level -1).ToString()
+                            + "/"
+                            + (tree_ProjectCode.FocusedNode.Level -2).ToString()
+                            + "/"
+                            + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
+                    }
+                    
+
+                    tree_ProjectCode.FocusedNode =
+                            tree_ProjectCode.AppendNode(
+                                new object[] {IdNode , Category, Description }, tree_ProjectCode.FocusedNode);
+                }
+            }
+        }
+
+        void DeleteProjectCode()
+        {
+            string msg = string.Format("The node {0} is about to be deleted. Do you want to proceed?", tree_ProjectCode.FocusedNode);
+            if (XtraMessageBox.Show(msg, "Deleting node", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (tree_ProjectCode.FocusedNode != null)
+                    tree_ProjectCode.DeleteNode(tree_ProjectCode.FocusedNode);
+        }
+
+        #endregion Methods For my Form
+
+        #region My Old Method
+        public void Add_Oold()
+        {
+            for (int i = 0; i < tree_ProjectCode.AllNodesCount; i++)
+            {
+                var dt = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.Nodes[i]);
+                //int KeyName = tree_ProjectCode.KeyFieldName[tree_ProjectCode.Nodes[i].ParentNode.Id];
+                //int keyparent = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].ParentNode.Id];
+                int NodeCountx = tree_ProjectCode.Nodes[i].Nodes.Count;
+                if (NodeCountx > 0)
+                {
+                    if (NodeCountx == 1)
+                    {
+                        var dt2 = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.Nodes[i]);
+                        int KeyName2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].ParentNode.Id];
+                        //int keyparent2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].Nodes[c].Id];
+                        for (int x = 0; x < NodeCountx; x++)
+                        {
+                            dt2 = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.Nodes[i].Nodes[x]);
+                            KeyName2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].Nodes[x].ParentNode.Id];
+                            //int keyparent2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].Nodes[c].Id];
+                        }
+                    }
+                    else if (NodeCountx == 2)
+                    {
+                        for (int x = 0; x < NodeCountx; x++)
+                        {
+                            int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
+                            for (int c = 0; c < NodeCountc; c++)
+                            {
+
+                            }
+                        }
+                    }
+                    else if (NodeCountx == 3)
+                    {
+                        for (int x = 0; x < NodeCountx; x++)
+                        {
+                            int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
+                            for (int c = 0; c < NodeCountc; c++)
+                            {
+                                int NodeCountv = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes[NodeCountc].Nodes.Count;
+                                for (int v = 0; v < NodeCountv; v++)
+                                {
+
+                                }
+                            }
+                        }
+                    }
+
+                }
+                else
+                {
+
+                }
+            }
+        }
+        public void AppendingNodes(TreeList treeList)
+        {
+            SimpleButton appendNodeButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Append node" };
+            // UI Binding
+            appendNodeButton.Click += (sender, e) => {
+                // Appending a new Node
+                TreeListNode newNode = treeList.AppendNode(
+                    nodeData: new object[] {
+                        "/"+((treeList.FocusedNode != null) ? treeList.FocusedNode.Id : -1)+ "/"+ treeList.AllNodesCount +"/", "Suyama, Michael", "Obere Str. 55"
+                    },
+                    parentNode: treeList.FocusedNode
+                );
+                // Using the newly added node
+                treeList.FocusedNode = newNode;
+            };
         }
         public void RemovingSelectedNodes(TreeList treeList)
         {
@@ -234,129 +514,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 deleteNodeWithConfirmation(treeList.FocusedNode);
             };
         }
-        public void ClearAllData()
-        {
-            cm_Categories.DataSource = null;
-            cm_Categories.SelectedItem = -1;
-            cm_Categories.Enabled = false;
-
-
-            txt_Description.Text = "";
-            txt_Description.Enabled = false;
-
-            cm_Projects.Enabled = true;
-            cm_Projects.SelectedItem = -1;
-
-            tree_ProjectCode.DataSource = null;
-        }
-
-
-        private void cm_Projects_DropDownClosed(object sender, EventArgs e)
-        {
-            try
-            {
-                string NameProject = cm_Projects.SelectedText.ToString();
-                int Count = tree_ProjectCode.AllNodesCount;
-                List<ProjectCodeUdT> projectCodes = new List<ProjectCodeUdT>();
-
-                for (int i = 0; i < tree_ProjectCode.AllNodesCount; i++)
-                {
-                    int NodeCountx = tree_ProjectCode.Nodes[i].Nodes.Count;
-                    if (NodeCountx > 0)
-                    {
-                        TreeList tr1 = (TreeList)tree_ProjectCode.Nodes[i].TreeList;
-                        NodeCountx = tr1.AllNodesCount;
-                        if (NodeCountx == 1) 
-                        {
-                            for (int x = 0; x < NodeCountx; x++)
-                            {
-
-                            }
-                        }
-                        else if (NodeCountx == 2)
-                        {
-                            for (int x = 0; x < NodeCountx; x++)
-                            {
-                                int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
-                                for (int c = 0; c < NodeCountc; c++)
-                                {
-
-                                }
-                            }
-                        }
-                        else if (NodeCountx == 3)
-                        {
-                            for (int x = 0; x < NodeCountx; x++)
-                            {
-                                int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
-                                for (int c = 0; c < NodeCountc; c++)
-                                {
-                                    int NodeCountv = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes[NodeCountc].Nodes.Count;
-                                    for (int v = 0; v < NodeCountv; v++)
-                                    {
-
-                                    }
-                                }
-                            }
-                        }
-                        //else if (NodeCountx == 1)
-                        //{
-                        //    for (int x = 0; x < NodeCountx; x++)
-                        //    {
-                        //        int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
-                        //        for (int c = 0; c < NodeCountc; c++)
-                        //        {
-                        //            int NodeCountv = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes[NodeCountc].Nodes.Count;
-                        //            for (int v = 0; v < NodeCountv; v++)
-                        //            {
-                        //                int NodeCountb = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes[NodeCountc].Nodes[NodeCountv].Nodes.Count;
-                        //                for (int b = 0; b < NodeCountv; b++)
-                        //                {
-
-                        //                } 
-                        //            }
-                        //        }
-                        //    }
-                        //}
-                        
-                    }
-                    else
-                    {
-
-                    }
-                }
-                
-            }
-            catch { }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(null, parentNode: null);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (tree_ProjectCode.FocusedNode != null)
-            {
-                if (tree_ProjectCode.FocusedNode.Level > 2)
-                {
-                    MessageBox.Show("This Node Level Maxminim 4");
-                }
-                else
-                {
-                    tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(null, tree_ProjectCode.FocusedNode);
-                }
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            string msg = string.Format("The node {0} is about to be deleted. Do you want to proceed?", tree_ProjectCode.FocusedNode);
-            if (XtraMessageBox.Show(msg, "Deleting node", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                if (tree_ProjectCode.FocusedNode != null)
-                tree_ProjectCode.DeleteNode(tree_ProjectCode.FocusedNode);
-
-        }
+        #endregion My Old Method
     }
 }

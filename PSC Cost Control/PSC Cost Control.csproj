@@ -81,11 +81,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BussinessLogics\HirearchyIdGenerator\HireachyIdGenerator.cs" />
-    <Compile Include="Forms\Project Code\Frm_ProjectCode_Add.cs">
+    <Compile Include="Forms\Project Code\Frm_Categories_ProjectCode.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Project Code\Frm_ProjectCode_Add.Designer.cs">
-      <DependentUpon>Frm_ProjectCode_Add.cs</DependentUpon>
+    <Compile Include="Forms\Project Code\Frm_Categories_ProjectCode.Designer.cs">
+      <DependentUpon>Frm_Categories_ProjectCode.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Project Code\Frm_ProjectCode_Show.cs">
       <SubType>Form</SubType>
@@ -174,6 +174,9 @@
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifedCodeRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifiedCodeCategoriesRepo.cs" />
     <Compile Include="Services\DependencyApis\ExternalAPI%27s.cs" />
+    <EmbeddedResource Include="Forms\Project Code\Frm_Categories_ProjectCode.resx">
+      <DependentUpon>Frm_Categories_ProjectCode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Project Code\Frm_ProjectCode_Show.resx">
       <DependentUpon>Frm_ProjectCode_Show.cs</DependentUpon>
     </EmbeddedResource>
@@ -223,6 +226,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\Model1.edmx.sql" />
     <Content Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

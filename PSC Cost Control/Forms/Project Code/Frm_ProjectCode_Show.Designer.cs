@@ -37,6 +37,8 @@ namespace PSC_Cost_Control.Forms.Project_Code
             DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions windowsUIButtonImageOptions5 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions();
             DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions windowsUIButtonImageOptions6 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions();
             DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions windowsUIButtonImageOptions7 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions();
+            DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions windowsUIButtonImageOptions8 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions();
+            DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions windowsUIButtonImageOptions9 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
@@ -53,9 +55,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.tree_ProjectCode = new DevExpress.XtraTreeList.TreeList();
             this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             this.dragDropEvents1 = new DevExpress.Utils.DragDrop.DragDropEvents(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -81,11 +80,8 @@ namespace PSC_Cost_Control.Forms.Project_Code
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.groupControl2);
-            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.groupControl1);
-            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.windowsUIButtonPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(2, 2);
@@ -188,10 +184,12 @@ namespace PSC_Cost_Control.Forms.Project_Code
             windowsUIButtonImageOptions2.ImageUri.Uri = "Zoom;Size32x32;GrayScaled";
             windowsUIButtonImageOptions3.ImageUri.Uri = "SaveAll;Size32x32;GrayScaled";
             windowsUIButtonImageOptions4.ImageUri.Uri = "AddNewDataSource;Size32x32;GrayScaled";
-            windowsUIButtonImageOptions5.ImageUri.Uri = "Add;Size32x32;GrayScaled";
-            windowsUIButtonImageOptions6.ImageIndex = 0;
-            windowsUIButtonImageOptions6.ImageUri.Uri = "New;Size32x32;GrayScaled";
-            windowsUIButtonImageOptions7.ImageUri.Uri = "Copy;Size32x32;GrayScaled";
+            windowsUIButtonImageOptions5.ImageUri.Uri = "Delete;GrayScaled";
+            windowsUIButtonImageOptions6.ImageUri.Uri = "AddItem;Size32x32;GrayScaled";
+            windowsUIButtonImageOptions7.ImageUri.Uri = "Add;Size32x32;GrayScaled";
+            windowsUIButtonImageOptions8.ImageIndex = 0;
+            windowsUIButtonImageOptions8.ImageUri.Uri = "New;Size32x32;GrayScaled";
+            windowsUIButtonImageOptions9.ImageUri.Uri = "Copy;Size32x32;GrayScaled";
             this.windowsUIButtonPanel1.Buttons.AddRange(new DevExpress.XtraEditors.ButtonPanel.IBaseButton[] {
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("Print Project", true, windowsUIButtonImageOptions1, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("Search Project", true, windowsUIButtonImageOptions2, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
@@ -199,17 +197,18 @@ namespace PSC_Cost_Control.Forms.Project_Code
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("Save Project", true, windowsUIButtonImageOptions3, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("New Project", true, windowsUIButtonImageOptions4, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
             new DevExpress.XtraBars.Docking2010.WindowsUISeparator(),
-            new DevExpress.XtraBars.Docking2010.WindowsUIButton("Add Project Code", true, windowsUIButtonImageOptions5, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
-            new DevExpress.XtraBars.Docking2010.WindowsUIButton("New Project Code", true, windowsUIButtonImageOptions6, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("Delete", true, windowsUIButtonImageOptions5, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("Add Child", true, windowsUIButtonImageOptions6, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("Add Root", true, windowsUIButtonImageOptions7, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("New Project Code", true, windowsUIButtonImageOptions8, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
             new DevExpress.XtraBars.Docking2010.WindowsUISeparator(),
-            new DevExpress.XtraBars.Docking2010.WindowsUIButton("copy from another Project", true, windowsUIButtonImageOptions7, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false)});
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("copy from another Project", true, windowsUIButtonImageOptions9, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false)});
             this.windowsUIButtonPanel1.Location = new System.Drawing.Point(10, 224);
             this.windowsUIButtonPanel1.Name = "windowsUIButtonPanel1";
             this.windowsUIButtonPanel1.Size = new System.Drawing.Size(870, 92);
             this.windowsUIButtonPanel1.TabIndex = 0;
             this.windowsUIButtonPanel1.Text = "windowsUIButtonPanel1";
             this.windowsUIButtonPanel1.ButtonClick += new DevExpress.XtraBars.Docking2010.ButtonEventHandler(this.windowsUIButtonPanel1_ButtonClick);
-            this.windowsUIButtonPanel1.Click += new System.EventHandler(this.windowsUIButtonPanel1_Click_1);
             // 
             // panelControl3
             // 
@@ -246,39 +245,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.tree_ProjectCode.ParentFieldName = "GetLevelNode";
             this.tree_ProjectCode.Size = new System.Drawing.Size(890, 310);
             this.tree_ProjectCode.TabIndex = 0;
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.button1.Location = new System.Drawing.Point(185, 318);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(191, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Add &Root";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.button2.Location = new System.Drawing.Point(382, 318);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(177, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Add &Child";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.button3.Location = new System.Drawing.Point(565, 318);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(195, 23);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "&Delete";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.tree_ProjectCode.NodeChanged += new DevExpress.XtraTreeList.NodeChangedEventHandler(this.tree_ProjectCode_NodeChanged);
             // 
             // Frm_ProjectCode_Show
             // 
@@ -326,8 +293,5 @@ namespace PSC_Cost_Control.Forms.Project_Code
         private DevExpress.XtraEditors.GroupControl groupControl1;
         private System.Windows.Forms.ComboBox cm_Projects;
         private DevExpress.XtraEditors.LabelControl labelControl1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
     }
 }
