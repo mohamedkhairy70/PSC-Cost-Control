@@ -14,7 +14,7 @@ namespace PSC_Cost_Control.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public partial class C_Cost_Project_Codes:IHireichy
+    public partial class C_Cost_Project_Codes:IHireichy,IHasId
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public C_Cost_Project_Codes()
