@@ -80,6 +80,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\IUnifedCodeRepo.cs" />
+    <Compile Include="Services\UnifiedCodesServices\UnifiedCodeService.cs" />
     <Compile Include="Trackers\PersistantCruds\IPersistent.cs" />
     <Compile Include="Trackers\PersistantCruds\ProjectCodePersistent.cs" />
     <Compile Include="Trackers\TrackingEntitiesFactory\Tracker.cs" />

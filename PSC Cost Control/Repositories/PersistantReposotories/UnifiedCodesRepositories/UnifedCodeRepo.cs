@@ -13,7 +13,7 @@ using PSC_Cost_Control.Repositories.Helpers.Enums;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories
 {
-    public class UnifedCodeRepo : BaseRepo<C_Cost_Unified_Codes>,IAvailableId,IPersistent<C_Cost_Unified_Codes>
+    public class UnifedCodeRepo : BaseRepo<C_Cost_Unified_Codes>, IAvailableId, IPersistent<C_Cost_Unified_Codes>, IUnifedCodeRepo
     {
         protected override TablesEnum Table => TablesEnum._Cost_Unified_Codes;
 
@@ -26,7 +26,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
             return await Context.C_Cost_Unified_Codes.ToListAsync();
         }
 
-        public int NextId { get => Context.C_Cost_Project_Codes.Max(c => c.Id)+1; set => NextId = value; }
+        public int NextId { get => Context.C_Cost_Project_Codes.Max(c => c.Id) + 1; set => NextId = value; }
 
         public async Task AddUnifiedCodesAsync(List<C_Cost_Unified_Codes> codes)
         {
@@ -36,7 +36,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
                 list = codes.Select(c =>
                     new UnifiedCodeUDT
                     {
-                        Id=NextId,
+                        Id = NextId++,
                         CategoryId = c.Category_Id.Value,
                         Code = c.Code,
                         parent = c.Parent.Value,
