@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DevExpress.XtraTreeList.Nodes;
 using DevExpress.XtraTreeList;
 using PSC_Cost_Control.Helper.TreeListHandler;
+using PSC_Cost_Control.Helper.Interfaces;
 
 namespace UnitTestProject1.HelpersUnitTestings
 {
@@ -14,31 +15,43 @@ namespace UnitTestProject1.HelpersUnitTestings
     public class TreeListHandlerUnitTesting
     {
         private TreeList _tree;
+        public class Hi : IHireichy
+        {
+            public string Name { set; get; }
+            public string Code { set; get; }
+            public Hi Parent { set; get; }
+            public string HCode { get => Code; set => Code=value; }
+            public IHireichy HParent { get => Parent; set => Parent=(Hi)value; }
+        }
         [SetUp]
         public void SetUp()
         {
             _tree = new TreeList();
-            var p1=_tree.Nodes.Add(new PSC_Cost_Control.Models.C_Cost_Project_Codes() { 
-                Category_Id=4,
-                Description="dklqemflkc",
-                Unified_Code_Id=7,
-                
-            });
-            p1.Nodes.Add(new object());
-            var x1=p1.Nodes.Add(new object());
-            x1.Nodes.Add(new object());
+            var p1=_tree.Nodes.Add();
+            p1.Tag = new Hi { Name = "p1" };
+            var p11=p1.Nodes.Add();
+            p11.Tag = (new Hi { Name = "p1/1" });
+            var x1=p1.Nodes.Add();
+            x1.Tag = new Hi{Name = "x1"};
+            var x11=x1.Nodes.Add();
+            x11.Tag = new Hi { Name = "x11" };
 
-            var p2 = _tree.Nodes.Add(new object());
-            p2.Nodes.Add(new object());
+            var p2 = _tree.Nodes.Add();
+            p2.Tag = new Hi { Name = "p2" };
+            var p22=p2.Nodes.Add();
+            p22.Tag = new Hi { Name = "p2/1" };
 
         }
 
         [Test]
-        public void t1()
+        public void ToSequentialList_ReturnAlistWithValidParentsAndCodes()
         {
-            var h = new TreeListHandler();
-            var l= h.HandleProjectCodes(_tree);
-            Assert.That(l.Count, Is.EqualTo(5));
+            var list = _tree.ToSequentialList<Hi>();
+            Assert.That(list.Count, Is.EqualTo(6));
+
+            Assert.That(list[0].Parent, Is.Null);
+            Assert.That(list[0].Code, Is.Not.Null.And.Not.Empty);
+
            
         }
 

@@ -80,7 +80,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BussinessLogics\HirearchyIdGenerator\HireachyIdGenerator.cs" />
     <Compile Include="Forms\Project Code\Frm_Categories_ProjectCode.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,7 +168,6 @@
     <Compile Include="Repositories\PersistantReposotories\IAvailableId.cs" />
     <Compile Include="Repositories\Helpers\Enums\TablesEnum.cs" />
     <Compile Include="Repositories\PersistantReposotories\HireachyRepo.cs" />
-    <Compile Include="Repositories\InMemoryRepositories\InMemoryHireachyRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\BaseRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\IProjectCodesRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\ProjectCodesCategoriesRepo.cs" />
@@ -222,7 +220,10 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="BussinessLogics\" />
+    <Folder Include="Repositories\InMemoryRepositories\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
