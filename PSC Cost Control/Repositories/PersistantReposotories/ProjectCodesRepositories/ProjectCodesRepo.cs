@@ -12,7 +12,7 @@ using PSC_Cost_Control.Repositories.Helpers.Enums;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories
 {
-    public class ProjectCodesRepo : HireachyRepo<C_Cost_Project_Codes>, IProjectCodesRepo
+    public class ProjectCodesRepo : HireachyRepo<C_Cost_Project_Codes>, IProjectCodesRepo, IAvailableId
     {
         public ProjectCodesRepo(PSC_COST3Entities context) : base(context)
         {
@@ -20,6 +20,8 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
         }
 
         protected override TablesEnum Table => TablesEnum._Cost_Project_Codes;
+
+        public int NextId { get => Context.C_Cost_Project_Codes.Max(c=>c.Id)+1; set=>NextId=value; }
 
         public async Task<IEnumerable<C_Cost_Project_Codes>> GetProjectCodesAsync(int projectId)
         {
@@ -33,6 +35,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
                 list = codes.Select(c =>
                     new ProjectCodeUdT
                     {
+                        Id=NextId++,
                         CategoryId = c.CategoryId,
                         Code = c.Code,
                         parent = c.parent,

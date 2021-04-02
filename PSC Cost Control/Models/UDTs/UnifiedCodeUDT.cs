@@ -11,17 +11,19 @@ namespace PSC_Cost_Control.Models.UDFs
     public class UnifiedCodeUDT
     {
         [UserDefinedTableTypeColumn(1)]
+        public int Id { set; get; }
+        [UserDefinedTableTypeColumn(2)]
         public string Title { set; get; }
 
-        [UserDefinedTableTypeColumn(2)]
+        [UserDefinedTableTypeColumn(3)]
         public int CategoryId { set; get; }
 
-        [UserDefinedTableTypeColumn(3)]
+        [UserDefinedTableTypeColumn(4)]
         public int parent { set; get; }
         /// <summary>
         /// Node is a string represention for SQL hirearchyId type
         /// </summary>
-        [UserDefinedTableTypeColumn(4)]
+        [UserDefinedTableTypeColumn(5)]
         public string Code { set; get; }
     }
 }

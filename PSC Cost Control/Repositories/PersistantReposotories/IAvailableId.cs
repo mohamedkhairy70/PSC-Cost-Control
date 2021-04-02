@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PSC_Cost_Control.Helper.Interfaces
+namespace PSC_Cost_Control.Repositories
 {
-    public interface HasCode
+    public interface IAvailableId
     {
-        string HCode { set; get; }
+         int NextId { set; get; }
     }
 }
