@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using EntityFrameworkExtras.EF6;
 using PSC_Cost_Control.Factories.PersistantCruds;
@@ -15,7 +13,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
 {
     public class UnifedCodeRepo : BaseRepo<C_Cost_Unified_Codes>, IAvailableId, IPersistent<C_Cost_Unified_Codes>, IUnifedCodeRepo
     {
-        protected override TablesEnum Table => TablesEnum._Cost_Unified_Codes;
+        protected override TablesEnum Table => TablesEnum.C_Cost_Unified_Codes;
 
         public UnifedCodeRepo(PSC_COST3Entities context) : base(context)
         {
@@ -47,20 +45,30 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
 
             await Context.Database.ExecuteStoredProcedureAsync<UnifiedCodeUDT>(proc);
         }
+        public void Update(C_Cost_Unified_Codes code)
+        {
+            Context.f_COST_Update_Unified_Code(code.Id, code.Title, code.Category_Id, code.Code, code.Parent);
+        }
 
         public async Task Add(IEnumerable<C_Cost_Unified_Codes> entities)
         {
             await AddUnifiedCodesAsync(entities.ToList());
         }
 
+        public void Delete(C_Cost_Unified_Codes unified)
+        {
+            Context.f_COST_Delete_By_Id(Table.ToString(), unified.Id);
+        }
         public void Update(IEnumerable<C_Cost_Unified_Codes> entities)
         {
-            throw new NotImplementedException();
+            foreach (var e in entities)
+                Update(e);
         }
 
         public void Delete(IEnumerable<C_Cost_Unified_Codes> entities)
         {
-            throw new NotImplementedException();
+            entities.ToList()
+                .ForEach(e => Delete(e));
         }
     }
 

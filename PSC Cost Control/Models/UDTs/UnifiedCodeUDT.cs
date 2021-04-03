@@ -19,7 +19,7 @@ namespace PSC_Cost_Control.Models.UDFs
         public int CategoryId { set; get; }
 
         [UserDefinedTableTypeColumn(4)]
-        public int parent { set; get; }
+        public int? parent { set; get; }
         /// <summary>
         /// Node is a string represention for SQL hirearchyId type
         /// </summary>

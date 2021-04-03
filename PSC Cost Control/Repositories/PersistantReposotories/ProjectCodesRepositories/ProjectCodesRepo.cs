@@ -13,14 +13,14 @@ using PSC_Cost_Control.Repositories.Helpers.Enums;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories
 {
-    public class ProjectCodesRepo : HireachyRepo<C_Cost_Project_Codes>, IProjectCodesRepo,IPersistent<C_Cost_Project_Codes>
+    public class ProjectCodesRepo : HireachyRepo<C_Cost_Project_Codes>, IPersistent<C_Cost_Project_Codes>
     {
         public ProjectCodesRepo(PSC_COST3Entities context) : base(context)
         {
 
         }
 
-        protected override TablesEnum Table => TablesEnum._Cost_Project_Codes;
+        protected override TablesEnum Table => TablesEnum.C_Cost_Project_Codes;
 
         public int NextId { get => Context.C_Cost_Project_Codes.Max(c => c.Id) + 1; set => NextId = value; }
 
@@ -31,10 +31,10 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
 
         public async Task AddProjectCodes(List<ProjectCodeUdT> codes)
         {
-          
+
             var proc = new ProjectCodesInserion()
             {
-                list=codes
+                list = codes
             };
 
 
@@ -49,33 +49,35 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
 
         public void UpdateNodeData(int codeId, ProjectCodeUdT code)
         {
-            Context.f_COST_Update_Project_Code(codeId, code.Description, code.UnifiedCodeId, code.CategoryId);
+            Context.f_COST_Update_Project_Code(codeId, code.Description, code.UnifiedCodeId, code.CategoryId, code.Code, code.parent);
         }
 
         public async Task Add(IEnumerable<C_Cost_Project_Codes> entities)
         {
-            var x = entities.Select(e => new ProjectCodeUdT
-            {
-                Id = e.Id,
-                CategoryId = e.Category_Id.Value,
-                Code = e.Code,
-                Description = e.Description,
-                parent = e.Parent.Value,
-                ProjectId = e.Project_Id.Value,
-                UnifiedCodeId = e.Unified_Code_Id.Value
-            }).ToList();
-            await AddProjectCodes(x);
+            await AddProjectCodes(
+                entities.Select(e => new ProjectCodeUdT
+                {
+                    Id = NextId,
+                    CategoryId = e.Category_Id.Value,
+                    Code = e.Code,
+                    Description = e.Description,
+                    parent = e.Parent.Value,
+                    ProjectId = e.Project_Id.Value,
+                    UnifiedCodeId = e.Unified_Code_Id.Value
+                })
+                .ToList());
         }
 
         public void Update(IEnumerable<C_Cost_Project_Codes> entities)
         {
-           /** foreach(var e in entities)
-                Context.f_COST_Update_Project_Code()**/
+            foreach (var e in entities)
+                Context.f_COST_Update_Project_Code(e.Id, e.Description, e.Unified_Code_Id, e.Category_Id, e.Code, e.Parent);
         }
 
         public void Delete(IEnumerable<C_Cost_Project_Codes> entities)
         {
-            throw new NotImplementedException();
+            foreach (var e in entities)
+                Context.Delete_parent_With_HisChilds(this.Table.ToString(), e.Id);
         }
     }
 }

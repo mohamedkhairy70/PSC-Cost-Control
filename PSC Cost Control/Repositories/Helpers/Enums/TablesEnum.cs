@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PSC_Cost_Control.Repositories.Helpers.Enums
+﻿namespace PSC_Cost_Control.Repositories.Helpers.Enums
 {
     public enum TablesEnum
     {
-        _Cost_Unified_Codes,
-        _Cost_Project_Codes,
-        _Cost_Direct_Project_Codes_Summerizng,
-        _Cost_Project_Code_Categories,
-        _Cost_Project_Codes_Items,
-        _Cost_Unified_Code_Category
+        C_Cost_Direct_Project_Codes_Summerizng,
+        C_Cost_Indirect_Project_Code_Summerizing,
+        C_Cost_Project_Code_Categories,
+        C_Cost_Project_Codes,
+        C_Cost_Unified_Code_Category,
+        C_Cost_Project_Codes_Items,
+        C_Cost_Unified_Codes,
+        BOQ_Items,
+        BOQs,
+        BreakdownItemType,
     }
 }

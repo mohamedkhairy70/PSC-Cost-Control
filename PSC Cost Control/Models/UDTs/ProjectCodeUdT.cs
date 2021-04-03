@@ -22,7 +22,7 @@ namespace PSC_Cost_Control.Models.UDFs
         public int UnifiedCodeId { set; get; }
 
         [UserDefinedTableTypeColumn(5)]
-        public int parent { set; get; }
+        public int? parent { set; get; }
 
         /// <summary>
         /// string represention for  SQL HireachyId Type

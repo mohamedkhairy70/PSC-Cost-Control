@@ -14,6 +14,7 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
     {
         /// <summary>
         /// convert from treeList in devExpress to List with elements have apropriate HireachyId and parent.
+        /// it will generate new code for every node even if it has a value that is not Null
         /// </summary>
         /// <typeparam name="T">data type of Tag in TreeListNode</typeparam>
         /// <param name="tree">Devexpree treeList object</param>

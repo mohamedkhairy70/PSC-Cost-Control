@@ -80,7 +80,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ParialModels\C_Cost_Project_Codes.cs" />
+    <Compile Include="Models\ParialModels\C_Cost_Unified_Codes.cs" />
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\IProjectCodesCategoriesRepo.cs" />
+    <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\IProjectCodesRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\IUnifedCodeRepo.cs" />
+    <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\IUnifiedCodeCategoriesRepo.cs" />
+    <Compile Include="Services\ProjectCodesServices\IProjectCodeCategoryService.cs" />
+    <Compile Include="Services\ProjectCodesServices\ProjectCodeCategoryService.cs" />
+    <Compile Include="Services\UnifiedCodesServices\IUnifiedCodeCategoryService.cs" />
+    <Compile Include="Services\UnifiedCodesServices\UnifiedCodeCategoryService.cs" />
     <Compile Include="Services\UnifiedCodesServices\UnifiedCodeService.cs" />
     <Compile Include="Trackers\PersistantCruds\IPersistent.cs" />
     <Compile Include="Trackers\PersistantCruds\ProjectCodePersistent.cs" />
@@ -175,7 +187,6 @@
     <Compile Include="Repositories\Helpers\Enums\TablesEnum.cs" />
     <Compile Include="Repositories\PersistantReposotories\HireachyRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\BaseRepo.cs" />
-    <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\IProjectCodesRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\ProjectCodesCategoriesRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\ProjectCodesRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifedCodeRepo.cs" />

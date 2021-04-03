@@ -41,6 +41,7 @@ namespace PSC_Cost_Control.Models
         public virtual DbSet<Item_Breakdowns> Item_Breakdowns { get; set; }
         public virtual DbSet<Projects> Projects { get; set; }
         public virtual DbSet<Units> Units { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     
         public virtual int f_Cost_SP_Insert_Project_Codes()
         {
@@ -83,7 +84,7 @@ namespace PSC_Cost_Control.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_COST_Delete_By_Id", tableParameter, idParameter);
         }
     
-        public virtual int f_COST_Update_Project_Code(Nullable<int> forId, string description, Nullable<int> unifiedCode_Id, Nullable<int> categoryId)
+        public virtual int f_COST_Update_Project_Code(Nullable<int> forId, string description, Nullable<int> unifiedCode_Id, Nullable<int> categoryId, string code, Nullable<int> parent)
         {
             var forIdParameter = forId.HasValue ?
                 new ObjectParameter("forId", forId) :
@@ -101,7 +102,15 @@ namespace PSC_Cost_Control.Models
                 new ObjectParameter("CategoryId", categoryId) :
                 new ObjectParameter("CategoryId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_COST_Update_Project_Code", forIdParameter, descriptionParameter, unifiedCode_IdParameter, categoryIdParameter);
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var parentParameter = parent.HasValue ?
+                new ObjectParameter("parent", parent) :
+                new ObjectParameter("parent", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_COST_Update_Project_Code", forIdParameter, descriptionParameter, unifiedCode_IdParameter, categoryIdParameter, codeParameter, parentParameter);
         }
     
         public virtual int f_COST_Update_Project_Codes_Hireachy()
@@ -239,7 +248,7 @@ namespace PSC_Cost_Control.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_SP_Insert_Direct_Project_Codes_Summerizng");
         }
     
-        public virtual int f_COST_Update_Unified_Code(Nullable<int> forId, string title, Nullable<int> categoryId)
+        public virtual int f_COST_Update_Unified_Code(Nullable<int> forId, string title, Nullable<int> categoryId, string code, Nullable<int> parent)
         {
             var forIdParameter = forId.HasValue ?
                 new ObjectParameter("forId", forId) :
@@ -253,7 +262,20 @@ namespace PSC_Cost_Control.Models
                 new ObjectParameter("CategoryId", categoryId) :
                 new ObjectParameter("CategoryId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_COST_Update_Unified_Code", forIdParameter, titleParameter, categoryIdParameter);
+            var codeParameter = code != null ?
+                new ObjectParameter("code", code) :
+                new ObjectParameter("code", typeof(string));
+    
+            var parentParameter = parent.HasValue ?
+                new ObjectParameter("parent", parent) :
+                new ObjectParameter("parent", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_COST_Update_Unified_Code", forIdParameter, titleParameter, categoryIdParameter, codeParameter, parentParameter);
+        }
+    
+        public virtual int f_Cost_SP_Insert_Indirect_Project_Codes_Summerizng()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_SP_Insert_Indirect_Project_Codes_Summerizng");
         }
     }
 }

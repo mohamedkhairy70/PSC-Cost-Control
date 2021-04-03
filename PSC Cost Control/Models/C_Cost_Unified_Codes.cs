@@ -9,12 +9,10 @@
 
 namespace PSC_Cost_Control.Models
 {
-    using PSC_Cost_Control.Helper.Interfaces;
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    public partial class C_Cost_Unified_Codes:IHireichy,IHasId
+    
+    public partial class C_Cost_Unified_Codes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public C_Cost_Unified_Codes()
@@ -35,9 +33,5 @@ namespace PSC_Cost_Control.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<C_Cost_Unified_Codes> C_Cost_Unified_Codes1 { get; set; }
         public virtual C_Cost_Unified_Codes C_Cost_Unified_Codes2 { get; set; }
-        [NotMapped]
-        public string HCode { get => Code; set => this.Code = value; }
-        [NotMapped]
-        public IHireichy HParent { get => C_Cost_Unified_Codes2; set => this.C_Cost_Unified_Codes2 = (C_Cost_Unified_Codes)value; }
     }
 }
