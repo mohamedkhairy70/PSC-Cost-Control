@@ -32,5 +32,11 @@ namespace PSC_Cost_Control
             frm.ShowDialog();
 
         }
+
+        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Forms.Project_Code.Frm_Categories_ProjectCode frm = new Forms.Project_Code.Frm_Categories_ProjectCode();
+            frm.ShowDialog();
+        }
     }
 }

@@ -20,17 +20,24 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.Utils.Serializing;
 using PSC_Cost_Control.Models.UDFs;
 using System.Collections;
+using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
+using PSC_Cost_Control.Helper.TreeListHandler;
 
 namespace PSC_Cost_Control.Forms.Project_Code
 {
     public partial class Frm_ProjectCode_Show : DevExpress.XtraEditors.XtraForm
     {
         readonly Static st = new Static();
+        ProjectCodesCategoriesRepo categoriesRepo;
+        ProjectCodesRepo project_Codes;
+        PSC_COST3Entities context = new PSC_COST3Entities();
+        List<C_Cost_Project_Codes> _Codes;
 
         public Frm_ProjectCode_Show()
         {
             InitializeComponent();
-            
+            categoriesRepo = new ProjectCodesCategoriesRepo(context);
+            project_Codes = new ProjectCodesRepo(context);
         }
        
         private void windowsUIButtonPanel1_ButtonClick(object sender, ButtonEventArgs e)
@@ -98,7 +105,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
         private void Frm_ProjectCode_Show_Load(object sender, EventArgs e)
         {
             CreateColumns(tree_ProjectCode);
-
+            GetProjectCode(1);
             //CreateNodes(tree_ProjectCode);
             //AppendingNodes(tree_ProjectCode);
             //RemovingNode(tree_ProjectCode);
@@ -146,26 +153,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             col3.Caption = "Category";
             col3.VisibleIndex = 2;
             tl.EndUpdate();
-        }
-
-        private void CreateNodes(TreeList tl)
-        {
-            tl.BeginUnboundLoad();
-            // Create a root node .
-            TreeListNode parentForRootNodes = null;
-            TreeListNode rootNode = tl.AppendNode(
-                new object[] { "/1", "Alfreds Futterkiste", "Germany, Obere Str. 57" }, parentForRootNodes);
-            TreeListNode rootNode2 = tl.AppendNode(
-               new object[] { "/2", "Alfreds Futterkiste", "Germany, Obere Str. 57" }, parentForRootNodes);
-
-            // Create a child of the rootNode
-            tl.AppendNode(new object[] { (rootNode[0]).ToString() + "/1", "Suyama, Michael", "Obere Str. 55" }, rootNode);
-            tl.AppendNode(new object[] { (rootNode[0]).ToString() + "/2", "Suyama, Michael", "Obere Str. 55" }, rootNode);
-
-            // Create a child of the rootNode2
-            tl.AppendNode(new object[] { (rootNode2[0]).ToString() + "/1", "Suyama, Michael", "Obere Str. 55" }, rootNode2);
-            tl.AppendNode(new object[] { (rootNode2[0]).ToString() + "/2", "Suyama, Michael", "Obere Str. 55" }, rootNode2);
-            tl.EndUnboundLoad();
         }
 
         private void OnDragDrop(object sender, DragDropEventArgs e)
@@ -360,6 +347,16 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 if (tree_ProjectCode.FocusedNode != null)
                     tree_ProjectCode.DeleteNode(tree_ProjectCode.FocusedNode);
         }
+
+        void GetProjectCode(int _ProjectId)
+        {
+            
+            //tree_ProjectCode.Parent = "asds";
+        }
+        void AddProectCode()
+        {
+            //List<C_Cost_Project_Codes> c_Cost_s = TreeListHandler.ToSequentialList(tree_ProjectCode);
+        }
         #endregion Methods For my Form
 
         #region My Old Method
@@ -481,6 +478,26 @@ namespace PSC_Cost_Control.Forms.Project_Code
             deleteButton.Click += (sender, e) => {
                 deleteNodeWithConfirmation(treeList.FocusedNode);
             };
+        }
+
+        private void CreateNodes(TreeList tl)
+        {
+            tl.BeginUnboundLoad();
+            // Create a root node .
+            TreeListNode parentForRootNodes = null;
+            TreeListNode rootNode = tl.AppendNode(
+                new object[] { "/1", "Alfreds Futterkiste", "Germany, Obere Str. 57" }, parentForRootNodes);
+            TreeListNode rootNode2 = tl.AppendNode(
+               new object[] { "/2", "Alfreds Futterkiste", "Germany, Obere Str. 57" }, parentForRootNodes);
+
+            // Create a child of the rootNode
+            tl.AppendNode(new object[] { (rootNode[0]).ToString() + "/1", "Suyama, Michael", "Obere Str. 55" }, rootNode);
+            tl.AppendNode(new object[] { (rootNode[0]).ToString() + "/2", "Suyama, Michael", "Obere Str. 55" }, rootNode);
+
+            // Create a child of the rootNode2
+            tl.AppendNode(new object[] { (rootNode2[0]).ToString() + "/1", "Suyama, Michael", "Obere Str. 55" }, rootNode2);
+            tl.AppendNode(new object[] { (rootNode2[0]).ToString() + "/2", "Suyama, Michael", "Obere Str. 55" }, rootNode2);
+            tl.EndUnboundLoad();
         }
         #endregion My Old Method
 
