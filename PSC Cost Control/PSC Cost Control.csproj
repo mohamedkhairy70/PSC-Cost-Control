@@ -80,6 +80,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DTO\DirectItemProjectCode.cs" />
+    <Compile Include="Models\DTO\InDirectItemProjectCode.cs" />
     <Compile Include="Models\ParialModels\C_Cost_Project_Codes.cs" />
     <Compile Include="Models\ParialModels\C_Cost_Unified_Codes.cs" />
     <Compile Include="Models\sysdiagrams.cs">
@@ -89,6 +91,7 @@
     <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\IProjectCodesRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\IUnifedCodeRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\IUnifiedCodeCategoriesRepo.cs" />
+    <Compile Include="Services\ProjectCodeItemRegisterationServices\IRegisterationService.cs" />
     <Compile Include="Services\ProjectCodesServices\IProjectCodeCategoryService.cs" />
     <Compile Include="Services\ProjectCodesServices\ProjectCodeCategoryService.cs" />
     <Compile Include="Services\UnifiedCodesServices\IUnifiedCodeCategoryService.cs" />
