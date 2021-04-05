@@ -6,8 +6,8 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories
 {
     public abstract class BaseRepo<T>
     {
-        protected readonly PSC_COST3Entities Context;
-        protected BaseRepo(PSC_COST3Entities context)
+        protected readonly ApplicationContext Context;
+        protected BaseRepo(ApplicationContext context)
         {
             Context = context;
         }

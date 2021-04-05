@@ -10,16 +10,15 @@
 namespace PSC_Cost_Control.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class C_Cost_Direct_Project_Codes_Summerizng1
+    public partial class f_COST_Delete_By_Id_Result
     {
-        public int Project_Code_Item_Id { get; set; }
-        public short Break_Down_Type_Id { get; set; }
-        public decimal Planned_Price { get; set; }
-        public decimal Ref_Price { get; set; }
-    
-        public virtual BreakdownItemType BreakdownItemType { get; set; }
-        public virtual C_Cost_Project_Codes_Items C_Cost_Project_Codes_Items { get; set; }
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public Nullable<int> Unified_Code_Id { get; set; }
+        public Nullable<int> Category_Id { get; set; }
+        public Nullable<int> Project_Id { get; set; }
+        public Nullable<int> Parent { get; set; }
+        public string Code { get; set; }
     }
 }

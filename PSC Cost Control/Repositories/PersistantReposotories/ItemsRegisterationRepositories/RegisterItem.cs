@@ -16,7 +16,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
     /// <typeparam name="V"></typeparam>
     public abstract class RegisterItem<T,V> : BaseRepo<T>
     {
-        protected RegisterItem(PSC_COST3Entities context,string itemType ) : base(context)
+        protected RegisterItem(ApplicationContext context,string itemType ) : base(context)
         {
             ItemType = itemType;
         }

@@ -10,8 +10,8 @@ namespace PSC_Cost_Control.Services.DependencyApis
 {
     public partial class ExternalAPIs
     {
-        private PSC_COST3Entities Context;
-        public ExternalAPIs(PSC_COST3Entities context)
+        private ApplicationContext Context;
+        public ExternalAPIs(ApplicationContext context)
         {
             Context = context;
         }

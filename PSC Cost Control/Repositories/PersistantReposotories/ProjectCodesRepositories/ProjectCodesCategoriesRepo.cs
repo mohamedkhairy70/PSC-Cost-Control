@@ -10,7 +10,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
     {
         protected override TablesEnum Table { get => TablesEnum.C_Cost_Project_Code_Categories; }
 
-        public ProjectCodesCategoriesRepo(PSC_COST3Entities context) : base(context)
+        public ProjectCodesCategoriesRepo(ApplicationContext context) : base(context)
         {
         }
 

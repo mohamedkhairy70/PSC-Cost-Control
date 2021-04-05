@@ -19,7 +19,6 @@ namespace PSC_Cost_Control.Models
         {
             this.C_Cost_Direct_Project_Codes_Summerizng = new HashSet<C_Cost_Direct_Project_Codes_Summerizng>();
             this.Item_Breakdowns = new HashSet<Item_Breakdowns>();
-            this.C_Cost_Direct_Project_Codes_Summerizng1 = new HashSet<C_Cost_Direct_Project_Codes_Summerizng1>();
         }
     
         public short Id { get; set; }
@@ -30,7 +29,5 @@ namespace PSC_Cost_Control.Models
         public virtual ICollection<C_Cost_Direct_Project_Codes_Summerizng> C_Cost_Direct_Project_Codes_Summerizng { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item_Breakdowns> Item_Breakdowns { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<C_Cost_Direct_Project_Codes_Summerizng1> C_Cost_Direct_Project_Codes_Summerizng1 { get; set; }
     }
 }

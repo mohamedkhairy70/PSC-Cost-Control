@@ -9,6 +9,7 @@ using PSC_Cost_Control.Repositories;
 using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
 using PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories;
 using PSC_Cost_Control.Models;
+using ApplicationContext = PSC_Cost_Control.Models.ApplicationContext;
 
 namespace PSC_Cost_Control
 {
@@ -35,7 +36,7 @@ namespace PSC_Cost_Control
             /**Dependency Injection Resolving*/
             var builder = new ContainerBuilder();
             //start Registeration of services
-            builder.RegisterType<PSC_COST3Entities>();
+            builder.RegisterType<ApplicationContext>();
             builder.RegisterType<Mapper>().As<IMapper>();
             builder.RegisterType<ProjectCodesRepo>().As<IProjectCodesRepo>();
             builder.RegisterType<UnifedCodeRepo>().As<IUnifedCodeRepo>();

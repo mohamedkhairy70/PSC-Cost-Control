@@ -87,37 +87,34 @@
       <DependentUpon>Frm_UnifiedCode_Show.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\BOQs.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BOQ_Items.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BreakdownItemType.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C_Cost_Direct_Project_Codes_Summerizng.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\C_Cost_Direct_Project_Codes_Summerizng1.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C_Cost_Indirect_Project_Code_Summerizing.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C_Cost_Project_Codes.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C_Cost_Project_Codes_Items.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C_Cost_Project_Code_Categories.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C_Cost_Unified_Codes.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C_Cost_Unified_Code_Category.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DTO\DirectItemProjectCode.cs" />
     <Compile Include="Models\DTO\DirectItemProjectCodeWithId.cs" />
@@ -125,27 +122,54 @@
     <Compile Include="Models\DTO\IItemPairWithId.cs" />
     <Compile Include="Models\DTO\IndirectItemProjecCodeWithId.cs" />
     <Compile Include="Models\DTO\InDirectItemProjectCode.cs" />
+    <Compile Include="Models\Entities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Entities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Entities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\f_COST_Delete_By_Id_Result.cs">
+      <DependentUpon>Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\f_COST_Update_Unified_Code_Result.cs">
+      <DependentUpon>Entities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IndirectCostItems.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Item_Breakdowns.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ParialModels\C_Cost_Project_Codes.cs" />
     <Compile Include="Models\ParialModels\C_Cost_Project_Codes_Items.cs" />
     <Compile Include="Models\ParialModels\C_Cost_Unified_Codes.cs" />
     <Compile Include="Models\Projects.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SPs\RegisterItemsToProjectCodeSP.cs" />
     <Compile Include="Models\SPs\UpdateItemsRegisterationSP.cs" />
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Entities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDTs\ItemPairCodeUDT.cs" />
     <Compile Include="Models\UDTs\UpdateItemsCodeRegisteration.cs" />
     <Compile Include="Models\Units.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\DirectItemRegisterationRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\IndirectCostItemRegisterationRepo.cs" />
@@ -186,21 +210,6 @@
     <Compile Include="Helper\Static.cs" />
     <Compile Include="Helper\TreeListHandler\TreeListHandler.cs" />
     <Compile Include="Mapping\AutoMapping.cs" />
-    <Compile Include="Models\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\SPs\ProjectCodesInserionSP.cs" />
     <Compile Include="Models\SPs\UnifiedCodeInsertion.cs" />
     <Compile Include="Models\UDTs\ProjectCodeUdT.cs" />
@@ -240,12 +249,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EntityDeploy Include="Models\Model1.edmx">
+    <EntityDeploy Include="Models\Entities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+      <LastGenOutput>Entities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <None Include="Models\Entities.edmx.diagram">
+      <DependentUpon>Entities.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -269,16 +278,15 @@
     <Folder Include="Repositories\InMemoryRepositories\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\Model1.Context.tt">
+    <Content Include="Models\Entities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>Entities.edmx</DependentUpon>
+      <LastGenOutput>Entities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Model1.edmx.sql" />
-    <Content Include="Models\Model1.tt">
+    <Content Include="Models\Entities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>Entities.edmx</DependentUpon>
+      <LastGenOutput>Entities.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

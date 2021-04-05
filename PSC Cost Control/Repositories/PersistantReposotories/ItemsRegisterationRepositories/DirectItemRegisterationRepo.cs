@@ -12,7 +12,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
     public class DirectItemRegisterationRepo : RegisterItem<C_Cost_Project_Codes_Items,BOQ_Items>,IPersistent<C_Cost_Project_Codes_Items>
     {
         private  const string TYPE = "direct";
-        public DirectItemRegisterationRepo(PSC_COST3Entities context) : base(context,TYPE)
+        public DirectItemRegisterationRepo(ApplicationContext context) : base(context,TYPE)
         {
         }
 

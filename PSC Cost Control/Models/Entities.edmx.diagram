@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9d30f0726aec4a94ad0ae093bafb3911" Name="Diagram1">
+        <EntityTypeShape EntityType="CostExternalModel.BOQ_Items" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.BOQs" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.BreakdownItemType" Width="1.5" PointX="7.5" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.C_Cost_Direct_Project_Codes_Summerizng" Width="1.5" PointX="9.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.C_Cost_Indirect_Project_Code_Summerizing" Width="1.5" PointX="7.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.C_Cost_Project_Code_Categories" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.C_Cost_Project_Codes" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.C_Cost_Project_Codes_Items" Width="1.5" PointX="7.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.C_Cost_Unified_Code_Category" Width="1.5" PointX="1.5" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.C_Cost_Unified_Codes" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.IndirectCostItems" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.Item_Breakdowns" Width="1.5" PointX="7.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.Projects" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.sysdiagrams" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CostExternalModel.Units" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <AssociationConnector Association="CostExternalModel.FK_BOQ_Items__Cost_Project_Codes_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_BOQ_Items_BOQ_Items3" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_BOQ_Items_BOQs" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_BOQ_Items_Units" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_Item_Breakdowns_BOQ_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_BOQs_Contracts" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_IndirectCostItems_BOQs" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_Item_Breakdowns_BreakdownItemType" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK___Cost_Ind__Indir__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK___Cost_Ind__Projc__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_C_Cost_Project_Code_Categories__Cost_Project_Codes" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK___Cost_Pro__Paren__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_C_Cost_Unified_Codes_Cost_Project_Codes" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_Cost_Project_Codes__Cost_Project_Codes_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_Projects__Cost_Project_Codes" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_C_Cost_Unified_Code_Category_Cost_Unified_Codes" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK___Cost_Uni__Paren__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="CostExternalModel.FK_IndirectCostItems_IndirectCostItems" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

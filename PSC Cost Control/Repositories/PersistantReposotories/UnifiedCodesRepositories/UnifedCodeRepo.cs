@@ -15,7 +15,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
     {
         protected override TablesEnum Table => TablesEnum.C_Cost_Unified_Codes;
 
-        public UnifedCodeRepo(PSC_COST3Entities context) : base(context)
+        public UnifedCodeRepo(ApplicationContext context) : base(context)
         {
         }
 
