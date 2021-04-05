@@ -23,12 +23,12 @@ using System.Collections;
 using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
 using PSC_Cost_Control.Helper.TreeListHandler;
 
-namespace PSC_Cost_Control.Forms.Project_Code
+namespace PSC_Cost_Control.Forms.Unified_Code
 {
-    public partial class Frm_ProjectCode_Show : DevExpress.XtraEditors.XtraForm
+    public partial class Frm_UnifiedCode_Show : DevExpress.XtraEditors.XtraForm
     {
         readonly Static st = new Static();
-        public Frm_ProjectCode_Show()
+        public Frm_UnifiedCode_Show()
         {
             InitializeComponent();
         }

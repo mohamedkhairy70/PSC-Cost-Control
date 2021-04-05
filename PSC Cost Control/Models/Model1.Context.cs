@@ -40,8 +40,8 @@ namespace PSC_Cost_Control.Models
         public virtual DbSet<IndirectCostItems> IndirectCostItems { get; set; }
         public virtual DbSet<Item_Breakdowns> Item_Breakdowns { get; set; }
         public virtual DbSet<Projects> Projects { get; set; }
-        public virtual DbSet<Units> Units { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Units> Units { get; set; }
     
         public virtual int f_Cost_SP_Insert_Project_Codes()
         {
@@ -276,6 +276,24 @@ namespace PSC_Cost_Control.Models
         public virtual int f_Cost_SP_Insert_Indirect_Project_Codes_Summerizng()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_SP_Insert_Indirect_Project_Codes_Summerizng");
+        }
+    
+        public virtual int f_COST_Register_Items_To_ProjectCodes(string type)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_COST_Register_Items_To_ProjectCodes", typeParameter);
+        }
+    
+        public virtual int f_Cost_UPdate_Items_Registeration(string type)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_UPdate_Items_Registeration", typeParameter);
         }
     }
 }

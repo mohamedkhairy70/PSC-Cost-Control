@@ -11,20 +11,24 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
 using PSC_Cost_Control.Models;
+using PSC_Cost_Control.Services.ProjectCodesServices;
+using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
 
 namespace PSC_Cost_Control.Forms.Project_Code
 {
     public partial class Frm_Categories_ProjectCode : DevExpress.XtraEditors.XtraForm
     {
-        ProjectCodesCategoriesRepo categoriesRepo;
-        
-        PSC_COST3Entities context = new PSC_COST3Entities();
+        ProjectCodeCategoryService _categoryService;
+
         public Frm_Categories_ProjectCode()
         {
             InitializeComponent();
-            categoriesRepo = new ProjectCodesCategoriesRepo(context);
+            
         }
-
+        public Frm_Categories_ProjectCode(ProjectCodesCategoriesRepo categoryService) : this()
+        {
+            _categoryService = new ProjectCodeCategoryService(categoryService);
+        }
 
 
         #region My Method for my From
@@ -32,45 +36,19 @@ namespace PSC_Cost_Control.Forms.Project_Code
         {
             txt_Id.Clear();
             txt_Name.Clear();
-            GetAllData();
+            GetAllData().GetAwaiter();
         }
-        void GetAllData()
+        async Task GetAllData()
         {
-            using (PSC_COST3Entities entities = new PSC_COST3Entities())
-            {
-                dataGridView1.DataSource = entities.C_Cost_Project_Code_Categories.ToList();
-            };
-             
+           // var Resualt = await _categoryService.GetCategoriesAsync();
+           // dataGridView1.DataSource = Resualt;
         }
-        void AddData(string _Neme)
-        {
-            bool testAdd = context.C_Cost_Project_Code_Categories.Any(x => x.Name == _Neme);
-            if (testAdd)
-            {
-                MessageBox.Show("This is Exists");
-                return;
-            }
-            else
-            {
-                using (PSC_COST3Entities forCheck = new PSC_COST3Entities())
-                {
-                    bool testAddForCheck = forCheck.C_Cost_Project_Code_Categories.Any(x => x.Name == _Neme);
-                    if (testAdd)
-                    {
-                        MessageBox.Show("This is Exists");
-                        return;
-                    }
-                    
-                }
-                C_Cost_Project_Code_Categories project_Code_Categories = new C_Cost_Project_Code_Categories()
-                {
-                    Name = _Neme
-                };
-                categoriesRepo.AddUnifiedCodeCategory(project_Code_Categories);
-                ClearAllData();
-            }
-            
-        }
+        //void AddData(string _Neme)
+        //{
+
+        //    categoryService.Add(_Neme);
+
+        //}
         bool ValidationData()
         {
             if (string.IsNullOrWhiteSpace(txt_Name.Text))
@@ -98,15 +76,15 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 if (ValidationData())
                 {
                     //Add Cateogry
-                    AddData(txt_Name.Text);
+                    //AddData(txt_Name.Text);
                 }
             }
         }
 
         private void Frm_Categories_ProjectCode_Load(object sender, EventArgs e)
         {
-            
-           
+
+            ClearAllData();
         }
     }
 }

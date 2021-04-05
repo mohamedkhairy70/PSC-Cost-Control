@@ -20,6 +20,7 @@ namespace PSC_Cost_Control.Models
             this.C_Cost_Direct_Project_Codes_Summerizng = new HashSet<C_Cost_Direct_Project_Codes_Summerizng>();
         }
     
+        public int Id { get; set; }
         public int Project_Code_Id { get; set; }
         public int Boq_Item_Id { get; set; }
     

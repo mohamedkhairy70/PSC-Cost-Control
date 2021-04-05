@@ -14,6 +14,7 @@ namespace PSC_Cost_Control.Models
     
     public partial class C_Cost_Indirect_Project_Code_Summerizing
     {
+        public int Id { get; set; }
         public int Projcet_Code_Id { get; set; }
         public int Indirect_Cost_Item_Id { get; set; }
         public decimal Planned_Price { get; set; }
