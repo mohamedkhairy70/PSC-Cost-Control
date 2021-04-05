@@ -6,7 +6,7 @@ using System.Data;
 namespace PSC_Cost_Control.Models.SPs
 {
     [StoredProcedure("_Cost_SP_Insert_Project_Codes")]
-    public class ProjectCodesInserion
+    public class ProjectCodesInserionSP
     {
         [StoredProcedureParameter(SqlDbType.Udt)]
         public List<ProjectCodeUdT> list { set; get; }

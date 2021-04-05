@@ -32,13 +32,13 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
         public async Task AddProjectCodes(List<ProjectCodeUdT> codes)
         {
 
-            var proc = new ProjectCodesInserion()
+            var proc = new ProjectCodesInserionSP()
             {
                 list = codes
             };
 
 
-            await Context.Database.ExecuteStoredProcedureAsync<ProjectCodesInserion>(proc);
+            await Context.Database.ExecuteStoredProcedureAsync<ProjectCodesInserionSP>(proc);
         }
 
         public async Task UpdateProjectCodes(List<ProjectCodeUdT> codes, int projectId)
