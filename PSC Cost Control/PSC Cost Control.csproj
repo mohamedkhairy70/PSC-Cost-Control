@@ -120,6 +120,8 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DTO\DirectItemProjectCode.cs" />
+    <Compile Include="Models\DTO\IItemPair.cs" />
+    <Compile Include="Models\DTO\IItemPairWithId.cs" />
     <Compile Include="Models\DTO\InDirectItemProjectCode.cs" />
     <Compile Include="Models\IndirectCostItems.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -133,6 +135,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SPs\RegisterItemsToProjectCodeSP.cs" />
+    <Compile Include="Models\SPs\UpdateItemsRegisterationSP.cs" />
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -141,6 +144,9 @@
     <Compile Include="Models\Units.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\DirectItemRegisterationRepo.cs" />
+    <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\IndirectCostItemRegisterationRepo.cs" />
+    <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\RegisterItem.cs" />
     <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\IProjectCodesCategoriesRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ProjectCodesRepositories\IProjectCodesRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\IUnifedCodeRepo.cs" />
