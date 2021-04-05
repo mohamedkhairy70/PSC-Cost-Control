@@ -24,9 +24,9 @@ namespace PSC_Cost_Control.Factories.TrackingEntitiesFactory
 
         public void Commit()
         {
-            _persistent.Add(_added);
-            _persistent.Update(_udated);
-            _persistent.Delete(_deleted);
+            _persistent.AddCollection(_added);
+            _persistent.UpdateCollction(_udated);
+            _persistent.DeleteCollection(_deleted);
         }
 
         public void TrackCollection(IEnumerable<T> entities)

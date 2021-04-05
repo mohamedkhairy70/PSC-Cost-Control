@@ -52,7 +52,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
             Context.f_COST_Update_Project_Code(codeId, code.Description, code.UnifiedCodeId, code.CategoryId, code.Code, code.parent);
         }
 
-        public async Task Add(IEnumerable<C_Cost_Project_Codes> entities)
+        public async Task AddCollection(IEnumerable<C_Cost_Project_Codes> entities)
         {
             await AddProjectCodes(
                 entities.Select(e => new ProjectCodeUdT
@@ -68,13 +68,13 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
                 .ToList());
         }
 
-        public void Update(IEnumerable<C_Cost_Project_Codes> entities)
+        public void UpdateCollction(IEnumerable<C_Cost_Project_Codes> entities)
         {
             foreach (var e in entities)
                 Context.f_COST_Update_Project_Code(e.Id, e.Description, e.Unified_Code_Id, e.Category_Id, e.Code, e.Parent);
         }
 
-        public void Delete(IEnumerable<C_Cost_Project_Codes> entities)
+        public void DeleteCollection(IEnumerable<C_Cost_Project_Codes> entities)
         {
             foreach (var e in entities)
                 Context.Delete_parent_With_HisChilds(this.Table.ToString(), e.Id);

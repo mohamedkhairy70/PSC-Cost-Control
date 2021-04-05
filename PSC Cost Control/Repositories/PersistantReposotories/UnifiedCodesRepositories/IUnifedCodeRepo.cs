@@ -8,12 +8,12 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
     {
         int NextId { get; set; }
 
-        Task Add(IEnumerable<C_Cost_Unified_Codes> entities);
+        Task AddCollection(IEnumerable<C_Cost_Unified_Codes> entities);
         Task AddUnifiedCodesAsync(List<C_Cost_Unified_Codes> codes);
         void Delete(C_Cost_Unified_Codes unified);
-        void Delete(IEnumerable<C_Cost_Unified_Codes> entities);
+        void DeleteCollection(IEnumerable<C_Cost_Unified_Codes> entities);
         Task<IEnumerable<C_Cost_Unified_Codes>> GetUnifiedCodesAsync();
         void Update(C_Cost_Unified_Codes code);
-        void Update(IEnumerable<C_Cost_Unified_Codes> entities);
+        void UpdateCollction(IEnumerable<C_Cost_Unified_Codes> entities);
     }
 }

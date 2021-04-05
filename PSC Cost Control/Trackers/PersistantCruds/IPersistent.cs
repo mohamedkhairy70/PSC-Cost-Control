@@ -8,9 +8,9 @@ namespace PSC_Cost_Control.Factories.PersistantCruds
 {
     public interface IPersistent<T>
     {
-        Task Add(IEnumerable<T> entities);
-        void Update(IEnumerable<T> entities);
-        void Delete(IEnumerable<T> entities);
+        Task AddCollection(IEnumerable<T> entities);
+        void UpdateCollction(IEnumerable<T> entities);
+        void DeleteCollection(IEnumerable<T> entities);
 
     }
 }

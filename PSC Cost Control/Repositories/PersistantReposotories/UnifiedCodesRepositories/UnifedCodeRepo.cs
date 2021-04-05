@@ -50,7 +50,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
             Context.f_COST_Update_Unified_Code(code.Id, code.Title, code.Category_Id, code.Code, code.Parent);
         }
 
-        public async Task Add(IEnumerable<C_Cost_Unified_Codes> entities)
+        public async Task AddCollection(IEnumerable<C_Cost_Unified_Codes> entities)
         {
             await AddUnifiedCodesAsync(entities.ToList());
         }
@@ -59,13 +59,13 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
         {
             Context.f_COST_Delete_By_Id(Table.ToString(), unified.Id);
         }
-        public void Update(IEnumerable<C_Cost_Unified_Codes> entities)
+        public void UpdateCollction(IEnumerable<C_Cost_Unified_Codes> entities)
         {
             foreach (var e in entities)
                 Update(e);
         }
 
-        public void Delete(IEnumerable<C_Cost_Unified_Codes> entities)
+        public void DeleteCollection(IEnumerable<C_Cost_Unified_Codes> entities)
         {
             entities.ToList()
                 .ForEach(e => Delete(e));
