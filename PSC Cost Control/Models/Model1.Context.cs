@@ -42,6 +42,7 @@ namespace PSC_Cost_Control.Models
         public virtual DbSet<Projects> Projects { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Units> Units { get; set; }
+        public virtual DbSet<C_Cost_Direct_Project_Codes_Summerizng1> C_Cost_Direct_Project_Codes_Summerizng1Set { get; set; }
     
         public virtual int f_Cost_SP_Insert_Project_Codes()
         {

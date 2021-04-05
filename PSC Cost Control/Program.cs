@@ -44,7 +44,7 @@ namespace PSC_Cost_Control
             builder.RegisterType<UnifiedCodeCategoriesRepo>().As<IUnifiedCodeCategoriesRepo>();
                //end of registeration of service 
 
-            var container = builder.Build();
+       //     var container = builder.Build();
             
         }
     }

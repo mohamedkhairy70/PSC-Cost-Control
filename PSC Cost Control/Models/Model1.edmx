@@ -148,11 +148,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="x">
-          <Property Name="id" Type="int" />
-        </EntityType>-->
         <Association Name="FK___Cost_Ind__Indir__6477ECF3">
           <End Role="IndirectCostItems" Type="Self.IndirectCostItems" Multiplicity="1" />
           <End Role="C_Cost_Indirect_Project_Code_Summerizing" Type="Self.C_Cost_Indirect_Project_Code_Summerizing" Multiplicity="*" />
@@ -202,7 +197,9 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng">
-          <End Role="C_Cost_Project_Codes_Items" Type="Self.C_Cost_Project_Codes_Items" Multiplicity="1" />
+          <End Role="C_Cost_Project_Codes_Items" Type="Self.C_Cost_Project_Codes_Items" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="C_Cost_Direct_Project_Codes_Summerizng" Type="Self.C_Cost_Direct_Project_Codes_Summerizng" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="C_Cost_Project_Codes_Items">
@@ -419,7 +416,6 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
           <Parameter Name="code" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="parent" Type="int" Mode="In" />
         </Function>
-        <Function Name="f_COST_Update_Project_Codes_Hireachy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_COST_Update_Project_Codes_Hireachy" />
         <Function Name="f_COST_Update_Unified_Code" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_COST_Update_Unified_Code">
           <Parameter Name="forId" Type="int" Mode="In" />
           <Parameter Name="title" Type="nvarchar" Mode="In" />
@@ -728,6 +724,15 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
             <End Role="IndirectCostItems" EntitySet="IndirectCostItems" />
             <End Role="IndirectCostItems1" EntitySet="IndirectCostItems" />
           </AssociationSet>
+          <EntitySet Name="C_Cost_Direct_Project_Codes_Summerizng1Set" EntityType="PSC_COST3Model.C_Cost_Direct_Project_Codes_Summerizng1" />
+          <AssociationSet Name="FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng1" Association="PSC_COST3Model.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng1">
+            <End Role="BreakdownItemType" EntitySet="BreakdownItemType" />
+            <End Role="C_Cost_Direct_Project_Codes_Summerizng1" EntitySet="C_Cost_Direct_Project_Codes_Summerizng1Set" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng1" Association="PSC_COST3Model.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng1">
+            <End Role="C_Cost_Project_Codes_Items" EntitySet="C_Cost_Project_Codes_Items" />
+            <End Role="C_Cost_Direct_Project_Codes_Summerizng1" EntitySet="C_Cost_Direct_Project_Codes_Summerizng1Set" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="BOQ_Items">
           <Key>
@@ -771,6 +776,7 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
           <Property Name="TranslateName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="C_Cost_Direct_Project_Codes_Summerizng" Relationship="PSC_COST3Model.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng" FromRole="BreakdownItemType" ToRole="C_Cost_Direct_Project_Codes_Summerizng" />
           <NavigationProperty Name="Item_Breakdowns" Relationship="PSC_COST3Model.FK_Item_Breakdowns_BreakdownItemType" FromRole="BreakdownItemType" ToRole="Item_Breakdowns" />
+          <NavigationProperty Name="C_Cost_Direct_Project_Codes_Summerizng1" Relationship="PSC_COST3Model.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng1" FromRole="BreakdownItemType" ToRole="C_Cost_Direct_Project_Codes_Summerizng1" />
         </EntityType>
         <EntityType Name="C_Cost_Direct_Project_Codes_Summerizng">
           <Key>
@@ -833,6 +839,7 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
           <NavigationProperty Name="BOQ_Items" Relationship="PSC_COST3Model.FK_BOQ_Items__Cost_Project_Codes_Items" FromRole="C_Cost_Project_Codes_Items" ToRole="BOQ_Items" />
           <NavigationProperty Name="C_Cost_Direct_Project_Codes_Summerizng" Relationship="PSC_COST3Model.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng" FromRole="C_Cost_Project_Codes_Items" ToRole="C_Cost_Direct_Project_Codes_Summerizng" />
           <NavigationProperty Name="C_Cost_Project_Codes" Relationship="PSC_COST3Model.FK_Cost_Project_Codes__Cost_Project_Codes_Items" FromRole="C_Cost_Project_Codes_Items" ToRole="C_Cost_Project_Codes" />
+          <NavigationProperty Name="C_Cost_Direct_Project_Codes_Summerizng1" Relationship="PSC_COST3Model.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng1" FromRole="C_Cost_Project_Codes_Items" ToRole="C_Cost_Direct_Project_Codes_Summerizng1" />
         </EntityType>
         <EntityType Name="C_Cost_Unified_Code_Category">
           <Key>
@@ -1148,6 +1155,44 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="C_Cost_Direct_Project_Codes_Summerizng1">
+          <Key>
+            <PropertyRef Name="Project_Code_Item_Id" />
+            <PropertyRef Name="Break_Down_Type_Id" />
+          </Key>
+          <Property Name="Project_Code_Item_Id" Type="Int32" Nullable="false" />
+          <Property Name="Break_Down_Type_Id" Type="Int16" Nullable="false" />
+          <Property Name="Planned_Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Ref_Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="BreakdownItemType" Relationship="PSC_COST3Model.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng1" FromRole="C_Cost_Direct_Project_Codes_Summerizng1" ToRole="BreakdownItemType" />
+          <NavigationProperty Name="C_Cost_Project_Codes_Items" Relationship="PSC_COST3Model.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng1" FromRole="C_Cost_Direct_Project_Codes_Summerizng1" ToRole="C_Cost_Project_Codes_Items" />
+        </EntityType>
+        <Association Name="FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng1">
+          <End Type="PSC_COST3Model.BreakdownItemType" Role="BreakdownItemType" Multiplicity="1" />
+          <End Type="PSC_COST3Model.C_Cost_Direct_Project_Codes_Summerizng1" Role="C_Cost_Direct_Project_Codes_Summerizng1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BreakdownItemType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="C_Cost_Direct_Project_Codes_Summerizng1">
+              <PropertyRef Name="Break_Down_Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng1">
+          <End Type="PSC_COST3Model.C_Cost_Project_Codes_Items" Role="C_Cost_Project_Codes_Items" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PSC_COST3Model.C_Cost_Direct_Project_Codes_Summerizng1" Role="C_Cost_Direct_Project_Codes_Summerizng1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_Cost_Project_Codes_Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="C_Cost_Direct_Project_Codes_Summerizng1">
+              <PropertyRef Name="Project_Code_Item_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1160,7 +1205,6 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
           <FunctionImportMapping FunctionImportName="f_Cost_Add_Unified_Codes_Category" FunctionName="PSC_COST3Model.Store.f_Cost_Add_Unified_Codes_Category" />
           <FunctionImportMapping FunctionImportName="f_COST_Delete_By_Id" FunctionName="PSC_COST3Model.Store.f_COST_Delete_By_Id" />
           <FunctionImportMapping FunctionImportName="f_COST_Update_Project_Code" FunctionName="PSC_COST3Model.Store.f_COST_Update_Project_Code" />
-          <FunctionImportMapping FunctionImportName="f_COST_Update_Project_Codes_Hireachy" FunctionName="PSC_COST3Model.Store.f_COST_Update_Project_Codes_Hireachy" />
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="PSC_COST3Model.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="PSC_COST3Model.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="PSC_COST3Model.Store.sp_dropdiagram" />
@@ -1203,16 +1247,6 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
                 <ScalarProperty Name="TranslateName" ColumnName="TranslateName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="C_Cost_Direct_Project_Codes_Summerizng">
-            <EntityTypeMapping TypeName="PSC_COST3Model.C_Cost_Direct_Project_Codes_Summerizng">
-              <MappingFragment StoreEntitySet="C_Cost_Direct_Project_Codes_Summerizng">
-                <ScalarProperty Name="Ref_Price" ColumnName="Ref_Price" />
-                <ScalarProperty Name="Planned_Price" ColumnName="Planned_Price" />
-                <ScalarProperty Name="Break_Down_Type_Id" ColumnName="Break_Down_Type_Id" />
-                <ScalarProperty Name="Project_Code_Item_Id" ColumnName="Project_Code_Item_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1321,6 +1355,16 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
               <MappingFragment StoreEntitySet="Units">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C_Cost_Direct_Project_Codes_Summerizng1Set">
+            <EntityTypeMapping TypeName="PSC_COST3Model.C_Cost_Direct_Project_Codes_Summerizng1">
+              <MappingFragment StoreEntitySet="C_Cost_Direct_Project_Codes_Summerizng">
+                <ScalarProperty Name="Ref_Price" ColumnName="Ref_Price" />
+                <ScalarProperty Name="Planned_Price" ColumnName="Planned_Price" />
+                <ScalarProperty Name="Break_Down_Type_Id" ColumnName="Break_Down_Type_Id" />
+                <ScalarProperty Name="Project_Code_Item_Id" ColumnName="Project_Code_Item_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

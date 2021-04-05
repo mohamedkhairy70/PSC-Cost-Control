@@ -40,6 +40,9 @@
         <AssociationConnector Association="PSC_COST3Model.FK_C_Cost_Unified_Code_Category_Cost_Unified_Codes" />
         <AssociationConnector Association="PSC_COST3Model.FK___Cost_Uni__Paren__656C112C" />
         <AssociationConnector Association="PSC_COST3Model.FK_IndirectCostItems_IndirectCostItems" />
+        <EntityTypeShape EntityType="PSC_COST3Model.C_Cost_Direct_Project_Codes_Summerizng1" Width="1.5" PointX="9.75" PointY="4.875" />
+        <AssociationConnector Association="PSC_COST3Model.FK_BREAK_DOWN_ITEM_TYPE_Cost_Direct_Project_Codes_Summerizng1" />
+        <AssociationConnector Association="PSC_COST3Model.FK__Cost_Project_Codes_Items__Cost_Direct_Project_Codes_Summerizng1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
