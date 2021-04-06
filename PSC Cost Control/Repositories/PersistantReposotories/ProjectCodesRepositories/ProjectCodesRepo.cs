@@ -24,7 +24,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
 
         public int NextId { get => Context.C_Cost_Project_Codes.Max(c => c.Id) + 1; set => NextId = value; }
 
-        public async Task<IEnumerable<C_Cost_Project_Codes>> GetProjectCodesWithItsItsUnofoedAsync(int projectId)
+        public async Task<IEnumerable<C_Cost_Project_Codes>> GetProjectCodesWithItsItsUnifiedAsync(int projectId)
         {
             return await Context.C_Cost_Project_Codes.Where(c => c.Project_Id == projectId).ToListAsync();
         }
