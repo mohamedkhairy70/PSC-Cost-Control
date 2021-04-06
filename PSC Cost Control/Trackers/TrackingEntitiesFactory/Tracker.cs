@@ -1,26 +1,31 @@
-﻿using PSC_Cost_Control.Factories.PersistantCruds;
-using PSC_Cost_Control.Helper.Interfaces;
+﻿using PSC_Cost_Control.Helper.Interfaces;
+using PSC_Cost_Control.Trackers.PersistantCruds;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PSC_Cost_Control.Factories.TrackingEntitiesFactory
+namespace PSC_Cost_Control.Trackers
 {
-    public  class Tracker<T> where T:IHasId
+   
+    public class Tracker<T> : ITracker<T> where T : IHasId
     {
         private IDictionary<int, T> _base;
-        public  LinkedList<T> _added;
+        private LinkedList<T> _added;
         private LinkedList<T> _deleted;
         private LinkedList<T> _udated;
         private IPersistent<T> _persistent;
-        public Tracker(IPersistent<T> persistent,IEnumerable<T> origin)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="persistent">Repository that handle Commiting data </param>
+        /// <param name="origin">the existed data.if tracking is for database handling,then origin is the database existed data.</param>
+        public Tracker(IPersistent<T> persistent, IEnumerable<T> origin)
         {
             _persistent = persistent;
             _base = origin.ToDictionary(o => o.Id);
-            _base = new Dictionary<int,T>();
             _added = new LinkedList<T>();
             _udated = new LinkedList<T>();
             _deleted = new LinkedList<T>();
-       }
+        }
 
         public void Commit()
         {
@@ -39,8 +44,9 @@ namespace PSC_Cost_Control.Factories.TrackingEntitiesFactory
 
         private void HandleDelete(IEnumerable<T> entities)
         {
-            var map2 = entities.ToDictionary(e => e.Id);
-            foreach(var o in _base)
+            var map2 = entities.Where(e=>e.Id!=0).ToDictionary(e => e.Id);
+
+            foreach (var o in _base)
                 if (!map2.ContainsKey(o.Key))
                     Delete(o.Value);
         }
@@ -52,7 +58,7 @@ namespace PSC_Cost_Control.Factories.TrackingEntitiesFactory
             {
                 var ob = _base[entity.Id];
                 if (!ob.Equals(entity))
-                    Update(entity);          
+                    Update(entity);
             }
         }
         private void Add(T entity)
@@ -67,5 +73,11 @@ namespace PSC_Cost_Control.Factories.TrackingEntitiesFactory
         {
             _deleted.AddLast(entity);
         }
+
+        public IEnumerable<T> GetNewEntities() => _added;
+
+        public IEnumerable<T> GetUpdatedEntities() => _udated;
+        public IEnumerable<T> GetDeletedEntities() => _deleted;
+         
     }
 }

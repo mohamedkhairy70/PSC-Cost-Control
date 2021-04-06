@@ -1,8 +1,7 @@
-﻿using PSC_Cost_Control.Factories.PersistantCruds;
-using PSC_Cost_Control.Factories.TrackingEntitiesFactory;
-using PSC_Cost_Control.Models;
+﻿using PSC_Cost_Control.Models;
 using PSC_Cost_Control.Models.DTO;
 using PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisterationRepositories;
+using PSC_Cost_Control.Trackers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -44,16 +44,34 @@ namespace UnitTestProject1.HelpersUnitTestings
         }
 
         [Test]
-        public void ToSequentialList_ReturnAlistWithValidParentsAndCodes()
+        public void ToSequentialList_AssertListHas4Elements()
         {
             var list = _tree.ToSequentialList<Hi>();
             Assert.That(list.Count, Is.EqualTo(4));
-
-            Assert.That(list[0].Parent, Is.Null);
-            Assert.That(list[0].Code, Is.Not.Null.And.Not.Empty);
-
-           
         }
+
+        [Test]
+        public void ToSequentialList_AssertThatCodeIsValid()
+        {
+            var list = _tree.ToSequentialList<Hi>();
+            var p1Code = list[0].Code;// p1 Node
+            var p22Code = list[3].Code;//p22 Node
+            var p1CodeLevel = p1Code.Split('/').Where(s=>!string.IsNullOrEmpty(s)).ToList();
+            var p22CodeLevel = p22Code.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
+            Assert.That(p1CodeLevel, Has.Count.EqualTo(1)); //level 0
+            Assert.That(p22CodeLevel, Has.Count.EqualTo(2)); //level 1
+        }
+
+        [Test]
+        public void ToSequentialList_AssertThatParentIsValid()
+        {
+            var list = _tree.ToSequentialList<Hi>();
+            var p2 = list[2];
+            var p22 = list[3];
+            Assert.That(p2.Parent, Is.Null);
+            Assert.That(p22.Parent, Is.SameAs(p2));
+        }
+
 
     }
 }

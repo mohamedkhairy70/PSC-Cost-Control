@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PSC_Cost_Control.Models;
 using DevExpress.XtraTreeList.Nodes;
 using DevExpress.XtraTreeList;
 using PSC_Cost_Control.Helper.Interfaces;
@@ -26,7 +23,7 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
             foreach(var n in parents)
             {
                 //code is generated in random
-                var code = $"/{new Random().Next(10, 10000)}/";
+                var code = $"/{GetGuid()}/";
 
                 //add code and parent to object
                 var o = (T)n.Tag;
@@ -39,16 +36,18 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
             return list;
         }
 
+        private static int GetGuid() => new Random().Next(10, 1000000);
+
         private static void ToList_Rec<T>(TreeListNode node,string code,List<T> rt) where T : IHireichy
         {
             var childs = node.Nodes.ToList();
             foreach(var n in childs)
             {
-                var newCode = $"{code}{new Random().Next(1, 1000)}/";
+                var newCode = $"{code}{GetGuid()}/";
 
                 var o = (T)n.Tag;
 
-                o.HParent = ((T)n.ParentNode.Tag);
+                o.HParent = (T)n.ParentNode.Tag;
                 o.HCode = newCode;
 
                 rt.Add(o);
