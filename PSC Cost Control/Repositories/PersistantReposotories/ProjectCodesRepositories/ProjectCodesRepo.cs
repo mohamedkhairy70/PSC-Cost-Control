@@ -13,7 +13,7 @@ using PSC_Cost_Control.Trackers.PersistantCruds;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories
 {
-    public class ProjectCodesRepo : HireachyRepo<C_Cost_Project_Codes>, IPersistent<C_Cost_Project_Codes>
+    public class ProjectCodesRepo : HireachyRepo<C_Cost_Project_Codes>, IPersistent<C_Cost_Project_Codes>, IProjectCodesRepo
     {
         public ProjectCodesRepo(ApplicationContext context) : base(context)
         {
@@ -43,7 +43,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
 
         public async Task UpdateProjectCodes(List<ProjectCodeUdT> codes, int projectId)
         {
-           // Context.Clear_Project_Codes(projectId);
+            // Context.Clear_Project_Codes(projectId);
             await AddProjectCodes(codes);
         }
 
@@ -76,9 +76,9 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
 
         public void DeleteCollection(IEnumerable<C_Cost_Project_Codes> entities)
         {
-          /**  foreach (var e in entities)
-                Context.Delete_parent_With_HisChilds(this.Table.ToString(), e.Id);
-          **/
+            /**  foreach (var e in entities)
+                  Context.Delete_parent_With_HisChilds(this.Table.ToString(), e.Id);
+            **/
         }
     }
 }

@@ -20,7 +20,7 @@ namespace PSC_Cost_Control.Services.ProjectCodesServices
         }
         public async Task<IEnumerable<C_Cost_Project_Codes>> GetProjectCodes(int projectId)
         {
-            return await _projectCodesRepo.GetProjectCodesWithItsItsUnofoedAsync(projectId);
+            return await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId);
         }
 
         public async Task<IEnumerable<C_Cost_Project_Codes>>NewCodesForProject(int projectId,List<C_Cost_Project_Codes> codes)
@@ -37,13 +37,13 @@ namespace PSC_Cost_Control.Services.ProjectCodesServices
                 parent=((C_Cost_Project_Codes)c.HParent).Id
             }).ToList();
             await _projectCodesRepo.AddProjectCodes(lUDT);
-            return await _projectCodesRepo.GetProjectCodesWithItsItsUnofoedAsync(projectId);
+            return await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId);
         }
 
         public async Task Update(int projectId,List<C_Cost_Project_Codes> codes)
         {
             var tracker = new Tracker<C_Cost_Project_Codes>((IPersistent<C_Cost_Project_Codes>)_projectCodesRepo,
-                await _projectCodesRepo.GetProjectCodesWithItsItsUnofoedAsync(projectId));
+                await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId));
             tracker.TrackCollection(codes);
             tracker.Commit();
         }
