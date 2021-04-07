@@ -23,13 +23,8 @@ namespace PSC_Cost_Control.Forms.Project_Code
         public Frm_Categories_ProjectCode()
         {
             InitializeComponent();
-            
+            _categoryService = new ProjectCodeCategoryService(new ProjectCodesCategoriesRepo(new PSC_COST3Entities()));
         }
-        public Frm_Categories_ProjectCode(ProjectCodesCategoriesRepo categoryService) : this()
-        {
-            _categoryService = new ProjectCodeCategoryService(categoryService);
-        }
-
 
         #region My Method for my From
         void ClearAllData()
@@ -40,15 +35,17 @@ namespace PSC_Cost_Control.Forms.Project_Code
         }
         async Task GetAllData()
         {
-           // var Resualt = await _categoryService.GetCategoriesAsync();
-           // dataGridView1.DataSource = Resualt;
+            var Resualt = await _categoryService.GetCategories();
+            dataGridView1.DataSource = Resualt;
         }
-        //void AddData(string _Neme)
-        //{
-
-        //    categoryService.Add(_Neme);
-
-        //}
+        void AddData(string _Neme)
+        {
+            //check if name is not null
+            if (ValidationData())
+            {
+                _categoryService.Add(_Neme);
+            }
+        }
         bool ValidationData()
         {
             if (string.IsNullOrWhiteSpace(txt_Name.Text))
@@ -70,14 +67,10 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 //Clear all Data 
                 ClearAllData();
             }
-            else
+            else if (btn.Caption == "Save")
             {
-                //check if name is not null
-                if (ValidationData())
-                {
-                    //Add Cateogry
-                    //AddData(txt_Name.Text);
-                }
+                //Add Cateogry
+                AddData(txt_Name.Text);
             }
         }
 

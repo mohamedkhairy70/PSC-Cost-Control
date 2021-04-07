@@ -22,17 +22,25 @@ using PSC_Cost_Control.Models.UDFs;
 using System.Collections;
 using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
 using PSC_Cost_Control.Helper.TreeListHandler;
+using PSC_Cost_Control.Services.DependencyApis;
+using PSC_Cost_Control.Services.ProjectCodesServices;
 
 namespace PSC_Cost_Control.Forms.Project_Code
 {
     public partial class Frm_ProjectCode_Show : DevExpress.XtraEditors.XtraForm
     {
+        public ExternalAPIs _externalAPIs;
+        public ProjectCodeCategoryService _categoryService;
+        public ProjectCodeService _projectCode;
         readonly Static st = new Static();
         public Frm_ProjectCode_Show()
         {
             InitializeComponent();
+            _externalAPIs = new ExternalAPIs(new Models.ApplicationContext());
+            _categoryService = new ProjectCodeCategoryService(new ProjectCodesCategoriesRepo(new Models.ApplicationContext()));
+            _projectCode = new ProjectCodeService(new ProjectCodesRepo(new Models.ApplicationContext()));
         }
-       
+
         private void windowsUIButtonPanel1_ButtonClick(object sender, ButtonEventArgs e)
         {
             WindowsUIButton btn = e.Button as WindowsUIButton;
@@ -113,11 +121,14 @@ namespace PSC_Cost_Control.Forms.Project_Code
         {
             try
             {
-                string NameProject = cm_Projects.SelectedText.ToString();
-                int Count = tree_ProjectCode.AllNodesCount;
-                List<ProjectCodeUdT> projectCodes = new List<ProjectCodeUdT>();
+                int IdProject = Convert.ToInt32(cm_Projects.SelectedValue);
 
-                DevExpress.XtraTreeList.TreeList xtraTreeList = tree_ProjectCode;
+                var ResualtProject = _projectCode.GetProjectCodes(IdProject).Result;
+                if (ResualtProject.Count() > 0)
+                {
+                    tree_ProjectCode.DataSource = ResualtProject;
+                    //tree_ProjectCode.KeyFieldName = 
+                }
 
 
 
@@ -247,7 +258,11 @@ namespace PSC_Cost_Control.Forms.Project_Code
             txt_Description.Enabled = false;
 
             cm_Projects.Enabled = true;
+            var ProjectList = _externalAPIs.GetProjectsAsync().Result;
             cm_Projects.SelectedItem = -1;
+            cm_Projects.DataSource = ProjectList;
+            cm_Projects.DisplayMember = "Name";
+            cm_Projects.ValueMember = "ContractId";
 
             tree_ProjectCode.DataSource = null;
         }
