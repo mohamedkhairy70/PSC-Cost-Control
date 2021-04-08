@@ -9,19 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
-using PSC_Cost_Control.Services.ProjectCodesServices;
+using PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories;
+using PSC_Cost_Control.Services.UnifiedCodesServices;
 
-namespace PSC_Cost_Control.Forms.Project_Code
+namespace PSC_Cost_Control.Forms.Unified_Code
 {
-    public partial class Frm_Categories_ProjectCode : DevExpress.XtraEditors.XtraForm
+    public partial class Frm_Categories_UnifiedCode : DevExpress.XtraEditors.XtraForm
     {
-        ProjectCodeCategoryService _categoryService;
+        UnifiedCodeCategoryService _categoryService;
 
-        public Frm_Categories_ProjectCode()
+        public Frm_Categories_UnifiedCode()
         {
             InitializeComponent();
-            _categoryService = new ProjectCodeCategoryService(new ProjectCodesCategoriesRepo(new Models.ApplicationContext()));
+            _categoryService = new UnifiedCodeCategoryService(new UnifiedCodeCategoriesRepo(new Models.ApplicationContext()));
         }
 
         #region My Method for my From
