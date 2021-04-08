@@ -258,5 +258,28 @@ namespace PSC_Cost_Control.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+    
+        public virtual int f_Cost_Delete_Parent_With_Childs(string table, Nullable<int> id)
+        {
+            var tableParameter = table != null ?
+                new ObjectParameter("table", table) :
+                new ObjectParameter("table", typeof(string));
+    
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_Delete_Parent_With_Childs", tableParameter, idParameter);
+        }
+    
+        public virtual int f_Cost_Update_Project_Codes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_Update_Project_Codes");
+        }
+    
+        public virtual int f_Cost_Update_Unified_Codes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("f_Cost_Update_Unified_Codes");
+        }
     }
 }
