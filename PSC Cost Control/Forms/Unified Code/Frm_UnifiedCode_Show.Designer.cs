@@ -46,13 +46,10 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.cm_Categories = new System.Windows.Forms.ComboBox();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
-            this.cm_Projects = new System.Windows.Forms.ComboBox();
-            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.windowsUIButtonPanel1 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonPanel();
             this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.tree_ProjectCode = new DevExpress.XtraTreeList.TreeList();
+            this.tree_UnifiedCode = new DevExpress.XtraTreeList.TreeList();
             this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             this.dragDropEvents1 = new DevExpress.Utils.DragDrop.DragDropEvents(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
@@ -60,12 +57,10 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             this.groupControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
-            this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).BeginInit();
             this.panelControl3.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tree_ProjectCode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tree_UnifiedCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,18 +70,17 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1045, 349);
+            this.panelControl1.Size = new System.Drawing.Size(1045, 282);
             this.panelControl1.TabIndex = 0;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.groupControl2);
-            this.panel1.Controls.Add(this.groupControl1);
             this.panel1.Controls.Add(this.windowsUIButtonPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1041, 345);
+            this.panel1.Size = new System.Drawing.Size(1041, 278);
             this.panel1.TabIndex = 0;
             // 
             // groupControl2
@@ -96,11 +90,11 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             this.groupControl2.Controls.Add(this.labelControl4);
             this.groupControl2.Controls.Add(this.cm_Categories);
             this.groupControl2.Controls.Add(this.labelControl2);
-            this.groupControl2.Location = new System.Drawing.Point(85, 94);
+            this.groupControl2.Location = new System.Drawing.Point(79, 19);
             this.groupControl2.Name = "groupControl2";
             this.groupControl2.Size = new System.Drawing.Size(870, 117);
             this.groupControl2.TabIndex = 2;
-            this.groupControl2.Text = "Project Code";
+            this.groupControl2.Text = "Unified Code";
             // 
             // txt_Description
             // 
@@ -142,41 +136,6 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             this.labelControl2.TabIndex = 2;
             this.labelControl2.Text = "Categories :";
             // 
-            // groupControl1
-            // 
-            this.groupControl1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.groupControl1.Controls.Add(this.cm_Projects);
-            this.groupControl1.Controls.Add(this.labelControl1);
-            this.groupControl1.Location = new System.Drawing.Point(242, 11);
-            this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(605, 73);
-            this.groupControl1.TabIndex = 1;
-            this.groupControl1.Text = "Projects";
-            // 
-            // cm_Projects
-            // 
-            this.cm_Projects.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.cm_Projects.FormattingEnabled = true;
-            this.cm_Projects.Items.AddRange(new object[] {
-            "Concrete 300",
-            "Concrete 350",
-            "Concrete 400"});
-            this.cm_Projects.Location = new System.Drawing.Point(99, 29);
-            this.cm_Projects.Name = "cm_Projects";
-            this.cm_Projects.Size = new System.Drawing.Size(420, 27);
-            this.cm_Projects.TabIndex = 1;
-            this.cm_Projects.DropDownClosed += new System.EventHandler(this.cm_Projects_DropDownClosed);
-            // 
-            // labelControl1
-            // 
-            this.labelControl1.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.labelControl1.Appearance.Options.UseFont = true;
-            this.labelControl1.Location = new System.Drawing.Point(36, 32);
-            this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(57, 19);
-            this.labelControl1.TabIndex = 0;
-            this.labelControl1.Text = "Projects :";
-            // 
             // windowsUIButtonPanel1
             // 
             this.windowsUIButtonPanel1.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -200,10 +159,10 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("Delete", true, windowsUIButtonImageOptions5, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("Add Child", true, windowsUIButtonImageOptions6, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("Add Root", true, windowsUIButtonImageOptions7, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
-            new DevExpress.XtraBars.Docking2010.WindowsUIButton("New Project Code", true, windowsUIButtonImageOptions8, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("New Unified Code", true, windowsUIButtonImageOptions8, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false),
             new DevExpress.XtraBars.Docking2010.WindowsUISeparator(),
-            new DevExpress.XtraBars.Docking2010.WindowsUIButton("copy from another Project", true, windowsUIButtonImageOptions9, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false)});
-            this.windowsUIButtonPanel1.Location = new System.Drawing.Point(10, 234);
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("All Unified Code", true, windowsUIButtonImageOptions9, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, null, -1, false)});
+            this.windowsUIButtonPanel1.Location = new System.Drawing.Point(4, 159);
             this.windowsUIButtonPanel1.Name = "windowsUIButtonPanel1";
             this.windowsUIButtonPanel1.Size = new System.Drawing.Size(1021, 92);
             this.windowsUIButtonPanel1.TabIndex = 0;
@@ -214,62 +173,59 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             // 
             this.panelControl3.Controls.Add(this.panel2);
             this.panelControl3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelControl3.Location = new System.Drawing.Point(0, 349);
+            this.panelControl3.Location = new System.Drawing.Point(0, 282);
             this.panelControl3.Name = "panelControl3";
-            this.panelControl3.Size = new System.Drawing.Size(1045, 314);
+            this.panelControl3.Size = new System.Drawing.Size(1045, 381);
             this.panelControl3.TabIndex = 2;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.tree_ProjectCode);
+            this.panel2.Controls.Add(this.tree_UnifiedCode);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1041, 310);
+            this.panel2.Size = new System.Drawing.Size(1041, 377);
             this.panel2.TabIndex = 1;
             // 
-            // tree_ProjectCode
+            // tree_UnifiedCode
             // 
-            this.behaviorManager1.SetBehaviors(this.tree_ProjectCode, new DevExpress.Utils.Behaviors.Behavior[] {
+            this.behaviorManager1.SetBehaviors(this.tree_UnifiedCode, new DevExpress.Utils.Behaviors.Behavior[] {
             ((DevExpress.Utils.Behaviors.Behavior)(DevExpress.Utils.DragDrop.DragDropBehavior.Create(typeof(DevExpress.XtraTreeList.TreeListDragDropSource), true, true, true, true, this.dragDropEvents1)))});
-            this.tree_ProjectCode.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tree_ProjectCode.CustomizationFormBounds = new System.Drawing.Rectangle(684, 564, 260, 232);
-            this.tree_ProjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tree_ProjectCode.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.tree_ProjectCode.KeyFieldName = "Id";
-            this.tree_ProjectCode.Location = new System.Drawing.Point(0, 0);
-            this.tree_ProjectCode.Name = "tree_ProjectCode";
-            this.tree_ProjectCode.OptionsNavigation.AutoFocusNewNode = true;
-            this.tree_ProjectCode.OptionsSelection.MultiSelect = true;
-            this.tree_ProjectCode.OptionsView.AllowBandColumnsMultiRow = true;
-            this.tree_ProjectCode.ParentFieldName = "GetLevelNode";
-            this.tree_ProjectCode.Size = new System.Drawing.Size(1041, 310);
-            this.tree_ProjectCode.TabIndex = 0;
-            this.tree_ProjectCode.NodeChanged += new DevExpress.XtraTreeList.NodeChangedEventHandler(this.tree_ProjectCode_NodeChanged);
+            this.tree_UnifiedCode.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tree_UnifiedCode.CustomizationFormBounds = new System.Drawing.Rectangle(684, 564, 260, 232);
+            this.tree_UnifiedCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tree_UnifiedCode.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.tree_UnifiedCode.KeyFieldName = "Id";
+            this.tree_UnifiedCode.Location = new System.Drawing.Point(0, 0);
+            this.tree_UnifiedCode.Name = "tree_UnifiedCode";
+            this.tree_UnifiedCode.OptionsNavigation.AutoFocusNewNode = true;
+            this.tree_UnifiedCode.OptionsSelection.MultiSelect = true;
+            this.tree_UnifiedCode.OptionsView.AllowBandColumnsMultiRow = true;
+            this.tree_UnifiedCode.ParentFieldName = "GetLevelNode";
+            this.tree_UnifiedCode.Size = new System.Drawing.Size(1041, 377);
+            this.tree_UnifiedCode.TabIndex = 0;
+            this.tree_UnifiedCode.NodeChanged += new DevExpress.XtraTreeList.NodeChangedEventHandler(this.tree_UnifiedCode_NodeChanged);
             // 
-            // Frm_ProjectCode_Show
+            // Frm_UnifiedCode_Show
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1045, 663);
             this.Controls.Add(this.panelControl3);
             this.Controls.Add(this.panelControl1);
-            this.Name = "Frm_ProjectCode_Show";
-            this.Text = "Project Code Show";
-            this.Load += new System.EventHandler(this.Frm_ProjectCode_Show_Load);
+            this.Name = "Frm_UnifiedCode_Show";
+            this.Text = "Unified Code Show";
+            this.Load += new System.EventHandler(this.Frm_UnifiedCode_Show_Load);
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
             this.groupControl2.ResumeLayout(false);
             this.groupControl2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
-            this.groupControl1.ResumeLayout(false);
-            this.groupControl1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).EndInit();
             this.panelControl3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.tree_ProjectCode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tree_UnifiedCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
             this.ResumeLayout(false);
 
@@ -281,7 +237,7 @@ namespace PSC_Cost_Control.Forms.Unified_Code
         private DevExpress.XtraEditors.PanelControl panelControl3;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private DevExpress.XtraTreeList.TreeList tree_ProjectCode;
+        private DevExpress.XtraTreeList.TreeList tree_UnifiedCode;
         public DevExpress.XtraBars.Docking2010.WindowsUIButtonPanel windowsUIButtonPanel1;
         private DevExpress.Utils.Behaviors.BehaviorManager behaviorManager1;
         private DevExpress.Utils.DragDrop.DragDropEvents dragDropEvents1;
@@ -290,8 +246,5 @@ namespace PSC_Cost_Control.Forms.Unified_Code
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private System.Windows.Forms.ComboBox cm_Categories;
         private DevExpress.XtraEditors.LabelControl labelControl2;
-        private DevExpress.XtraEditors.GroupControl groupControl1;
-        private System.Windows.Forms.ComboBox cm_Projects;
-        private DevExpress.XtraEditors.LabelControl labelControl1;
     }
 }

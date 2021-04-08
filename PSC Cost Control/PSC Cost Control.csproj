@@ -80,6 +80,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Unified Code\Frm_Categories_UnifiedCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Unified Code\Frm_Categories_UnifiedCode.Designer.cs">
+      <DependentUpon>Frm_Categories_UnifiedCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Unified Code\Frm_UnifiedCode_Show.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,7 @@
     <Compile Include="Models\Units.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\BOQItemsRegisterationRepositories\BOQitemRegisterationRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\DirectItemRegisterationRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\IndirectCostItemRegisterationRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\RegisterItem.cs" />
@@ -228,6 +235,9 @@
     <Compile Include="Services\DependencyApis\ExternalAPI%27s.cs" />
     <Compile Include="Services\ProjectCodesServices\IProjectCodeService.cs" />
     <Compile Include="Services\ProjectCodesServices\ProjectCodeService.cs" />
+    <EmbeddedResource Include="Forms\Unified Code\Frm_Categories_UnifiedCode.resx">
+      <DependentUpon>Frm_Categories_UnifiedCode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Unified Code\Frm_UnifiedCode_Show.resx">
       <DependentUpon>Frm_UnifiedCode_Show.cs</DependentUpon>
     </EmbeddedResource>

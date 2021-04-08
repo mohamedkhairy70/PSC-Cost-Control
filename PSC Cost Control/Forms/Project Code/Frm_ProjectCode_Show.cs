@@ -94,23 +94,38 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 //Check if Project is Null
                 if (validationProjects())
                 {
-                    //Add Project Code To Treelist
+                    //Delete Project Code To Treelist
                     DeleteProjectCode();
 
                     //Clear Combobox Categore and text Description
                     ClearAllDataProjectCode();
                 }
             }
+            else if(btn.Caption == "Save Project")
+            {
+                //Check if Project is Null
+                if (validationProjects())
+                {
+                    //Add Project Code To Treelist
+                    if (tree_ProjectCode.AllNodesCount > 0)
+                    {
+                        AddProectCode(Convert.ToInt32(cm_Projects.SelectedValue));
+                    }
+                    else
+                    {
+                        MessageBox.Show("There's no data on the Project Code table. ");
+                    }
+                    //Clear Combobox Categore and text Description
+                    ClearAllDataProjectCode();
+                }
+                
+            }
+
         }
 
         private void Frm_ProjectCode_Show_Load(object sender, EventArgs e)
         {
             CreateColumns(tree_ProjectCode);
-            GetProjectCode(1);
-            //CreateNodes(tree_ProjectCode);
-            //AppendingNodes(tree_ProjectCode);
-            //RemovingNode(tree_ProjectCode);
-            //RemovingSelectedNodes(tree_ProjectCode);
             tree_ProjectCode.ExpandAll();
             DragDropManager.Default.DragOver += OnDragOver;
             DragDropManager.Default.DragDrop += OnDragDrop;
@@ -122,16 +137,9 @@ namespace PSC_Cost_Control.Forms.Project_Code
             try
             {
                 int IdProject = Convert.ToInt32(cm_Projects.SelectedValue);
-
-                var ResualtProject = _projectCode.GetProjectCodes(IdProject).Result;
-                if (ResualtProject.Count() > 0)
-                {
-                    tree_ProjectCode.DataSource = ResualtProject;
-                    //tree_ProjectCode.KeyFieldName = 
-                }
-
-
-
+                GetProjectCode(IdProject);
+                if(IdProject > 0)
+                    cm_Projects.Enabled = false;
             }
             catch { }
         }
@@ -147,15 +155,17 @@ namespace PSC_Cost_Control.Forms.Project_Code
             // Create three columns.
             tl.BeginUpdate();
             TreeListColumn col1 = tl.Columns.Add();
-            col1.Caption = "Code";
+            col1.Caption = "ProjectCode_Code";
             col1.VisibleIndex = 0;
-
             TreeListColumn col2 = tl.Columns.Add();
-            col2.Caption = "Discription";
+            col2.Caption = "ProjectCode_Description";
             col2.VisibleIndex = 1;
             TreeListColumn col3 = tl.Columns.Add();
-            col3.Caption = "Category";
+            col3.Caption = "Category_Name";
             col3.VisibleIndex = 2;
+            TreeListColumn col4 = tl.Columns.Add();
+            col4.Caption = "ProjectCode_Parent";
+            col4.VisibleIndex = 0;
             tl.EndUpdate();
         }
 
@@ -282,12 +292,13 @@ namespace PSC_Cost_Control.Forms.Project_Code
             if(cm_Projects.SelectedIndex < 0)
             {
                 MessageBox.Show("Please choose the project first.");
-                result = false;
+                return  false;
             }
             else
             {
                 result = true;
             }
+           
             return result;
         }
 
@@ -296,7 +307,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             bool result;
             if (string.IsNullOrWhiteSpace(cm_Categories.SelectedText))
             {
-                MessageBox.Show("Please choose the category to add the project code.");
+                MessageBox.Show("Please choose the category to add the Project Code.");
                 return false;
             }
             else
@@ -305,7 +316,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             }
             if (string.IsNullOrWhiteSpace(txt_Description.Text))
             {
-                MessageBox.Show("Please add the description of the project code to add the project code.");
+                MessageBox.Show("Please add the description of the Project Code to add the Project Code.");
                 return false;
             }
             else
@@ -358,11 +369,32 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
         void GetProjectCode(int _ProjectId)
         {
-            
+            var ResualtCategory = _categoryService.GetCategories().Result;
+            var ResualtProject = _projectCode.GetProjectCodes(_ProjectId).Result;
+            var innerJoin = from p in ResualtProject
+                            join c in ResualtCategory on p.Category_Id equals c.Id
+                            select new
+                            {
+                                ProjectCode_Code = p.Code,
+                                ProjectCode_Description = p.Description,
+                                ProjectCode_Parent = p.Parent,
+                                Category_Name = c.Name
+                            };
+            if (ResualtProject.Count() > 0)
+            {
+                tree_ProjectCode.DataSource = innerJoin;
+                tree_ProjectCode.KeyFieldName = "ProjectCode_Code";
+                tree_ProjectCode.ParentFieldName = "ProjectCode_Parent";
+            }
         }
-        void AddProectCode()
+
+        void AddProectCode(int _ProjectId)
         {
+            var Resault =  TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
+
+            _projectCode.NewCodesForProject(_ProjectId, Resault).ConfigureAwait(true);
         }
+
         #endregion Methods For my Form
 
         #region My Old Method

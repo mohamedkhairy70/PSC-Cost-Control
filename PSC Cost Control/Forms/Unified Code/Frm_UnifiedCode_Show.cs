@@ -20,90 +20,114 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.Utils.Serializing;
 using PSC_Cost_Control.Models.UDFs;
 using System.Collections;
-using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
+using PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories;
 using PSC_Cost_Control.Helper.TreeListHandler;
+using PSC_Cost_Control.Services.DependencyApis;
+using PSC_Cost_Control.Services.UnifiedCodesServices;
 
 namespace PSC_Cost_Control.Forms.Unified_Code
 {
     public partial class Frm_UnifiedCode_Show : DevExpress.XtraEditors.XtraForm
     {
+        public ExternalAPIs _externalAPIs;
+        public UnifiedCodeCategoryService _categoryService;
+        public UnifiedCodeService _UnifiedCode;
         readonly Static st = new Static();
         public Frm_UnifiedCode_Show()
         {
             InitializeComponent();
+            _externalAPIs = new ExternalAPIs(new Models.ApplicationContext());
+            _categoryService = new UnifiedCodeCategoryService(new UnifiedCodeCategoriesRepo(new Models.ApplicationContext()));
+            _UnifiedCode = new UnifiedCodeService(new UnifedCodeRepo(new Models.ApplicationContext()));
         }
-       
+
         private void windowsUIButtonPanel1_ButtonClick(object sender, ButtonEventArgs e)
         {
             WindowsUIButton btn = e.Button as WindowsUIButton;
-            if (btn.Caption == "New Project Code")
+            if (btn.Caption == "New Unified Code")
             {
-                //Clear all Data from Project Code Combobox Categore and text Description
-                ClearAllDataProjectCode();
+                //Clear all Data from Unified Code Combobox Categore and text Description
+                ClearAllDataUnifiedCode();
             }
             else if (btn.Caption == "New Project")
             {
-                //Clear all Data from Project Code Combobox Categore and text Description and Project
+                //Clear all Data from Unified Code Combobox Categore and text Description and Project
                 ClearAllDataProject();
             }
             else if (btn.Caption == "Add Root")
             {
-                //Check if Project is Null
-                if (validationProjects())
+
+
+                //Check if Category and description is Null
+                if (validationUnifiedCode())
                 {
+                    //Add Root Unified Code To Treelist
+                    AddRootUnifiedCode(cm_Categories.SelectedText, txt_Description.Text);
 
-                    //Check if Category and description is Null
-                    if (validationProjectCode())
-                    {
-                        //Add Root Project Code To Treelist
-                        AddRootProjectCode(cm_Categories.SelectedText, txt_Description.Text);
-
-                        //Clear Combobox Categore and text Description
-                        ClearAllDataProjectCode();
-                    }
+                    //Clear Combobox Categore and text Description
+                    ClearAllDataUnifiedCode();
                 }
+
             }
             else if (btn.Caption == "Add Child")
             {
-                //Check if Project is Null
-                if (validationProjects())
+                //Check if Category and description is Null
+                if (validationUnifiedCode())
                 {
+                    //Add Child Unified Code To Treelist
+                    AddChildUnifiedCode(cm_Categories.SelectedText, txt_Description.Text);
 
-                    //Check if Category and description is Null
-                    if (validationProjectCode())
-                    {
-                        //Add Child Project Code To Treelist
-                        AddChildProjectCode(cm_Categories.SelectedText, txt_Description.Text);
-
-                        //Clear Combobox Categore and text Description
-                        ClearAllDataProjectCode();
-                    }
+                    //Clear Combobox Categore and text Description
+                    ClearAllDataUnifiedCode();
                 }
-                
+
+
             }
             else if (btn.Caption == "Delete")
             {
                 //Check if Project is Null
-                if (validationProjects())
+                if (tree_UnifiedCode.AllNodesCount > 0)
                 {
-                    //Add Project Code To Treelist
-                    DeleteProjectCode();
+                    //Delete Unified Code To Treelist
+                    DeleteUnifiedCode();
 
                     //Clear Combobox Categore and text Description
-                    ClearAllDataProjectCode();
+                    ClearAllDataUnifiedCode();
                 }
             }
+            else if (btn.Caption == "Save Project")
+            {
+
+                //Add Unified Code To Treelist
+                if (tree_UnifiedCode.AllNodesCount > 0)
+                {
+                    AddProectCode();
+                }
+                else
+                {
+                    MessageBox.Show("There's no data on the Unified Code table. ");
+                }
+                //Clear Combobox Categore and text Description
+                ClearAllDataUnifiedCode();
+
+
+            }
+            else if(btn.Caption == "All Unified Code")
+            {
+                try
+                {
+                    GetUnifiedCode();
+
+                }
+                catch { }
+            }
+
         }
 
-        private void Frm_ProjectCode_Show_Load(object sender, EventArgs e)
+        private void Frm_UnifiedCode_Show_Load(object sender, EventArgs e)
         {
-            CreateColumns(tree_ProjectCode);
-            GetProjectCode(1);
-            //CreateNodes(tree_ProjectCode);
-            //AppendingNodes(tree_ProjectCode);
-            //RemovingNode(tree_ProjectCode);
-            //RemovingSelectedNodes(tree_ProjectCode);
-            tree_ProjectCode.ExpandAll();
+            CreateColumns(tree_UnifiedCode);
+            tree_UnifiedCode.ExpandAll();
             DragDropManager.Default.DragOver += OnDragOver;
             DragDropManager.Default.DragDrop += OnDragDrop;
             
@@ -111,21 +135,10 @@ namespace PSC_Cost_Control.Forms.Unified_Code
 
         private void cm_Projects_DropDownClosed(object sender, EventArgs e)
         {
-            try
-            {
-                string NameProject = cm_Projects.SelectedText.ToString();
-                int Count = tree_ProjectCode.AllNodesCount;
-                List<ProjectCodeUdT> projectCodes = new List<ProjectCodeUdT>();
-
-                DevExpress.XtraTreeList.TreeList xtraTreeList = tree_ProjectCode;
-
-
-
-            }
-            catch { }
+           
         }
 
-        private void tree_ProjectCode_NodeChanged(object sender, NodeChangedEventArgs e)
+        private void tree_UnifiedCode_NodeChanged(object sender, NodeChangedEventArgs e)
         {
 
         }
@@ -136,15 +149,17 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             // Create three columns.
             tl.BeginUpdate();
             TreeListColumn col1 = tl.Columns.Add();
-            col1.Caption = "Code";
+            col1.Caption = "UnifiedCode_Code";
             col1.VisibleIndex = 0;
-
             TreeListColumn col2 = tl.Columns.Add();
-            col2.Caption = "Discription";
+            col2.Caption = "UnifiedCode_Description";
             col2.VisibleIndex = 1;
             TreeListColumn col3 = tl.Columns.Add();
-            col3.Caption = "Category";
+            col3.Caption = "Category_Name";
             col3.VisibleIndex = 2;
+            TreeListColumn col4 = tl.Columns.Add();
+            col4.Caption = "UnifiedCode_Parent";
+            col4.VisibleIndex = 0;
             tl.EndUpdate();
         }
 
@@ -155,7 +170,7 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             e.Handled = true;
             if (e.Action == DragDropActions.None || e.InsertType == InsertType.None)
                 return;
-            if (e.Target == tree_ProjectCode)
+            if (e.Target == tree_UnifiedCode)
                 OnTreeListDrop(e);
 
             Cursor.Current = Cursors.Default;
@@ -188,27 +203,27 @@ namespace PSC_Cost_Control.Forms.Unified_Code
                 return;
             var destNode = GetDestNode(e.Location);
             int index = CalcDestNodeIndex(e, destNode);
-            tree_ProjectCode.BeginUpdate();
-            tree_ProjectCode.Selection.UnselectAll();
+            tree_UnifiedCode.BeginUpdate();
+            tree_UnifiedCode.Selection.UnselectAll();
             List<object> _items = new List<object>(items);
             foreach (object _item in _items)
             {
                 DataRowView rowView = _item as DataRowView;
-                TreeListNode node = tree_ProjectCode.AppendNode(rowView.Row.ItemArray, index == -1000 ? destNode : null);
+                TreeListNode node = tree_UnifiedCode.AppendNode(rowView.Row.ItemArray, index == -1000 ? destNode : null);
                 if (index > -1)
                 {
 
-                    tree_ProjectCode.MoveNode(node, destNode.ParentNode, true, index);
+                    tree_UnifiedCode.MoveNode(node, destNode.ParentNode, true, index);
                     index++;
                 }
                 if (e.Action != DragDropActions.Copy)
 
-                    tree_ProjectCode.SelectNode(node);
+                    tree_UnifiedCode.SelectNode(node);
                 if (node.ParentNode != null)
                     node.ParentNode.Expand();
             }
 
-            tree_ProjectCode.EndUpdate();
+            tree_UnifiedCode.EndUpdate();
         }
 
         int CalcDestNodeIndex(DragDropEventArgs e, TreeListNode destNode)
@@ -217,7 +232,7 @@ namespace PSC_Cost_Control.Forms.Unified_Code
                 return -1;
             if (e.InsertType == InsertType.AsChild)
                 return -1000;
-            var nodes = destNode.ParentNode == null ? tree_ProjectCode.Nodes : destNode.ParentNode.Nodes;
+            var nodes = destNode.ParentNode == null ? tree_UnifiedCode.Nodes : destNode.ParentNode.Nodes;
             int index = nodes.IndexOf(destNode);
             if (e.InsertType == InsertType.After)
                 return ++index;
@@ -226,8 +241,8 @@ namespace PSC_Cost_Control.Forms.Unified_Code
 
         TreeListNode GetDestNode(Point hitPoint)
         {
-            Point pt = tree_ProjectCode.PointToClient(hitPoint);
-            DevExpress.XtraTreeList.TreeListHitInfo ht = tree_ProjectCode.CalcHitInfo(pt);
+            Point pt = tree_UnifiedCode.PointToClient(hitPoint);
+            DevExpress.XtraTreeList.TreeListHitInfo ht = tree_UnifiedCode.CalcHitInfo(pt);
             TreeListNode destNode = ht.Node;
             if (destNode is TreeListAutoFilterNode)
                 return null;
@@ -246,42 +261,23 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             txt_Description.Text = "";
             txt_Description.Enabled = false;
 
-            cm_Projects.Enabled = true;
-            cm_Projects.SelectedItem = -1;
-
-            tree_ProjectCode.DataSource = null;
+            tree_UnifiedCode.DataSource = null;
         }
 
-        void ClearAllDataProjectCode()
+        void ClearAllDataUnifiedCode()
         {
             cm_Categories.SelectedItem = -1;
 
             txt_Description.Text = "";
 
-            cm_Projects.Enabled = false;
         }
 
-        bool validationProjects()
-        {
-            bool result;
-            if(cm_Projects.SelectedIndex < 0)
-            {
-                MessageBox.Show("Please choose the project first.");
-                result = false;
-            }
-            else
-            {
-                result = true;
-            }
-            return result;
-        }
-
-        bool validationProjectCode()
+        bool validationUnifiedCode()
         {
             bool result;
             if (string.IsNullOrWhiteSpace(cm_Categories.SelectedText))
             {
-                MessageBox.Show("Please choose the category to add the project code.");
+                MessageBox.Show("Please choose the category to add the Unified Code.");
                 return false;
             }
             else
@@ -290,7 +286,7 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             }
             if (string.IsNullOrWhiteSpace(txt_Description.Text))
             {
-                MessageBox.Show("Please add the description of the project code to add the project code.");
+                MessageBox.Show("Please add the description of the Unified Code to add the Unified Code.");
                 return false;
             }
             else
@@ -300,84 +296,105 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             return result;
         }
 
-        void AddRootProjectCode(string Category, string Description)
+        void AddRootUnifiedCode(string Category, string Description)
         {
 
-            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(new object[] { "/" + (tree_ProjectCode.Nodes.Count +1), Category, Description }, parentNode: null);
+            tree_UnifiedCode.FocusedNode = tree_UnifiedCode.AppendNode(new object[] { "/" + (tree_UnifiedCode.Nodes.Count +1), Category, Description }, parentNode: null);
         }
 
-        void AddChildProjectCode(string Category, string Description)
+        void AddChildUnifiedCode(string Category, string Description)
         {
-            if (tree_ProjectCode.FocusedNode != null)
+            if (tree_UnifiedCode.FocusedNode != null)
             {
-                if (tree_ProjectCode.FocusedNode.Level > 2)
+                if (tree_UnifiedCode.FocusedNode.Level > 2)
                 {
                     MessageBox.Show("This Node Level Maxminim 4");
                 }
                 else
                 {
                     string IdNode = " ";
-                    if (tree_ProjectCode.FocusedNode.Level+1 > 0)
+                    if (tree_UnifiedCode.FocusedNode.Level+1 > 0)
                     {
-                        var vs = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.FocusedNode);
+                        var vs = tree_UnifiedCode.GetDataRecordByNode(tree_UnifiedCode.FocusedNode);
                         IList objectList = vs as IList;
                         string NodeCode = objectList[0].ToString();
                         IdNode = (NodeCode
                             + "/"
-                            + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
-                        tree_ProjectCode.FocusedNode =
-                            tree_ProjectCode.AppendNode(
-                                new object[] { IdNode, Category, Description }, tree_ProjectCode.FocusedNode);
+                            + (tree_UnifiedCode.FocusedNode.Nodes.Count +1).ToString());
+                        tree_UnifiedCode.FocusedNode =
+                            tree_UnifiedCode.AppendNode(
+                                new object[] { IdNode, Category, Description }, tree_UnifiedCode.FocusedNode);
                     }             
                 }
             }
         }
 
-        void DeleteProjectCode()
+        void DeleteUnifiedCode()
         {
-            string msg = string.Format("The node {0} is about to be deleted. Do you want to proceed?", tree_ProjectCode.FocusedNode);
+            string msg = string.Format("The node {0} is about to be deleted. Do you want to proceed?", tree_UnifiedCode.FocusedNode);
             if (XtraMessageBox.Show(msg, "Deleting node", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                if (tree_ProjectCode.FocusedNode != null)
-                    tree_ProjectCode.DeleteNode(tree_ProjectCode.FocusedNode);
+                if (tree_UnifiedCode.FocusedNode != null)
+                    tree_UnifiedCode.DeleteNode(tree_UnifiedCode.FocusedNode);
         }
 
-        void GetProjectCode(int _ProjectId)
+        void GetUnifiedCode()
         {
-            
+            var ResualtCategory = _categoryService.GetCategories().Result;
+            var ResualtProject = _UnifiedCode.GetUnifiedCodes().Result;
+            var innerJoin = from p in ResualtProject
+                            join c in ResualtCategory on p.Category_Id equals c.Id
+                            select new
+                            {
+                                UnifiedCode_Code = p.Code,
+                                UnifiedCode_Description = p.Title,
+                                UnifiedCode_Parent = p.Parent,
+                                Category_Name = c.Name
+                            };
+            if (ResualtProject.Count() > 0)
+            {
+                tree_UnifiedCode.DataSource = innerJoin;
+                tree_UnifiedCode.KeyFieldName = "UnifiedCode_Code";
+                tree_UnifiedCode.ParentFieldName = "UnifiedCode_Parent";
+            }
         }
+
         void AddProectCode()
         {
+            var Resault =  TreeListHandler.ToSequentialList<C_Cost_Unified_Codes>(tree_UnifiedCode).ToList();
+
+            _UnifiedCode.NewUnifiedCodes(Resault).ConfigureAwait(true);
         }
+
         #endregion Methods For my Form
 
         #region My Old Method
         public void Add_Oold()
         {
-            for (int i = 0; i < tree_ProjectCode.AllNodesCount; i++)
+            for (int i = 0; i < tree_UnifiedCode.AllNodesCount; i++)
             {
-                var dt = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.Nodes[i]);
-                //int KeyName = tree_ProjectCode.KeyFieldName[tree_ProjectCode.Nodes[i].ParentNode.Id];
-                //int keyparent = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].ParentNode.Id];
-                int NodeCountx = tree_ProjectCode.Nodes[i].Nodes.Count;
+                var dt = tree_UnifiedCode.GetDataRecordByNode(tree_UnifiedCode.Nodes[i]);
+                //int KeyName = tree_UnifiedCode.KeyFieldName[tree_UnifiedCode.Nodes[i].ParentNode.Id];
+                //int keyparent = tree_UnifiedCode.ParentFieldName[tree_UnifiedCode.Nodes[i].ParentNode.Id];
+                int NodeCountx = tree_UnifiedCode.Nodes[i].Nodes.Count;
                 if (NodeCountx > 0)
                 {
                     if (NodeCountx == 1)
                     {
-                        var dt2 = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.Nodes[i]);
-                        int KeyName2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].ParentNode.Id];
-                        //int keyparent2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].Nodes[c].Id];
+                        var dt2 = tree_UnifiedCode.GetDataRecordByNode(tree_UnifiedCode.Nodes[i]);
+                        int KeyName2 = tree_UnifiedCode.ParentFieldName[tree_UnifiedCode.Nodes[i].ParentNode.Id];
+                        //int keyparent2 = tree_UnifiedCode.ParentFieldName[tree_UnifiedCode.Nodes[i].Nodes[c].Id];
                         for (int x = 0; x < NodeCountx; x++)
                         {
-                            dt2 = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.Nodes[i].Nodes[x]);
-                            KeyName2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].Nodes[x].ParentNode.Id];
-                            //int keyparent2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].Nodes[c].Id];
+                            dt2 = tree_UnifiedCode.GetDataRecordByNode(tree_UnifiedCode.Nodes[i].Nodes[x]);
+                            KeyName2 = tree_UnifiedCode.ParentFieldName[tree_UnifiedCode.Nodes[i].Nodes[x].ParentNode.Id];
+                            //int keyparent2 = tree_UnifiedCode.ParentFieldName[tree_UnifiedCode.Nodes[i].Nodes[c].Id];
                         }
                     }
                     else if (NodeCountx == 2)
                     {
                         for (int x = 0; x < NodeCountx; x++)
                         {
-                            int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
+                            int NodeCountc = tree_UnifiedCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
                             for (int c = 0; c < NodeCountc; c++)
                             {
 
@@ -388,10 +405,10 @@ namespace PSC_Cost_Control.Forms.Unified_Code
                     {
                         for (int x = 0; x < NodeCountx; x++)
                         {
-                            int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
+                            int NodeCountc = tree_UnifiedCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
                             for (int c = 0; c < NodeCountc; c++)
                             {
-                                int NodeCountv = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes[NodeCountc].Nodes.Count;
+                                int NodeCountv = tree_UnifiedCode.Nodes[i].Nodes[NodeCountx].Nodes[NodeCountc].Nodes.Count;
                                 for (int v = 0; v < NodeCountv; v++)
                                 {
 

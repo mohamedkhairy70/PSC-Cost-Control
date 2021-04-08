@@ -1,7 +1,7 @@
 ﻿
-namespace PSC_Cost_Control.Forms.Project_Code
+namespace PSC_Cost_Control.Forms.Unified_Code
 {
-    partial class Frm_Categories_ProjectCode
+    partial class Frm_Categories_UnifiedCode
     {
         /// <summary>
         /// Required designer variable.
@@ -157,14 +157,14 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.Name.Name = "Name";
             this.Name.ReadOnly = true;
             // 
-            // Frm_Categories_ProjectCode
+            // Frm_Categories_UnifiedCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(577, 429);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Text = "Form Categories Project Code";
+            this.Text = "Form Categories Unified Code";
             this.Load += new System.EventHandler(this.Frm_Categories_ProjectCode_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

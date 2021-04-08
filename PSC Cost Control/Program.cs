@@ -10,6 +10,7 @@ using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositor
 using PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories;
 using PSC_Cost_Control.Models;
 using ApplicationContext = PSC_Cost_Control.Models.ApplicationContext;
+using PSC_Cost_Control.Models.UDFs;
 
 namespace PSC_Cost_Control
 {
@@ -28,7 +29,9 @@ namespace PSC_Cost_Control
             /**adding autoMapper*/
             var config = new MapperConfiguration(c =>
             {
-
+                c.CreateMap<C_Cost_Project_Codes, ProjectCodeUdT>()
+                    .ForMember(dest => dest.Id, act => act.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.Id, act => act.MapFrom(src => src.Id));
             });
             /**End of adding AutoMapper*/
 
