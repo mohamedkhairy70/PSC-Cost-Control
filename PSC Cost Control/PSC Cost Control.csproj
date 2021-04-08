@@ -186,7 +186,12 @@
     <Compile Include="Services\ProjectCodesServices\ProjectCodeCategoryService.cs" />
     <Compile Include="Services\ServicesBuilders\ServiceBuilder.cs" />
     <Compile Include="Services\ServicesBuilders\servicesFactories\IBuild.cs" />
+    <Compile Include="Services\ServicesBuilders\servicesFactories\ProjectCodesCategoryServiceBuilder.cs" />
+    <Compile Include="Services\ServicesBuilders\servicesFactories\ProjectCodesServiceBuilder.cs" />
+    <Compile Include="Services\ServicesBuilders\servicesFactories\UnifiedCodesCategoryServiceBuilder.cs" />
+    <Compile Include="Services\ServicesBuilders\servicesFactories\UnifiedCodeServiceBuilder.cs" />
     <Compile Include="Services\UnifiedCodesServices\IUnifiedCodeCategoryService.cs" />
+    <Compile Include="Services\UnifiedCodesServices\IUnifiedCodeService.cs" />
     <Compile Include="Services\UnifiedCodesServices\UnifiedCodeCategoryService.cs" />
     <Compile Include="Services\UnifiedCodesServices\UnifiedCodeService.cs" />
     <Compile Include="Trackers\PersistantCruds\IPersistent.cs" />

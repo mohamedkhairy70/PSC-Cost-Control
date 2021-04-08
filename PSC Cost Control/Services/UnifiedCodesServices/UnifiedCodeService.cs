@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PSC_Cost_Control.Services.UnifiedCodesServices
 {
-    public class UnifiedCodeService
+    public class UnifiedCodeService : IUnifiedCodeService
     {
         private IUnifedCodeRepo _unifiedCodesRepo;
         public UnifiedCodeService(IUnifedCodeRepo codesRepo)
@@ -27,7 +27,7 @@ namespace PSC_Cost_Control.Services.UnifiedCodesServices
 
         public async Task NewUnifiedCodes(List<C_Cost_Unified_Codes> codes)
         {
-             await _unifiedCodesRepo.AddUnifiedCodesAsync(codes);
+            await _unifiedCodesRepo.AddUnifiedCodesAsync(codes);
         }
 
         public async Task Update(List<C_Cost_Unified_Codes> codes)
