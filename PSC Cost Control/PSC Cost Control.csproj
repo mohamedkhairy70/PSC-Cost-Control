@@ -157,6 +157,8 @@
     </Compile>
     <Compile Include="Models\SPs\RegisterItemsToProjectCodeSP.cs" />
     <Compile Include="Models\SPs\UpdateItemsRegisterationSP.cs" />
+    <Compile Include="Models\SPs\UpdateProjectCodeSP.cs" />
+    <Compile Include="Models\SPs\UpdateProjectCodesSP.cs" />
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
@@ -182,6 +184,8 @@
     <Compile Include="Services\ProjectCodeItemRegisterationServices\ItemsRegisterationService.cs" />
     <Compile Include="Services\ProjectCodesServices\IProjectCodeCategoryService.cs" />
     <Compile Include="Services\ProjectCodesServices\ProjectCodeCategoryService.cs" />
+    <Compile Include="Services\ServicesBuilders\ServiceBuilder.cs" />
+    <Compile Include="Services\ServicesBuilders\servicesFactories\IBuild.cs" />
     <Compile Include="Services\UnifiedCodesServices\IUnifiedCodeCategoryService.cs" />
     <Compile Include="Services\UnifiedCodesServices\UnifiedCodeCategoryService.cs" />
     <Compile Include="Services\UnifiedCodesServices\UnifiedCodeService.cs" />

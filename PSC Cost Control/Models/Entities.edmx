@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CostExternalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CostExternalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BOQ_Items">
           <Key>
             <PropertyRef Name="Id" />
@@ -148,11 +148,6 @@ warning 6005: The data type 'hierarchyid' is currently not supported for the tar
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="x">
-          <Property Name="id" Type="int" />
-        </EntityType>-->
         <Association Name="FK___Cost_Ind__Indir__6477ECF3">
           <End Role="IndirectCostItems" Type="Self.IndirectCostItems" Multiplicity="1" />
           <End Role="C_Cost_Indirect_Project_Code_Summerizing" Type="Self.C_Cost_Indirect_Project_Code_Summerizing" Multiplicity="*" />
@@ -405,6 +400,10 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
           <Parameter Name="table" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="f_Cost_Delete_Parent_With_Childs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_Delete_Parent_With_Childs">
+          <Parameter Name="table" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
         <Function Name="f_COST_Register_Items_To_ProjectCodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_COST_Register_Items_To_ProjectCodes">
           <Parameter Name="type" Type="nvarchar" Mode="In" />
         </Function>
@@ -413,21 +412,8 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
         <Function Name="f_Cost_UPdate_Items_Registeration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_UPdate_Items_Registeration">
           <Parameter Name="type" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="f_COST_Update_Project_Code" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_COST_Update_Project_Code">
-          <Parameter Name="forId" Type="int" Mode="In" />
-          <Parameter Name="description" Type="nvarchar" Mode="In" />
-          <Parameter Name="unifiedCode_Id" Type="int" Mode="In" />
-          <Parameter Name="CategoryId" Type="int" Mode="In" />
-          <Parameter Name="code" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="parent" Type="int" Mode="In" />
-        </Function>
-        <Function Name="f_COST_Update_Unified_Code" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_COST_Update_Unified_Code">
-          <Parameter Name="forId" Type="int" Mode="In" />
-          <Parameter Name="title" Type="nvarchar" Mode="In" />
-          <Parameter Name="CategoryId" Type="int" Mode="In" />
-          <Parameter Name="code" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="parent" Type="int" Mode="In" />
-        </Function>
+        <Function Name="f_Cost_Update_Project_Codes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_Update_Project_Codes" />
+        <Function Name="f_Cost_Update_Unified_Codes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_Cost_Update_Unified_Codes" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -556,8 +542,7 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
             <End Role="C_Cost_Project_Codes" EntitySet="C_Cost_Project_Codes" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CostExternalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1079,22 +1064,22 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
             <End Role="IndirectCostItems1" EntitySet="IndirectCostItems" />
           </AssociationSet>
           <FunctionImport Name="f_Cost_Add_Project_Codes_Category">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="f_Cost_Add_Unified_Codes_Category">
-            <Parameter Name="Name" Mode="In" Type="String" />
+          <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="f_COST_Delete_By_Id" ReturnType="Collection(CostExternalModel.f_COST_Delete_By_Id_Result)">
             <Parameter Name="table" Mode="In" Type="String" />
             <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="f_COST_Register_Items_To_ProjectCodes">
-            <Parameter Name="type" Mode="In" Type="String" />
+          <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="f_Cost_SP_Insert_Project_Codes" />
           <FunctionImport Name="f_Cost_SP_Insert_Unified_Codes" />
           <FunctionImport Name="f_Cost_UPdate_Items_Registeration">
-            <Parameter Name="type" Mode="In" Type="String" />
+          <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="f_COST_Update_Project_Code">
             <Parameter Name="forId" Mode="In" Type="Int32" />
@@ -1141,6 +1126,12 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="f_Cost_Delete_Parent_With_Childs">
+            <Parameter Name="table" Mode="In" Type="String" />
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="f_Cost_Update_Project_Codes" />
+          <FunctionImport Name="f_Cost_Update_Unified_Codes" />
         </EntityContainer>
         <ComplexType Name="f_COST_Delete_By_Id_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1347,18 +1338,6 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
           <FunctionImportMapping FunctionImportName="f_Cost_SP_Insert_Project_Codes" FunctionName="CostExternalModel.Store.f_Cost_SP_Insert_Project_Codes" />
           <FunctionImportMapping FunctionImportName="f_Cost_SP_Insert_Unified_Codes" FunctionName="CostExternalModel.Store.f_Cost_SP_Insert_Unified_Codes" />
           <FunctionImportMapping FunctionImportName="f_Cost_UPdate_Items_Registeration" FunctionName="CostExternalModel.Store.f_Cost_UPdate_Items_Registeration" />
-          <FunctionImportMapping FunctionImportName="f_COST_Update_Project_Code" FunctionName="CostExternalModel.Store.f_COST_Update_Project_Code" />
-          <FunctionImportMapping FunctionImportName="f_COST_Update_Unified_Code" FunctionName="CostExternalModel.Store.f_COST_Update_Unified_Code">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CostExternalModel.f_COST_Update_Unified_Code_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
-                <ScalarProperty Name="Parent" ColumnName="Parent" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="CostExternalModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="CostExternalModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="CostExternalModel.Store.sp_dropdiagram" />
@@ -1383,6 +1362,9 @@ warning 6013: The table/view 'CostExternal.dbo.x' does not have a primary key de
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="CostExternalModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="CostExternalModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="f_Cost_Delete_Parent_With_Childs" FunctionName="CostExternalModel.Store.f_Cost_Delete_Parent_With_Childs" />
+          <FunctionImportMapping FunctionImportName="f_Cost_Update_Project_Codes" FunctionName="CostExternalModel.Store.f_Cost_Update_Project_Codes" />
+          <FunctionImportMapping FunctionImportName="f_Cost_Update_Unified_Codes" FunctionName="CostExternalModel.Store.f_Cost_Update_Unified_Codes" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
