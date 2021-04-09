@@ -16,7 +16,7 @@ namespace UnitTestProject1.Tracker
         {
             public int MId { set; get; }
             public string Name { set; get; }
-            public int Id => MId;
+            public int Id { get => MId; set =>Id=value; }
 
             public override bool Equals(object obj)
             {
