@@ -208,6 +208,7 @@
     <Compile Include="Services\ProjectCodesServices\ProjectCodeCategoryService.cs" />
     <Compile Include="Services\ServicesBuilders\ServiceBuilder.cs" />
     <Compile Include="Services\ServicesBuilders\servicesFactories\IBuild.cs" />
+    <Compile Include="Services\ServicesBuilders\servicesFactories\ProjectCodeItemRegisterationServiceBuilder.cs" />
     <Compile Include="Services\ServicesBuilders\servicesFactories\ProjectCodesCategoryServiceBuilder.cs" />
     <Compile Include="Services\ServicesBuilders\servicesFactories\ProjectCodesServiceBuilder.cs" />
     <Compile Include="Services\ServicesBuilders\servicesFactories\UnifiedCodesCategoryServiceBuilder.cs" />

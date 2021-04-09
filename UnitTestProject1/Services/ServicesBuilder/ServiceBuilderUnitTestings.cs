@@ -1,12 +1,8 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PSC_Cost_Control.Services.ProjectCodesServices;
 using PSC_Cost_Control.Services.UnifiedCodesServices;
 using PSC_Cost_Control.Services.ServicesBuilders;
+using PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices;
 
 namespace UnitTestProject1.Services.ServicesBuilder
 {
@@ -36,6 +32,12 @@ namespace UnitTestProject1.Services.ServicesBuilder
         {
             var o = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
             Assert.That(o, Is.InstanceOf<IUnifiedCodeCategoryService>());
+        }
+        [Test]
+        public void Build_TIsIRegisterationService_ReturnsIRegisterationService()
+        {
+            var o = ServiceBuilder.Build<IRegisterationService>();
+            Assert.That(o, Is.InstanceOf<IRegisterationService>());
         }
     }
 }

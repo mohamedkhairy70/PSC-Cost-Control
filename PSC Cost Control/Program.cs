@@ -101,8 +101,9 @@ namespace PSC_Cost_Control
                };
                service.NewUnifiedCodes(new List<C_Cost_Unified_Codes> {code1,code2});
             **/
-            var l = await service.GetUnifiedCodes();
-
+            //  var l = await service.GetUnifiedCodes();
+          //  var exeternal = new PSC_Cost_Control.Services.DependencyApis.ExternalAPIs(new Models.ApplicationContext());
+          //  var l =await  exeternal.GetProjectsAsync();
 
 
         }

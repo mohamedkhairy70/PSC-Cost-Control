@@ -2,6 +2,8 @@
 using System;
 using PSC_Cost_Control.Services.ProjectCodesServices;
 using PSC_Cost_Control.Services.UnifiedCodesServices;
+using PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices;
+
 namespace PSC_Cost_Control.Services.ServicesBuilders
 {
     public static class ServiceBuilder
@@ -16,15 +18,19 @@ namespace PSC_Cost_Control.Services.ServicesBuilders
                 throw new NotSupportedException("T must be an interface type!");
 
             return t.Equals(typeof(IProjectCodeService)) ?
-                (IBuild<T>)new ProjectCodesServiceBuilder() 
+                 (IBuild<T>)new ProjectCodesServiceBuilder()
                 :
                 t.Equals(typeof(IProjectCodeCategoryService)) ?
-                (IBuild<T>)new ProjectCodesCategoryServiceBuilder() 
+                 (IBuild<T>)new ProjectCodesCategoryServiceBuilder()
                 :
-                t.Equals(typeof(IUnifiedCodeService)) ? 
-                (IBuild<T>)new UnifiedCodeServiceBuilder()
+                t.Equals(typeof(IUnifiedCodeService)) ?
+                 (IBuild<T>)new UnifiedCodeServiceBuilder()
+                :
+                t.Equals(typeof(IRegisterationService))?
+                (IBuild<T>)new ProjectCodeItemRegisterationServiceBuilder()
                 :
                 (IBuild<T>)new UnifiedCodesCategoryServiceBuilder();
+
         }
     }
 }

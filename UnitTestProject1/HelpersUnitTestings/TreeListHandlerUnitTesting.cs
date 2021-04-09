@@ -22,6 +22,8 @@ namespace UnitTestProject1.HelpersUnitTestings
             public Hi Parent { set; get; }
             public string HCode { get => Code; set => Code=value; }
             public IHireichy HParent { get => Parent; set => Parent=(Hi)value; }
+            public int? ParentId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         }
         [SetUp]
         public void SetUp()
