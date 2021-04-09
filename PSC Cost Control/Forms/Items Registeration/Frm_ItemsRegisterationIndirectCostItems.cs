@@ -16,11 +16,11 @@ using PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices;
 
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
-    public partial class Frm_ItemsRegisteration : DevExpress.XtraEditors.XtraForm
+    public partial class Frm_ItemsRegisterationIndirectCostItems : DevExpress.XtraEditors.XtraForm
     {
         ItemsRegisterationService _itemsRegisterationService;
 
-        public Frm_ItemsRegisteration()
+        public Frm_ItemsRegisterationIndirectCostItems()
         {
             InitializeComponent();
             _itemsRegisterationService = new ItemsRegisterationService

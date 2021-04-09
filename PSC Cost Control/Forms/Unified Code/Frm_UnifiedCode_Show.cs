@@ -112,6 +112,23 @@ namespace PSC_Cost_Control.Forms.Unified_Code
 
 
             }
+            else if (btn.Caption == "Update Project")
+            {
+
+                //Add Unified Code To Treelist
+                if (tree_UnifiedCode.AllNodesCount > 0)
+                {
+                    UpdateProectCode();
+                }
+                else
+                {
+                    MessageBox.Show("There's no data on the Unified Code table. ");
+                }
+                //Clear Combobox Categore and text Description
+                ClearAllDataUnifiedCode();
+
+
+            }
             else if(btn.Caption == "All Unified Code")
             {
                 try
@@ -347,7 +364,7 @@ namespace PSC_Cost_Control.Forms.Unified_Code
                             {
                                 UnifiedCode_Code = p.Code,
                                 UnifiedCode_Description = p.Title,
-                                UnifiedCode_Parent = p.Parent,
+                                UnifiedCode_Parent = p.HParent,
                                 Category_Name = c.Name
                             };
             if (ResualtProject.Count() > 0)
@@ -365,66 +382,16 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             _UnifiedCode.NewUnifiedCodes(Resault).ConfigureAwait(true);
         }
 
+        void UpdateProectCode()
+        {
+            var Resault = TreeListHandler.ToSequentialList<C_Cost_Unified_Codes>(tree_UnifiedCode).ToList();
+
+            _UnifiedCode.Update(Resault).ConfigureAwait(true);
+        }
+
         #endregion Methods For my Form
 
         #region My Old Method
-        public void Add_Oold()
-        {
-            for (int i = 0; i < tree_UnifiedCode.AllNodesCount; i++)
-            {
-                var dt = tree_UnifiedCode.GetDataRecordByNode(tree_UnifiedCode.Nodes[i]);
-                //int KeyName = tree_UnifiedCode.KeyFieldName[tree_UnifiedCode.Nodes[i].ParentNode.Id];
-                //int keyparent = tree_UnifiedCode.ParentFieldName[tree_UnifiedCode.Nodes[i].ParentNode.Id];
-                int NodeCountx = tree_UnifiedCode.Nodes[i].Nodes.Count;
-                if (NodeCountx > 0)
-                {
-                    if (NodeCountx == 1)
-                    {
-                        var dt2 = tree_UnifiedCode.GetDataRecordByNode(tree_UnifiedCode.Nodes[i]);
-                        int KeyName2 = tree_UnifiedCode.ParentFieldName[tree_UnifiedCode.Nodes[i].ParentNode.Id];
-                        //int keyparent2 = tree_UnifiedCode.ParentFieldName[tree_UnifiedCode.Nodes[i].Nodes[c].Id];
-                        for (int x = 0; x < NodeCountx; x++)
-                        {
-                            dt2 = tree_UnifiedCode.GetDataRecordByNode(tree_UnifiedCode.Nodes[i].Nodes[x]);
-                            KeyName2 = tree_UnifiedCode.ParentFieldName[tree_UnifiedCode.Nodes[i].Nodes[x].ParentNode.Id];
-                            //int keyparent2 = tree_UnifiedCode.ParentFieldName[tree_UnifiedCode.Nodes[i].Nodes[c].Id];
-                        }
-                    }
-                    else if (NodeCountx == 2)
-                    {
-                        for (int x = 0; x < NodeCountx; x++)
-                        {
-                            int NodeCountc = tree_UnifiedCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
-                            for (int c = 0; c < NodeCountc; c++)
-                            {
-
-                            }
-                        }
-                    }
-                    else if (NodeCountx == 3)
-                    {
-                        for (int x = 0; x < NodeCountx; x++)
-                        {
-                            int NodeCountc = tree_UnifiedCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
-                            for (int c = 0; c < NodeCountc; c++)
-                            {
-                                int NodeCountv = tree_UnifiedCode.Nodes[i].Nodes[NodeCountx].Nodes[NodeCountc].Nodes.Count;
-                                for (int v = 0; v < NodeCountv; v++)
-                                {
-
-                                }
-                            }
-                        }
-                    }
-
-                }
-                else
-                {
-
-                }
-            }
-        }
-
         public void AppendingNodes(TreeList treeList)
         {
             SimpleButton appendNodeButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Append node" };

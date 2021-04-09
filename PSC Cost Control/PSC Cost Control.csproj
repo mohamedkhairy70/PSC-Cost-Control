@@ -80,11 +80,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Items Registeration\Frm_ItemsRegisteration.cs">
+    <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationIndirectCostItems.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Items Registeration\Frm_ItemsRegisteration.Designer.cs">
-      <DependentUpon>Frm_ItemsRegisteration.cs</DependentUpon>
+    <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationIndirectCostItems.Designer.cs">
+      <DependentUpon>Frm_ItemsRegisterationIndirectCostItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationBOQItems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationBOQItems.Designer.cs">
+      <DependentUpon>Frm_ItemsRegisterationBOQItems.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Unified Code\Frm_Categories_UnifiedCode.cs">
       <SubType>Form</SubType>
@@ -252,8 +258,11 @@
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifiedCodeCategoriesRepo.cs" />
     <Compile Include="Services\DependencyApis\ExternalAPI%27s.cs" />
     <Compile Include="Services\ProjectCodesServices\ProjectCodeService.cs" />
-    <EmbeddedResource Include="Forms\Items Registeration\Frm_ItemsRegisteration.resx">
-      <DependentUpon>Frm_ItemsRegisteration.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Items Registeration\Frm_ItemsRegisterationIndirectCostItems.resx">
+      <DependentUpon>Frm_ItemsRegisterationIndirectCostItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Items Registeration\Frm_ItemsRegisterationBOQItems.resx">
+      <DependentUpon>Frm_ItemsRegisterationBOQItems.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Unified Code\Frm_Categories_UnifiedCode.resx">
       <DependentUpon>Frm_Categories_UnifiedCode.cs</DependentUpon>
