@@ -16,11 +16,11 @@ using PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices;
 
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
-    public partial class Frm_ItemsRegisteration : DevExpress.XtraEditors.XtraForm
+    public partial class Frm_ItemsRegisterationBOQItems : DevExpress.XtraEditors.XtraForm
     {
         ItemsRegisterationService _itemsRegisterationService;
 
-        public Frm_ItemsRegisteration()
+        public Frm_ItemsRegisterationBOQItems()
         {
             InitializeComponent();
             _itemsRegisterationService = new ItemsRegisterationService
@@ -103,6 +103,11 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             {
 
             }
+        }
+
+        private void panel7_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
-    partial class Frm_ItemsRegisteration
+    partial class Frm_ItemsRegisterationIndirectCostItems
     {
         /// <summary>
         /// Required designer variable.
@@ -31,6 +31,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         {
             DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions windowsUIButtonImageOptions1 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cm_BOQItems = new System.Windows.Forms.ComboBox();
+            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+            this.cm_IndirectCostItems = new System.Windows.Forms.ComboBox();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.windowsUIButtonPanel1 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonPanel();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
@@ -38,9 +41,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cm_IndirectCostItems = new System.Windows.Forms.ComboBox();
-            this.cm_BOQItems = new System.Windows.Forms.ComboBox();
-            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.cm_Project = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -61,6 +61,41 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(856, 182);
             this.panel1.TabIndex = 0;
+            // 
+            // cm_BOQItems
+            // 
+            this.cm_BOQItems.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.cm_BOQItems.FormattingEnabled = true;
+            this.cm_BOQItems.Items.AddRange(new object[] {
+            "Structure",
+            "indirect"});
+            this.cm_BOQItems.Location = new System.Drawing.Point(541, 53);
+            this.cm_BOQItems.Name = "cm_BOQItems";
+            this.cm_BOQItems.Size = new System.Drawing.Size(253, 27);
+            this.cm_BOQItems.TabIndex = 14;
+            // 
+            // labelControl2
+            // 
+            this.labelControl2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.labelControl2.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.labelControl2.Appearance.Options.UseFont = true;
+            this.labelControl2.Location = new System.Drawing.Point(457, 56);
+            this.labelControl2.Name = "labelControl2";
+            this.labelControl2.Size = new System.Drawing.Size(78, 19);
+            this.labelControl2.TabIndex = 13;
+            this.labelControl2.Text = "BOQ Items :";
+            // 
+            // cm_IndirectCostItems
+            // 
+            this.cm_IndirectCostItems.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.cm_IndirectCostItems.FormattingEnabled = true;
+            this.cm_IndirectCostItems.Items.AddRange(new object[] {
+            "Structure",
+            "indirect"});
+            this.cm_IndirectCostItems.Location = new System.Drawing.Point(159, 53);
+            this.cm_IndirectCostItems.Name = "cm_IndirectCostItems";
+            this.cm_IndirectCostItems.Size = new System.Drawing.Size(217, 27);
+            this.cm_IndirectCostItems.TabIndex = 12;
             // 
             // labelControl1
             // 
@@ -138,41 +173,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.Name.Name = "Name";
             this.Name.ReadOnly = true;
             // 
-            // cm_IndirectCostItems
-            // 
-            this.cm_IndirectCostItems.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.cm_IndirectCostItems.FormattingEnabled = true;
-            this.cm_IndirectCostItems.Items.AddRange(new object[] {
-            "Structure",
-            "indirect"});
-            this.cm_IndirectCostItems.Location = new System.Drawing.Point(159, 53);
-            this.cm_IndirectCostItems.Name = "cm_IndirectCostItems";
-            this.cm_IndirectCostItems.Size = new System.Drawing.Size(217, 27);
-            this.cm_IndirectCostItems.TabIndex = 12;
-            // 
-            // cm_BOQItems
-            // 
-            this.cm_BOQItems.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.cm_BOQItems.FormattingEnabled = true;
-            this.cm_BOQItems.Items.AddRange(new object[] {
-            "Structure",
-            "indirect"});
-            this.cm_BOQItems.Location = new System.Drawing.Point(541, 53);
-            this.cm_BOQItems.Name = "cm_BOQItems";
-            this.cm_BOQItems.Size = new System.Drawing.Size(253, 27);
-            this.cm_BOQItems.TabIndex = 14;
-            // 
-            // labelControl2
-            // 
-            this.labelControl2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.labelControl2.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.labelControl2.Appearance.Options.UseFont = true;
-            this.labelControl2.Location = new System.Drawing.Point(457, 56);
-            this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(78, 19);
-            this.labelControl2.TabIndex = 13;
-            this.labelControl2.Text = "BOQ Items :";
-            // 
             // cm_Project
             // 
             this.cm_Project.Font = new System.Drawing.Font("Times New Roman", 12F);
@@ -185,14 +185,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.cm_Project.Size = new System.Drawing.Size(253, 27);
             this.cm_Project.TabIndex = 15;
             // 
-            // Frm_ItemsRegisteration
+            // Frm_ItemsRegisterationIndirectCostItems
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(856, 515);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Name = "Frm_ItemsRegisteration";
+            this.Name = "Frm_ItemsRegisterationIndirectCostItems";
             this.Text = "Form Categories Project Code";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
