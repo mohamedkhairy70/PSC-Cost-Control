@@ -11,6 +11,8 @@ using PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositor
 using PSC_Cost_Control.Models;
 using ApplicationContext = PSC_Cost_Control.Models.ApplicationContext;
 using PSC_Cost_Control.Models.UDFs;
+using PSC_Cost_Control.Services.ServicesBuilders;
+using PSC_Cost_Control.Services.ProjectCodesServices;
 
 namespace PSC_Cost_Control
 {
@@ -20,8 +22,9 @@ namespace PSC_Cost_Control
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static async Task Main()
         {
+            Test();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Frm_Cost_Main());
@@ -46,10 +49,40 @@ namespace PSC_Cost_Control
             builder.RegisterType<ProjectCodesRepo>().As<IProjectCodesRepo>();
             builder.RegisterType<ProjectCodesCategoriesRepo>().As<IProjectCodesCategoriesRepo>();
             builder.RegisterType<UnifiedCodeCategoriesRepo>().As<IUnifiedCodeCategoriesRepo>();
-               //end of registeration of service 
+            //end of registeration of service 
 
-       //     var container = builder.Build();
-            
+            //     var container = builder.Build();
+
         }
+
+
+        static  void Test()
+        {
+            var service = ServiceBuilder.Build<IProjectCodeService>();
+            // var l = (await service.GetProjectCodes(1)).ToList();
+            var code1 =
+                new C_Cost_Project_Codes
+                {
+                    Code = "/2555/",
+                    Category_Id = 2,
+                    Unified_Code_Id = 1,
+                    Description = "em",
+                    HParent=null,
+                };
+            var code2 =
+                new C_Cost_Project_Codes
+                {
+                    Code = "/2555/545/",
+                    Category_Id = 2,
+                    Unified_Code_Id = 1,
+                    Description = "em",
+                    HParent = code1,
+                };
+            service.NewCodesForProject(1, new List<C_Cost_Project_Codes>
+            {
+                code1,code2
+            });
+        }
+
     }
 }

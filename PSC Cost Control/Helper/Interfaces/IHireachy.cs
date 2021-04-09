@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace PSC_Cost_Control.Helper.Interfaces
 {
-    public interface IHireichy
+    public interface IHireichy:IHasId
     {
         string HCode { set; get; }
         IHireichy HParent { set; get; }
+        int? ParentId { set; get; }
     }
 }

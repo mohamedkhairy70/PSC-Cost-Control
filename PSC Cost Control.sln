@@ -7,11 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSC Cost Control", "PSC Cos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSC Cost Control Unit Testings", "UnitTestProject1\PSC Cost Control Unit Testings.csproj", "{4DCCA1AB-AC5C-4AF6-8BE9-FF88E1B72977}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F7705873-8A90-459A-A4D8-3D4E65ABE54E}"
-	ProjectSection(SolutionItems) = preProject
-		Technical Desicions.txt = Technical Desicions.txt
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

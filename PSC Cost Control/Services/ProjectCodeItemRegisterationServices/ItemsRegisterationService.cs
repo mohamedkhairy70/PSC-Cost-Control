@@ -60,13 +60,18 @@ namespace PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices
         {
             var tracker = new Tracker<C_Cost_Project_Codes_Items>(
                 _directRepo, _directRepo.GetRegisterationsAsync(projectId).Result);
+
             tracker.TrackCollection(itemsCodes);
             tracker.Commit();
         }
 
         public void UpdateInDirectItems(int projecId,IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> itemsCodes)
         {
-            throw new NotImplementedException();
+            var tracker = new Tracker<C_Cost_Indirect_Project_Code_Summerizing>(
+                            _indirectRepo, _indirectRepo.GetRegisterationsAsync(projecId).Result);
+
+            tracker.TrackCollection(itemsCodes);
+            tracker.Commit();
         }
     }
 }

@@ -14,7 +14,5 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
         void DeleteCollection(IEnumerable<C_Cost_Project_Codes> entities);
         Task<IEnumerable<C_Cost_Project_Codes>> GetProjectCodesWithItsItsUnifiedAsync(int projectId);
         void UpdateCollction(IEnumerable<C_Cost_Project_Codes> entities);
-        void UpdateNodeData(int codeId, ProjectCodeUdT code);
-        Task UpdateProjectCodes(List<ProjectCodeUdT> codes, int projectId);
     }
 }

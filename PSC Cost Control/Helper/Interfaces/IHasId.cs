@@ -8,6 +8,6 @@ namespace PSC_Cost_Control.Helper.Interfaces
 {
     public interface IHasId
     {
-        int Id {  get; }
+        int Id { get; set; }
     }
 }

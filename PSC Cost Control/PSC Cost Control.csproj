@@ -92,6 +92,7 @@
     <Compile Include="Forms\Unified Code\Frm_UnifiedCode_Show.Designer.cs">
       <DependentUpon>Frm_UnifiedCode_Show.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\FakeIDsGenerator\FakeIdGenrator.cs" />
     <Compile Include="Models\BOQs.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
@@ -155,6 +156,7 @@
     <Compile Include="Models\Item_Breakdowns.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ParialModels\C_Cost_Indirect_Project_Code_Summerizing.cs" />
     <Compile Include="Models\ParialModels\C_Cost_Project_Codes.cs" />
     <Compile Include="Models\ParialModels\C_Cost_Project_Codes_Items.cs" />
     <Compile Include="Models\ParialModels\C_Cost_Unified_Codes.cs" />
@@ -163,7 +165,7 @@
     </Compile>
     <Compile Include="Models\SPs\RegisterItemsToProjectCodeSP.cs" />
     <Compile Include="Models\SPs\UpdateItemsRegisterationSP.cs" />
-    <Compile Include="Models\SPs\UpdateProjectCodeSP.cs" />
+    <Compile Include="Models\SPs\UpdateUnifiedCodeSP.cs" />
     <Compile Include="Models\SPs\UpdateProjectCodesSP.cs" />
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>Entities.tt</DependentUpon>
@@ -179,7 +181,7 @@
     <Compile Include="Models\Units.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repositories\BOQItemsRegisterationRepositories\BOQitemRegisterationRepo.cs" />
+    <Compile Include="Repositories\PersistantReposotories\BOQItemsRegisterationRepositories\BOQitemRegisterationRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\DirectItemRegisterationRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\IndirectCostItemRegisterationRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\RegisterItem.cs" />
@@ -190,6 +192,7 @@
     <Compile Include="Services\ProjectCodeItemRegisterationServices\IRegisterationService.cs" />
     <Compile Include="Services\ProjectCodeItemRegisterationServices\ItemsRegisterationService.cs" />
     <Compile Include="Services\ProjectCodesServices\IProjectCodeCategoryService.cs" />
+    <Compile Include="Services\ProjectCodesServices\IProjectCodeService.cs" />
     <Compile Include="Services\ProjectCodesServices\ProjectCodeCategoryService.cs" />
     <Compile Include="Services\ServicesBuilders\ServiceBuilder.cs" />
     <Compile Include="Services\ServicesBuilders\servicesFactories\IBuild.cs" />
@@ -242,7 +245,6 @@
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifedCodeRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifiedCodeCategoriesRepo.cs" />
     <Compile Include="Services\DependencyApis\ExternalAPI%27s.cs" />
-    <Compile Include="Services\ProjectCodesServices\IProjectCodeService.cs" />
     <Compile Include="Services\ProjectCodesServices\ProjectCodeService.cs" />
     <EmbeddedResource Include="Forms\Unified Code\Frm_Categories_UnifiedCode.resx">
       <DependentUpon>Frm_Categories_UnifiedCode.cs</DependentUpon>

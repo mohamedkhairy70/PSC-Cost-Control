@@ -1,4 +1,5 @@
 ﻿using EntityFrameworkExtras.EF6;
+using PSC_Cost_Control.Helper.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace PSC_Cost_Control.Models.UDFs
 {
     [UserDefinedTableType("_Cost_Project_Codes_List")]
-    public class ProjectCodeUdT
+    public class ProjectCodeUdT:IHasId
     {
         [UserDefinedTableTypeColumn(1)]
         public int Id { set; get; }
