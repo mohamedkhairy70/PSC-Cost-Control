@@ -192,7 +192,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.ClientSize = new System.Drawing.Size(856, 515);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Name = "Frm_ItemsRegisteration";
+          //  this.Name = "Frm_ItemsRegisteration";
             this.Text = "Form Categories Project Code";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

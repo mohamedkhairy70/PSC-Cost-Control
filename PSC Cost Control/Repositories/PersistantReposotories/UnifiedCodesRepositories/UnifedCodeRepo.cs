@@ -28,16 +28,15 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
 
         public async Task AddUnifiedCodesAsync(List<C_Cost_Unified_Codes> codes)
         {
-
             var proc = new UnifiedCodeInsertion()
             {
                 list = codes.Select(c =>
                     new UnifiedCodeUDT
                     {
-                        Id = NextId++,
+                        Id = c.Id,
                         CategoryId = c.Category_Id.Value,
                         Code = c.Code,
-                        parent = c.Parent.Value,
+                        parent = c.Parent,
                         Title = c.Title
                     }
                 ).ToList()

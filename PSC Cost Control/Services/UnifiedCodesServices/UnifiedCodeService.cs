@@ -1,4 +1,6 @@
-﻿using PSC_Cost_Control.Models;
+﻿using PSC_Cost_Control.Helper.FakeIDsGenerator;
+using PSC_Cost_Control.Helper.Interfaces;
+using PSC_Cost_Control.Models;
 using PSC_Cost_Control.Models.UDFs;
 using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
 using PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories;
@@ -27,6 +29,8 @@ namespace PSC_Cost_Control.Services.UnifiedCodesServices
 
         public async Task NewUnifiedCodes(List<C_Cost_Unified_Codes> codes)
         {
+            (codes.InjectIds() as IEnumerable<IHireichy>).ReSolvingHireachicalParentChild();
+
             await _unifiedCodesRepo.AddUnifiedCodesAsync(codes);
         }
 

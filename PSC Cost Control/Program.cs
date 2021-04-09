@@ -13,6 +13,7 @@ using ApplicationContext = PSC_Cost_Control.Models.ApplicationContext;
 using PSC_Cost_Control.Models.UDFs;
 using PSC_Cost_Control.Services.ServicesBuilders;
 using PSC_Cost_Control.Services.ProjectCodesServices;
+using PSC_Cost_Control.Services.UnifiedCodesServices;
 
 namespace PSC_Cost_Control
 {
@@ -57,9 +58,9 @@ namespace PSC_Cost_Control
 
 
         static  void Test()
-        {
+        {/**
             var service = ServiceBuilder.Build<IProjectCodeService>();
-            // var l = (await service.GetProjectCodes(1)).ToList();
+             var l = (await service.GetProjectCodes(1)).ToList();
             var code1 =
                 new C_Cost_Project_Codes
                 {
@@ -82,6 +83,26 @@ namespace PSC_Cost_Control
             {
                 code1,code2
             });
+            **/
+            var service = ServiceBuilder.Build<IUnifiedCodeService>();
+         /**   var code1 = new C_Cost_Unified_Codes
+            {
+                Title="q1",
+                Code="/8/",
+                Parent=null,
+                Category_Id=1
+            };
+            var code2 = new C_Cost_Unified_Codes
+            {
+                Title = "q2",
+                Code = "/8/1/",
+                C_Cost_Unified_Codes2=code1,
+                Category_Id = 1
+            };
+            service.NewUnifiedCodes(new List<C_Cost_Unified_Codes> {code1,code2});
+         **/
+
+
         }
 
     }

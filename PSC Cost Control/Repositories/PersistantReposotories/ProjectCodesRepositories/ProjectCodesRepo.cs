@@ -52,7 +52,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
                     CategoryId = e.Category_Id.Value,
                     Code = e.Code,
                     Description = e.Description,
-                    parent = e.Parent.Value,
+                    parent = e.ParentId,
                     ProjectId = e.Project_Id.Value,
                     UnifiedCodeId = e.Unified_Code_Id.Value
                 })
