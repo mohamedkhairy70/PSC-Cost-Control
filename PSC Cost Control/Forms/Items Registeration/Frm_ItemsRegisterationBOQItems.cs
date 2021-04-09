@@ -32,66 +32,16 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         void GetData(string _State,int Project)
         {
             //check if ValidationData is not False
-            if (ValidationData(_State))
-            {
-                if (_State == cm_BOQItems.Name)
-                {
-                    dataGridView1.DataSource =  _itemsRegisterationService.GetBOQRegisteration(Project).Result;
-                }
-                else if (_State == cm_IndirectCostItems.Name)
-                {
-                    dataGridView1.DataSource = _itemsRegisterationService.GetIndirectItemRegisteration(Project).Result;
-                }
-            }
+
         }
         void GetData(string _State, int Project,int Fild)
         {
-            //check if ValidationData is not False
-            if (ValidationData(_State))
-            {
-                if (_State == cm_BOQItems.Name)
-                {
-                    dataGridView1.DataSource = _itemsRegisterationService.GetBOQRegisteration(Project).Result;
-                }
-                else if (_State == cm_IndirectCostItems.Name)
-                {
-                    dataGridView1.DataSource = _itemsRegisterationService.GetIndirectItemRegisteration(Project).Result;
-                }
-            }
+
         }
         bool ValidationData(string _State)
         {
             bool Resualt = false;
-            if (Convert.ToInt32(cm_Project.SelectedValue) > 0)
-            {
-                Resualt = true;
-            }
-            else
-            {
-                return false;
-            }
-            if(_State == cm_BOQItems.Name)
-            {
-                if (Convert.ToInt32(cm_BOQItems.SelectedValue) > 0)
-                {
-                    Resualt = true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else if (_State == cm_IndirectCostItems.Name)
-            {
-                if (Convert.ToInt32(cm_IndirectCostItems.SelectedValue) > 0)
-                {
-                    Resualt = true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+
             return Resualt;
         }
         #endregion My Method for my Form

@@ -109,7 +109,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     //Add Project Code To Treelist
                     if (tree_ProjectCode.AllNodesCount > 0)
                     {
-                        AddProectCode(Convert.ToInt32(cm_Projects.SelectedValue));
+                        SaveProectCode(Convert.ToInt32(cm_Projects.SelectedValue));
                     }
                     else
                     {
@@ -377,7 +377,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                             {
                                 ProjectCode_Code = p.Code,
                                 ProjectCode_Description = p.Description,
-                                ProjectCode_Parent = p.Parent,
+                                ProjectCode_Parent = p.HParent,
                                 Category_Name = c.Name
                             };
             if (ResualtProject.Count() > 0)
@@ -388,11 +388,18 @@ namespace PSC_Cost_Control.Forms.Project_Code
             }
         }
 
-        void AddProectCode(int _ProjectId)
+        void SaveProectCode(int _ProjectId)
         {
-            var Resault =  TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
-
-            _projectCode.NewCodesForProject(_ProjectId, Resault).ConfigureAwait(true);
+            var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
+            if (_projectCode.GetProjectCodes(_ProjectId).Result.Count() > 0)
+            {
+                _projectCode.Update(_ProjectId, Resault).ConfigureAwait(true);
+            }
+            else
+            {
+                _projectCode.NewCodesForProject(_ProjectId, Resault).ConfigureAwait(true);
+            }
+            
         }
 
         #endregion Methods For my Form

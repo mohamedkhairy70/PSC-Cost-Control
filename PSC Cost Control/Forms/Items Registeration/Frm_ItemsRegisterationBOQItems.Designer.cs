@@ -34,9 +34,12 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btn_Regiter = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.cm_Categories = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
@@ -55,7 +58,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label5 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.btn_Regiter = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
@@ -123,6 +125,18 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel2.Size = new System.Drawing.Size(1116, 73);
             this.panel2.TabIndex = 1;
             // 
+            // btn_Regiter
+            // 
+            this.btn_Regiter.BackColor = System.Drawing.Color.PapayaWhip;
+            this.btn_Regiter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Regiter.Font = new System.Drawing.Font("Times New Roman", 16F);
+            this.btn_Regiter.Location = new System.Drawing.Point(390, 15);
+            this.btn_Regiter.Name = "btn_Regiter";
+            this.btn_Regiter.Size = new System.Drawing.Size(338, 46);
+            this.btn_Regiter.TabIndex = 0;
+            this.btn_Regiter.Text = ">>> Register <<<";
+            this.btn_Regiter.UseVisualStyleBackColor = false;
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.dataGridView3);
@@ -138,14 +152,16 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView3.Location = new System.Drawing.Point(0, 112);
+            this.dataGridView3.Location = new System.Drawing.Point(0, 139);
             this.dataGridView3.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.Size = new System.Drawing.Size(362, 327);
+            this.dataGridView3.Size = new System.Drawing.Size(362, 300);
             this.dataGridView3.TabIndex = 2;
             // 
             // panel8
             // 
+            this.panel8.Controls.Add(this.cm_Categories);
+            this.panel8.Controls.Add(this.label7);
             this.panel8.Controls.Add(this.textBox3);
             this.panel8.Controls.Add(this.label6);
             this.panel8.Controls.Add(this.panel11);
@@ -153,12 +169,33 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Margin = new System.Windows.Forms.Padding(4);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(362, 112);
+            this.panel8.Size = new System.Drawing.Size(362, 139);
             this.panel8.TabIndex = 0;
+            // 
+            // cm_Categories
+            // 
+            this.cm_Categories.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.cm_Categories.FormattingEnabled = true;
+            this.cm_Categories.Items.AddRange(new object[] {
+            "Structure",
+            "indirect"});
+            this.cm_Categories.Location = new System.Drawing.Point(71, 43);
+            this.cm_Categories.Name = "cm_Categories";
+            this.cm_Categories.Size = new System.Drawing.Size(240, 27);
+            this.cm_Categories.TabIndex = 8;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 46);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(56, 19);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "BOQs :";
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(116, 62);
+            this.textBox3.Location = new System.Drawing.Point(103, 100);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(206, 26);
             this.textBox3.TabIndex = 6;
@@ -166,11 +203,11 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(20, 40);
+            this.label6.Location = new System.Drawing.Point(7, 78);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(151, 19);
             this.label6.TabIndex = 5;
-            this.label6.Text = "Search By Name Item :";
+            this.label6.Text = "Search By Item Name :";
             // 
             // panel11
             // 
@@ -207,10 +244,10 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 112);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 139);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(365, 327);
+            this.dataGridView1.Size = new System.Drawing.Size(365, 300);
             this.dataGridView1.TabIndex = 1;
             // 
             // panel6
@@ -222,12 +259,12 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel6.Location = new System.Drawing.Point(0, 0);
             this.panel6.Margin = new System.Windows.Forms.Padding(4);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(365, 112);
+            this.panel6.Size = new System.Drawing.Size(365, 139);
             this.panel6.TabIndex = 0;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(107, 62);
+            this.textBox1.Location = new System.Drawing.Point(107, 91);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(214, 26);
             this.textBox1.TabIndex = 2;
@@ -235,11 +272,11 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 40);
+            this.label4.Location = new System.Drawing.Point(12, 69);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(151, 19);
             this.label4.TabIndex = 1;
-            this.label4.Text = "Search By Name Item :";
+            this.label4.Text = "Search By Item Name :";
             // 
             // panel9
             // 
@@ -257,9 +294,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(147, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 19);
+            this.label1.Size = new System.Drawing.Size(91, 19);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Projec Code";
+            this.label1.Text = "Project Code";
             // 
             // panel5
             // 
@@ -276,10 +313,10 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(0, 112);
+            this.dataGridView2.Location = new System.Drawing.Point(0, 139);
             this.dataGridView2.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(389, 327);
+            this.dataGridView2.Size = new System.Drawing.Size(389, 300);
             this.dataGridView2.TabIndex = 2;
             // 
             // panel7
@@ -291,13 +328,13 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Margin = new System.Windows.Forms.Padding(4);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(389, 112);
+            this.panel7.Size = new System.Drawing.Size(389, 139);
             this.panel7.TabIndex = 0;
             this.panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.panel7_Paint);
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(118, 62);
+            this.textBox2.Location = new System.Drawing.Point(118, 91);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(230, 26);
             this.textBox2.TabIndex = 4;
@@ -305,11 +342,11 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(21, 40);
+            this.label5.Location = new System.Drawing.Point(21, 69);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(151, 19);
             this.label5.TabIndex = 3;
-            this.label5.Text = "Search By Name Item :";
+            this.label5.Text = "Search By Item Name :";
             // 
             // panel10
             // 
@@ -327,21 +364,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(93, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(199, 19);
+            this.label2.Size = new System.Drawing.Size(162, 19);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Items Registeration BOQ Items";
-            // 
-            // btn_Regiter
-            // 
-            this.btn_Regiter.BackColor = System.Drawing.Color.PapayaWhip;
-            this.btn_Regiter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Regiter.Font = new System.Drawing.Font("Times New Roman", 16F);
-            this.btn_Regiter.Location = new System.Drawing.Point(390, 15);
-            this.btn_Regiter.Name = "btn_Regiter";
-            this.btn_Regiter.Size = new System.Drawing.Size(338, 46);
-            this.btn_Regiter.TabIndex = 0;
-            this.btn_Regiter.Text = ">>> Regiter <<<";
-            this.btn_Regiter.UseVisualStyleBackColor = false;
+            this.label2.Text = "Registeration BOQ Items";
             // 
             // Frm_ItemsRegisterationBOQItems
             // 
@@ -357,7 +382,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Frm_ItemsRegisterationBOQItems";
-            this.Text = "Form Categories Project Code";
+            this.Text = "Form Registeration BOQ Items";
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
@@ -414,5 +439,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         private System.Windows.Forms.TextBox textBox4;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private System.Windows.Forms.Button btn_Regiter;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cm_Categories;
     }
 }
