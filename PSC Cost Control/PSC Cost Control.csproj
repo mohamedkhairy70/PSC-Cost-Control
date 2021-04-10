@@ -193,7 +193,6 @@
     <Compile Include="Models\Units.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repositories\PersistantReposotories\BOQItemsRegisterationRepositories\BOQitemRegisterationRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\DirectItemRegisterationRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\IndirectCostItemRegisterationRepo.cs" />
     <Compile Include="Repositories\PersistantReposotories\ItemsRegisterationRepositories\RegisterItem.cs" />

@@ -31,24 +31,28 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
                     {
                         Item = e.BOQ_Items,
                         ProjectCode = e.C_Cost_Project_Codes,
-                        ItemId = e.Boq_Item_Id,
-                        ProjecCodeId = e.Project_Code_Id
+                        ItemId = e.BOQ_Items.Id,
+                        ProjecCodeId = e.C_Cost_Project_Codes.Id
                     }
                     ));
         }
 
         public void DeleteCollection(IEnumerable<C_Cost_Project_Codes_Items> entities)
         {
-            foreach (var e in entities)
-                Context.f_COST_Delete_By_Id(Table.ToString(), e.Id);
+            using (var context = new ApplicationContext())
+            {
+                foreach (var e in entities)
+                    context.f_COST_Delete_By_Id(Table.ToString(), e.Id);
+            }
         }
 
         public  override async Task<IEnumerable<C_Cost_Project_Codes_Items>> GetRegisterationsAsync(int projectId)
         {
-            return await Context.C_Cost_Project_Codes_Items
+            var data = await Context.C_Cost_Project_Codes_Items
                 .Include(c => c.C_Cost_Project_Codes)
                 .Where(c => c.C_Cost_Project_Codes.Project_Id == projectId)
                 .ToListAsync();
+            return data;
         }
 
         public void UpdateCollction(IEnumerable<C_Cost_Project_Codes_Items> entities)
@@ -60,8 +64,8 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
                     Id=e.Id,
                     Item = e.BOQ_Items,
                     ProjectCode = e.C_Cost_Project_Codes,
-                    ItemId = e.Boq_Item_Id,
-                    ProjecCodeId = e.Project_Code_Id
+                    ItemId = e.BOQ_Items.Id,
+                    ProjecCodeId = e.C_Cost_Project_Codes.Id
                 }));
         }
     }

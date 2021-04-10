@@ -2,7 +2,6 @@
 using PSC_Cost_Control.Models.DTO;
 using PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisterationRepositories;
 using PSC_Cost_Control.Trackers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,7 +37,7 @@ namespace PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices
                 .Select(
                     i => new DirectItemProjectCode
                     {
-                        ItemId = i.BOQ_Items.BOQId,
+                        ItemId = i.BOQ_Items.Id,
                         ProjecCodeId = i.C_Cost_Project_Codes.Id
                     }));
         }
@@ -68,7 +67,7 @@ namespace PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices
         public void UpdateInDirectItems(int projecId,IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> itemsCodes)
         {
             var tracker = new Tracker<C_Cost_Indirect_Project_Code_Summerizing>(
-                            _indirectRepo, _indirectRepo.GetRegisterationsAsync(projecId).Result);
+                            _indirectRepo,_indirectRepo.GetRegisterationsAsync(projecId).Result);
 
             tracker.TrackCollection(itemsCodes);
             tracker.Commit();
