@@ -29,9 +29,9 @@ namespace PSC_Cost_Control.Trackers
 
         public void Commit()
         {
+            _persistent.DeleteCollection(_deleted);
             _persistent.AddCollection(_added);
             _persistent.UpdateCollction(_udated);
-            _persistent.DeleteCollection(_deleted);
         }
 
         public void TrackCollection(IEnumerable<T> entities)

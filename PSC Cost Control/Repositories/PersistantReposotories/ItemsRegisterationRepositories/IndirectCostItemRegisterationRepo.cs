@@ -21,7 +21,6 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
         public async Task AddCollection(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
         {
             await Task.Run(() => AddCollectionHelper(entities));
-            Dispose();
         }
         private void AddCollectionHelper(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
         {
@@ -32,18 +31,16 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
                     {
                         Item = e.IndirectCostItems,
                         ProjectCode = e.C_Cost_Project_Codes,
-                        ItemId = e.Indirect_Cost_Item_Id,
-                        ProjecCodeId = e.Projcet_Code_Id
+                        ItemId = e.IndirectCostItems.Id,
+                        ProjecCodeId = e.C_Cost_Project_Codes.Id
                     }
                     ));
-            Dispose();
         }
 
         public void DeleteCollection(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
         {
             foreach (var e in entities)
                 Context.f_COST_Delete_By_Id(Table.ToString(), e.Id);
-            Dispose();
         }
 
 
@@ -53,7 +50,6 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
                 .Include(c => c.C_Cost_Project_Codes)
                 .Where(z => z.C_Cost_Project_Codes.Project_Id == projectId)
                 .ToListAsync();
-            Dispose();
             return data;
         }
         public void UpdateCollction(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
@@ -66,10 +62,9 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
                     Id = e.Id,
                     Item = e.IndirectCostItems,
                     ProjectCode = e.C_Cost_Project_Codes,
-                    ItemId = e.Indirect_Cost_Item_Id,
-                    ProjecCodeId = e.Projcet_Code_Id
+                    ItemId = e.IndirectCostItems.Id,
+                    ProjecCodeId = e.C_Cost_Project_Codes.Id
                 }));
-            Dispose();
         }
     }
 }
