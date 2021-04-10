@@ -1,44 +1,37 @@
 ﻿using DevExpress.XtraEditors;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using PSC_Cost_Control.Models;
 using PSC_Cost_Control.Helper;
-using System.Data.Entity;
 using DevExpress.XtraBars.Docking2010;
 using DevExpress.XtraTreeList.Columns;
 using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Nodes;
 using DevExpress.Utils.DragDrop;
-using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.Utils.Serializing;
-using PSC_Cost_Control.Models.UDFs;
 using System.Collections;
-using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
 using PSC_Cost_Control.Helper.TreeListHandler;
 using PSC_Cost_Control.Services.DependencyApis;
 using PSC_Cost_Control.Services.ProjectCodesServices;
+using PSC_Cost_Control.Services.ServicesBuilders;
 
 namespace PSC_Cost_Control.Forms.Project_Code
 {
     public partial class Frm_ProjectCode_Show : DevExpress.XtraEditors.XtraForm
     {
         public ExternalAPIs _externalAPIs;
-        public ProjectCodeCategoryService _categoryService;
-        public ProjectCodeService _projectCode;
+        public IProjectCodeCategoryService _categoryService;
+        public IProjectCodeService _projectCode;
         readonly Static st = new Static();
         public Frm_ProjectCode_Show()
         {
             InitializeComponent();
             _externalAPIs = new ExternalAPIs(new Models.ApplicationContext());
-            _categoryService = new ProjectCodeCategoryService(new ProjectCodesCategoriesRepo(new Models.ApplicationContext()));
-            _projectCode = new ProjectCodeService(new ProjectCodesRepo(new Models.ApplicationContext()));
+            _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
+            _projectCode = ServiceBuilder.Build<IProjectCodeService>();
         }
 
         private void windowsUIButtonPanel1_ButtonClick(object sender, ButtonEventArgs e)
