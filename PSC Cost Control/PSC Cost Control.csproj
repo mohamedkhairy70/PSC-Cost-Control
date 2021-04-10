@@ -105,6 +105,7 @@
       <DependentUpon>Frm_UnifiedCode_Show.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\FakeIDsGenerator\FakeIdGenrator.cs" />
+    <Compile Include="Helper\Helper.cs" />
     <Compile Include="Models\BOQs.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
@@ -219,6 +220,7 @@
     <Compile Include="Trackers\Commiters\HireaichalUpdatingCommitter.cs" />
     <Compile Include="Trackers\Commiters\UpdatingCommiter.cs" />
     <Compile Include="Trackers\Commiters\NonHireaichalUpdatingCommitter.cs" />
+    <Compile Include="Trackers\PersistantCruds\IHirechicalPersistent.cs" />
     <Compile Include="Trackers\PersistantCruds\IPersistent.cs" />
     <Compile Include="Trackers\TrackingEntitiesFactory\ITracker.cs" />
     <Compile Include="Trackers\TrackingEntitiesFactory\Tracker.cs" />

@@ -11,7 +11,7 @@ using PSC_Cost_Control.Trackers.PersistantCruds;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories
 {
-    public class UnifedCodeRepo : BaseRepo<C_Cost_Unified_Codes>, IAvailableId, IPersistent<C_Cost_Unified_Codes>, IUnifedCodeRepo
+    public class UnifedCodeRepo : BaseRepo<C_Cost_Unified_Codes>, IAvailableId, IHirechicalPersistent<C_Cost_Unified_Codes>, IUnifedCodeRepo
     {
         protected override TablesEnum Table => TablesEnum.C_Cost_Unified_Codes;
 
@@ -68,6 +68,15 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
         {
             entities.ToList()
                 .ForEach(e => Delete(e));
+        }
+
+        public IDictionary<string, int> GetDamagedHiraichals()
+        {
+            using (var context = new Models.ApplicationContext())
+            {
+                return context.C_Cost_Project_Codes.Where(c => c.Parent == -1).Select(x => new { Code = x.Code, Id = x.Id })
+                     .ToDictionary(c => c.Code, c => c.Id);
+            }
         }
     }
 
