@@ -84,11 +84,11 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
                   Context.f_Cost_Delete_Parent_With_Childs(Table.ToString(), e.Id);
         }
 
-        public IDictionary<string, int> GetDamagedHiraichals()
+        public IDictionary<string, int> GetDamagedHiraichals(int? projectId)
         {
             using (var context = new Models.ApplicationContext())
             {
-               return context.C_Cost_Project_Codes.Where(c => c.Parent == -1)
+               return context.C_Cost_Project_Codes.Where(c => c.Parent == -1 &&c.Project_Id==projectId)
                     .Select(x => new { Code = x.Code, Id = x.Id })
                     .ToDictionary(c => c.Code, c => c.Id);
             }

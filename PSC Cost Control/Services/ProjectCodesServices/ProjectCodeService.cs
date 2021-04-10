@@ -8,6 +8,7 @@ using PSC_Cost_Control.Trackers;
 using PSC_Cost_Control.Trackers.PersistantCruds;
 using PSC_Cost_Control.Helper.FakeIDsGenerator;
 using PSC_Cost_Control.Helper.Interfaces;
+using PSC_Cost_Control.Trackers.Commiters;
 
 namespace PSC_Cost_Control.Services.ProjectCodesServices
 {
@@ -46,13 +47,12 @@ namespace PSC_Cost_Control.Services.ProjectCodesServices
 
         public async Task Update(int projectId, List<C_Cost_Project_Codes> codes)
         {
+            var tracker = new Tracker<C_Cost_Project_Codes>(await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId));
+            tracker.TrackCollection(codes);
 
-            /**  var tracker = new Tracker<C_Cost_Project_Codes>((IPersistent<C_Cost_Project_Codes>)_projectCodesRepo,
-                  await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId));
-
-              tracker.TrackCollection(codes);
-              tracker.Commit();***/
-         
+            var commiter = new HireaichalUpdatingCommitter<C_Cost_Project_Codes>
+                ((IPersistent<C_Cost_Project_Codes>)_projectCodesRepo, tracker);
+            commiter.Commit();
         }
 
 

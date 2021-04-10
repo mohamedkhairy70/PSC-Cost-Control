@@ -70,7 +70,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
                 .ForEach(e => Delete(e));
         }
 
-        public IDictionary<string, int> GetDamagedHiraichals()
+        public IDictionary<string, int> GetDamagedHiraichals(int? projectId)
         {
             using (var context = new Models.ApplicationContext())
             {

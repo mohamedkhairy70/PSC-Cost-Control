@@ -13,6 +13,6 @@ namespace PSC_Cost_Control.Trackers.PersistantCruds
         /// Get entities has parent value =-1 ,so they need to be fixed
         /// </summary>
         /// <returns>dictionary of key Is Code,value is Id</returns>
-        IDictionary<string, int> GetDamagedHiraichals();
+        IDictionary<string, int> GetDamagedHiraichals(int? projectId=null);
     }
 }
