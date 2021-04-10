@@ -127,10 +127,9 @@ namespace PSC_Cost_Control
                     C_Cost_Project_Codes=new C_Cost_Project_Codes{Id=12}
                 }
             };
-            service.RegisterInDirectItems(input);
+
+            service.UpdateInDirectItems(1 ,input);
         }
-        /**
-         * "The INSERT statement conflicted with the FOREIGN KEY constraint \"FK___Cost_Ind__Projc__6383C8BA\". The conflict occurred in database \"CostExternal\", table \"dbo.C_Cost_Project_Codes\", column 'Id'.\r\nThe statement has been terminated."**/
 
     }
 }
