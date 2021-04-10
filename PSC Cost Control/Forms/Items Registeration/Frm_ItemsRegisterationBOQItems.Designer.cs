@@ -83,7 +83,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1116, 87);
+            this.panel1.Size = new System.Drawing.Size(1217, 87);
             this.panel1.TabIndex = 0;
             // 
             // groupControl1
@@ -91,7 +91,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.groupControl1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupControl1.Controls.Add(this.textBox4);
             this.groupControl1.Controls.Add(this.labelControl1);
-            this.groupControl1.Location = new System.Drawing.Point(256, 7);
+            this.groupControl1.Location = new System.Drawing.Point(306, 7);
             this.groupControl1.Name = "groupControl1";
             this.groupControl1.Size = new System.Drawing.Size(605, 73);
             this.groupControl1.TabIndex = 2;
@@ -122,7 +122,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel2.Location = new System.Drawing.Point(0, 526);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1116, 73);
+            this.panel2.Size = new System.Drawing.Size(1217, 73);
             this.panel2.TabIndex = 1;
             // 
             // btn_Regiter
@@ -142,10 +142,10 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel3.Controls.Add(this.dataGridView3);
             this.panel3.Controls.Add(this.panel8);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel3.Location = new System.Drawing.Point(754, 87);
+            this.panel3.Location = new System.Drawing.Point(804, 87);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(362, 439);
+            this.panel3.Size = new System.Drawing.Size(413, 439);
             this.panel3.TabIndex = 2;
             // 
             // dataGridView3
@@ -155,7 +155,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.dataGridView3.Location = new System.Drawing.Point(0, 139);
             this.dataGridView3.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.Size = new System.Drawing.Size(362, 300);
+            this.dataGridView3.Size = new System.Drawing.Size(413, 300);
             this.dataGridView3.TabIndex = 2;
             // 
             // panel8
@@ -169,7 +169,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Margin = new System.Windows.Forms.Padding(4);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(362, 139);
+            this.panel8.Size = new System.Drawing.Size(413, 139);
             this.panel8.TabIndex = 0;
             // 
             // cm_Categories
@@ -195,7 +195,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(103, 100);
+            this.textBox3.Location = new System.Drawing.Point(142, 91);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(206, 26);
             this.textBox3.TabIndex = 6;
@@ -203,7 +203,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 78);
+            this.label6.Location = new System.Drawing.Point(46, 69);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(151, 19);
             this.label6.TabIndex = 5;
@@ -217,7 +217,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel11.Location = new System.Drawing.Point(0, 0);
             this.panel11.Margin = new System.Windows.Forms.Padding(4);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(362, 36);
+            this.panel11.Size = new System.Drawing.Size(413, 36);
             this.panel11.TabIndex = 1;
             // 
             // label3
@@ -306,7 +306,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel5.Location = new System.Drawing.Point(365, 87);
             this.panel5.Margin = new System.Windows.Forms.Padding(4);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(389, 439);
+            this.panel5.Size = new System.Drawing.Size(439, 439);
             this.panel5.TabIndex = 4;
             // 
             // dataGridView2
@@ -316,7 +316,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.dataGridView2.Location = new System.Drawing.Point(0, 139);
             this.dataGridView2.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(389, 300);
+            this.dataGridView2.Size = new System.Drawing.Size(439, 300);
             this.dataGridView2.TabIndex = 2;
             // 
             // panel7
@@ -328,7 +328,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Margin = new System.Windows.Forms.Padding(4);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(389, 139);
+            this.panel7.Size = new System.Drawing.Size(439, 139);
             this.panel7.TabIndex = 0;
             this.panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.panel7_Paint);
             // 
@@ -356,7 +356,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel10.Location = new System.Drawing.Point(0, 0);
             this.panel10.Margin = new System.Windows.Forms.Padding(4);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(389, 36);
+            this.panel10.Size = new System.Drawing.Size(439, 36);
             this.panel10.TabIndex = 1;
             // 
             // label2
@@ -373,7 +373,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.Appearance.Options.UseFont = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1116, 599);
+            this.ClientSize = new System.Drawing.Size(1217, 599);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);

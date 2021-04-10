@@ -125,6 +125,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
         private void Frm_ProjectCode_Show_Load(object sender, EventArgs e)
         {
+            ClearAllDataProject();
             CreateColumns(tree_ProjectCode);
             tree_ProjectCode.ExpandAll();
             DragDropManager.Default.DragOver += OnDragOver;
@@ -386,6 +387,8 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 tree_ProjectCode.KeyFieldName = "ProjectCode_Code";
                 tree_ProjectCode.ParentFieldName = "ProjectCode_Parent";
             }
+            txt_Description.Enabled = true;
+            cm_Categories.Enabled = true;
         }
 
         void SaveProectCode(int _ProjectId)
