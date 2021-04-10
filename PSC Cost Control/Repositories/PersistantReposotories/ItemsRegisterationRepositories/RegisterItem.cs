@@ -2,6 +2,7 @@
 using PSC_Cost_Control.Models;
 using PSC_Cost_Control.Models.DTO;
 using PSC_Cost_Control.Models.SPs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,40 +23,57 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
         protected string ItemType;
 
         public  abstract Task<IEnumerable<T>> GetRegisterationsAsync(int projectId);
+        /**
+         * *
+         * "Violation of PRIMARY KEY constraint 'PK_C_Cost_Direct_Project_Codes_Summerizng'. Cannot insert duplicate key in object 'dbo.C_Cost_Direct_Project_Codes_Summerizng'. 
+         * The duplicate key value is (30, 1).\r\nThe statement has been terminated."
+         */
         public void InsertItems(IEnumerable<IItemPair<V>> pairs)
         {
-            var proc = new RegisterItemsToProjectCodeSP()
+            try
             {
-                type = ItemType,
-                list = pairs
-                .Select(
-                    i => new Models.UDTs.ItemPairCodeUDT 
-                    { 
-                        ItemId = i.ItemId,ProjectCodeId=i.ProjecCodeId
-                    }
-                    ).ToList()
-            };
+                using (var context = new ApplicationContext())
+                {
+                    var proc = new RegisterItemsToProjectCodeSP()
+                    {
+                        type = ItemType,
+                        list = pairs
+                        .Select(
+                            i => new Models.UDTs.ItemPairCodeUDT
+                            {
+                                ItemId = i.ItemId,
+                                ProjectCodeId = i.ProjecCodeId
+                            }
+                            ).ToList()
+                    };
 
-            Context.Database.ExecuteStoredProcedure(proc);
+                    context.Database.ExecuteStoredProcedure(proc);
+                }
+            } catch (Exception e) { throw e; }
         }
+        
 
         public void UpdateItems(IEnumerable<IItemPairWithId<V>> pairs) {
-            var proc = new UpdateItemsRegisterationSP
+            using (var context = new ApplicationContext())
             {
-                type = ItemType,
-                list = pairs
+
+                var proc = new UpdateItemsRegisterationSP
+                {
+                    type = ItemType,
+                    list = pairs
                 .Select(
                     i => new Models.UDTs.UpdateItemsCodeRegisteration
                     {
-                        Id=i.Id,
+                        Id = i.Id,
                         ItemId = i.ItemId,
                         ProjectCodeId = i.ProjecCodeId
                     }
                     ).ToList()
-            };
 
-            Context.Database.ExecuteStoredProcedure(proc);
+                };
 
+                context.Database.ExecuteStoredProcedure(proc);
+            }
         }
 
      

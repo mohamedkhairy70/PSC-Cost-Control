@@ -21,6 +21,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
         public async Task AddCollection(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
         {
             await Task.Run(() => AddCollectionHelper(entities));
+            Dispose();
         }
         private void AddCollectionHelper(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
         {
@@ -35,22 +36,25 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
                         ProjecCodeId = e.Projcet_Code_Id
                     }
                     ));
-
+            Dispose();
         }
 
         public void DeleteCollection(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
         {
             foreach (var e in entities)
                 Context.f_COST_Delete_By_Id(Table.ToString(), e.Id);
+            Dispose();
         }
 
 
         public override async Task<IEnumerable<C_Cost_Indirect_Project_Code_Summerizing>> GetRegisterationsAsync(int projectId)
         { 
-            return await Context.C_Cost_Indirect_Project_Code_Summerizing
+            var data= await Context.C_Cost_Indirect_Project_Code_Summerizing
                 .Include(c => c.C_Cost_Project_Codes)
                 .Where(z => z.C_Cost_Project_Codes.Project_Id == projectId)
                 .ToListAsync();
+            Dispose();
+            return data;
         }
         public void UpdateCollction(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
         {
@@ -65,6 +69,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
                     ItemId = e.Indirect_Cost_Item_Id,
                     ProjecCodeId = e.Projcet_Code_Id
                 }));
+            Dispose();
         }
     }
 }

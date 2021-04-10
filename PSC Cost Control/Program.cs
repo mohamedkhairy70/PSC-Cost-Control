@@ -14,6 +14,7 @@ using PSC_Cost_Control.Models.UDFs;
 using PSC_Cost_Control.Services.ServicesBuilders;
 using PSC_Cost_Control.Services.ProjectCodesServices;
 using PSC_Cost_Control.Services.UnifiedCodesServices;
+using PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices;
 
 namespace PSC_Cost_Control
 {
@@ -84,7 +85,7 @@ namespace PSC_Cost_Control
                 code1,code2
             });
             **/
-            var service = ServiceBuilder.Build<IUnifiedCodeService>();
+            //var service = ServiceBuilder.Build<IUnifiedCodeService>();
             /**   var code1 = new C_Cost_Unified_Codes
                {
                    Title="q1",
@@ -102,11 +103,34 @@ namespace PSC_Cost_Control
                service.NewUnifiedCodes(new List<C_Cost_Unified_Codes> {code1,code2});
             **/
             //  var l = await service.GetUnifiedCodes();
-          //  var exeternal = new PSC_Cost_Control.Services.DependencyApis.ExternalAPIs(new Models.ApplicationContext());
-          //  var l =await  exeternal.GetProjectsAsync();
+            //  var exeternal = new PSC_Cost_Control.Services.DependencyApis.ExternalAPIs(new Models.ApplicationContext());
+            //  var l =await  exeternal.GetProjectsAsync();
+            var service = ServiceBuilder.Build<IRegisterationService>();
+            //     var list =( await service.GetBOQRegisteration(2)).ToList();
+            //var list= (await service.GetIndirectItemRegisteration(1)).ToList();
 
-
+            /**  var input = new List<C_Cost_Project_Codes_Items> {
+                  new C_Cost_Project_Codes_Items
+                  {
+                      Id=63,
+                      BOQ_Items = new BOQ_Items { Id = 1 },
+                      C_Cost_Project_Codes = new C_Cost_Project_Codes { Id = 12 },
+                  }};**/
+            //
+            //service.RegisterBOQItems(input);
+            //    service.UpdateBOQItems(1, input);
+            var input = new List<C_Cost_Indirect_Project_Code_Summerizing>
+            {
+                new C_Cost_Indirect_Project_Code_Summerizing
+                {
+                    IndirectCostItems=new IndirectCostItems{Id=1},
+                    C_Cost_Project_Codes=new C_Cost_Project_Codes{Id=12}
+                }
+            };
+            service.RegisterInDirectItems(input);
         }
+        /**
+         * "The INSERT statement conflicted with the FOREIGN KEY constraint \"FK___Cost_Ind__Projc__6383C8BA\". The conflict occurred in database \"CostExternal\", table \"dbo.C_Cost_Project_Codes\", column 'Id'.\r\nThe statement has been terminated."**/
 
     }
 }

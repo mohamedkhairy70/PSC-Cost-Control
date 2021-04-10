@@ -18,6 +18,10 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories
 
         protected abstract TablesEnum Table { get; }
 
+        public void Dispose()
+        {
+            Context.Dispose();
+        }
         public virtual void Delete(int id)
         {
             Context.f_COST_Delete_By_Id(Table.ToString(), id);
