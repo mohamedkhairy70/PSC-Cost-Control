@@ -46,12 +46,13 @@ namespace PSC_Cost_Control.Services.ProjectCodesServices
 
         public async Task Update(int projectId, List<C_Cost_Project_Codes> codes)
         {
-    
-            var tracker = new Tracker<C_Cost_Project_Codes>((IPersistent<C_Cost_Project_Codes>)_projectCodesRepo,
-                await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId));
 
-            tracker.TrackCollection(codes);
-            tracker.Commit();
+            /**  var tracker = new Tracker<C_Cost_Project_Codes>((IPersistent<C_Cost_Project_Codes>)_projectCodesRepo,
+                  await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId));
+
+              tracker.TrackCollection(codes);
+              tracker.Commit();***/
+         
         }
 
 

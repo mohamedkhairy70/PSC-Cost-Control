@@ -33,13 +33,6 @@ namespace UnitTestProject1.Tracker
                 new Entity{MId=2,Name="ahmed"},
                 new Entity{MId=1,Name="khaled"}
             };
-
-            var tracked = new List<Entity> {
-                new Entity{}
-            };
-            var persistent = new Mock<IPersistent<Entity>>();
-            var tracker = new Tracker<Entity>(persistent.Object, _origin);
-
         }
 
         [Test]
@@ -50,7 +43,7 @@ namespace UnitTestProject1.Tracker
                 new Entity{Name="ali"}
             };
             var persistent = new Mock<IPersistent<Entity>>();
-            var tracker = new Tracker<Entity>(persistent.Object, _origin);
+            var tracker = new Tracker<Entity>(_origin);
             tracker.TrackCollection(tracked);
 
             Assert.That(tracker.GetNewEntities().ToList(), Has.Count.EqualTo(2));
@@ -64,7 +57,7 @@ namespace UnitTestProject1.Tracker
                 new Entity{Name="ahmed"},
             };
             var persistent = new Mock<IPersistent<Entity>>();
-            var tracker = new Tracker<Entity>(persistent.Object, _origin);
+            var tracker = new Tracker<Entity>( _origin);
             tracker.TrackCollection(tracked);
 
             Assert.That(tracker.GetNewEntities().ToList(), Has.Count.EqualTo(1));
@@ -78,7 +71,7 @@ namespace UnitTestProject1.Tracker
                 new Entity{Name="ahmed"},
             };
             var persistent = new Mock<IPersistent<Entity>>();
-            var tracker = new Tracker<Entity>(persistent.Object, _origin);
+            var tracker = new Tracker<Entity>( _origin);
             tracker.TrackCollection(tracked);
 
             Assert.That(tracker.GetDeletedEntities().ToList(), Has.Count.EqualTo(2));
@@ -91,7 +84,7 @@ namespace UnitTestProject1.Tracker
                 new Entity{MId=1,Name="ahmed"},
             };
             var persistent = new Mock<IPersistent<Entity>>();
-            var tracker = new Tracker<Entity>(persistent.Object, _origin);
+            var tracker = new Tracker<Entity>(_origin);
             tracker.TrackCollection(tracked);
             Assert.That(tracker.GetUpdatedEntities().ToList(), Has.Count.EqualTo(1));
         }
@@ -103,30 +96,11 @@ namespace UnitTestProject1.Tracker
                 new Entity{Name="ahmed"},
             };
             var persistent = new Mock<IPersistent<Entity>>();
-            var tracker = new Tracker<Entity>(persistent.Object, new List<Entity> { });
+            var tracker = new Tracker<Entity>(new List<Entity> { });
             tracker.TrackCollection(tracked);
 
             Assert.That(tracker.GetNewEntities().ToList(), Has.Count.EqualTo(1));
         }
 
-        [Test]
-        public void Commit_WhenCalled_Pass()
-        {
-            var tracked = new List<Entity> {
-                new Entity{Name="ahmed"},
-                new Entity{MId=1,Name="Osama"}
-            };
-            var persistent = new Mock<IPersistent<Entity>>();
-            var tracker = new Tracker<Entity>(persistent.Object, new List<Entity> { });
-            tracker.TrackCollection(tracked);
-            tracker.Commit();
-            var added = tracker.GetNewEntities();
-            var updated = tracker.GetUpdatedEntities();
-            var deleted = tracker.GetDeletedEntities();
-            persistent.Verify(s => s.AddCollection(added));
-            persistent.Verify(s => s.DeleteCollection(deleted));
-            persistent.Verify(s => s.UpdateCollction(updated));
-
-        }
     }
 }

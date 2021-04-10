@@ -216,6 +216,9 @@
     <Compile Include="Services\UnifiedCodesServices\IUnifiedCodeService.cs" />
     <Compile Include="Services\UnifiedCodesServices\UnifiedCodeCategoryService.cs" />
     <Compile Include="Services\UnifiedCodesServices\UnifiedCodeService.cs" />
+    <Compile Include="Trackers\Commiters\HireaichalUpdatingCommitter.cs" />
+    <Compile Include="Trackers\Commiters\UpdatingCommiter.cs" />
+    <Compile Include="Trackers\Commiters\NonHireaichalUpdatingCommitter.cs" />
     <Compile Include="Trackers\PersistantCruds\IPersistent.cs" />
     <Compile Include="Trackers\TrackingEntitiesFactory\ITracker.cs" />
     <Compile Include="Trackers\TrackingEntitiesFactory\Tracker.cs" />

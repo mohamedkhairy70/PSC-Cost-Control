@@ -2,6 +2,7 @@
 using PSC_Cost_Control.Models.DTO;
 using PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisterationRepositories;
 using PSC_Cost_Control.Trackers;
+using PSC_Cost_Control.Trackers.Commiters;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,20 +58,20 @@ namespace PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices
 
         public void UpdateBOQItems(int projectId,IEnumerable<C_Cost_Project_Codes_Items> itemsCodes)
         {
-            var tracker = new Tracker<C_Cost_Project_Codes_Items>(
-                _directRepo, _directRepo.GetRegisterationsAsync(projectId).Result);
-
+            var tracker = new Tracker<C_Cost_Project_Codes_Items>(_directRepo.GetRegisterationsAsync(projectId).Result);
             tracker.TrackCollection(itemsCodes);
-            tracker.Commit();
+
+            var commiter = new NonHireaichalUpdatingCommitter<C_Cost_Project_Codes_Items>(_directRepo, tracker);
+            commiter.Commit();
         }
 
         public void UpdateInDirectItems(int projecId,IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> itemsCodes)
         {
-            var tracker = new Tracker<C_Cost_Indirect_Project_Code_Summerizing>(
-                            _indirectRepo,_indirectRepo.GetRegisterationsAsync(projecId).Result);
-
+            var tracker=new Tracker<C_Cost_Indirect_Project_Code_Summerizing>(_indirectRepo.GetRegisterationsAsync(projecId).Result);
             tracker.TrackCollection(itemsCodes);
-            tracker.Commit();
+
+            var commiter = new NonHireaichalUpdatingCommitter<C_Cost_Indirect_Project_Code_Summerizing>(_indirectRepo, tracker);
+            commiter.Commit();
         }
     }
 }

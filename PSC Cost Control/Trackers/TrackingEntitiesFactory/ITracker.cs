@@ -11,10 +11,6 @@ namespace PSC_Cost_Control.Trackers
     public interface ITracker<T> where T : IHasId
     {
         /// <summary>
-        /// commiting the data in repositiories of insertion ,updating and delation
-        /// </summary>
-        void Commit();
-        /// <summary>
         /// distrubute entities to Delation,insertion,Updating repositories to be steady for commiting.
         /// </summary>
         /// <param name="entities">the entities that will be tracked</param>
