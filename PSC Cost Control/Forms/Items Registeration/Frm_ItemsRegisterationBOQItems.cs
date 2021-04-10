@@ -30,33 +30,39 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             {
                 var ResaultProjects = _externalAPIs.SearchProjectsBYName(ProjectName).Result;
                 ProjectId = Convert.ToInt32(ResaultProjects.SingleOrDefault().ContractId.ToString());
+
                 var ResaultBOQs = _externalAPIs.GetBOQsAsync(ProjectId).Result;
                 var CustomResaultBOQs = from boq in ResaultBOQs
                             join pro in ResaultProjects on boq.ContractId equals pro.ContractId
-                            select new
-                            {
-                                ProjectName = pro.Name,
-                                ProjectId = boq.Id
-                            };
+                            select new  { ProjectName = boq.Id, ProjectId = boq.Id};
+
                 cm_BOQItem.DataSource = CustomResaultBOQs.ToList();
                 cm_BOQItem.ValueMember = "ProjectId";
                 cm_BOQItem.DisplayMember = "ProjectName";
-                var ResaultBOQRegisteration = _RegisterationService.GetBOQRegisteration(ProjectId).Result;
-                //var CustomResaultBOQRegisteration = from boq in ResaultBOQRegisteration
-                //                                from Procode in Models.ApplicationContext.C_Cost_Project_Codes 
-                //                          {
 
-                //                          };
+                
+
+                
                 var ResaultProjectCode = _IProjectCodeService.GetProjectCodes(ProjectId).Result;
-                DGV_RegistBOQItem.DataSource = _RegisterationService.GetBOQRegisteration(ProjectId).Result;
-                DGV_ProjectCode.DataSource = _IProjectCodeService.GetProjectCodes(ProjectId).Result;
+                var CustomResaultProjectCode = from ProCode in ResaultProjectCode
+                                              select new { ProjectCode_Id = ProCode.Id, ProjectCode_Description = ProCode.Description };
+                
+                
+                DGV_ProjectCode.DataSource = CustomResaultProjectCode;
             }
         }
         void GetDataByBOQs(int Project, int BOQs)
         {
             if(Project > 0)
             {
-                DGV_BOQItem.DataSource = _externalAPIs.GetBOQ_ItemsAsync(BOQs).Result;
+                DGV_BOQItem.DataSource = _externalAPIs.GetBOQ_ItemsAsync(BOQs).Result; 
+                var ResaultBOQRegisteration = _RegisterationService.GetBOQRegisteration(ProjectId).Result;
+                var CustomResaultBOQRegisteration = from boq in ResaultBOQRegisteration
+                                                    from Procode in Models.ApplicationContext.C_Cost_Project_Codes
+                                          {
+
+                };
+                DGV_RegistBOQItem.DataSource = ResaultBOQRegisteration;
             }
         }
         void ClreaData()
@@ -98,7 +104,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     {
 
                         BOQItemRow = i;
-                        NameBOQ = DGV_ProjectCode.Rows[i].Cells["ProjectName"].Value.ToString();
+                        NameBOQ = DGV_ProjectCode.Rows[i].Cells["ProjectCode_Description"].Value.ToString();
 
                     }
 
@@ -133,6 +139,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             if(cm_BOQItem.SelectedIndex > 0)
             {
                 GetDataByBOQs(ProjectId, Convert.ToInt32(cm_BOQItem.SelectedValue));
+
             }
         }
 
