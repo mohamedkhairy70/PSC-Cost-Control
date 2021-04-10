@@ -1,44 +1,113 @@
-﻿using DevExpress.XtraBars.Docking2010;
-using DevExpress.XtraEditors;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
 using PSC_Cost_Control.Services.ProjectCodesServices;
-using PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisterationRepositories;
 using PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices;
+using PSC_Cost_Control.Services.ServicesBuilders;
+using PSC_Cost_Control.Services.DependencyApis;
 
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
     public partial class Frm_ItemsRegisterationBOQItems : DevExpress.XtraEditors.XtraForm
     {
-        ItemsRegisterationService _itemsRegisterationService;
-
+        IProjectCodeService _IProjectCodeService;
+        IRegisterationService _RegisterationService;
+        ExternalAPIs _externalAPIs;
+        int ProjectId;
         public Frm_ItemsRegisterationBOQItems()
         {
             InitializeComponent();
-            _itemsRegisterationService = new ItemsRegisterationService
-                (new DirectItemRegisterationRepo(new Models.ApplicationContext())
-                    , new IndirectCostItemRegisterationRepo(new Models.ApplicationContext()));
+            _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+            _externalAPIs = new ExternalAPIs(new Models.ApplicationContext());
         }
 
         #region My Method for my From
-        void GetData(string _State,int Project)
+        void GetData(string ProjectName)
         {
             //check if ValidationData is not False
+            if (!string.IsNullOrWhiteSpace(ProjectName))
+            {
+                var ResaultProjects = _externalAPIs.SearchProjectsBYName(ProjectName).Result;
+                ProjectId = Convert.ToInt32(ResaultProjects.SingleOrDefault().ContractId.ToString());
+                var ResaultBOQs = _externalAPIs.GetBOQsAsync(ProjectId).Result;
+                var CustomResaultBOQs = from boq in ResaultBOQs
+                            join pro in ResaultProjects on boq.ContractId equals pro.ContractId
+                            select new
+                            {
+                                ProjectName = pro.Name,
+                                ProjectId = boq.Id
+                            };
+                cm_BOQItem.DataSource = CustomResaultBOQs.ToList();
+                cm_BOQItem.ValueMember = "ProjectId";
+                cm_BOQItem.DisplayMember = "ProjectName";
+                var ResaultBOQRegisteration = _RegisterationService.GetBOQRegisteration(ProjectId).Result;
+                //var CustomResaultBOQRegisteration = from boq in ResaultBOQRegisteration
+                //                                from Procode in Models.ApplicationContext.C_Cost_Project_Codes 
+                //                          {
 
+                //                          };
+                var ResaultProjectCode = _IProjectCodeService.GetProjectCodes(ProjectId).Result;
+                DGV_RegistBOQItem.DataSource = _RegisterationService.GetBOQRegisteration(ProjectId).Result;
+                DGV_ProjectCode.DataSource = _IProjectCodeService.GetProjectCodes(ProjectId).Result;
+            }
         }
-        void GetData(string _State, int Project,int Fild)
+        void GetDataByBOQs(int Project, int BOQs)
         {
+            if(Project > 0)
+            {
+                DGV_BOQItem.DataSource = _externalAPIs.GetBOQ_ItemsAsync(BOQs).Result;
+            }
+        }
+        void ClreaData()
+        {
+            txt_Projects.Clear();
+            txt_SearchByBOQItem.Clear();
+            txt_SearchByProjectCode.Clear();
+            txt_SearchByRegistBOQItem.Clear();
+            cm_BOQItem.SelectedIndex = -1;
+            ProjectId = 0;
+        }
+        void Registretion()
+        {
+            int BOQItemRow;
+            string NameBOQ;
+            for (int i = 0; i < DGV_BOQItem.Rows.Count; i++)
+            {
+                if (DGV_BOQItem.Rows.Count > 0)
+                {
+                    bool isSelected = Convert.ToBoolean(DGV_BOQItem.Rows[i].Cells["ch_RegisterBOQItem"].Value);
+                    if (isSelected)
+                    {
+
+                        BOQItemRow = i;
+                        NameBOQ = DGV_BOQItem.Rows[i].Cells["ProjectName"].Value.ToString();
+
+                    }
+
+                }
+
+            }
+
+            for (int i = 0; i < DGV_ProjectCode.Rows.Count; i++)
+            {
+                if (DGV_ProjectCode.Rows.Count > 0)
+                {
+                    bool isSelected = Convert.ToBoolean(DGV_ProjectCode.Rows[i].Cells["ch_ProjectCode"].Value);
+                    if (isSelected)
+                    {
+
+                        BOQItemRow = i;
+                        NameBOQ = DGV_ProjectCode.Rows[i].Cells["ProjectName"].Value.ToString();
+
+                    }
+
+                }
+
+            }
 
         }
-        bool ValidationData(string _State)
+        bool ValidationDataProjec(string _State)
         {
             bool Resualt = false;
 
@@ -46,18 +115,30 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         }
         #endregion My Method for my Form
 
-        private void windowsUIButtonPanel1_ButtonClick(object sender, DevExpress.XtraBars.Docking2010.ButtonEventArgs e)
-        {
-            WindowsUIButton btn = e.Button as WindowsUIButton;
-            if (btn.Caption == "Show")
-            {
-
-            }
-        }
-
         private void panel7_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void txt_Projects_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                GetData(txt_Projects.Text);
+            }
+        }
+
+        private void cm_BOQItem_DropDown(object sender, EventArgs e)
+        {
+            if(cm_BOQItem.SelectedIndex > 0)
+            {
+                GetDataByBOQs(ProjectId, Convert.ToInt32(cm_BOQItem.SelectedValue));
+            }
+        }
+
+        private void Frm_ItemsRegisterationBOQItems_Load(object sender, EventArgs e)
+        {
+            ClreaData();
         }
     }
 }

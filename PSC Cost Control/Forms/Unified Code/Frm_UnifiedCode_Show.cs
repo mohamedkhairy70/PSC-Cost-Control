@@ -1,44 +1,37 @@
 ﻿using DevExpress.XtraEditors;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using PSC_Cost_Control.Models;
 using PSC_Cost_Control.Helper;
-using System.Data.Entity;
 using DevExpress.XtraBars.Docking2010;
 using DevExpress.XtraTreeList.Columns;
 using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Nodes;
 using DevExpress.Utils.DragDrop;
-using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.Utils.Serializing;
-using PSC_Cost_Control.Models.UDFs;
 using System.Collections;
-using PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories;
 using PSC_Cost_Control.Helper.TreeListHandler;
 using PSC_Cost_Control.Services.DependencyApis;
 using PSC_Cost_Control.Services.UnifiedCodesServices;
+using PSC_Cost_Control.Services.ServicesBuilders;
 
 namespace PSC_Cost_Control.Forms.Unified_Code
 {
     public partial class Frm_UnifiedCode_Show : DevExpress.XtraEditors.XtraForm
     {
         public ExternalAPIs _externalAPIs;
-        public UnifiedCodeCategoryService _categoryService;
-        public UnifiedCodeService _UnifiedCode;
+        public IUnifiedCodeCategoryService _categoryService;
+        public IUnifiedCodeService _UnifiedCode;
         readonly Static st = new Static();
         public Frm_UnifiedCode_Show()
         {
             InitializeComponent();
             _externalAPIs = new ExternalAPIs(new Models.ApplicationContext());
-            _categoryService = new UnifiedCodeCategoryService(new UnifiedCodeCategoriesRepo(new Models.ApplicationContext()));
-            _UnifiedCode = new UnifiedCodeService(new UnifedCodeRepo(new Models.ApplicationContext()));
+            _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
+            _UnifiedCode = ServiceBuilder.Build<IUnifiedCodeService>();
         }
 
         private void windowsUIButtonPanel1_ButtonClick(object sender, ButtonEventArgs e)
