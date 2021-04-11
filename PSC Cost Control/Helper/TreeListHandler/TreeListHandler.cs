@@ -36,7 +36,8 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
             return list;
         }
 
-        private static int GetGuid() => new Random().Next(10, 1000000);
+        private static Random _random = new Random();
+        private static int GetGuid() => _random.Next(10, 1000000);
 
         private static void ToList_Rec<T>(TreeListNode node,string code,List<T> rt) where T : IHireichy
         {

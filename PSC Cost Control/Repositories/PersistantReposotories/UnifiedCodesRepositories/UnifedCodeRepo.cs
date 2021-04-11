@@ -58,7 +58,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
         {
             Context.f_COST_Delete_By_Id(Table.ToString(), unified.Id);
         }
-        public void UpdateCollction(IEnumerable<C_Cost_Unified_Codes> entities)
+        public void UpdateCollection(IEnumerable<C_Cost_Unified_Codes> entities)
         {
             foreach (var e in entities)
                 Update(e);

@@ -59,7 +59,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
                 .ToList());
         }
 
-        public void UpdateCollction(IEnumerable<C_Cost_Project_Codes> entities)
+        public void UpdateCollection(IEnumerable<C_Cost_Project_Codes> entities)
         {
             var proc = new UpdateProjectCodesSP
             {

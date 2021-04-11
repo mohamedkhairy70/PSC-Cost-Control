@@ -81,6 +81,7 @@
     <Compile Include="HelpersUnitTestings\TreeListHandlerUnitTesting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ServicesBuilder\ServiceBuilderUnitTestings.cs" />
+    <Compile Include="Tracker\HireaichalUpdatingCommitterUnitTestings.cs" />
     <Compile Include="Tracker\TrackerUnitTestings.cs" />
   </ItemGroup>
   <ItemGroup>

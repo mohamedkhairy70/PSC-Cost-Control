@@ -13,6 +13,6 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
         Task AddProjectCodes(List<ProjectCodeUdT> codes);
         void DeleteCollection(IEnumerable<C_Cost_Project_Codes> entities);
         Task<IEnumerable<C_Cost_Project_Codes>> GetProjectCodesWithItsItsUnifiedAsync(int projectId);
-        void UpdateCollction(IEnumerable<C_Cost_Project_Codes> entities);
+        void UpdateCollection(IEnumerable<C_Cost_Project_Codes> entities);
     }
 }

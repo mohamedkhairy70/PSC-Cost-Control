@@ -52,7 +52,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
                 .ToListAsync();
             return data;
         }
-        public void UpdateCollction(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
+        public void UpdateCollection(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
         {
             UpdateItems(
                 entities

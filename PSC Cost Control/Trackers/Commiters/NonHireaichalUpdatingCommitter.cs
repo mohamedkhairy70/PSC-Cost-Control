@@ -10,7 +10,8 @@ namespace PSC_Cost_Control.Trackers.Commiters
 {
     public class NonHireaichalUpdatingCommitter<T>: UpdatingCommiter<T> where T : IHasId
     {
-        public NonHireaichalUpdatingCommitter(IPersistent<T> persistent, ITracker<T> tracker) : base(persistent, tracker)
+        public NonHireaichalUpdatingCommitter(IPersistent<T> persistent, ITracker<T> tracker)
+            : base(persistent, tracker)
         {
         }
 
@@ -18,7 +19,7 @@ namespace PSC_Cost_Control.Trackers.Commiters
         {
             Persistent.DeleteCollection(Tracker.GetDeletedEntities());
             Persistent.AddCollection(Tracker.GetNewEntities());
-            Persistent.UpdateCollction(Tracker.GetUpdatedEntities());
+            Persistent.UpdateCollection(Tracker.GetUpdatedEntities());
         }
 
     }
