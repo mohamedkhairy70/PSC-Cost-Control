@@ -41,8 +41,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 cm_BOQItem.DisplayMember = "ProjectName";
 
                 
-
-                
                 var ResaultProjectCode = _IProjectCodeService.GetProjectCodes(ProjectId).Result;
                 var CustomResaultProjectCode = from ProCode in ResaultProjectCode
                                               select new { ProjectCode_Id = ProCode.Id, ProjectCode_Description = ProCode.Description };
@@ -53,15 +51,27 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         }
         void GetDataByBOQs(int Project, int BOQs)
         {
-            if(Project > 0)
-            {
-                DGV_BOQItem.DataSource = _externalAPIs.GetBOQ_ItemsAsync(BOQs).Result; 
-                var ResaultBOQRegisteration = _RegisterationService.GetBOQRegisteration(ProjectId).Result;
+            if (Project > 0)
+            { 
+                var ResaultBOQItem = _externalAPIs.GetBOQ_ItemsAsync(BOQs).Result;
+                var CustomResaultBOQItem = from boq in ResaultBOQItem
+                                           select new
+                                            {
+                                               BoqItemId = boq.Id,
+                                               BOQItemDescription = boq.Description 
+                                            };
+                DGV_BOQItem.DataSource = CustomResaultBOQItem;
+                var ResaultBOQRegisteration = _RegisterationService.GetBOQRegisteration(Project).Result;
+                var ResaultProjectCode = _IProjectCodeService.GetProjectCodes(Project).Result;
                 var CustomResaultBOQRegisteration = from boq in ResaultBOQRegisteration
-                                                    from Procode in Models.ApplicationContext.C_Cost_Project_Codes
-                                          {
-
-                };
+                                                    join BoqItem in ResaultBOQItem on boq.Boq_Item_Id equals BoqItem.BOQId
+                                                    join proCode in ResaultProjectCode on boq.Project_Code_Id equals proCode.Id
+                                                    select new
+                                                      {
+                                                            BoqRegisterid =  boq.Id ,
+                                                            BoqResisterBoqItemeDescription = BoqItem.Description,
+                                                            BoqResisterProjectCodeDescription =  proCode.Description
+                                                      };
                 DGV_RegistBOQItem.DataSource = ResaultBOQRegisteration;
             }
         }
@@ -76,8 +86,8 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         }
         void Registretion()
         {
-            int BOQItemRow;
-            string NameBOQ;
+            int BOQItemRow, BOQItemId, ProjectCodeRow, ProjectCodeId;
+            string BOQItemDescriptoin, ProjectCodeDesscription;
             for (int i = 0; i < DGV_BOQItem.Rows.Count; i++)
             {
                 if (DGV_BOQItem.Rows.Count > 0)
@@ -85,10 +95,10 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     bool isSelected = Convert.ToBoolean(DGV_BOQItem.Rows[i].Cells["ch_RegisterBOQItem"].Value);
                     if (isSelected)
                     {
-
+                        BOQItemId = Convert.ToInt32(DGV_BOQItem.Rows[i].Cells["BoqItemId"].Value.ToString());
                         BOQItemRow = i;
-                        NameBOQ = DGV_BOQItem.Rows[i].Cells["ProjectName"].Value.ToString();
-
+                        BOQItemDescriptoin = DGV_BOQItem.Rows[i].Cells["BOQItemDescription"].Value.ToString();
+                        break;
                     }
 
                 }
@@ -102,16 +112,16 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     bool isSelected = Convert.ToBoolean(DGV_ProjectCode.Rows[i].Cells["ch_ProjectCode"].Value);
                     if (isSelected)
                     {
-
-                        BOQItemRow = i;
-                        NameBOQ = DGV_ProjectCode.Rows[i].Cells["ProjectCode_Description"].Value.ToString();
-
+                        ProjectCodeId = Convert.ToInt32(DGV_ProjectCode.Rows[i].Cells["ProjectCode_Description"].Value.ToString());
+                        ProjectCodeRow = i;
+                        ProjectCodeDesscription = DGV_ProjectCode.Rows[i].Cells["ProjectCode_Description"].Value.ToString();
+                        break;
                     }
 
                 }
 
             }
-
+            
         }
         bool ValidationDataProjec(string _State)
         {

@@ -17,6 +17,7 @@ using PSC_Cost_Control.Helper.TreeListHandler;
 using PSC_Cost_Control.Services.DependencyApis;
 using PSC_Cost_Control.Services.ProjectCodesServices;
 using PSC_Cost_Control.Services.ServicesBuilders;
+using PSC_Cost_Control.Services.UnifiedCodesServices;
 
 namespace PSC_Cost_Control.Forms.Project_Code
 {
@@ -25,6 +26,8 @@ namespace PSC_Cost_Control.Forms.Project_Code
         public ExternalAPIs _externalAPIs;
         public IProjectCodeCategoryService _categoryService;
         public IProjectCodeService _projectCode;
+        public IUnifiedCodeService _unifiedCodeService;
+
         readonly Static st = new Static();
         public Frm_ProjectCode_Show()
         {
@@ -32,6 +35,8 @@ namespace PSC_Cost_Control.Forms.Project_Code
             _externalAPIs = new ExternalAPIs(new Models.ApplicationContext());
             _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
             _projectCode = ServiceBuilder.Build<IProjectCodeService>();
+            _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
+
         }
 
         private void windowsUIButtonPanel1_ButtonClick(object sender, ButtonEventArgs e)
@@ -57,7 +62,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     if (validationProjectCode())
                     {
                         //Add Root Project Code To Treelist
-                        AddRootProjectCode(cm_Categories.SelectedText, txt_Description.Text);
+                        AddRootProjectCode(cm_Categories.SelectedText, txt_Description.Text,cm_UnifiedCode.SelectedText);
 
                         //Clear Combobox Categore and text Description
                         ClearAllDataProjectCode();
@@ -74,7 +79,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     if (validationProjectCode())
                     {
                         //Add Child Project Code To Treelist
-                        AddChildProjectCode(cm_Categories.SelectedText, txt_Description.Text);
+                        AddChildProjectCode(cm_Categories.SelectedText, txt_Description.Text, cm_UnifiedCode.SelectedText);
 
                         //Clear Combobox Categore and text Description
                         ClearAllDataProjectCode();
@@ -263,10 +268,18 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
             cm_Projects.Enabled = true;
             var ProjectList = _externalAPIs.GetProjectsAsync().Result;
-            cm_Projects.SelectedItem = -1;
+            
             cm_Projects.DataSource = ProjectList;
             cm_Projects.DisplayMember = "Name";
             cm_Projects.ValueMember = "ContractId";
+            cm_Projects.SelectedItem = -1;
+
+            var UnifiedCodeList = _unifiedCodeService.GetUnifiedCodes().Result;
+
+            cm_UnifiedCode.DataSource = UnifiedCodeList;
+            cm_UnifiedCode.DisplayMember = "Title";
+            cm_UnifiedCode.ValueMember = "Id";
+            cm_UnifiedCode.SelectedItem = -1;
 
             tree_ProjectCode.DataSource = null;
         }
@@ -299,7 +312,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
         bool validationProjectCode()
         {
             bool result;
-            if (string.IsNullOrWhiteSpace(cm_Categories.SelectedText))
+            if (Convert.ToInt32(cm_Categories.SelectedValue) > 0)
             {
                 MessageBox.Show("Please choose the category to add the Project Code.");
                 return false;
@@ -320,13 +333,13 @@ namespace PSC_Cost_Control.Forms.Project_Code
             return result;
         }
 
-        void AddRootProjectCode(string Category, string Description)
+        void AddRootProjectCode(string Category, string Description,string UnifiedCodeTitle)
         {
 
-            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(new object[] { "/" + (tree_ProjectCode.Nodes.Count +1), Category, Description }, parentNode: null);
+            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(new object[] { "/" + (tree_ProjectCode.Nodes.Count +1), Category, Description, UnifiedCodeTitle }, parentNode: null);
         }
 
-        void AddChildProjectCode(string Category, string Description)
+        void AddChildProjectCode(string Category, string Description,string UnifiedCodeTitle)
         {
             if (tree_ProjectCode.FocusedNode != null)
             {
@@ -347,7 +360,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                             + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
                         tree_ProjectCode.FocusedNode =
                             tree_ProjectCode.AppendNode(
-                                new object[] { IdNode, Category, Description }, tree_ProjectCode.FocusedNode);
+                                new object[] { IdNode, Category, Description, UnifiedCodeTitle }, tree_ProjectCode.FocusedNode);
                     }             
                 }
             }
