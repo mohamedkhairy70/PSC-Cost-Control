@@ -12,27 +12,20 @@ namespace PSC_Cost_Control.Trackers
         private LinkedList<T> _added;
         private LinkedList<T> _deleted;
         private LinkedList<T> _udated;
-        private IPersistent<T> _persistent;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="persistent">Repository that handle Commiting data </param>
         /// <param name="origin">the existed data.if tracking is for database handling,then origin is the database existed data.</param>
-        public Tracker(IPersistent<T> persistent, IEnumerable<T> origin)
+        public Tracker(IEnumerable<T> origin)
         {
-            _persistent = persistent;
             _base = origin.ToDictionary(o => o.Id);
             _added = new LinkedList<T>();
             _udated = new LinkedList<T>();
             _deleted = new LinkedList<T>();
         }
 
-        public void Commit()
-        {
-            _persistent.DeleteCollection(_deleted);
-            _persistent.AddCollection(_added);
-            _persistent.UpdateCollction(_udated);
-        }
+       
 
         public void TrackCollection(IEnumerable<T> entities)
         {

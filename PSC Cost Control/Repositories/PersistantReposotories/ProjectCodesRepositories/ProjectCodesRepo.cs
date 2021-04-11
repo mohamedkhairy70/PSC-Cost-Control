@@ -15,7 +15,7 @@ using PSC_Cost_Control.Trackers.PersistantCruds;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories
 {
-    public class ProjectCodesRepo : HireachyRepo<C_Cost_Project_Codes>, IPersistent<C_Cost_Project_Codes>, IProjectCodesRepo
+    public class ProjectCodesRepo : HireachyRepo<C_Cost_Project_Codes>, IHirechicalPersistent<C_Cost_Project_Codes>, IProjectCodesRepo
     {
         public ProjectCodesRepo(ApplicationContext context) : base(context)
         {
@@ -82,6 +82,16 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
         {
               foreach (var e in entities)
                   Context.f_Cost_Delete_Parent_With_Childs(Table.ToString(), e.Id);
+        }
+
+        public IDictionary<string, int> GetDamagedHiraichals(int? projectId)
+        {
+            using (var context = new Models.ApplicationContext())
+            {
+               return context.C_Cost_Project_Codes.Where(c => c.Parent == -1 &&c.Project_Id==projectId)
+                    .Select(x => new { Code = x.Code, Id = x.Id })
+                    .ToDictionary(c => c.Code, c => c.Id);
+            }
         }
     }
 }

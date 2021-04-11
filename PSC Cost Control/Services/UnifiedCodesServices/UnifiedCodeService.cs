@@ -5,6 +5,7 @@ using PSC_Cost_Control.Models.UDFs;
 using PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepositories;
 using PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories;
 using PSC_Cost_Control.Trackers;
+using PSC_Cost_Control.Trackers.Commiters;
 using PSC_Cost_Control.Trackers.PersistantCruds;
 using System;
 using System.Collections.Generic;
@@ -36,10 +37,12 @@ namespace PSC_Cost_Control.Services.UnifiedCodesServices
 
         public async Task Update(List<C_Cost_Unified_Codes> codes)
         {
-            var tracker = new Tracker<C_Cost_Unified_Codes>((IPersistent<C_Cost_Unified_Codes>)_unifiedCodesRepo,
-                await _unifiedCodesRepo.GetUnifiedCodesAsync());
+            var tracker = new Tracker<C_Cost_Unified_Codes>(await _unifiedCodesRepo.GetUnifiedCodesAsync());
             tracker.TrackCollection(codes);
-            tracker.Commit();
+
+            var commiter = new HireaichalUpdatingCommitter<C_Cost_Unified_Codes>
+                ((IPersistent<C_Cost_Unified_Codes>)_unifiedCodesRepo, tracker);
+            commiter.Commit();
         }
     }
 }
