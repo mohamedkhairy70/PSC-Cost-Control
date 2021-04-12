@@ -88,7 +88,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
         {
             using (var context = new Models.ApplicationContext())
             {
-               return context.C_Cost_Project_Codes.Where(c => c.Parent == -1 &&c.Project_Id==projectId)
+               return context.C_Cost_Project_Codes.Where(c => c.Parent == null &&c.Project_Id==projectId)
                     .Select(x => new { Code = x.Code, Id = x.Id })
                     .ToDictionary(c => c.Code, c => c.Id);
             }

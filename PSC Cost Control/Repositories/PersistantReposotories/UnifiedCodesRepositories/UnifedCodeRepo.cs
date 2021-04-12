@@ -72,9 +72,9 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
 
         public IDictionary<string, int> GetDamagedHiraichals(int? projectId)
         {
-            using (var context = new Models.ApplicationContext())
+            using (var context = new ApplicationContext())
             {
-                return context.C_Cost_Project_Codes.Where(c => c.Parent == -1).Select(x => new { Code = x.Code, Id = x.Id })
+                return context.C_Cost_Project_Codes.Where(c => c.Parent == null).Select(x => new { Code = x.Code, Id = x.Id })
                      .ToDictionary(c => c.Code, c => c.Id);
             }
         }
