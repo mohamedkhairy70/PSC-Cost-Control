@@ -164,7 +164,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             col3.VisibleIndex = 2;
             TreeListColumn col4 = tl.Columns.Add();
             col4.Caption = "ProjectCode_Parent";
-            col4.VisibleIndex = 0;
+            col4.VisibleIndex = 3;
             tl.EndUpdate();
         }
 

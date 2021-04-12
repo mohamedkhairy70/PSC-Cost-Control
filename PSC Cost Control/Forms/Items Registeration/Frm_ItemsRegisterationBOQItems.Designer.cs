@@ -37,6 +37,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.btn_Regiter = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.DGV_BOQItem = new System.Windows.Forms.DataGridView();
+            this.ch_RegisterBOQItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel8 = new System.Windows.Forms.Panel();
             this.cm_BOQItem = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -46,6 +47,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.DGV_ProjectCode = new System.Windows.Forms.DataGridView();
+            this.ch_RegisterProjectCode = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.txt_SearchByProjectCode = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -58,8 +60,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label5 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.ch_RegisterProjectCode = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ch_RegisterBOQItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.btn_RegisterEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
@@ -139,6 +140,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.btn_Regiter.TabIndex = 0;
             this.btn_Regiter.Text = ">>> Register <<<";
             this.btn_Regiter.UseVisualStyleBackColor = false;
+            this.btn_Regiter.Click += new System.EventHandler(this.btn_Regiter_Click);
             // 
             // panel3
             // 
@@ -153,6 +155,8 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             // DGV_BOQItem
             // 
+            this.DGV_BOQItem.AllowUserToAddRows = false;
+            this.DGV_BOQItem.AllowUserToDeleteRows = false;
             this.DGV_BOQItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_BOQItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ch_RegisterBOQItem});
@@ -160,8 +164,16 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_BOQItem.Location = new System.Drawing.Point(0, 139);
             this.DGV_BOQItem.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_BOQItem.Name = "DGV_BOQItem";
+            this.DGV_BOQItem.ReadOnly = true;
             this.DGV_BOQItem.Size = new System.Drawing.Size(413, 300);
             this.DGV_BOQItem.TabIndex = 2;
+            // 
+            // ch_RegisterBOQItem
+            // 
+            this.ch_RegisterBOQItem.HeaderText = "Register BOQ Item";
+            this.ch_RegisterBOQItem.Name = "ch_RegisterBOQItem";
+            this.ch_RegisterBOQItem.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ch_RegisterBOQItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // panel8
             // 
@@ -248,6 +260,8 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             // DGV_ProjectCode
             // 
+            this.DGV_ProjectCode.AllowUserToAddRows = false;
+            this.DGV_ProjectCode.AllowUserToDeleteRows = false;
             this.DGV_ProjectCode.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_ProjectCode.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ch_RegisterProjectCode});
@@ -255,8 +269,16 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_ProjectCode.Location = new System.Drawing.Point(0, 139);
             this.DGV_ProjectCode.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_ProjectCode.Name = "DGV_ProjectCode";
+            this.DGV_ProjectCode.ReadOnly = true;
             this.DGV_ProjectCode.Size = new System.Drawing.Size(386, 300);
             this.DGV_ProjectCode.TabIndex = 1;
+            // 
+            // ch_RegisterProjectCode
+            // 
+            this.ch_RegisterProjectCode.HeaderText = "Register Project Code";
+            this.ch_RegisterProjectCode.Name = "ch_RegisterProjectCode";
+            this.ch_RegisterProjectCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ch_RegisterProjectCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // panel6
             // 
@@ -319,11 +341,16 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             // DGV_RegistBOQItem
             // 
+            this.DGV_RegistBOQItem.AllowUserToAddRows = false;
+            this.DGV_RegistBOQItem.AllowUserToDeleteRows = false;
             this.DGV_RegistBOQItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_RegistBOQItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.btn_RegisterEdit});
             this.DGV_RegistBOQItem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGV_RegistBOQItem.Location = new System.Drawing.Point(0, 139);
             this.DGV_RegistBOQItem.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_RegistBOQItem.Name = "DGV_RegistBOQItem";
+            this.DGV_RegistBOQItem.ReadOnly = true;
             this.DGV_RegistBOQItem.Size = new System.Drawing.Size(418, 300);
             this.DGV_RegistBOQItem.TabIndex = 2;
             // 
@@ -376,19 +403,12 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label2.TabIndex = 1;
             this.label2.Text = "Registeration BOQ Items";
             // 
-            // ch_RegisterProjectCode
+            // btn_RegisterEdit
             // 
-            this.ch_RegisterProjectCode.HeaderText = "Register Project Code";
-            this.ch_RegisterProjectCode.Name = "ch_RegisterProjectCode";
-            this.ch_RegisterProjectCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ch_RegisterProjectCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // ch_RegisterBOQItem
-            // 
-            this.ch_RegisterBOQItem.HeaderText = "Register BOQ Item";
-            this.ch_RegisterBOQItem.Name = "ch_RegisterBOQItem";
-            this.ch_RegisterBOQItem.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ch_RegisterBOQItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.btn_RegisterEdit.HeaderText = "Register Edit";
+            this.btn_RegisterEdit.Name = "btn_RegisterEdit";
+            this.btn_RegisterEdit.ReadOnly = true;
+            this.btn_RegisterEdit.UseColumnTextForButtonValue = true;
             // 
             // Frm_ItemsRegisterationBOQItems
             // 
@@ -466,5 +486,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         private System.Windows.Forms.ComboBox cm_BOQItem;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ch_RegisterBOQItem;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ch_RegisterProjectCode;
+        private System.Windows.Forms.DataGridViewButtonColumn btn_RegisterEdit;
     }
 }

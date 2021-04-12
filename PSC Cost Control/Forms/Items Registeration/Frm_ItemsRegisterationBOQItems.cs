@@ -88,6 +88,8 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         {
             int BOQItemRow, BOQItemId, ProjectCodeRow, ProjectCodeId;
             string BOQItemDescriptoin, ProjectCodeDesscription;
+            BOQItemDescriptoin = ProjectCodeDesscription = "";
+
             for (int i = 0; i < DGV_BOQItem.Rows.Count; i++)
             {
                 if (DGV_BOQItem.Rows.Count > 0)
@@ -112,7 +114,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     bool isSelected = Convert.ToBoolean(DGV_ProjectCode.Rows[i].Cells["ch_ProjectCode"].Value);
                     if (isSelected)
                     {
-                        ProjectCodeId = Convert.ToInt32(DGV_ProjectCode.Rows[i].Cells["ProjectCode_Description"].Value.ToString());
+                        ProjectCodeId = Convert.ToInt32(DGV_ProjectCode.Rows[i].Cells["ProjectCode_Id"].Value.ToString());
                         ProjectCodeRow = i;
                         ProjectCodeDesscription = DGV_ProjectCode.Rows[i].Cells["ProjectCode_Description"].Value.ToString();
                         break;
@@ -121,7 +123,17 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 }
 
             }
-            
+
+            if (!string.IsNullOrEmpty(BOQItemDescriptoin) && !string.IsNullOrEmpty(ProjectCodeDesscription))
+            {
+                DGV_RegistBOQItem.Rows.Add(1);
+                int rowindex = DGV_RegistBOQItem.Rows.Count - 1;
+
+                DGV_RegistBOQItem.Rows[rowindex].Cells[0].Value = 0;
+                DGV_RegistBOQItem.Rows[rowindex].Cells[1].Value = BOQItemDescriptoin;
+                DGV_RegistBOQItem.Rows[rowindex].Cells[2].Value = ProjectCodeDesscription;
+            }
+
         }
         bool ValidationDataProjec(string _State)
         {
@@ -156,6 +168,11 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         private void Frm_ItemsRegisterationBOQItems_Load(object sender, EventArgs e)
         {
             ClreaData();
+        }
+
+        private void btn_Regiter_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
