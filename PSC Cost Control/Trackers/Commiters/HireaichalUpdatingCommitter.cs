@@ -16,18 +16,18 @@ namespace PSC_Cost_Control.Trackers.Commiters
         
         public HireaichalUpdatingCommitter(IPersistent<T> persistent, ITracker<T> tracker) : base(persistent, tracker)
         {
-
+            Hireaical = new Dictionary<string, string>();
         }
 
         public override void Commit()
         {
             Persistent.DeleteCollection(Tracker.GetDeletedEntities());
 
-            SnapShotHireacal();
-
             SetAllAndMap();
 
-            Tracker.GetNewEntities().InjectIds();
+            SnapShotHireacalParent_Child();
+
+            Tracker.GetNewEntities().InjectIds();//fake Ids 
 
             Persistent.AddCollection(Tracker.GetNewEntities());
 
@@ -37,18 +37,16 @@ namespace PSC_Cost_Control.Trackers.Commiters
 
             Persistent.UpdateCollection(All);
         }
-
-
-        private void SnapShotHireacal()
+        private void SnapShotHireacalParent_Child()
         {
               Hireaical = All
-                .Select(c => new { Code = c.HCode, ParentCode = c.HParent.HCode })
+                .Select(c => new { Code = c.HCode, ParentCode = c.HParent?.HCode })
                 .ToDictionary(c => c.Code, c => c.ParentCode);
         }
        
         private void SetAllAndMap()
         {
-            All = Tracker.GetNewEntities();
+            All = Tracker.GetNewEntities().Concat(Tracker.GetUpdatedEntities());
 
             ALLMap= All.ToDictionary(t => t.HCode);
         }
@@ -56,12 +54,13 @@ namespace PSC_Cost_Control.Trackers.Commiters
         private void InjectRealIds()
         {
             var damaged=(Persistent as IHirechicalPersistent<T>).GetDamagedHiraichals();
-            ALLMap.ForEach(a => a.Value.Id = damaged[a.Key]);
+            damaged.ForEach(d => ALLMap[d.Key].Id = d.Value);
         }
 
         private void SolveHireachy()
         {
-            ALLMap.ForEach(c => c.Value.ParentId = ALLMap[c.Value.HCode].Id);
+            ALLMap.ForEach
+                (c => c.Value.ParentId = Hireaical[c.Value.HCode] is null?null: ALLMap[Hireaical[c.Value?.HCode]]?.Id);
         }
     }
 }
