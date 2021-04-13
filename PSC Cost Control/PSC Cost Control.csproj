@@ -105,6 +105,7 @@
       <DependentUpon>Frm_UnifiedCode_Show.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\FakeIDsGenerator\FakeIdGenrator.cs" />
+    <Compile Include="Helper\GuidIntGenerator.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Models\BOQs.cs">
       <DependentUpon>Entities.tt</DependentUpon>

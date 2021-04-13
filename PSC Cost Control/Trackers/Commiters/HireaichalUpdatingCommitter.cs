@@ -59,7 +59,7 @@ namespace PSC_Cost_Control.Trackers.Commiters
 
         private void SolveHireachy()
         {
-            ALLMap.ForEach
+             ALLMap.ForEach
                 (c => c.Value.ParentId = Hireaical[c.Value.HCode] is null?null: ALLMap[Hireaical[c.Value?.HCode]]?.Id);
         }
     }

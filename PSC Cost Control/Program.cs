@@ -26,7 +26,7 @@ namespace PSC_Cost_Control
         [STAThread]
         static async Task Main()
         {
-            await Test();
+            //await Test();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Frm_Cost_Main());
@@ -59,16 +59,16 @@ namespace PSC_Cost_Control
 
 
         static async Task Test()
-        {/**
-            var service = ServiceBuilder.Build<IProjectCodeService>();
-             var l = (await service.GetProjectCodes(1)).ToList();
-            var code1 =
+        {
+   //         var service = ServiceBuilder.Build<IProjectCodeService>();
+          //   var l = (await service.GetProjectCodes(1)).ToList();
+            /**var code1 =
                 new C_Cost_Project_Codes
                 {
                     Code = "/2555/",
                     Category_Id = 2,
                     Unified_Code_Id = 1,
-                    Description = "em",
+                    Description = "bug1",
                     HParent=null,
                 };
             var code2 =
@@ -77,14 +77,15 @@ namespace PSC_Cost_Control
                     Code = "/2555/545/",
                     Category_Id = 2,
                     Unified_Code_Id = 1,
-                    Description = "em",
+                    Description = "bug2",
                     HParent = code1,
                 };
-            service.NewCodesForProject(1, new List<C_Cost_Project_Codes>
+            var z=await service.NewCodesForProject(2, new List<C_Cost_Project_Codes>
             {
                 code1,code2
             });
             **/
+
             //var service = ServiceBuilder.Build<IUnifiedCodeService>();
             /**   var code1 = new C_Cost_Unified_Codes
                {
@@ -105,7 +106,7 @@ namespace PSC_Cost_Control
             //  var l = await service.GetUnifiedCodes();
             //  var exeternal = new PSC_Cost_Control.Services.DependencyApis.ExternalAPIs(new Models.ApplicationContext());
             //  var l =await  exeternal.GetProjectsAsync();
-            var service = ServiceBuilder.Build<IRegisterationService>();
+           // var service = ServiceBuilder.Build<IRegisterationService>();
             //     var list =( await service.GetBOQRegisteration(2)).ToList();
             //var list= (await service.GetIndirectItemRegisteration(1)).ToList();
 
@@ -119,16 +120,39 @@ namespace PSC_Cost_Control
             //
             //service.RegisterBOQItems(input);
             //    service.UpdateBOQItems(1, input);
-            var input = new List<C_Cost_Indirect_Project_Code_Summerizing>
+          /**  var input = new List<C_Cost_Indirect_Project_Code_Summerizing>
             {
                 new C_Cost_Indirect_Project_Code_Summerizing
                 {
                     IndirectCostItems=new IndirectCostItems{Id=1},
                     C_Cost_Project_Codes=new C_Cost_Project_Codes{Id=12}
                 }
-            };
+            };**/
 
-            service.UpdateInDirectItems(1 ,input);
+         //   service.UpdateInDirectItems(1 ,input);
+         var service= ServiceBuilder.Build<IProjectCodeService>();
+            var code1 =
+               new C_Cost_Project_Codes
+               {//the same
+                   Id=1,
+                   Code = "/25565/",
+                   Category_Id = 2,
+                   Unified_Code_Id = 1,
+                   Description = "bug1",
+                   HParent = null,
+               };
+            var code2=
+                new C_Cost_Project_Codes
+                {//update category
+                    Id=2,
+                    Code = "/25565/545/",
+                    Category_Id = 3,
+                    Unified_Code_Id = 1,
+                    Description = "bug2",
+                    HParent = code1,
+                };
+            await service.Update(2, new List<C_Cost_Project_Codes> { code1,code2});
+
         }
 
     }

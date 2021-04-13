@@ -74,6 +74,61 @@ namespace UnitTestProject1.HelpersUnitTestings
             Assert.That(p22.Parent, Is.SameAs(p2));
         }
 
+        [Test]
+        public void ToSequentialList_TreeHasNodesThatAlreadyHaveCodes_AssertThatCodeIsValid()
+        {
+            var tree = new TreeList();
+
+            var p1 = tree.Nodes.Add();
+            p1.Tag = new Hi {HCode="/44/", Name = "p1" };
+
+            var x1 = p1.Nodes.Add();
+            x1.Tag = new Hi { Name = "x1" };
+
+
+            var p2 = tree.Nodes.Add();
+            p2.Tag = new Hi { Name = "p2" };
+
+            var p22 = p2.Nodes.Add();
+            p22.Tag = new Hi { Name = "p2/1" };
+
+            var list = tree.ToSequentialList<Hi>();
+            var p1Code = list[0].Code;// p1 Node
+            var x1Code = list[1].Code;
+
+            var p1CodeLevel = p1Code.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
+            var x1CodeLevel = x1Code.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
+
+            Assert.That(p1Code, Is.EqualTo("/44/"));
+            Assert.That(x1CodeLevel, Has.Count.EqualTo(2));
+            Assert.That(x1Code, Does.Contain("/44/"));
+        }
+
+        [Test]
+        public void ToSequentialList_TreeHasNodesThatAlreadyHaveCodes_AssertThatParentIsValid()
+        {
+
+            var tree = new TreeList();
+
+            var p1 = tree.Nodes.Add();
+            p1.Tag = new Hi { HCode = "/44/", Name = "p1" };
+
+            var x1 = p1.Nodes.Add();
+            x1.Tag = new Hi { Name = "x1" };
+
+
+            var p2 = tree.Nodes.Add();
+            p2.Tag = new Hi { Name = "p2" };
+
+            var p22 = p2.Nodes.Add();
+            p22.Tag = new Hi { Name = "p2/1" };
+
+            var list = tree.ToSequentialList<Hi>();
+            var pn2 = list[2];
+            var pn22 = list[3];
+            Assert.That(pn2.Parent, Is.Null);
+            Assert.That(pn22.Parent, Is.SameAs(pn2));
+        }
 
     }
 }
