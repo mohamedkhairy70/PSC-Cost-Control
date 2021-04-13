@@ -38,6 +38,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.btn_Regiter = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.DGV_BOQItem = new System.Windows.Forms.DataGridView();
+            this.ch_RegisterBOQItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.BoqItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BOQItemDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel8 = new System.Windows.Forms.Panel();
             this.cm_BOQItem = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -47,6 +50,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.DGV_ProjectCode = new System.Windows.Forms.DataGridView();
+            this.ch_RegisterProjectCode = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ProjectCode_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProjectCode_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.txt_SearchByProjectCode = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -59,12 +65,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label5 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.ch_RegisterProjectCode = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ProjectCode_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProjectCode_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ch_RegisterBOQItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.BoqItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BOQItemDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_RegisterEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.BoqResisterProjectCodeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BoqRegisterid = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -195,6 +195,26 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_BOQItem.Size = new System.Drawing.Size(360, 300);
             this.DGV_BOQItem.TabIndex = 2;
             // 
+            // ch_RegisterBOQItem
+            // 
+            this.ch_RegisterBOQItem.HeaderText = "Register BOQ Item";
+            this.ch_RegisterBOQItem.Name = "ch_RegisterBOQItem";
+            this.ch_RegisterBOQItem.ReadOnly = true;
+            this.ch_RegisterBOQItem.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ch_RegisterBOQItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // BoqItemId
+            // 
+            this.BoqItemId.HeaderText = "BOQ Item Id";
+            this.BoqItemId.Name = "BoqItemId";
+            this.BoqItemId.ReadOnly = true;
+            // 
+            // BOQItemDescription
+            // 
+            this.BOQItemDescription.HeaderText = "BOQ Item Description";
+            this.BOQItemDescription.Name = "BOQItemDescription";
+            this.BOQItemDescription.ReadOnly = true;
+            // 
             // panel8
             // 
             this.panel8.Controls.Add(this.cm_BOQItem);
@@ -296,6 +316,26 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_ProjectCode.Size = new System.Drawing.Size(423, 300);
             this.DGV_ProjectCode.TabIndex = 1;
             // 
+            // ch_RegisterProjectCode
+            // 
+            this.ch_RegisterProjectCode.HeaderText = "Register Project Code";
+            this.ch_RegisterProjectCode.Name = "ch_RegisterProjectCode";
+            this.ch_RegisterProjectCode.ReadOnly = true;
+            this.ch_RegisterProjectCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ch_RegisterProjectCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // ProjectCode_Description
+            // 
+            this.ProjectCode_Description.HeaderText = "Project Code Description";
+            this.ProjectCode_Description.Name = "ProjectCode_Description";
+            this.ProjectCode_Description.ReadOnly = true;
+            // 
+            // ProjectCode_Id
+            // 
+            this.ProjectCode_Id.HeaderText = "Project Code Id";
+            this.ProjectCode_Id.Name = "ProjectCode_Id";
+            this.ProjectCode_Id.ReadOnly = true;
+            // 
             // panel6
             // 
             this.panel6.Controls.Add(this.txt_SearchByProjectCode);
@@ -375,6 +415,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_RegistBOQItem.ReadOnly = true;
             this.DGV_RegistBOQItem.Size = new System.Drawing.Size(524, 300);
             this.DGV_RegistBOQItem.TabIndex = 2;
+            this.DGV_RegistBOQItem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_RegistBOQItem_CellContentClick);
             // 
             // panel7
             // 
@@ -425,46 +466,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label2.TabIndex = 1;
             this.label2.Text = "Registeration BOQ Items";
             // 
-            // ch_RegisterProjectCode
-            // 
-            this.ch_RegisterProjectCode.HeaderText = "Register Project Code";
-            this.ch_RegisterProjectCode.Name = "ch_RegisterProjectCode";
-            this.ch_RegisterProjectCode.ReadOnly = true;
-            this.ch_RegisterProjectCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ch_RegisterProjectCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // ProjectCode_Description
-            // 
-            this.ProjectCode_Description.HeaderText = "Project Code Description";
-            this.ProjectCode_Description.Name = "ProjectCode_Description";
-            this.ProjectCode_Description.ReadOnly = true;
-            // 
-            // ProjectCode_Id
-            // 
-            this.ProjectCode_Id.HeaderText = "Project Code Id";
-            this.ProjectCode_Id.Name = "ProjectCode_Id";
-            this.ProjectCode_Id.ReadOnly = true;
-            // 
-            // ch_RegisterBOQItem
-            // 
-            this.ch_RegisterBOQItem.HeaderText = "Register BOQ Item";
-            this.ch_RegisterBOQItem.Name = "ch_RegisterBOQItem";
-            this.ch_RegisterBOQItem.ReadOnly = true;
-            this.ch_RegisterBOQItem.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ch_RegisterBOQItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // BoqItemId
-            // 
-            this.BoqItemId.HeaderText = "BOQ Item Id";
-            this.BoqItemId.Name = "BoqItemId";
-            this.BoqItemId.ReadOnly = true;
-            // 
-            // BOQItemDescription
-            // 
-            this.BOQItemDescription.HeaderText = "BOQ Item Description";
-            this.BOQItemDescription.Name = "BOQItemDescription";
-            this.BOQItemDescription.ReadOnly = true;
-            // 
             // btn_RegisterEdit
             // 
             this.btn_RegisterEdit.HeaderText = "Register Edit";
@@ -474,6 +475,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             // BoqResisterProjectCodeId
             // 
+            this.BoqResisterProjectCodeId.DataPropertyName = "BoqResisterProjectCodeId";
             this.BoqResisterProjectCodeId.HeaderText = "BOQ Resister Project Code Id";
             this.BoqResisterProjectCodeId.Name = "BoqResisterProjectCodeId";
             this.BoqResisterProjectCodeId.ReadOnly = true;
@@ -481,12 +483,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             // BoqRegisterid
             // 
+            this.BoqRegisterid.DataPropertyName = "BoqRegisterid";
             this.BoqRegisterid.HeaderText = "BOQ Register Id";
             this.BoqRegisterid.Name = "BoqRegisterid";
             this.BoqRegisterid.ReadOnly = true;
             // 
             // BoqResisterBoqItemeId
             // 
+            this.BoqResisterBoqItemeId.DataPropertyName = "BoqResisterBoqItemeId";
             this.BoqResisterBoqItemeId.HeaderText = "BOQ Resister BOQ Iteme Id";
             this.BoqResisterBoqItemeId.Name = "BoqResisterBoqItemeId";
             this.BoqResisterBoqItemeId.ReadOnly = true;
@@ -494,12 +498,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             // BoqResisterBoqItemeDescription
             // 
+            this.BoqResisterBoqItemeDescription.DataPropertyName = "BoqResisterBoqItemeDescription";
             this.BoqResisterBoqItemeDescription.HeaderText = "BOQ Iteme Description";
             this.BoqResisterBoqItemeDescription.Name = "BoqResisterBoqItemeDescription";
             this.BoqResisterBoqItemeDescription.ReadOnly = true;
             // 
             // BoqResisterProjectCodeDescription
             // 
+            this.BoqResisterProjectCodeDescription.DataPropertyName = "BoqResisterProjectCodeDescription";
             this.BoqResisterProjectCodeDescription.HeaderText = "Project Code Description";
             this.BoqResisterProjectCodeDescription.Name = "BoqResisterProjectCodeDescription";
             this.BoqResisterProjectCodeDescription.ReadOnly = true;

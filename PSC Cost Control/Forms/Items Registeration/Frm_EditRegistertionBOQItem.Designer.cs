@@ -39,6 +39,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel2 = new System.Windows.Forms.Panel();
             this.btn_Update = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.DGV_BOQItem = new System.Windows.Forms.DataGridView();
             this.panel8 = new System.Windows.Forms.Panel();
             this.cm_BOQItemOld = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -47,33 +48,36 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel11 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.DGV_ProjectCode = new System.Windows.Forms.DataGridView();
             this.panel6 = new System.Windows.Forms.Panel();
             this.txt_SearchByProjectCode = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.DGV_ProjectCode = new System.Windows.Forms.DataGridView();
+            this.txt_IdProject = new System.Windows.Forms.TextBox();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.ch_RegisterProjectCode = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ProjectCode_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProjectCode_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DGV_BOQItem = new System.Windows.Forms.DataGridView();
             this.ch_RegisterBOQItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.BoqItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BOQItemDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_BOQItem)).BeginInit();
             this.panel8.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_ProjectCode)).BeginInit();
             this.panel6.SuspendLayout();
             this.panel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_ProjectCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_BOQItem)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.txt_IdProject);
+            this.panel1.Controls.Add(this.labelControl3);
             this.panel1.Controls.Add(this.txt_ProjectCodeItemOld);
             this.panel1.Controls.Add(this.labelControl2);
             this.panel1.Controls.Add(this.txt_BOQItemOld);
@@ -137,7 +141,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.txt_NameProjectOld.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txt_NameProjectOld.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.txt_NameProjectOld.Location = new System.Drawing.Point(266, 22);
+            this.txt_NameProjectOld.Location = new System.Drawing.Point(266, 36);
             this.txt_NameProjectOld.Margin = new System.Windows.Forms.Padding(4);
             this.txt_NameProjectOld.Name = "txt_NameProjectOld";
             this.txt_NameProjectOld.Size = new System.Drawing.Size(372, 26);
@@ -148,7 +152,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.labelControl4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.labelControl4.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.labelControl4.Appearance.Options.UseFont = true;
-            this.labelControl4.Location = new System.Drawing.Point(166, 25);
+            this.labelControl4.Location = new System.Drawing.Point(166, 39);
             this.labelControl4.Margin = new System.Windows.Forms.Padding(4);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Size = new System.Drawing.Size(92, 19);
@@ -187,6 +191,24 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(413, 411);
             this.panel3.TabIndex = 3;
+            // 
+            // DGV_BOQItem
+            // 
+            this.DGV_BOQItem.AllowUserToAddRows = false;
+            this.DGV_BOQItem.AllowUserToDeleteRows = false;
+            this.DGV_BOQItem.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_BOQItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_BOQItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ch_RegisterBOQItem,
+            this.BoqItemId,
+            this.BOQItemDescription});
+            this.DGV_BOQItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DGV_BOQItem.Location = new System.Drawing.Point(0, 139);
+            this.DGV_BOQItem.Margin = new System.Windows.Forms.Padding(4);
+            this.DGV_BOQItem.Name = "DGV_BOQItem";
+            this.DGV_BOQItem.Size = new System.Drawing.Size(413, 272);
+            this.DGV_BOQItem.TabIndex = 3;
+            this.DGV_BOQItem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_BOQItem_CellContentClick);
             // 
             // panel8
             // 
@@ -270,6 +292,24 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel4.Size = new System.Drawing.Size(404, 411);
             this.panel4.TabIndex = 4;
             // 
+            // DGV_ProjectCode
+            // 
+            this.DGV_ProjectCode.AllowUserToAddRows = false;
+            this.DGV_ProjectCode.AllowUserToDeleteRows = false;
+            this.DGV_ProjectCode.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_ProjectCode.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_ProjectCode.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ch_RegisterProjectCode,
+            this.ProjectCode_Description,
+            this.ProjectCode_Id});
+            this.DGV_ProjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DGV_ProjectCode.Location = new System.Drawing.Point(0, 139);
+            this.DGV_ProjectCode.Margin = new System.Windows.Forms.Padding(4);
+            this.DGV_ProjectCode.Name = "DGV_ProjectCode";
+            this.DGV_ProjectCode.Size = new System.Drawing.Size(404, 272);
+            this.DGV_ProjectCode.TabIndex = 2;
+            this.DGV_ProjectCode.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_ProjectCode_CellContentClick);
+            // 
             // panel6
             // 
             this.panel6.Controls.Add(this.txt_SearchByProjectCode);
@@ -318,29 +358,34 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label1.TabIndex = 0;
             this.label1.Text = "Project Code";
             // 
-            // DGV_ProjectCode
+            // txt_IdProject
             // 
-            this.DGV_ProjectCode.AllowUserToAddRows = false;
-            this.DGV_ProjectCode.AllowUserToDeleteRows = false;
-            this.DGV_ProjectCode.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DGV_ProjectCode.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_ProjectCode.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ch_RegisterProjectCode,
-            this.ProjectCode_Description,
-            this.ProjectCode_Id});
-            this.DGV_ProjectCode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DGV_ProjectCode.Location = new System.Drawing.Point(0, 139);
-            this.DGV_ProjectCode.Margin = new System.Windows.Forms.Padding(4);
-            this.DGV_ProjectCode.Name = "DGV_ProjectCode";
-            this.DGV_ProjectCode.ReadOnly = true;
-            this.DGV_ProjectCode.Size = new System.Drawing.Size(404, 272);
-            this.DGV_ProjectCode.TabIndex = 2;
+            this.txt_IdProject.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txt_IdProject.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.txt_IdProject.Location = new System.Drawing.Point(266, 6);
+            this.txt_IdProject.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_IdProject.Name = "txt_IdProject";
+            this.txt_IdProject.Size = new System.Drawing.Size(372, 26);
+            this.txt_IdProject.TabIndex = 14;
+            this.txt_IdProject.Visible = false;
+            // 
+            // labelControl3
+            // 
+            this.labelControl3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.labelControl3.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.labelControl3.Appearance.Options.UseFont = true;
+            this.labelControl3.Location = new System.Drawing.Point(190, 9);
+            this.labelControl3.Margin = new System.Windows.Forms.Padding(4);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(68, 19);
+            this.labelControl3.TabIndex = 13;
+            this.labelControl3.Text = "Id Project :";
+            this.labelControl3.Visible = false;
             // 
             // ch_RegisterProjectCode
             // 
             this.ch_RegisterProjectCode.HeaderText = "Register Project Code";
             this.ch_RegisterProjectCode.Name = "ch_RegisterProjectCode";
-            this.ch_RegisterProjectCode.ReadOnly = true;
             this.ch_RegisterProjectCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.ch_RegisterProjectCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
@@ -356,29 +401,10 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.ProjectCode_Id.Name = "ProjectCode_Id";
             this.ProjectCode_Id.ReadOnly = true;
             // 
-            // DGV_BOQItem
-            // 
-            this.DGV_BOQItem.AllowUserToAddRows = false;
-            this.DGV_BOQItem.AllowUserToDeleteRows = false;
-            this.DGV_BOQItem.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DGV_BOQItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_BOQItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ch_RegisterBOQItem,
-            this.BoqItemId,
-            this.BOQItemDescription});
-            this.DGV_BOQItem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DGV_BOQItem.Location = new System.Drawing.Point(0, 139);
-            this.DGV_BOQItem.Margin = new System.Windows.Forms.Padding(4);
-            this.DGV_BOQItem.Name = "DGV_BOQItem";
-            this.DGV_BOQItem.ReadOnly = true;
-            this.DGV_BOQItem.Size = new System.Drawing.Size(413, 272);
-            this.DGV_BOQItem.TabIndex = 3;
-            // 
             // ch_RegisterBOQItem
             // 
             this.ch_RegisterBOQItem.HeaderText = "Register BOQ Item";
             this.ch_RegisterBOQItem.Name = "ch_RegisterBOQItem";
-            this.ch_RegisterBOQItem.ReadOnly = true;
             this.ch_RegisterBOQItem.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.ch_RegisterBOQItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
@@ -413,17 +439,17 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_BOQItem)).EndInit();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
             this.panel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_ProjectCode)).EndInit();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_ProjectCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_BOQItem)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -453,13 +479,15 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         public System.Windows.Forms.TextBox txt_ProjectCodeItemOld;
         public System.Windows.Forms.TextBox txt_BOQItemOld;
         public System.Windows.Forms.ComboBox cm_BOQItemOld;
-        private System.Windows.Forms.DataGridView DGV_ProjectCode;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ch_RegisterProjectCode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProjectCode_Description;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProjectCode_Id;
-        private System.Windows.Forms.DataGridView DGV_BOQItem;
+        public System.Windows.Forms.DataGridView DGV_ProjectCode;
+        public System.Windows.Forms.DataGridView DGV_BOQItem;
+        public System.Windows.Forms.TextBox txt_IdProject;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ch_RegisterBOQItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn BoqItemId;
         private System.Windows.Forms.DataGridViewTextBoxColumn BOQItemDescription;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ch_RegisterProjectCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProjectCode_Description;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProjectCode_Id;
     }
 }

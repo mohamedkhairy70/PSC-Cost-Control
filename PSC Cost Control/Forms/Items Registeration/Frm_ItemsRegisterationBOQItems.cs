@@ -216,5 +216,38 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 }
             }
         }
+
+        private void DGV_RegistBOQItem_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(DGV_RegistBOQItem.Columns[e.ColumnIndex].Name == "btn_RegisterEdit")
+            {
+                try
+                {
+                    Frm_EditRegistertionBOQItem frm_Edit = new Frm_EditRegistertionBOQItem();
+                    frm_Edit.DGV_BOQItem.DataSource = DGV_BOQItem.DataSource;
+                    frm_Edit.DGV_ProjectCode.DataSource = DGV_ProjectCode.DataSource;
+
+                    var ResaultProjects = _externalAPIs.SearchProjectsBYName(txt_Projects.Text).Result;
+                    ProjectId = Convert.ToInt32(ResaultProjects.SingleOrDefault().ContractId.ToString());
+                    var ResaultBOQs = _externalAPIs.GetBOQsAsync(ProjectId).Result;
+                    var CustomResaultBOQs = from boq in ResaultBOQs
+                                            join pro in ResaultProjects on boq.ContractId equals pro.ContractId
+                                            select new { ProjectName = boq.Id, ProjectId = boq.Id };
+
+                    frm_Edit.cm_BOQItemOld.DataSource = CustomResaultBOQs.ToList();
+                    frm_Edit.cm_BOQItemOld.ValueMember = "ProjectId";
+                    frm_Edit.cm_BOQItemOld.DisplayMember = "ProjectName";
+
+
+                    frm_Edit.txt_NameProjectOld.Text = txt_Projects.Text;
+                    frm_Edit.txt_IdProject.Text = ProjectId.ToString();
+                    frm_Edit.txt_BOQItemOld.Text = DGV_RegistBOQItem.Rows[e.RowIndex].Cells["BoqResisterBoqItemeDescription"].Value.ToString();
+                    frm_Edit.txt_ProjectCodeItemOld.Text = DGV_RegistBOQItem.Rows[e.RowIndex].Cells["BoqResisterProjectCodeDescription"].Value.ToString();
+
+                    frm_Edit.ShowDialog();
+                }
+                catch { }
+            }
+        }
     }
 }
