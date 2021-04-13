@@ -224,7 +224,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 try
                 {
                     Frm_EditRegistertionIndirectCostItem frm_Edit = new Frm_EditRegistertionIndirectCostItem();
-                    frm_Edit.DGV_BOQItem.DataSource = DGV_IndirectCostItem.DataSource;
+                    frm_Edit.DGV_IndirectCostItem.DataSource = DGV_IndirectCostItem.DataSource;
                     frm_Edit.DGV_ProjectCode.DataSource = DGV_ProjectCode.DataSource;
 
                     var ResaultProjects = _externalAPIs.SearchProjectsBYName(txt_Projects.Text).Result;
@@ -254,11 +254,11 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     string _IndirectCostItemDescriptoin, _ProjectCodeDesscription;
                     int _IndirectCostItemId, _ProjectCodeId;
 
-                    _IndirectCostItemDescriptoin = frm_Edit.BOQItemDescriptoin;
-                    _ProjectCodeDesscription = frm_Edit.ProjectCodeDesscription;
+                    _IndirectCostItemDescriptoin = frm_Edit._IndirectCostItemDescriptoin;
+                    _ProjectCodeDesscription = frm_Edit._ProjectCodeDesscription;
                     
-                    _IndirectCostItemId = frm_Edit.BOQItemId;
-                    _ProjectCodeId = frm_Edit.ProjectCodeId;
+                    _IndirectCostItemId = frm_Edit._IndirectCostItemId;
+                    _ProjectCodeId = frm_Edit._ProjectCodeId;
 
                     if(!string.IsNullOrEmpty(_IndirectCostItemDescriptoin) && !string.IsNullOrEmpty(_ProjectCodeDesscription))
                     {

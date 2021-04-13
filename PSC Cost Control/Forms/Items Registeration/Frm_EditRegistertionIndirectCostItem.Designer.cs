@@ -41,6 +41,10 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel2 = new System.Windows.Forms.Panel();
             this.btn_Update = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.DGV_IndirectCostItem = new System.Windows.Forms.DataGridView();
+            this.ch_RegisterIndirectCostItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.IndirectCostItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IndirectCostItemDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel8 = new System.Windows.Forms.Panel();
             this.cm_BOQItemOld = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -58,20 +62,16 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label4 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.DGV_IndirectCostItem = new System.Windows.Forms.DataGridView();
-            this.ch_RegisterIndirectCostItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.IndirectCostItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IndirectCostItemDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_IndirectCostItem)).BeginInit();
             this.panel8.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_ProjectCode)).BeginInit();
             this.panel6.SuspendLayout();
             this.panel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_IndirectCostItem)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -216,6 +216,46 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(413, 411);
             this.panel3.TabIndex = 3;
+            // 
+            // DGV_IndirectCostItem
+            // 
+            this.DGV_IndirectCostItem.AllowUserToAddRows = false;
+            this.DGV_IndirectCostItem.AllowUserToDeleteRows = false;
+            this.DGV_IndirectCostItem.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_IndirectCostItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_IndirectCostItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ch_RegisterIndirectCostItem,
+            this.IndirectCostItemId,
+            this.IndirectCostItemDescription});
+            this.DGV_IndirectCostItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DGV_IndirectCostItem.Location = new System.Drawing.Point(0, 139);
+            this.DGV_IndirectCostItem.Margin = new System.Windows.Forms.Padding(4);
+            this.DGV_IndirectCostItem.Name = "DGV_IndirectCostItem";
+            this.DGV_IndirectCostItem.ReadOnly = true;
+            this.DGV_IndirectCostItem.Size = new System.Drawing.Size(413, 272);
+            this.DGV_IndirectCostItem.TabIndex = 3;
+            // 
+            // ch_RegisterIndirectCostItem
+            // 
+            this.ch_RegisterIndirectCostItem.HeaderText = "Register Indirect Cost Item";
+            this.ch_RegisterIndirectCostItem.Name = "ch_RegisterIndirectCostItem";
+            this.ch_RegisterIndirectCostItem.ReadOnly = true;
+            this.ch_RegisterIndirectCostItem.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ch_RegisterIndirectCostItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // IndirectCostItemId
+            // 
+            this.IndirectCostItemId.DataPropertyName = "IndirectCostItemId";
+            this.IndirectCostItemId.HeaderText = "Indirect Cost Item Id";
+            this.IndirectCostItemId.Name = "IndirectCostItemId";
+            this.IndirectCostItemId.ReadOnly = true;
+            // 
+            // IndirectCostItemDescription
+            // 
+            this.IndirectCostItemDescription.DataPropertyName = "IndirectCostItemDescription";
+            this.IndirectCostItemDescription.HeaderText = "Indirect Cost Item Description";
+            this.IndirectCostItemDescription.Name = "IndirectCostItemDescription";
+            this.IndirectCostItemDescription.ReadOnly = true;
             // 
             // panel8
             // 
@@ -385,46 +425,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label1.TabIndex = 0;
             this.label1.Text = "Project Code";
             // 
-            // DGV_IndirectCostItem
-            // 
-            this.DGV_IndirectCostItem.AllowUserToAddRows = false;
-            this.DGV_IndirectCostItem.AllowUserToDeleteRows = false;
-            this.DGV_IndirectCostItem.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DGV_IndirectCostItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_IndirectCostItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ch_RegisterIndirectCostItem,
-            this.IndirectCostItemId,
-            this.IndirectCostItemDescription});
-            this.DGV_IndirectCostItem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DGV_IndirectCostItem.Location = new System.Drawing.Point(0, 139);
-            this.DGV_IndirectCostItem.Margin = new System.Windows.Forms.Padding(4);
-            this.DGV_IndirectCostItem.Name = "DGV_IndirectCostItem";
-            this.DGV_IndirectCostItem.ReadOnly = true;
-            this.DGV_IndirectCostItem.Size = new System.Drawing.Size(413, 272);
-            this.DGV_IndirectCostItem.TabIndex = 3;
-            // 
-            // ch_RegisterIndirectCostItem
-            // 
-            this.ch_RegisterIndirectCostItem.HeaderText = "Register Indirect Cost Item";
-            this.ch_RegisterIndirectCostItem.Name = "ch_RegisterIndirectCostItem";
-            this.ch_RegisterIndirectCostItem.ReadOnly = true;
-            this.ch_RegisterIndirectCostItem.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ch_RegisterIndirectCostItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // IndirectCostItemId
-            // 
-            this.IndirectCostItemId.DataPropertyName = "IndirectCostItemId";
-            this.IndirectCostItemId.HeaderText = "Indirect Cost Item Id";
-            this.IndirectCostItemId.Name = "IndirectCostItemId";
-            this.IndirectCostItemId.ReadOnly = true;
-            // 
-            // IndirectCostItemDescription
-            // 
-            this.IndirectCostItemDescription.DataPropertyName = "IndirectCostItemDescription";
-            this.IndirectCostItemDescription.HeaderText = "Indirect Cost Item Description";
-            this.IndirectCostItemDescription.Name = "IndirectCostItemDescription";
-            this.IndirectCostItemDescription.ReadOnly = true;
-            // 
             // Frm_EditRegistertionIndirectCostItem
             // 
             this.Appearance.Options.UseFont = true;
@@ -444,6 +444,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_IndirectCostItem)).EndInit();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.panel11.ResumeLayout(false);
@@ -454,7 +455,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel6.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_IndirectCostItem)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -490,9 +490,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         private System.Windows.Forms.DataGridViewCheckBoxColumn ch_RegisterProjectCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProjectCode_Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProjectCode_Description;
-        private System.Windows.Forms.DataGridView DGV_IndirectCostItem;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ch_RegisterIndirectCostItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn IndirectCostItemId;
         private System.Windows.Forms.DataGridViewTextBoxColumn IndirectCostItemDescription;
+        public System.Windows.Forms.DataGridView DGV_IndirectCostItem;
     }
 }

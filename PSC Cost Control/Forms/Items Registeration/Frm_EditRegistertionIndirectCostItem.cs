@@ -36,7 +36,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                                                IndirectCostItemDescription = boq.Description
                                            };
                 DGV_IndirectCostItem.DataSource = CustomResaultIndirectCostItem;
-                var ResaultBOQRegisteration = _RegisterationService.GetBOQRegisteration(Project).Result;
+                var ResaultBOQRegisteration = _RegisterationService.GetIndirectItemRegisteration(Project).Result;
                 var ResaultProjectCode = _IProjectCodeService.GetProjectCodes(Project).Result;
             }
         }
@@ -50,7 +50,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             {
                 if (DGV_IndirectCostItem.Rows.Count > 0)
                 {
-                    bool isSelected = Convert.ToBoolean(DGV_IndirectCostItem.Rows[i].Cells["ch_RegisterBOQItem"].Value);
+                    bool isSelected = Convert.ToBoolean(DGV_IndirectCostItem.Rows[i].Cells["ch_RegisterIndirectCostItem"].Value);
                     if (isSelected)
                     {
                         _IndirectCostItemId = Convert.ToInt32(DGV_IndirectCostItem.Rows[i].Cells["IndirectCostItemId"].Value.ToString());
