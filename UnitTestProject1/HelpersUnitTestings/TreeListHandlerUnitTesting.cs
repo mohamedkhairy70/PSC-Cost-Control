@@ -1,10 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevExpress.XtraTreeList.Nodes;
 using DevExpress.XtraTreeList;
 using PSC_Cost_Control.Helper.TreeListHandler;
 using PSC_Cost_Control.Helper.Interfaces;
@@ -126,7 +122,7 @@ namespace UnitTestProject1.HelpersUnitTestings
 
             var list = tree.ToSequentialList<Hi>();
             var p1Code = list[0].Code;// p1 Node
-            var x1Code = list[1].Code;
+            var x1Code = list[2].Code;
 
             var p1CodeLevel = p1Code.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
             var x1CodeLevel = x1Code.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
@@ -200,6 +196,14 @@ namespace UnitTestProject1.HelpersUnitTestings
             var parent = new Hi { };
             var child = new Hi { HCode = "/22/1/" , HParent = parent };
             Assert.That(!parent.HasChild(child));
+        }
+
+        [Test]
+        public void HasChild_ChildCodeContainsOneALevelFromParentCode_ReturnFalse()
+        {
+            var parent = new Hi { HCode = "/1/" };
+            var chid = new Hi { HCode = "/44/1/", HParent = parent };
+            Assert.That(!parent.HasChild(chid));
         }
     }
 }

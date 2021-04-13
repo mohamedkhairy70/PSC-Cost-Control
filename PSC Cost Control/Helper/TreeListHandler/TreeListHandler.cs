@@ -17,7 +17,7 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
         /// </summary>
         /// <typeparam name="T">data type of Tag in TreeListNode</typeparam>
         /// <param name="tree">Devexpree treeList object</param>
-        /// <returns></returns>
+        /// <returns>List of items of T </returns>
         public static List<T> ToSequentialList<T> (this TreeList tree) where T:IHireichy
         {
             var list = new List<T>();
@@ -89,15 +89,15 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
 
             var parentArr = node.HCode?.Split('/');
             var childArr = child.HCode?.Split('/');
-
+            if (parentArr is null||childArr is null) return false;
+            for(int i = 0; i<parentArr.Length-1; i++)
+            {
+                if (!parentArr[i].Equals(childArr[i]))
+                    return false;
+            }
             return
-                parentArr!= null
-                && 
-                childArr!= null
-                && 
-                parentArr.Length+1 == childArr.Length
-                &&
-                child.HCode.Contains(node.HCode);
+                parentArr.Length + 1 == childArr.Length;
+               
         }
             
     }
