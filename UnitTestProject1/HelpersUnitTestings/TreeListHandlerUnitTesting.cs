@@ -75,7 +75,7 @@ namespace UnitTestProject1.HelpersUnitTestings
         }
 
         [Test]
-        public void ToSequentialList_TreeHasNodesThatAlreadyHaveCodes_AssertThatCodeIsValid()
+        public void ToSequentialList_TreeHasANodeThatAlreadyHasACodeAndTheParentDoesNotHaveChanged_AssertThatCodeIsValidAndDoesNotHaveChanged()
         {
             var tree = new TreeList();
 
@@ -105,6 +105,38 @@ namespace UnitTestProject1.HelpersUnitTestings
         }
 
         [Test]
+        public void ToSequentialList_TreeHasANodeThatAlreadyHasACodeAndTheParentHaveChanged_AssertThatCodeIsValidAndChanged()
+        {
+            var tree = new TreeList();
+
+            var p1 = tree.Nodes.Add();
+            p1.Tag = new Hi { HCode = "/44/", Name = "p1" };
+
+
+            var p2 = tree.Nodes.Add();
+            p2.Tag = new Hi { Name = "p2" };
+
+            var x1 = p2.Nodes.Add();
+            x1.Tag = new Hi { Name = "x1",HCode="/44/1/" };
+
+
+
+            var p22 = p2.Nodes.Add();
+            p22.Tag = new Hi { Name = "p2/1" };
+
+            var list = tree.ToSequentialList<Hi>();
+            var p1Code = list[0].Code;// p1 Node
+            var x1Code = list[1].Code;
+
+            var p1CodeLevel = p1Code.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
+            var x1CodeLevel = x1Code.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
+
+            Assert.That(x1CodeLevel, Has.Count.EqualTo(2));
+
+            Assert.That(x1Code, Is.Not.EqualTo("/44/1/"));
+        }
+
+        [Test]
         public void ToSequentialList_TreeHasNodesThatAlreadyHaveCodes_AssertThatParentIsValid()
         {
 
@@ -130,5 +162,44 @@ namespace UnitTestProject1.HelpersUnitTestings
             Assert.That(pn22.Parent, Is.SameAs(pn2));
         }
 
+        [Test]
+        public void HasChild_childHasAnappropriateCodeThatImpressThatChildFromHisParent_ReturnTrue()
+        {
+            var parent = new Hi { HCode = "/22/1/" };
+            var chid = new Hi { HCode = "/22/1/15/", HParent = parent };
+            Assert.That(parent.HasChild(chid));
+        }
+
+        [Test]
+        public void HasChild_childDoesNotHaveAnappropriateCodeThatImpressChildFromHisParent_ReturnFalse()
+        {
+            var parent = new Hi { HCode = "/22/1/" };
+            var chid = new Hi { HCode = "/22/3/15", HParent = parent };
+            Assert.That(! parent.HasChild(chid));
+        }
+
+        [Test]
+        public void HasChild_childIsNotTheDirectChildOfThePrent_ReturnFalse()
+        {
+            var parent = new Hi { HCode = "/22/1/" };
+            var chid = new Hi { HCode =   "/22/1/17/15/", HParent = parent };
+            Assert.That(!parent.HasChild(chid));
+        }
+
+        [Test]
+        public void HasChild_ChildHasCodeEqualsNull_ReturnFalse()
+        {
+            var parent = new Hi { HCode = "/22/1/" };
+            var child = new Hi { HParent = parent };
+            Assert.That(!parent.HasChild(child));
+        }
+
+        [Test]
+        public void HasChild_ParentHasCodeEqualsNull_ReturnFalse()
+        {
+            var parent = new Hi { };
+            var child = new Hi { HCode = "/22/1/" , HParent = parent };
+            Assert.That(!parent.HasChild(child));
+        }
     }
 }

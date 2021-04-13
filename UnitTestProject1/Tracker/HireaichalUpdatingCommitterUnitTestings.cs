@@ -18,17 +18,19 @@ namespace UnitTestProject1.Tracker
         private C_Cost_Project_Codes p22;
         private C_Cost_Project_Codes n2;
         private C_Cost_Project_Codes n3;
+        private C_Cost_Project_Codes p10;
         private IDictionary<string, int> damaged;
 
         [SetUp]
         public void SetUp()
         {
-            damaged= new Dictionary<string, int>();
-            n1 = new C_Cost_Project_Codes { Description = "n1", Code = "/22/", HParent = null };
+             damaged= new Dictionary<string, int>();
+             n1 = new C_Cost_Project_Codes { Description = "n1", Code = "/22/", HParent = null };
              p33 = new C_Cost_Project_Codes { Id=33,Description = "p33", Code = "/44/", HParent = null };//old 
              p22 = new C_Cost_Project_Codes {Id=22, Description = "p22", Code = "/22/5/", HParent = n1 };//old
              n2 = new C_Cost_Project_Codes { Description = "n2", Code = "/22/3/", HParent = n1 };
              n3 = new C_Cost_Project_Codes { Description = "n3", Code = "/44/7/", HParent = p33 };
+             p10 = new C_Cost_Project_Codes { Id=10,Description = "p10", Code = "/44/10/", HParent = p33 };
 
             var deleted = new List<C_Cost_Project_Codes> {
                 new C_Cost_Project_Codes{Id=77,Description="deleted77"}
@@ -41,6 +43,9 @@ namespace UnitTestProject1.Tracker
             var updated = new List<C_Cost_Project_Codes> {
                 p22,p33
             };
+            var notChanged = new List<C_Cost_Project_Codes> {
+                p10
+            };
 
             var tracker = new Mock<ITracker<C_Cost_Project_Codes>>();
 
@@ -49,6 +54,8 @@ namespace UnitTestProject1.Tracker
             tracker.Setup(t => t.GetUpdatedEntities()).Returns(updated);
 
             tracker.Setup(t => t.GetNewEntities()).Returns(added);
+
+            tracker.Setup(t => t.GetUnChangedEntities()).Returns(notChanged);
 
             var persistent = new Mock<IHirechicalPersistent<C_Cost_Project_Codes>>();
          
@@ -71,6 +78,7 @@ namespace UnitTestProject1.Tracker
             Assert.That(n3.Id, Is.Not.Null.Or.Zero);
         }
 
+
       
         [Test]
         public void Commit_DamagedEntitiesContainsAnUpdatedEntity_AllNewNodesParentsAreValidASTheParentHasTheRealIdOfTheParentNode()
@@ -88,6 +96,7 @@ namespace UnitTestProject1.Tracker
             Assert.That(p22.Parent, Is.EqualTo(n1.Id));
             Assert.That(p33.Parent, Is.EqualTo(null));
             Assert.That(n3.Parent, Is.EqualTo(p33.Id));
+            Assert.That(p10.Parent, Is.EqualTo(p33.Id));
         }
 
         [Test]

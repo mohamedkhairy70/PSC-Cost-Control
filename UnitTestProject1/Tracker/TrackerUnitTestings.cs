@@ -89,6 +89,17 @@ namespace UnitTestProject1.Tracker
         }
 
         [Test]
+        public void TrackCollection_TrackedEntityExistsInOriginAndStayedThesame_GetUnChangedElementsEquals1()
+        {
+            var tracked = new List<Entity> {
+                new Entity{MId=2,Name="ahmed"},
+            };
+            var tracker = new Tracker<Entity>(_origin);
+            tracker.TrackCollection(tracked);
+            Assert.That(tracker.GetUnChangedEntities().ToList(), Has.Count.EqualTo(1));
+        }
+
+        [Test]
         public void TrackCollection_OriginIsEmpty_AllTrackedWillBeInGetntities()
         {
             var tracked = new List<Entity> {

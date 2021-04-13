@@ -31,9 +31,7 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
                 if (string.IsNullOrEmpty(o.HCode))
                     o.HCode =$"/{guidInt.Guid()}/";
                 else
-                {
                     guidInt.Block(GetLastLevelCode(o.HCode));
-                }
 
                 o.HParent = null;//root node has no Parent
 
@@ -50,12 +48,15 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
             foreach(var n in childs)
             {
                 var o = (T)n.Tag;
-                if (string.IsNullOrEmpty(o.HCode))
+                o.HParent = (T)n.ParentNode.Tag;
+
+                var b = !o.HParent.HasChild(o);
+                if (string.IsNullOrEmpty(o.HCode) || !o.HParent.HasChild(o))
                     o.HCode = $"{code}{guidInt.Guid()}/";
                 else
-                    guidInt.Block(short.Parse(o.HCode.Split('/').Last()));
-
-                o.HParent = (T)n.ParentNode.Tag;
+                {
+                    guidInt.Block(GetLastLevelCode(o.HCode));
+                }
 
                 rt.Add(o);
                 ToList_Rec(n,o.HCode, rt,guidInt);
@@ -72,7 +73,32 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
             string output = "";
             while (stack.Count>0)
                 output += stack.Pop();
+
             return short.Parse(output);
         }
+
+        /// <summary>
+        /// Check wether a specific node have a specific direct child.
+        /// the process will depend only on comparing hireaical codes
+        /// </summary>
+        /// <param name="node">the parent</param>
+        /// <param name="child">the node you need to validate if his parent is "node" or not</param>
+        /// <returns></returns>
+        public static bool HasChild(this IHireichy node, IHireichy child) 
+        {
+
+            var parentArr = node.HCode?.Split('/');
+            var childArr = child.HCode?.Split('/');
+
+            return
+                parentArr!= null
+                && 
+                childArr!= null
+                && 
+                parentArr.Length+1 == childArr.Length
+                &&
+                child.HCode.Contains(node.HCode);
+        }
+            
     }
 }

@@ -16,7 +16,7 @@ namespace PSC_Cost_Control.Services.DependencyApis
 
         public async Task<IEnumerable<Projects>> GetProjectsAsync()
         {
-            return await Context.Projects.ToListAsync();
+            return await Context.Projects.AsNoTracking().ToListAsync();
         }
 
         public async Task<IEnumerable<Projects>> SearchProjectsBYName(string name)
@@ -29,17 +29,23 @@ namespace PSC_Cost_Control.Services.DependencyApis
                 ||
                 p.Name.Contains(name)
                 )
+                .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<BOQs>>GetBOQsAsync(int contractId)
+        public async Task<IEnumerable<BOQs>> GetBOQsAsync(int contractId)
         {
-            return await Context.BOQs.Where(b => b.ContractId == contractId).ToListAsync();
+            return await Context.BOQs.Where(b => b.ContractId == contractId).AsNoTracking().ToListAsync();
         }
 
         public async Task<IEnumerable<BOQ_Items>> GetBOQ_ItemsAsync(int BOQId)
         {
-            return await Context.BOQ_Items.Where(i => i.BOQId == BOQId).ToListAsync();
+            return await Context.BOQ_Items.Where(i => i.BOQId == BOQId).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IEnumerable<IndirectCostItems>> GetIndirectItems(int BOQId)
+        {
+            return await Context.IndirectCostItems.Where(i => i.BOQId == BOQId).AsNoTracking().ToListAsync();
         }
 
 
