@@ -1,7 +1,7 @@
 ﻿
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
-    partial class Frm_ItemsRegisterationBOQItems
+    partial class Frm_ItemsRegisterationIndercetCostItem
     {
         /// <summary>
         /// Required designer variable.

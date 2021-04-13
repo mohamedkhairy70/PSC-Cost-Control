@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
-    public partial class Frm_ItemsRegisterationBOQItems : DevExpress.XtraEditors.XtraForm
+    public partial class Frm_ItemsRegisterationIndercetCostItem : DevExpress.XtraEditors.XtraForm
     {
         IProjectCodeService _IProjectCodeService;
         IRegisterationService _RegisterationService;
         ExternalAPIs _externalAPIs;
         int ProjectId;
-        public Frm_ItemsRegisterationBOQItems()
+        public Frm_ItemsRegisterationIndercetCostItem()
         {
             InitializeComponent();
             _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
