@@ -6,6 +6,7 @@ using PSC_Cost_Control.Services.ProjectCodesServices;
 using PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices;
 using PSC_Cost_Control.Services.ServicesBuilders;
 using PSC_Cost_Control.Services.DependencyApis;
+using System.Collections.Generic;
 
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
@@ -19,6 +20,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         {
             InitializeComponent();
             _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+            _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
             _externalAPIs = new ExternalAPIs(new Models.ApplicationContext());
         }
 
@@ -68,7 +70,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                                                     join proCode in ResaultProjectCode on boq.Project_Code_Id equals proCode.Id
                                                     select new
                                                       {
-                                                            BoqRegisterid =  boq.Id ,
+                                                            BoqRegisterId =  boq.Id ,
+                                                            BoqResisterBoqItemeId = boq.Boq_Item_Id,
+                                                            BoqResisterProjectCodeId = boq.Project_Code_Id,
                                                             BoqResisterBoqItemeDescription = BoqItem.Description,
                                                             BoqResisterProjectCodeDescription =  proCode.Description
                                                       };
@@ -86,7 +90,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         }
         void Registretion()
         {
-            int BOQItemRow, BOQItemId, ProjectCodeRow, ProjectCodeId;
+            int BOQItemRow, BOQItemId = 0, ProjectCodeRow, ProjectCodeId = 0;
             string BOQItemDescriptoin, ProjectCodeDesscription;
             BOQItemDescriptoin = ProjectCodeDesscription = "";
 
@@ -128,17 +132,26 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             {
                 DGV_RegistBOQItem.Rows.Add(1);
                 int rowindex = DGV_RegistBOQItem.Rows.Count - 1;
-
                 DGV_RegistBOQItem.Rows[rowindex].Cells[0].Value = 0;
                 DGV_RegistBOQItem.Rows[rowindex].Cells[1].Value = BOQItemDescriptoin;
                 DGV_RegistBOQItem.Rows[rowindex].Cells[2].Value = ProjectCodeDesscription;
+                DGV_RegistBOQItem.Rows[rowindex].Cells[3].Value = BOQItemId;
+                DGV_RegistBOQItem.Rows[rowindex].Cells[4].Value = ProjectCodeId;
             }
 
         }
-        bool ValidationDataProjec(string _State)
+        bool ValidationDataProjec()
         {
             bool Resualt = false;
-
+            if (string.IsNullOrEmpty(txt_Projects.Text))
+            {
+                MessageBox.Show("Can't Find Name Project");                
+                Resualt = false;
+            }
+            else
+            {
+                return false;
+            }
             return Resualt;
         }
         #endregion My Method for my Form
@@ -173,6 +186,35 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         private void btn_Regiter_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (ValidationDataProjec())
+            {
+                if (DGV_RegistBOQItem.Rows.Count > 0)
+                {
+                    int BOQItemId = 0, ProjectCodeId = 0, RegisterId = 0;
+                    List<Models.C_Cost_Project_Codes_Items> RegisterItem = new List<Models.C_Cost_Project_Codes_Items>();
+                    for (int i = 0; i < DGV_RegistBOQItem.RowCount; i++)
+                    {
+                        RegisterId = Convert.ToInt32(DGV_RegistBOQItem.Rows[i].Cells[0].Value.ToString());
+                        BOQItemId = Convert.ToInt32(DGV_RegistBOQItem.Rows[i].Cells[3].Value.ToString());
+                        ProjectCodeId = Convert.ToInt32(DGV_RegistBOQItem.Rows[i].Cells[4].Value.ToString());
+                        RegisterItem.Add(new Models.C_Cost_Project_Codes_Items { Id = RegisterId, Boq_Item_Id = BOQItemId, Project_Code_Id = ProjectCodeId });
+                    }
+                    if (_RegisterationService.GetBOQRegisteration(ProjectId).Result.Any())
+                    {
+                        _RegisterationService.UpdateBOQItems(ProjectId, RegisterItem);
+                    }
+                    else
+                    {
+                        _RegisterationService.RegisterBOQItems(RegisterItem);
+                    }
+                    
+                    
+                }
+            }
         }
     }
 }

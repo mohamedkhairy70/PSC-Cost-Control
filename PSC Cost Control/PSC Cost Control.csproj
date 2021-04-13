@@ -80,6 +80,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Items Registeration\Frm_EditRegistertionBOQItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Items Registeration\Frm_EditRegistertionBOQItem.Designer.cs">
+      <DependentUpon>Frm_EditRegistertionBOQItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationIndirectCostItems.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -263,6 +269,9 @@
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifiedCodeCategoriesRepo.cs" />
     <Compile Include="Services\DependencyApis\ExternalAPI%27s.cs" />
     <Compile Include="Services\ProjectCodesServices\ProjectCodeService.cs" />
+    <EmbeddedResource Include="Forms\Items Registeration\Frm_EditRegistertionBOQItem.resx">
+      <DependentUpon>Frm_EditRegistertionBOQItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Items Registeration\Frm_ItemsRegisterationIndirectCostItems.resx">
       <DependentUpon>Frm_ItemsRegisterationIndirectCostItems.cs</DependentUpon>
     </EmbeddedResource>
