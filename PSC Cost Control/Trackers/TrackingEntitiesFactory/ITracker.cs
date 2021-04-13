@@ -30,5 +30,10 @@ namespace PSC_Cost_Control.Trackers
         /// </summary>
         /// <returns></returns>
         IEnumerable<T> GetDeletedEntities();
+        /// <summary>
+        /// Get entities had Not changed from the One In Origin
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<T> GetUnChangedEntities();
     }
 }

@@ -46,7 +46,10 @@ namespace PSC_Cost_Control.Trackers.Commiters
        
         private void SetAllAndMap()
         {
-            All = Tracker.GetNewEntities().Concat(Tracker.GetUpdatedEntities());
+            All = Tracker
+                .GetNewEntities()
+                .Concat(Tracker.GetUpdatedEntities())
+                .Concat(Tracker.GetUnChangedEntities());
 
             ALLMap= All.ToDictionary(t => t.HCode);
         }
