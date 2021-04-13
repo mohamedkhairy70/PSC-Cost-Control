@@ -80,11 +80,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Items Registeration\Frm_EditRegistertionIndercetCostItem.cs">
+    <Compile Include="Forms\Items Registeration\Frm_EditRegistertionIndirectCostItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Items Registeration\Frm_EditRegistertionIndercetCostItem.Designer.cs">
-      <DependentUpon>Frm_EditRegistertionIndercetCostItem.cs</DependentUpon>
+    <Compile Include="Forms\Items Registeration\Frm_EditRegistertionIndirectCostItem.Designer.cs">
+      <DependentUpon>Frm_EditRegistertionIndirectCostItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Items Registeration\Frm_EditRegistertionBOQItem.cs">
       <SubType>Form</SubType>
@@ -92,11 +92,11 @@
     <Compile Include="Forms\Items Registeration\Frm_EditRegistertionBOQItem.Designer.cs">
       <DependentUpon>Frm_EditRegistertionBOQItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationIndercetCostItem.cs">
+    <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationIndirectCostItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationIndercetCostItem.Designer.cs">
-      <DependentUpon>Frm_ItemsRegisterationIndercetCostItem.cs</DependentUpon>
+    <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationIndirectCostItem.Designer.cs">
+      <DependentUpon>Frm_ItemsRegisterationIndirectCostItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationBOQItems.cs">
       <SubType>Form</SubType>
@@ -276,14 +276,14 @@
     <Compile Include="Repositories\PersistantReposotories\UnifiedCodesRepositories\UnifiedCodeCategoriesRepo.cs" />
     <Compile Include="Services\DependencyApis\ExternalAPI%27s.cs" />
     <Compile Include="Services\ProjectCodesServices\ProjectCodeService.cs" />
-    <EmbeddedResource Include="Forms\Items Registeration\Frm_EditRegistertionIndercetCostItem.resx">
-      <DependentUpon>Frm_EditRegistertionIndercetCostItem.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Items Registeration\Frm_EditRegistertionIndirectCostItem.resx">
+      <DependentUpon>Frm_EditRegistertionIndirectCostItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Items Registeration\Frm_EditRegistertionBOQItem.resx">
       <DependentUpon>Frm_EditRegistertionBOQItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Items Registeration\Frm_ItemsRegisterationIndercetCostItem.resx">
-      <DependentUpon>Frm_ItemsRegisterationIndercetCostItem.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Items Registeration\Frm_ItemsRegisterationIndirectCostItem.resx">
+      <DependentUpon>Frm_ItemsRegisterationIndirectCostItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Items Registeration\Frm_ItemsRegisterationBOQItems.resx">
       <DependentUpon>Frm_ItemsRegisterationBOQItems.cs</DependentUpon>

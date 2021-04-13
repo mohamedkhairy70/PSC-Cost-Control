@@ -1,7 +1,7 @@
 ﻿
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
-    partial class Frm_EditRegistertionIndercetCostItem
+    partial class Frm_EditRegistertionIndirectCostItem
     {
         /// <summary>
         /// Required designer variable.
@@ -41,10 +41,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel2 = new System.Windows.Forms.Panel();
             this.btn_Update = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.DGV_BOQItem = new System.Windows.Forms.DataGridView();
-            this.ch_RegisterBOQItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.BoqItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BOQItemDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel8 = new System.Windows.Forms.Panel();
             this.cm_BOQItemOld = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -54,24 +50,28 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.DGV_ProjectCode = new System.Windows.Forms.DataGridView();
+            this.ch_RegisterProjectCode = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ProjectCode_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProjectCode_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.txt_SearchByProjectCode = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.ch_RegisterProjectCode = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ProjectCode_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProjectCode_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DGV_IndirectCostItem = new System.Windows.Forms.DataGridView();
+            this.ch_RegisterIndirectCostItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.IndirectCostItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IndirectCostItemDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_BOQItem)).BeginInit();
             this.panel8.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_ProjectCode)).BeginInit();
             this.panel6.SuspendLayout();
             this.panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_IndirectCostItem)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -157,9 +157,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.labelControl1.Location = new System.Drawing.Point(472, 66);
             this.labelControl1.Margin = new System.Windows.Forms.Padding(4);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(140, 19);
+            this.labelControl1.Size = new System.Drawing.Size(185, 19);
             this.labelControl1.TabIndex = 9;
-            this.labelControl1.Text = "Name BOQ Item Old :";
+            this.labelControl1.Text = "Name Indirect Cost Item Old :";
             // 
             // txt_NameProjectOld
             // 
@@ -208,7 +208,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.DGV_BOQItem);
+            this.panel3.Controls.Add(this.DGV_IndirectCostItem);
             this.panel3.Controls.Add(this.panel8);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel3.Location = new System.Drawing.Point(404, 137);
@@ -216,43 +216,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(413, 411);
             this.panel3.TabIndex = 3;
-            // 
-            // DGV_BOQItem
-            // 
-            this.DGV_BOQItem.AllowUserToAddRows = false;
-            this.DGV_BOQItem.AllowUserToDeleteRows = false;
-            this.DGV_BOQItem.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DGV_BOQItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_BOQItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ch_RegisterBOQItem,
-            this.BoqItemId,
-            this.BOQItemDescription});
-            this.DGV_BOQItem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DGV_BOQItem.Location = new System.Drawing.Point(0, 139);
-            this.DGV_BOQItem.Margin = new System.Windows.Forms.Padding(4);
-            this.DGV_BOQItem.Name = "DGV_BOQItem";
-            this.DGV_BOQItem.Size = new System.Drawing.Size(413, 272);
-            this.DGV_BOQItem.TabIndex = 3;
-            this.DGV_BOQItem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_BOQItem_CellContentClick);
-            // 
-            // ch_RegisterBOQItem
-            // 
-            this.ch_RegisterBOQItem.HeaderText = "Register BOQ Item";
-            this.ch_RegisterBOQItem.Name = "ch_RegisterBOQItem";
-            this.ch_RegisterBOQItem.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ch_RegisterBOQItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // BoqItemId
-            // 
-            this.BoqItemId.HeaderText = "BOQ Item Id";
-            this.BoqItemId.Name = "BoqItemId";
-            this.BoqItemId.ReadOnly = true;
-            // 
-            // BOQItemDescription
-            // 
-            this.BOQItemDescription.HeaderText = "BOQ Item Description";
-            this.BOQItemDescription.Name = "BOQItemDescription";
-            this.BOQItemDescription.ReadOnly = true;
             // 
             // panel8
             // 
@@ -322,9 +285,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(159, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 19);
+            this.label3.Size = new System.Drawing.Size(119, 19);
             this.label3.TabIndex = 1;
-            this.label3.Text = "BOQ Items";
+            this.label3.Text = "Indirect Cost Item";
             // 
             // panel4
             // 
@@ -354,6 +317,25 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_ProjectCode.Size = new System.Drawing.Size(404, 272);
             this.DGV_ProjectCode.TabIndex = 2;
             this.DGV_ProjectCode.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_ProjectCode_CellContentClick);
+            // 
+            // ch_RegisterProjectCode
+            // 
+            this.ch_RegisterProjectCode.HeaderText = "Register Project Code";
+            this.ch_RegisterProjectCode.Name = "ch_RegisterProjectCode";
+            this.ch_RegisterProjectCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ch_RegisterProjectCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // ProjectCode_Id
+            // 
+            this.ProjectCode_Id.HeaderText = "Project Code Id";
+            this.ProjectCode_Id.Name = "ProjectCode_Id";
+            this.ProjectCode_Id.ReadOnly = true;
+            // 
+            // ProjectCode_Description
+            // 
+            this.ProjectCode_Description.HeaderText = "Project Code Description";
+            this.ProjectCode_Description.Name = "ProjectCode_Description";
+            this.ProjectCode_Description.ReadOnly = true;
             // 
             // panel6
             // 
@@ -403,26 +385,47 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label1.TabIndex = 0;
             this.label1.Text = "Project Code";
             // 
-            // ch_RegisterProjectCode
+            // DGV_IndirectCostItem
             // 
-            this.ch_RegisterProjectCode.HeaderText = "Register Project Code";
-            this.ch_RegisterProjectCode.Name = "ch_RegisterProjectCode";
-            this.ch_RegisterProjectCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ch_RegisterProjectCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.DGV_IndirectCostItem.AllowUserToAddRows = false;
+            this.DGV_IndirectCostItem.AllowUserToDeleteRows = false;
+            this.DGV_IndirectCostItem.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_IndirectCostItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_IndirectCostItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ch_RegisterIndirectCostItem,
+            this.IndirectCostItemId,
+            this.IndirectCostItemDescription});
+            this.DGV_IndirectCostItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DGV_IndirectCostItem.Location = new System.Drawing.Point(0, 139);
+            this.DGV_IndirectCostItem.Margin = new System.Windows.Forms.Padding(4);
+            this.DGV_IndirectCostItem.Name = "DGV_IndirectCostItem";
+            this.DGV_IndirectCostItem.ReadOnly = true;
+            this.DGV_IndirectCostItem.Size = new System.Drawing.Size(413, 272);
+            this.DGV_IndirectCostItem.TabIndex = 3;
             // 
-            // ProjectCode_Id
+            // ch_RegisterIndirectCostItem
             // 
-            this.ProjectCode_Id.HeaderText = "Project Code Id";
-            this.ProjectCode_Id.Name = "ProjectCode_Id";
-            this.ProjectCode_Id.ReadOnly = true;
+            this.ch_RegisterIndirectCostItem.HeaderText = "Register Indirect Cost Item";
+            this.ch_RegisterIndirectCostItem.Name = "ch_RegisterIndirectCostItem";
+            this.ch_RegisterIndirectCostItem.ReadOnly = true;
+            this.ch_RegisterIndirectCostItem.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ch_RegisterIndirectCostItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
-            // ProjectCode_Description
+            // IndirectCostItemId
             // 
-            this.ProjectCode_Description.HeaderText = "Project Code Description";
-            this.ProjectCode_Description.Name = "ProjectCode_Description";
-            this.ProjectCode_Description.ReadOnly = true;
+            this.IndirectCostItemId.DataPropertyName = "IndirectCostItemId";
+            this.IndirectCostItemId.HeaderText = "Indirect Cost Item Id";
+            this.IndirectCostItemId.Name = "IndirectCostItemId";
+            this.IndirectCostItemId.ReadOnly = true;
             // 
-            // Frm_EditRegistertionBOQItem
+            // IndirectCostItemDescription
+            // 
+            this.IndirectCostItemDescription.DataPropertyName = "IndirectCostItemDescription";
+            this.IndirectCostItemDescription.HeaderText = "Indirect Cost Item Description";
+            this.IndirectCostItemDescription.Name = "IndirectCostItemDescription";
+            this.IndirectCostItemDescription.ReadOnly = true;
+            // 
+            // Frm_EditRegistertionIndirectCostItem
             // 
             this.Appearance.Options.UseFont = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -435,13 +438,12 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.Name = "Frm_EditRegistertionBOQItem";
+            this.Name = "Frm_EditRegistertionIndirectCostItem";
             this.Text = "Form Categories Project Code";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_BOQItem)).EndInit();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.panel11.ResumeLayout(false);
@@ -452,6 +454,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel6.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_IndirectCostItem)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -482,14 +485,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         public System.Windows.Forms.TextBox txt_BOQItemOld;
         public System.Windows.Forms.ComboBox cm_BOQItemOld;
         public System.Windows.Forms.DataGridView DGV_ProjectCode;
-        public System.Windows.Forms.DataGridView DGV_BOQItem;
         public System.Windows.Forms.TextBox txt_IdProject;
         private DevExpress.XtraEditors.LabelControl labelControl3;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ch_RegisterBOQItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BoqItemId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BOQItemDescription;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ch_RegisterProjectCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProjectCode_Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProjectCode_Description;
+        private System.Windows.Forms.DataGridView DGV_IndirectCostItem;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ch_RegisterIndirectCostItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IndirectCostItemId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IndirectCostItemDescription;
     }
 }

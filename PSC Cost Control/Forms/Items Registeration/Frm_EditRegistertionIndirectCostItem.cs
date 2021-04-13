@@ -7,14 +7,14 @@ using System.Linq;
 
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
-    public partial class Frm_EditRegistertionIndercetCostItem : DevExpress.XtraEditors.XtraForm
+    public partial class Frm_EditRegistertionIndirectCostItem : DevExpress.XtraEditors.XtraForm
     {
         public IProjectCodeService _IProjectCodeService;
         public IRegisterationService _RegisterationService;
         public ExternalAPIs _externalAPIs;
-        public string BOQItemDescriptoin, ProjectCodeDesscription;
-        public int BOQItemId = 0, ProjectCodeId = 0;
-        public Frm_EditRegistertionIndercetCostItem()
+        public string _IndirectCostItemDescriptoin, _ProjectCodeDesscription;
+        public int _IndirectCostItemId = 0, _ProjectCodeId = 0;
+        public Frm_EditRegistertionIndirectCostItem()
         {
             InitializeComponent();
         }
@@ -28,14 +28,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         {
             if (Project > 0)
             {
-                var ResaultBOQItem = _externalAPIs.GetBOQ_ItemsAsync(BOQs).Result;
-                var CustomResaultBOQItem = from boq in ResaultBOQItem
+                var ResaultIndirectCostItem = _externalAPIs.GetIndirectItems(BOQs).Result;
+                var CustomResaultIndirectCostItem = from boq in ResaultIndirectCostItem
                                            select new
                                            {
-                                               BoqItemId = boq.Id,
-                                               BOQItemDescription = boq.Description
+                                               IndirectCostItemId = boq.Id,
+                                               IndirectCostItemDescription = boq.Description
                                            };
-                DGV_BOQItem.DataSource = CustomResaultBOQItem;
+                DGV_IndirectCostItem.DataSource = CustomResaultIndirectCostItem;
                 var ResaultBOQRegisteration = _RegisterationService.GetBOQRegisteration(Project).Result;
                 var ResaultProjectCode = _IProjectCodeService.GetProjectCodes(Project).Result;
             }
@@ -43,18 +43,18 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
 
         void Registretion()
         {
-            
-            BOQItemDescriptoin = ProjectCodeDesscription = "";
 
-            for (int i = 0; i < DGV_BOQItem.Rows.Count; i++)
+            _IndirectCostItemDescriptoin = _ProjectCodeDesscription = "";
+
+            for (int i = 0; i < DGV_IndirectCostItem.Rows.Count; i++)
             {
-                if (DGV_BOQItem.Rows.Count > 0)
+                if (DGV_IndirectCostItem.Rows.Count > 0)
                 {
-                    bool isSelected = Convert.ToBoolean(DGV_BOQItem.Rows[i].Cells["ch_RegisterBOQItem"].Value);
+                    bool isSelected = Convert.ToBoolean(DGV_IndirectCostItem.Rows[i].Cells["ch_RegisterBOQItem"].Value);
                     if (isSelected)
                     {
-                        BOQItemId = Convert.ToInt32(DGV_BOQItem.Rows[i].Cells["BoqItemId"].Value.ToString());
-                        BOQItemDescriptoin = DGV_BOQItem.Rows[i].Cells["BOQItemDescription"].Value.ToString();
+                        _IndirectCostItemId = Convert.ToInt32(DGV_IndirectCostItem.Rows[i].Cells["IndirectCostItemId"].Value.ToString());
+                        _IndirectCostItemDescriptoin = DGV_IndirectCostItem.Rows[i].Cells["IndirectCostItemDescription"].Value.ToString();
                         break;
                     }
 
@@ -69,8 +69,8 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     bool isSelected = Convert.ToBoolean(DGV_ProjectCode.Rows[i].Cells["ch_ProjectCode"].Value);
                     if (isSelected)
                     {
-                        ProjectCodeId = Convert.ToInt32(DGV_ProjectCode.Rows[i].Cells["ProjectCode_Id"].Value.ToString());
-                        ProjectCodeDesscription = DGV_ProjectCode.Rows[i].Cells["ProjectCode_Description"].Value.ToString();
+                        _ProjectCodeId = Convert.ToInt32(DGV_ProjectCode.Rows[i].Cells["ProjectCode_Id"].Value.ToString());
+                        _ProjectCodeDesscription = DGV_ProjectCode.Rows[i].Cells["ProjectCode_Description"].Value.ToString();
                         break;
                     }
 
@@ -78,7 +78,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
 
             }
 
-            if (!string.IsNullOrEmpty(BOQItemDescriptoin) && !string.IsNullOrEmpty(ProjectCodeDesscription))
+            if (!string.IsNullOrEmpty(_IndirectCostItemDescriptoin) && !string.IsNullOrEmpty(_ProjectCodeDesscription))
             {
                 this.Close();
             }
@@ -88,13 +88,13 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
 
         private void DGV_BOQItem_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (DGV_BOQItem.Columns[e.ColumnIndex].Name == "ch_RegisterBOQItem")
+            if (DGV_IndirectCostItem.Columns[e.ColumnIndex].Name == "ch_RegisterIndirectCostItem")
             {
-                for (int i = 0; i < DGV_BOQItem.RowCount; i++)
+                for (int i = 0; i < DGV_IndirectCostItem.RowCount; i++)
                 {
                     if (i != e.RowIndex)
                     {
-                        DGV_BOQItem.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
+                        DGV_IndirectCostItem.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = false;
                     }
                 }
             }
