@@ -9,6 +9,7 @@
 
 namespace PSC_Cost_Control.Models
 {
+    using System;
     using System.Collections.Generic;
     
     public partial class C_Cost_Project_Codes_Items

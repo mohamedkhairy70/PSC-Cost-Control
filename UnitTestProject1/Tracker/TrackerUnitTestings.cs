@@ -56,7 +56,6 @@ namespace UnitTestProject1.Tracker
             var tracked = new List<Entity> {
                 new Entity{Name="ahmed"},
             };
-            var persistent = new Mock<IPersistent<Entity>>();
             var tracker = new Tracker<Entity>( _origin);
             tracker.TrackCollection(tracked);
 

@@ -55,7 +55,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
             return data;
         }
 
-        public void UpdateCollction(IEnumerable<C_Cost_Project_Codes_Items> entities)
+        public void UpdateCollection(IEnumerable<C_Cost_Project_Codes_Items> entities)
         {
             UpdateItems(
                 entities

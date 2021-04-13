@@ -12,8 +12,10 @@ namespace PSC_Cost_Control.Trackers
         private LinkedList<T> _added;
         private LinkedList<T> _deleted;
         private LinkedList<T> _udated;
+        private LinkedList<T> _UnChanged;
         /// <summary>
-        /// 
+        /// track the collection to categorize each entities as should added
+        /// or deleted or updated or the same(Un chnaged)
         /// </summary>
         /// <param name="persistent">Repository that handle Commiting data </param>
         /// <param name="origin">the existed data.if tracking is for database handling,then origin is the database existed data.</param>
@@ -23,6 +25,7 @@ namespace PSC_Cost_Control.Trackers
             _added = new LinkedList<T>();
             _udated = new LinkedList<T>();
             _deleted = new LinkedList<T>();
+            _UnChanged = new LinkedList<T>();
         }
 
        
@@ -45,18 +48,20 @@ namespace PSC_Cost_Control.Trackers
         }
         private void TackWithoutDelete(T entity)
         {
-            if (!_base.ContainsKey(entity.Id))
+            if (entity.Id == 0 || !_base.ContainsKey(entity.Id))
                 Add(entity);
+            else if (!_base[entity.Id].Equals(entity))
+                Update(entity);
             else
-            {
-                var ob = _base[entity.Id];
-                if (!ob.Equals(entity))
-                    Update(entity);
-            }
+                Unchanged(entity);
         }
         private void Add(T entity)
         {
             _added.AddLast(entity);
+        }
+        private void Unchanged(T entity)
+        {
+            _UnChanged.AddLast(entity);
         }
         private void Update(T entity)
         {
@@ -71,6 +76,7 @@ namespace PSC_Cost_Control.Trackers
 
         public IEnumerable<T> GetUpdatedEntities() => _udated;
         public IEnumerable<T> GetDeletedEntities() => _deleted;
-         
+
+        public IEnumerable<T> GetUnChangedEntities() => _UnChanged;
     }
 }

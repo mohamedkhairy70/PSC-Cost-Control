@@ -1,4 +1,5 @@
 ﻿using PSC_Cost_Control.Helper;
+using PSC_Cost_Control.Helper.FakeIDsGenerator;
 using PSC_Cost_Control.Helper.Interfaces;
 using PSC_Cost_Control.Trackers.PersistantCruds;
 using System.Collections.Generic;
@@ -11,54 +12,58 @@ namespace PSC_Cost_Control.Trackers.Commiters
         private IDictionary<string,T> ALLMap;
 
         private IEnumerable<T> All;
-       private IDictionary<string,string> Hireaical;
+        private IDictionary<string,string> Hireaical;
         
         public HireaichalUpdatingCommitter(IPersistent<T> persistent, ITracker<T> tracker) : base(persistent, tracker)
         {
+            Hireaical = new Dictionary<string, string>();
         }
 
         public override void Commit()
         {
             Persistent.DeleteCollection(Tracker.GetDeletedEntities());
 
-            SnapChotHireacal();
+            SetAllAndMap();
 
-            DamageParentsAndSetAllAndAllMap();
+            SnapShotHireacalParent_Child();
 
-            Persistent.AddCollection(All);
+            Tracker.GetNewEntities().InjectIds();//fake Ids 
 
-            InjectIds();
+            Persistent.AddCollection(Tracker.GetNewEntities());
+
+            InjectRealIds();
 
             SolveHireachy();
 
-            Persistent.UpdateCollction(All);
+            Persistent.UpdateCollection(All);
         }
-        private void SnapChotHireacal()
+        private void SnapShotHireacalParent_Child()
         {
-            this.Hireaical = All
-                .Select(c => new { Code = c.HCode, ParentCode = c.HParent.HCode })
+              Hireaical = All
+                .Select(c => new { Code = c.HCode, ParentCode = c.HParent?.HCode })
                 .ToDictionary(c => c.Code, c => c.ParentCode);
         }
-        /// <summary>
-        /// Set parentId to -1
-        /// </summary>
-        private void DamageParentsAndSetAllAndAllMap()
+       
+        private void SetAllAndMap()
         {
-            All = Tracker.GetNewEntities()
-                .ForEach(t => t.ParentId = -1);
+            All = Tracker
+                .GetNewEntities()
+                .Concat(Tracker.GetUpdatedEntities())
+                .Concat(Tracker.GetUnChangedEntities());
 
             ALLMap= All.ToDictionary(t => t.HCode);
         }
 
-        private void InjectIds()
+        private void InjectRealIds()
         {
             var damaged=(Persistent as IHirechicalPersistent<T>).GetDamagedHiraichals();
-            ALLMap.ForEach(a => a.Value.Id = damaged[a.Key]);
+            damaged.ForEach(d => ALLMap[d.Key].Id = d.Value);
         }
 
         private void SolveHireachy()
         {
-            ALLMap.ForEach(c => c.Value.ParentId = ALLMap[c.Value.HCode].Id);
+             ALLMap.ForEach
+                (c => c.Value.ParentId = Hireaical[c.Value.HCode] is null?null: ALLMap[Hireaical[c.Value?.HCode]]?.Id);
         }
     }
 }

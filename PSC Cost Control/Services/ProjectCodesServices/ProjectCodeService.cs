@@ -47,6 +47,9 @@ namespace PSC_Cost_Control.Services.ProjectCodesServices
 
         public async Task Update(int projectId, List<C_Cost_Project_Codes> codes)
         {
+            //inject projectId for every element in the list
+            codes.ForEach(c => c.Project_Id = projectId);
+            
             var tracker = new Tracker<C_Cost_Project_Codes>(await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId));
             tracker.TrackCollection(codes);
 

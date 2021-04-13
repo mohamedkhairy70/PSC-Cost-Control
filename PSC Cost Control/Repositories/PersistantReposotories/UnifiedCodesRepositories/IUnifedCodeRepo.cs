@@ -14,6 +14,6 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
         void DeleteCollection(IEnumerable<C_Cost_Unified_Codes> entities);
         Task<IEnumerable<C_Cost_Unified_Codes>> GetUnifiedCodesAsync();
         void Update(C_Cost_Unified_Codes code);
-        void UpdateCollction(IEnumerable<C_Cost_Unified_Codes> entities);
+        void UpdateCollection(IEnumerable<C_Cost_Unified_Codes> entities);
     }
 }

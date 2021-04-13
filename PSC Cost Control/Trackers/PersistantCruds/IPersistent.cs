@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 namespace PSC_Cost_Control.Trackers.PersistantCruds
 {
     /// <summary>
-    /// Crud operation deligating for Trackers
+    /// Crud operation deligating for Commiters
     /// </summary>
     /// <typeparam name="T">type of tracked entity</typeparam>
     public interface IPersistent<T>
     {
         Task AddCollection(IEnumerable<T> entities);
-        void UpdateCollction(IEnumerable<T> entities);
+        void UpdateCollection(IEnumerable<T> entities);
         void DeleteCollection(IEnumerable<T> entities);
     }
 }

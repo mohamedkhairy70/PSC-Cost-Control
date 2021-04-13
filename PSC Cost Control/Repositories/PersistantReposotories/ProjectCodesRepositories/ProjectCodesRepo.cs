@@ -52,14 +52,14 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
                     CategoryId = e.Category_Id.Value,
                     Code = e.Code,
                     Description = e.Description,
-                    parent = e.ParentId,
+                    parent = null,//adding in persistent is without parent
                     ProjectId = e.Project_Id.Value,
                     UnifiedCodeId = e.Unified_Code_Id.Value
                 })
                 .ToList());
         }
 
-        public void UpdateCollction(IEnumerable<C_Cost_Project_Codes> entities)
+        public void UpdateCollection(IEnumerable<C_Cost_Project_Codes> entities)
         {
             var proc = new UpdateProjectCodesSP
             {
@@ -88,7 +88,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
         {
             using (var context = new Models.ApplicationContext())
             {
-               return context.C_Cost_Project_Codes.Where(c => c.Parent == -1 &&c.Project_Id==projectId)
+               return context.C_Cost_Project_Codes.Where(c => c.Parent == null &&c.Project_Id==projectId)
                     .Select(x => new { Code = x.Code, Id = x.Id })
                     .ToDictionary(c => c.Code, c => c.Id);
             }
