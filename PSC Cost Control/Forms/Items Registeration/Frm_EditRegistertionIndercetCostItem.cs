@@ -7,14 +7,14 @@ using System.Linq;
 
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
-    public partial class Frm_EditRegistertionBOQItem : DevExpress.XtraEditors.XtraForm
+    public partial class Frm_EditRegistertionIndercetCostItem : DevExpress.XtraEditors.XtraForm
     {
         public IProjectCodeService _IProjectCodeService;
         public IRegisterationService _RegisterationService;
         public ExternalAPIs _externalAPIs;
         public string BOQItemDescriptoin, ProjectCodeDesscription;
         public int BOQItemId = 0, ProjectCodeId = 0;
-        public Frm_EditRegistertionBOQItem()
+        public Frm_EditRegistertionIndercetCostItem()
         {
             InitializeComponent();
         }
