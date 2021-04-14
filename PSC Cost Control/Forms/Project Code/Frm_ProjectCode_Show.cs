@@ -18,6 +18,7 @@ using PSC_Cost_Control.Services.DependencyApis;
 using PSC_Cost_Control.Services.ProjectCodesServices;
 using PSC_Cost_Control.Services.ServicesBuilders;
 using PSC_Cost_Control.Services.UnifiedCodesServices;
+using System.Threading.Tasks;
 
 namespace PSC_Cost_Control.Forms.Project_Code
 {
@@ -135,10 +136,13 @@ namespace PSC_Cost_Control.Forms.Project_Code
         {
             try
             {
-                int IdProject = Convert.ToInt32(cm_Projects.SelectedValue);
-                GetProjectCode(IdProject);
-                if(IdProject > 0)
-                    cm_Projects.Enabled = false;
+                if (cm_Projects.SelectedValue != null)
+                {
+                    int IdProject = Convert.ToInt32(cm_Projects.SelectedValue);
+                    GetProjectCode(IdProject);
+                    if (IdProject > 0)
+                        cm_Projects.Enabled = false;
+                }
             }
             catch { }
         }
@@ -256,7 +260,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
         #endregion Method for Create TreeList
 
         #region Methods For my Form
-        void ClearAllDataProject()
+        async Task ClearAllDataProject()
         {
             cm_Categories.DataSource = null;
             cm_Categories.SelectedItem = -1;
@@ -267,14 +271,14 @@ namespace PSC_Cost_Control.Forms.Project_Code
             txt_Description.Enabled = false;
 
             cm_Projects.Enabled = true;
-            var ProjectList = _externalAPIs.GetProjectsAsync().Result;
+            var ProjectList = await _externalAPIs.GetProjectsAsync();
             
             cm_Projects.DataSource = ProjectList;
             cm_Projects.DisplayMember = "Name";
             cm_Projects.ValueMember = "ContractId";
             cm_Projects.SelectedItem = -1;
 
-            var UnifiedCodeList = _unifiedCodeService.GetUnifiedCodes().Result;
+            var UnifiedCodeList = await _unifiedCodeService.GetUnifiedCodes();
 
             cm_UnifiedCode.DataSource = UnifiedCodeList;
             cm_UnifiedCode.DisplayMember = "Title";
