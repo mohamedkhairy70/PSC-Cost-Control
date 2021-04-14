@@ -33,7 +33,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
         public Frm_ProjectCode_Show()
         {
             InitializeComponent();
-            _externalAPIs = new ExternalAPIs(new Models.ApplicationContext());
+            _externalAPIs = ServiceBuilder.Build<ExternalAPIs>();
             _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
             _projectCode = ServiceBuilder.Build<IProjectCodeService>();
             _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();

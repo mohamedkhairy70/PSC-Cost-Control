@@ -29,7 +29,7 @@ namespace PSC_Cost_Control.Forms.Unified_Code
         public Frm_UnifiedCode_Show()
         {
             InitializeComponent();
-            _externalAPIs = new ExternalAPIs(new Models.ApplicationContext());
+            _externalAPIs = ServiceBuilder.Build<ExternalAPIs>();
             _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
             _UnifiedCode = ServiceBuilder.Build<IUnifiedCodeService>();
         }
