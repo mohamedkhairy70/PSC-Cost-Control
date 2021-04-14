@@ -19,19 +19,19 @@ namespace PSC_Cost_Control.Trackers
         /// </summary>
         /// <param name="persistent">Repository that handle Commiting data </param>
         /// <param name="origin">the existed data.if tracking is for database handling,then origin is the database existed data.</param>
-        public Tracker(IEnumerable<T> origin)
+        public Tracker()
         {
-            _base = origin.ToDictionary(o => o.Id);
             _added = new LinkedList<T>();
             _udated = new LinkedList<T>();
             _deleted = new LinkedList<T>();
             _UnChanged = new LinkedList<T>();
         }
 
-       
-
         public void TrackCollection(IEnumerable<T> entities)
         {
+            if (_base is null)
+                throw new System.Exception("set the origin Data first.!");
+
             foreach (var e in entities)
                 TackWithoutDelete(e);
 
@@ -78,5 +78,10 @@ namespace PSC_Cost_Control.Trackers
         public IEnumerable<T> GetDeletedEntities() => _deleted;
 
         public IEnumerable<T> GetUnChangedEntities() => _UnChanged;
+
+        public void SetOrigin(IEnumerable<T> origin)
+        {
+             _base = origin.ToDictionary(o => o.Id);
+        }
     }
 }
