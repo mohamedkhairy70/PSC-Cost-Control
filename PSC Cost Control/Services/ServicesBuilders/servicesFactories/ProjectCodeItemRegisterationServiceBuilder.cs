@@ -7,8 +7,7 @@ namespace PSC_Cost_Control.Services.ServicesBuilders.servicesFactories
     {
         public IRegisterationService Build()
         {
-            var context = new Models.ApplicationContext();
-            return new ItemsRegisterationService(new DirectItemRegisterationRepo(context),new IndirectCostItemRegisterationRepo(context));
+            return new ItemsRegisterationService(new DirectItemRegisterationRepo(),new IndirectCostItemRegisterationRepo());
         }
     }
 }

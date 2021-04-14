@@ -6,7 +6,7 @@ namespace PSC_Cost_Control.Services.ServicesBuilders.servicesFactories
     public class UnifiedCodesCategoryServiceBuilder : IBuild<IUnifiedCodeCategoryService>
     {
         public IUnifiedCodeCategoryService Build() =>
-                        new UnifiedCodeCategoryService(new UnifiedCodeCategoriesRepo(new Models.ApplicationContext()));
+                        new UnifiedCodeCategoryService(new UnifiedCodeCategoriesRepo());
     }
 }
 

@@ -11,42 +11,50 @@ using PSC_Cost_Control.Trackers.PersistantCruds;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories
 {
-    public class UnifedCodeRepo : BaseRepo<C_Cost_Unified_Codes>, IAvailableId, IHirechicalPersistent<C_Cost_Unified_Codes>, IUnifedCodeRepo
+    public class UnifedCodeRepo : BaseRepo<C_Cost_Unified_Codes>,IHirechicalPersistent<C_Cost_Unified_Codes>, IUnifedCodeRepo
     {
         protected override TablesEnum Table => TablesEnum.C_Cost_Unified_Codes;
 
-        public UnifedCodeRepo(ApplicationContext context) : base(context)
+        public UnifedCodeRepo() 
         {
         }
 
         public async Task<IEnumerable<C_Cost_Unified_Codes>> GetUnifiedCodesAsync()
         {
-            return await Context.C_Cost_Unified_Codes.ToListAsync();
+            using (var Context = new ApplicationContext())
+            {
+                return await Context.C_Cost_Unified_Codes.ToListAsync();
+            }
         }
 
-        public int NextId { get => Context.C_Cost_Project_Codes.Max(c => c.Id) + 1; set => NextId = value; }
 
         public async Task AddUnifiedCodesAsync(List<C_Cost_Unified_Codes> codes)
         {
-            var proc = new UnifiedCodeInsertion()
+            using (var Context = new ApplicationContext())
             {
-                list = codes.Select(c =>
-                    new UnifiedCodeUDT
-                    {
-                        Id = c.Id,
-                        CategoryId = c.Category_Id.Value,
-                        Code = c.Code,
-                        parent = c.Parent,
-                        Title = c.Title
-                    }
+                var proc = new UnifiedCodeInsertion()
+                {
+                    list = codes.Select(c =>
+                        new UnifiedCodeUDT
+                        {
+                            Id = c.Id,
+                            CategoryId = c.Category_Id.Value,
+                            Code = c.Code,
+                            parent = c.Parent,
+                            Title = c.Title
+                        }
                 ).ToList()
-            };
+                };
 
-            await Context.Database.ExecuteStoredProcedureAsync<UnifiedCodeUDT>(proc);
+                await Context.Database.ExecuteStoredProcedureAsync<UnifiedCodeUDT>(proc);
+            }
         }
         public void Update(C_Cost_Unified_Codes code)
         {
-            Context.f_COST_Update_Unified_Code(code.Id, code.Title, code.Category_Id, code.Code, code.Parent);
+            using (var Context = new ApplicationContext())
+            {
+                Context.f_COST_Update_Unified_Code(code.Id, code.Title, code.Category_Id, code.Code, code.Parent);
+            }
         }
 
         public async Task AddCollection(IEnumerable<C_Cost_Unified_Codes> entities)
@@ -56,7 +64,10 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
 
         public void Delete(C_Cost_Unified_Codes unified)
         {
-            Context.f_COST_Delete_By_Id(Table.ToString(), unified.Id);
+            using (var Context = new ApplicationContext())
+            {
+                Context.f_COST_Delete_By_Id(Table.ToString(), unified.Id);
+            }
         }
         public void UpdateCollection(IEnumerable<C_Cost_Unified_Codes> entities)
         {

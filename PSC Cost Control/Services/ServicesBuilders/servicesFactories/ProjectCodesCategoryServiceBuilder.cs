@@ -6,7 +6,7 @@ namespace PSC_Cost_Control.Services.ServicesBuilders.servicesFactories
     public class ProjectCodesCategoryServiceBuilder : IBuild<IProjectCodeCategoryService>
     {
         public IProjectCodeCategoryService Build()=>
-                        new ProjectCodeCategoryService(new ProjectCodesCategoriesRepo(new Models.ApplicationContext()));
+                        new ProjectCodeCategoryService(new ProjectCodesCategoriesRepo());
 
     }
 }

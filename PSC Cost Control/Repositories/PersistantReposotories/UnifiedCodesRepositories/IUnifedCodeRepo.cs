@@ -6,8 +6,6 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
 {
     public interface IUnifedCodeRepo
     {
-        int NextId { get; set; }
-
         Task AddCollection(IEnumerable<C_Cost_Unified_Codes> entities);
         Task AddUnifiedCodesAsync(List<C_Cost_Unified_Codes> codes);
         void Delete(C_Cost_Unified_Codes unified);

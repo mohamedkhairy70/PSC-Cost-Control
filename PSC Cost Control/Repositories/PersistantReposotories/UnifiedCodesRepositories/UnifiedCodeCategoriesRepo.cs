@@ -10,17 +10,23 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
     {
         protected override TablesEnum Table => TablesEnum.C_Cost_Unified_Code_Category;
 
-        public UnifiedCodeCategoriesRepo(ApplicationContext context) : base(context)
+        public UnifiedCodeCategoriesRepo() 
         {
         }
 
         public async Task<IEnumerable<C_Cost_Unified_Code_Category>> GetCategoriesAsync()
         {
-            return await Context.C_Cost_Unified_Code_Category.ToListAsync();
+            using (var Context = new ApplicationContext())
+            {
+                return await Context.C_Cost_Unified_Code_Category.ToListAsync();
+            }
         }
         public void AddUnifiedCodeCategory(C_Cost_Unified_Code_Category category)
         {
-            Context.f_Cost_Add_Unified_Codes_Category(category.Name);
+            using (var Context = new ApplicationContext())
+            {
+                Context.f_Cost_Add_Unified_Codes_Category(category.Name);
+            }
         }
 
 
