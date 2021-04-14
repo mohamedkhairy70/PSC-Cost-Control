@@ -7,8 +7,6 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
 {
     public interface IProjectCodesRepo
     {
-        int NextId { get; set; }
-
         Task AddCollection(IEnumerable<C_Cost_Project_Codes> entities);
         Task AddProjectCodes(List<ProjectCodeUdT> codes);
         void DeleteCollection(IEnumerable<C_Cost_Project_Codes> entities);

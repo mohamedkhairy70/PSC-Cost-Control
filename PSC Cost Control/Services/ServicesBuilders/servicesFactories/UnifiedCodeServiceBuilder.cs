@@ -7,6 +7,6 @@ namespace PSC_Cost_Control.Services.ServicesBuilders.servicesFactories
     public class UnifiedCodeServiceBuilder : IBuild<IUnifiedCodeService>
     {
         public IUnifiedCodeService Build()=>
-                        new UnifiedCodeService(new UnifedCodeRepo(new Models.ApplicationContext()));
+                        new UnifiedCodeService(new UnifedCodeRepo());
     }
 }

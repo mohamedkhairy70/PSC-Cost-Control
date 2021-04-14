@@ -10,17 +10,23 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
     {
         protected override TablesEnum Table { get => TablesEnum.C_Cost_Project_Code_Categories; }
 
-        public ProjectCodesCategoriesRepo(ApplicationContext context) : base(context)
+        public ProjectCodesCategoriesRepo() 
         {
         }
 
         public async Task<IEnumerable<C_Cost_Project_Code_Categories>> GetCategoriesAsync()
         {
-            return await Context.C_Cost_Project_Code_Categories.ToListAsync();
+            using (var Context = new ApplicationContext())
+            {
+                return await Context.C_Cost_Project_Code_Categories.ToListAsync();
+            }
         }
         public void AddProjectCodeCategory(C_Cost_Project_Code_Categories category)
         {
-            Context.f_Cost_Add_Project_Codes_Category(category.Name);
+            using (var Context = new ApplicationContext())
+            {
+                Context.f_Cost_Add_Project_Codes_Category(category.Name);
+            }
         }
 
     }

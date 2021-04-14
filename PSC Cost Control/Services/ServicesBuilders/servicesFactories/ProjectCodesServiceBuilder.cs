@@ -6,6 +6,6 @@ namespace PSC_Cost_Control.Services.ServicesBuilders.servicesFactories
     public class ProjectCodesServiceBuilder : IBuild<IProjectCodeService>
     {
         public IProjectCodeService Build() =>
-            new ProjectCodeService(new ProjectCodesRepo(new Models.ApplicationContext()));
+            new ProjectCodeService(new ProjectCodesRepo());
     }
 }

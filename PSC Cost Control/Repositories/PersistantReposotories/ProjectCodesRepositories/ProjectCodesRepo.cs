@@ -17,29 +17,33 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
 {
     public class ProjectCodesRepo : HireachyRepo<C_Cost_Project_Codes>, IHirechicalPersistent<C_Cost_Project_Codes>, IProjectCodesRepo
     {
-        public ProjectCodesRepo(ApplicationContext context) : base(context)
+        public ProjectCodesRepo()
         {
 
         }
 
         protected override TablesEnum Table => TablesEnum.C_Cost_Project_Codes;
 
-        public int NextId { get => Context.C_Cost_Project_Codes.Max(c => c.Id) + 1; set => NextId = value; }
 
         public async Task<IEnumerable<C_Cost_Project_Codes>> GetProjectCodesWithItsItsUnifiedAsync(int projectId)
         {
-            var rt= await Context.C_Cost_Project_Codes.Where(c => c.Project_Id == projectId).ToListAsync();
-            return rt;
+            using (var Context = new ApplicationContext())
+            {
+                return  await Context.C_Cost_Project_Codes.Where(c => c.Project_Id == projectId).ToListAsync();
+            }
         }
 
         public async Task AddProjectCodes(List<ProjectCodeUdT> codes)
         {
-            var proc = new ProjectCodesInserionSP()
+            using (var Context = new ApplicationContext())
             {
-                list = codes
-            };
-            
-            await Context.Database.ExecuteStoredProcedureAsync<ProjectCodesInserionSP>(proc);
+                var proc = new ProjectCodesInserionSP()
+                {
+                    list = codes
+                };
+
+                await Context.Database.ExecuteStoredProcedureAsync<ProjectCodesInserionSP>(proc);
+            }
         }
 
 
@@ -61,32 +65,38 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ProjectCodesRepos
 
         public void UpdateCollection(IEnumerable<C_Cost_Project_Codes> entities)
         {
-            var proc = new UpdateProjectCodesSP
+            using (var Context = new ApplicationContext())
             {
-                list = entities.Select(x => new ProjectCodeUdT 
+                var proc = new UpdateProjectCodesSP
                 {
-                    Id=x.Id,
-                    Code=x.Code,
-                    CategoryId=x.Category_Id.Value,
-                    Description=x.Description,
-                    parent=x.Parent,
-                    ProjectId=x.Project_Id.Value,
-                    UnifiedCodeId=x.Unified_Code_Id.Value
-                }).ToList()
-            };
-            Context.Database.ExecuteStoredProcedure<UpdateProjectCodesSP>(proc);
+                    list = entities.Select(x => new ProjectCodeUdT
+                    {
+                        Id = x.Id,
+                        Code = x.Code,
+                        CategoryId = x.Category_Id.Value,
+                        Description = x.Description,
+                        parent = x.Parent,
+                        ProjectId = x.Project_Id.Value,
+                        UnifiedCodeId = x.Unified_Code_Id.Value
+                    }).ToList()
+                };
+                Context.Database.ExecuteStoredProcedure<UpdateProjectCodesSP>(proc);
+            }
           
         }
 
         public void DeleteCollection(IEnumerable<C_Cost_Project_Codes> entities)
         {
-              foreach (var e in entities)
-                  Context.f_Cost_Delete_Parent_With_Childs(Table.ToString(), e.Id);
+            using (var Context = new ApplicationContext())
+            {
+                foreach (var e in entities)
+                    Context.f_Cost_Delete_Parent_With_Childs(Table.ToString(), e.Id);
+            }
         }
 
         public IDictionary<string, int> GetDamagedHiraichals(int? projectId)
         {
-            using (var context = new Models.ApplicationContext())
+            using (var context = new ApplicationContext())
             {
                return context.C_Cost_Project_Codes.Where(c => c.Parent == null &&c.Project_Id==projectId)
                     .Select(x => new { Code = x.Code, Id = x.Id })

@@ -12,7 +12,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
     public class IndirectCostItemRegisterationRepo:RegisterItem<C_Cost_Indirect_Project_Code_Summerizing,IndirectCostItems>, IPersistent<C_Cost_Indirect_Project_Code_Summerizing>
     {
         private const string TYPE = "indirect";
-        public IndirectCostItemRegisterationRepo(ApplicationContext context) : base(context, TYPE)
+        public IndirectCostItemRegisterationRepo() : base(TYPE)
         {
         }
 
@@ -39,18 +39,23 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
 
         public void DeleteCollection(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
         {
-            foreach (var e in entities)
-                Context.f_COST_Delete_By_Id(Table.ToString(), e.Id);
+            using (var Context = new ApplicationContext())
+            {
+                foreach (var e in entities)
+                    Context.f_COST_Delete_By_Id(Table.ToString(), e.Id);
+            }
         }
 
 
         public override async Task<IEnumerable<C_Cost_Indirect_Project_Code_Summerizing>> GetRegisterationsAsync(int projectId)
-        { 
-            var data= await Context.C_Cost_Indirect_Project_Code_Summerizing
+        {
+            using (var Context = new ApplicationContext())
+            {
+                return  await Context.C_Cost_Indirect_Project_Code_Summerizing
                 .Include(c => c.C_Cost_Project_Codes)
                 .Where(z => z.C_Cost_Project_Codes.Project_Id == projectId)
                 .ToListAsync();
-            return data;
+            }
         }
         public void UpdateCollection(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> entities)
         {

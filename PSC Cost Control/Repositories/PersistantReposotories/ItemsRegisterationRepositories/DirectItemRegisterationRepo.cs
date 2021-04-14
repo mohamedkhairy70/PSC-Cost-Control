@@ -12,7 +12,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
     public class DirectItemRegisterationRepo : RegisterItem<C_Cost_Project_Codes_Items,BOQ_Items>,IPersistent<C_Cost_Project_Codes_Items>
     {
         private  const string TYPE = "direct";
-        public DirectItemRegisterationRepo(ApplicationContext context) : base(context,TYPE)
+        public DirectItemRegisterationRepo() : base(TYPE)
         {
         }
 
@@ -48,11 +48,13 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
 
         public  override async Task<IEnumerable<C_Cost_Project_Codes_Items>> GetRegisterationsAsync(int projectId)
         {
-            var data = await Context.C_Cost_Project_Codes_Items
+            using (var Context = new ApplicationContext())
+            {
+                return await Context.C_Cost_Project_Codes_Items
                 .Include(c => c.C_Cost_Project_Codes)
                 .Where(c => c.C_Cost_Project_Codes.Project_Id == projectId)
                 .ToListAsync();
-            return data;
+            }
         }
 
         public void UpdateCollection(IEnumerable<C_Cost_Project_Codes_Items> entities)
