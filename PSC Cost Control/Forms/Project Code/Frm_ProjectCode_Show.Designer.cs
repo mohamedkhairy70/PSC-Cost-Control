@@ -42,6 +42,8 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
+            this.cm_UnifiedCode = new System.Windows.Forms.ComboBox();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.txt_Description = new System.Windows.Forms.TextBox();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.cm_Categories = new System.Windows.Forms.ComboBox();
@@ -55,8 +57,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.tree_ProjectCode = new DevExpress.XtraTreeList.TreeList();
             this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             this.dragDropEvents1 = new DevExpress.Utils.DragDrop.DragDropEvents(this.components);
-            this.cm_UnifiedCode = new System.Windows.Forms.ComboBox();
-            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -106,6 +106,25 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.groupControl2.TabIndex = 2;
             this.groupControl2.Text = "Project Code";
             // 
+            // cm_UnifiedCode
+            // 
+            this.cm_UnifiedCode.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.cm_UnifiedCode.FormattingEnabled = true;
+            this.cm_UnifiedCode.Location = new System.Drawing.Point(144, 80);
+            this.cm_UnifiedCode.Name = "cm_UnifiedCode";
+            this.cm_UnifiedCode.Size = new System.Drawing.Size(209, 27);
+            this.cm_UnifiedCode.TabIndex = 8;
+            // 
+            // labelControl3
+            // 
+            this.labelControl3.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.labelControl3.Appearance.Options.UseFont = true;
+            this.labelControl3.Location = new System.Drawing.Point(50, 83);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(88, 19);
+            this.labelControl3.TabIndex = 7;
+            this.labelControl3.Text = "Unified Code :";
+            // 
             // txt_Description
             // 
             this.txt_Description.Font = new System.Drawing.Font("Times New Roman", 12F);
@@ -128,9 +147,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             // 
             this.cm_Categories.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.cm_Categories.FormattingEnabled = true;
-            this.cm_Categories.Items.AddRange(new object[] {
-            "Structure",
-            "indirect"});
             this.cm_Categories.Location = new System.Drawing.Point(144, 29);
             this.cm_Categories.Name = "cm_Categories";
             this.cm_Categories.Size = new System.Drawing.Size(209, 27);
@@ -250,28 +266,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.tree_ProjectCode.Size = new System.Drawing.Size(1041, 310);
             this.tree_ProjectCode.TabIndex = 0;
             this.tree_ProjectCode.NodeChanged += new DevExpress.XtraTreeList.NodeChangedEventHandler(this.tree_ProjectCode_NodeChanged);
-            // 
-            // cm_UnifiedCode
-            // 
-            this.cm_UnifiedCode.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.cm_UnifiedCode.FormattingEnabled = true;
-            this.cm_UnifiedCode.Items.AddRange(new object[] {
-            "Structure",
-            "indirect"});
-            this.cm_UnifiedCode.Location = new System.Drawing.Point(144, 80);
-            this.cm_UnifiedCode.Name = "cm_UnifiedCode";
-            this.cm_UnifiedCode.Size = new System.Drawing.Size(209, 27);
-            this.cm_UnifiedCode.TabIndex = 8;
-            // 
-            // labelControl3
-            // 
-            this.labelControl3.Appearance.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.labelControl3.Appearance.Options.UseFont = true;
-            this.labelControl3.Location = new System.Drawing.Point(50, 83);
-            this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(88, 19);
-            this.labelControl3.TabIndex = 7;
-            this.labelControl3.Text = "Unified Code :";
             // 
             // Frm_ProjectCode_Show
             // 

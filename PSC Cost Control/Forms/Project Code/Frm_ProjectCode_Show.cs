@@ -63,7 +63,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     if (validationProjectCode())
                     {
                         //Add Root Project Code To Treelist
-                        AddRootProjectCode(cm_Categories.Text, txt_Description.Text,cm_UnifiedCode.Text);
+                        AddRootProjectCode(cm_Categories.Text, txt_Description.Text,cm_UnifiedCode.Text, Convert.ToInt32(cm_Categories.SelectedValue), Convert.ToInt32(cm_UnifiedCode.SelectedValue));
 
                         //Clear Combobox Categore and text Description
                         ClearAllDataProjectCode();
@@ -80,7 +80,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     if (validationProjectCode())
                     {
                         //Add Child Project Code To Treelist
-                        AddChildProjectCode(cm_Categories.Text, txt_Description.Text, cm_UnifiedCode.Text);
+                        AddChildProjectCode(cm_Categories.Text, txt_Description.Text, cm_UnifiedCode.Text, Convert.ToInt32(cm_Categories.SelectedValue),Convert.ToInt32(cm_UnifiedCode.SelectedValue));
 
                         //Clear Combobox Categore and text Description
                         ClearAllDataProjectCode();
@@ -354,13 +354,14 @@ namespace PSC_Cost_Control.Forms.Project_Code
             return result;
         }
 
-        void AddRootProjectCode(string Category, string Description,string UnifiedCodeTitle)
+        void AddRootProjectCode(string Category, string Description,string UnifiedCodeTitle,int CategoryId,int UnifiedCodeTitleId)
         {
 
-            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(new object[] { "/" + (tree_ProjectCode.Nodes.Count +1), Category, Description, UnifiedCodeTitle,null }, parentNode: null);
+            var tag = new Models.C_Cost_Project_Codes { Category_Id = CategoryId, Description = Description, Unified_Code_Id = UnifiedCodeTitleId };
+            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(new object[] { "/" + (tree_ProjectCode.Nodes.Count +1), Category, Description, UnifiedCodeTitle,null }, parentNode: null, tag);
         }
 
-        void AddChildProjectCode(string Category, string Description,string UnifiedCodeTitle)
+        void AddChildProjectCode(string Category, string Description,string UnifiedCodeTitle, int CategoryId, int UnifiedCodeTitleId)
         {
             if (tree_ProjectCode.FocusedNode != null)
             {
@@ -373,6 +374,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     string IdNode = " ";
                     if (tree_ProjectCode.FocusedNode.Level+1 > 0)
                     {
+                        var tag = new Models.C_Cost_Project_Codes { Category_Id = CategoryId, Description = Description, Unified_Code_Id = UnifiedCodeTitleId };
                         var vs = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.FocusedNode);
                         IList objectList = vs as IList;
                         string NodeCode = objectList[0].ToString();
@@ -381,7 +383,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                             + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
                         tree_ProjectCode.FocusedNode =
                             tree_ProjectCode.AppendNode(
-                                new object[] { IdNode, Category, Description, UnifiedCodeTitle,null }, tree_ProjectCode.FocusedNode);
+                                new object[] { IdNode, Category, Description, UnifiedCodeTitle,null }, tree_ProjectCode.FocusedNode,tag:tree_ProjectCode.FocusedNode.Tag);
                     }             
                 }
             }
