@@ -422,11 +422,14 @@ namespace PSC_Cost_Control.Forms.Project_Code
             txt_Description.Enabled = true;
             cm_Categories.Enabled = true;
         }
-
+        async Task<List<C_Cost_Project_Codes>> Get(int _ProjectId)
+        {
+            return (List<C_Cost_Project_Codes>)await _projectCode.GetProjectCodes(_ProjectId);
+        }
         void SaveProectCode(int _ProjectId)
         {
             var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
-            if (_projectCode.GetProjectCodes(_ProjectId).Result.Count() > 0)
+            if (Get(_ProjectId).GetAwaiter().GetResult().Count > 0)
             {
                 _projectCode.Update(_ProjectId, Resault);
             }
