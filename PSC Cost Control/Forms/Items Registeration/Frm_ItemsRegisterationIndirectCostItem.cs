@@ -21,7 +21,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             InitializeComponent();
             _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
             _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
-            _externalAPIs = ServiceBuilder.Build<ExternalAPIs>();
+            _externalAPIs = new ExternalAPIs();
         }
 
         #region My Method for my From
