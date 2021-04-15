@@ -18,9 +18,14 @@ namespace PSC_Cost_Control.Services.UnifiedCodesServices
     public class UnifiedCodeService : IUnifiedCodeService
     {
         private IUnifedCodeRepo _unifiedCodesRepo;
-        public UnifiedCodeService(IUnifedCodeRepo codesRepo)
+        private ITracker<C_Cost_Unified_Codes> _tracker;
+        private UpdatingCommiter<C_Cost_Unified_Codes> _committer;
+        public UnifiedCodeService(IUnifedCodeRepo codesRepo, ITracker<C_Cost_Unified_Codes> tracker)
         {
             _unifiedCodesRepo = codesRepo;
+            _tracker = tracker;
+            _committer = new HireaichalUpdatingCommitter< C_Cost_Unified_Codes >
+                ((IPersistent <C_Cost_Unified_Codes>)_unifiedCodesRepo, _tracker);
         }
 
         public async Task<IEnumerable<C_Cost_Unified_Codes>> GetUnifiedCodes()
@@ -37,12 +42,9 @@ namespace PSC_Cost_Control.Services.UnifiedCodesServices
 
         public async Task Update(List<C_Cost_Unified_Codes> codes)
         {
-            var tracker = new Tracker<C_Cost_Unified_Codes>(await _unifiedCodesRepo.GetUnifiedCodesAsync());
-            tracker.TrackCollection(codes);
-
-            var commiter = new HireaichalUpdatingCommitter<C_Cost_Unified_Codes>
-                ((IPersistent<C_Cost_Unified_Codes>)_unifiedCodesRepo, tracker);
-            commiter.Commit();
+            _tracker.SetOrigin(await _unifiedCodesRepo.GetUnifiedCodesAsync());
+            _tracker.TrackCollection(codes);
+            _committer.Commit();
         }
     }
 }

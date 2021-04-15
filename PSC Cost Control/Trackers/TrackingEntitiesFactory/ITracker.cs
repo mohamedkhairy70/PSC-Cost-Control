@@ -11,6 +11,11 @@ namespace PSC_Cost_Control.Trackers
     public interface ITracker<T> where T : IHasId
     {
         /// <summary>
+        /// set the base data which will be in comparing with the Tracked collection.
+        /// </summary>
+        /// <param name="origin">origin data for comparing</param>
+        void SetOrigin(IEnumerable<T> origin);
+        /// <summary>
         /// distrubute entities to Delation,insertion,Updating repositories to be steady for commiting.
         /// </summary>
         /// <param name="entities">the entities that will be tracked</param>

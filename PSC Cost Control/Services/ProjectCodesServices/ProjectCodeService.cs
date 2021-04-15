@@ -14,10 +14,16 @@ namespace PSC_Cost_Control.Services.ProjectCodesServices
 {
     public class ProjectCodeService : IProjectCodeService
     {
-        private IProjectCodesRepo _projectCodesRepo;
-        public ProjectCodeService(IProjectCodesRepo codesRepo)
+        private readonly IProjectCodesRepo _projectCodesRepo;
+        private readonly ITracker<C_Cost_Project_Codes> _tracker;
+        private readonly UpdatingCommiter<C_Cost_Project_Codes> _commiter;
+
+        public ProjectCodeService(IProjectCodesRepo codesRepo,ITracker<C_Cost_Project_Codes> tracker)
         {
             _projectCodesRepo = codesRepo;
+            _tracker = new Tracker<C_Cost_Project_Codes>();
+             _commiter = new HireaichalUpdatingCommitter<C_Cost_Project_Codes>
+               ((IPersistent<C_Cost_Project_Codes>)_projectCodesRepo, tracker);
         }
         public async Task<IEnumerable<C_Cost_Project_Codes>> GetProjectCodes(int projectId)
         {
@@ -49,13 +55,10 @@ namespace PSC_Cost_Control.Services.ProjectCodesServices
         {
             //inject projectId for every element in the list
             codes.ForEach(c => c.Project_Id = projectId);
-            
-            var tracker = new Tracker<C_Cost_Project_Codes>(await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId));
-            tracker.TrackCollection(codes);
 
-            var commiter = new HireaichalUpdatingCommitter<C_Cost_Project_Codes>
-                ((IPersistent<C_Cost_Project_Codes>)_projectCodesRepo, tracker);
-            commiter.Commit();
+            _tracker.SetOrigin(await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId));
+            _tracker.TrackCollection(codes);
+            _commiter.Commit();
         }
 
 

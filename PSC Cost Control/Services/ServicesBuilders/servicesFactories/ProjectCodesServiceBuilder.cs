@@ -6,6 +6,10 @@ namespace PSC_Cost_Control.Services.ServicesBuilders.servicesFactories
     public class ProjectCodesServiceBuilder : IBuild<IProjectCodeService>
     {
         public IProjectCodeService Build() =>
-            new ProjectCodeService(new ProjectCodesRepo());
+            new ProjectCodeService
+            (
+                 new ProjectCodesRepo()
+                ,new Trackers.Tracker<Models.C_Cost_Project_Codes>()
+            );
     }
 }
