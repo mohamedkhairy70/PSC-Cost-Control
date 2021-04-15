@@ -51,7 +51,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             else if (btn.Caption == "New Project")
             {
                 //Clear all Data from Project Code Combobox Categore and text Description and Project
-                ClearAllDataProject();
+                ClearAllDataProject().GetAwaiter();
             }
             else if (btn.Caption == "Add Root")
             {
@@ -63,7 +63,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     if (validationProjectCode())
                     {
                         //Add Root Project Code To Treelist
-                        AddRootProjectCode(cm_Categories.SelectedText, txt_Description.Text,cm_UnifiedCode.SelectedText);
+                        AddRootProjectCode(cm_Categories.Text, txt_Description.Text,cm_UnifiedCode.Text);
 
                         //Clear Combobox Categore and text Description
                         ClearAllDataProjectCode();
@@ -80,7 +80,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     if (validationProjectCode())
                     {
                         //Add Child Project Code To Treelist
-                        AddChildProjectCode(cm_Categories.SelectedText, txt_Description.Text, cm_UnifiedCode.SelectedText);
+                        AddChildProjectCode(cm_Categories.Text, txt_Description.Text, cm_UnifiedCode.Text);
 
                         //Clear Combobox Categore and text Description
                         ClearAllDataProjectCode();
@@ -124,7 +124,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
         private void Frm_ProjectCode_Show_Load(object sender, EventArgs e)
         {
-            ClearAllDataProject();
+            ClearAllDataProject().GetAwaiter();
             CreateColumns(tree_ProjectCode);
             tree_ProjectCode.ExpandAll();
             DragDropManager.Default.DragOver += OnDragOver;
@@ -139,7 +139,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 if (cm_Projects.SelectedValue != null)
                 {
                     int IdProject = Convert.ToInt32(cm_Projects.SelectedValue);
-                    GetProjectCode(IdProject);
+                    GetProjectCode(IdProject).GetAwaiter();
                     if (IdProject > 0)
                         cm_Projects.Enabled = false;
                 }
@@ -158,17 +158,25 @@ namespace PSC_Cost_Control.Forms.Project_Code
             // Create three columns.
             tl.BeginUpdate();
             TreeListColumn col1 = tl.Columns.Add();
-            col1.Caption = "ProjectCode_Code";
+            col1.Caption = "Project Code";
+            col1.Name = "ProjectCode_Code";
             col1.VisibleIndex = 0;
             TreeListColumn col2 = tl.Columns.Add();
-            col2.Caption = "ProjectCode_Description";
+            col2.Caption = "Project Code Description";
+            col2.Name = "ProjectCode_Description";
             col2.VisibleIndex = 1;
             TreeListColumn col3 = tl.Columns.Add();
-            col3.Caption = "Category_Name";
+            col3.Caption = "Category Name";
+            col3.Name = "Category_Name";
             col3.VisibleIndex = 2;
             TreeListColumn col4 = tl.Columns.Add();
-            col4.Caption = "ProjectCode_Parent";
+            col4.Caption = "Unified Code Name";
+            col4.Name = "UnifiedCode_Name";
             col4.VisibleIndex = 3;
+            TreeListColumn col5 = tl.Columns.Add();
+            col5.Caption = "Project Code Parent";
+            col5.Name = "ProjectCode_Parent";
+            col5.VisibleIndex = 4;
             tl.EndUpdate();
         }
 
@@ -262,10 +270,18 @@ namespace PSC_Cost_Control.Forms.Project_Code
         #region Methods For my Form
         async Task ClearAllDataProject()
         {
-            cm_Categories.DataSource = null;
-            cm_Categories.SelectedItem = -1;
             cm_Categories.Enabled = false;
-
+            var ResualtCategories = await _categoryService.GetCategories();
+            var CustomCategories = from cat in ResualtCategories
+                                   select new
+                                   {
+                                       Id = cat.Id,
+                                       Name = cat.Name
+                                   };
+            cm_Categories.DataSource = CustomCategories.ToList();
+            cm_Categories.DisplayMember = "Name";
+            cm_Categories.ValueMember = "Id";
+            cm_Categories.SelectedItem = -1;
 
             txt_Description.Text = "";
             txt_Description.Enabled = false;
@@ -291,7 +307,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
         void ClearAllDataProjectCode()
         {
             cm_Categories.SelectedItem = -1;
-
+            cm_UnifiedCode.SelectedItem = -1;
             txt_Description.Text = "";
 
             cm_Projects.Enabled = false;
@@ -318,12 +334,13 @@ namespace PSC_Cost_Control.Forms.Project_Code
             bool result;
             if (Convert.ToInt32(cm_Categories.SelectedValue) > 0)
             {
-                MessageBox.Show("Please choose the category to add the Project Code.");
-                return false;
+                result = true;
+                
             }
             else
             {
-                result =  true;
+                MessageBox.Show("Please choose the category to add the Project Code.");
+                return false;
             }
             if (string.IsNullOrWhiteSpace(txt_Description.Text))
             {
@@ -340,7 +357,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
         void AddRootProjectCode(string Category, string Description,string UnifiedCodeTitle)
         {
 
-            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(new object[] { "/" + (tree_ProjectCode.Nodes.Count +1), Category, Description, UnifiedCodeTitle }, parentNode: null);
+            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(new object[] { "/" + (tree_ProjectCode.Nodes.Count +1), Category, Description, UnifiedCodeTitle,null }, parentNode: null);
         }
 
         void AddChildProjectCode(string Category, string Description,string UnifiedCodeTitle)
@@ -364,7 +381,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                             + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
                         tree_ProjectCode.FocusedNode =
                             tree_ProjectCode.AppendNode(
-                                new object[] { IdNode, Category, Description, UnifiedCodeTitle }, tree_ProjectCode.FocusedNode);
+                                new object[] { IdNode, Category, Description, UnifiedCodeTitle,null }, tree_ProjectCode.FocusedNode);
                     }             
                 }
             }
@@ -378,18 +395,21 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     tree_ProjectCode.DeleteNode(tree_ProjectCode.FocusedNode);
         }
 
-        void GetProjectCode(int _ProjectId)
+        async Task GetProjectCode(int _ProjectId)
         {
-            var ResualtCategory = _categoryService.GetCategories().Result;
-            var ResualtProject = _projectCode.GetProjectCodes(_ProjectId).Result;
+            var ResualtCategory = await _categoryService.GetCategories();
+            var ResualtUnifiedCode = await _unifiedCodeService.GetUnifiedCodes();
+            var ResualtProject = await _projectCode.GetProjectCodes(_ProjectId);
             var innerJoin = from p in ResualtProject
                             join c in ResualtCategory on p.Category_Id equals c.Id
+                            join U in ResualtUnifiedCode on p.Unified_Code_Id equals U.Id
                             select new
                             {
                                 ProjectCode_Code = p.Code,
                                 ProjectCode_Description = p.Description,
                                 ProjectCode_Parent = p.HParent,
-                                Category_Name = c.Name
+                                Category_Name = c.Name,
+                                UnifiedCode_Name = U.Title
                             };
             if (ResualtProject.Count() > 0)
             {
@@ -406,11 +426,11 @@ namespace PSC_Cost_Control.Forms.Project_Code
             var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
             if (_projectCode.GetProjectCodes(_ProjectId).Result.Count() > 0)
             {
-                _projectCode.Update(_ProjectId, Resault).ConfigureAwait(true);
+                _projectCode.Update(_ProjectId, Resault);
             }
             else
             {
-                _projectCode.NewCodesForProject(_ProjectId, Resault).ConfigureAwait(true);
+                _projectCode.NewCodesForProject(_ProjectId, Resault);
             }
             
         }
