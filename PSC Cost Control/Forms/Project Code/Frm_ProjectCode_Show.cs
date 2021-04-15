@@ -381,9 +381,10 @@ namespace PSC_Cost_Control.Forms.Project_Code
                         IdNode = (NodeCode
                             + "/"
                             + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
-                        tree_ProjectCode.FocusedNode =
-                            tree_ProjectCode.AppendNode(
-                                new object[] { IdNode, Category, Description, UnifiedCodeTitle,null }, tree_ProjectCode.FocusedNode,tag:tree_ProjectCode.FocusedNode.Tag);
+
+                        tree_ProjectCode.FocusedNode =  tree_ProjectCode.AppendNode(
+                                new object[] { IdNode, Category, Description, UnifiedCodeTitle,null }
+                                , tree_ProjectCode.FocusedNode,tag:tag);
                     }             
                 }
             }
