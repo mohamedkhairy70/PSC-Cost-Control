@@ -159,6 +159,40 @@ namespace UnitTestProject1.HelpersUnitTestings
         }
 
         [Test]
+        public void ToSequentialList_TreeHasAChildNodeWithCodeOfARoot_AssertThatTheTreeIsValid()
+        {
+
+            var tree = new TreeList();
+
+            var p3 = tree.Nodes.Add();
+            p3.Tag = new Hi { HCode = "/2/3/", Name = "p3" };
+
+            var p1 = p3.Nodes.Add();//was root and changed to be a child
+            p1.Tag = new Hi { HCode="/2/", Name = "p1" };
+
+
+            var p2 = p1.Nodes.Add();
+            p2.Tag = new Hi { HCode = "/2/2/", Name = "p2" };
+
+
+            var list = tree.ToSequentialList<Hi>();
+            var pL3 = list[0];
+            var pL1 = list[1];
+            var pL2 = list[2];
+
+
+            var p3CodeLevel = pL3.Code.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
+            var p1CodeLevel = pL1.Code.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
+            var p2CodeLevel = pL2.Code.Split('/').Where(s => !string.IsNullOrEmpty(s)).ToList();
+
+
+            //assert for vaild code
+            Assert.That(p3CodeLevel.Count, Is.EqualTo(1).And.Not.EqualTo("/2/3/"));
+            Assert.That(p1CodeLevel.Count, Is.EqualTo(2).And.Not.EqualTo("/2/"));
+            Assert.That(p2CodeLevel.Count, Is.EqualTo(3).And.Not.EqualTo("/2/2/"));
+        }
+
+        [Test]
         public void HasChild_childHasAnappropriateCodeThatImpressThatChildFromHisParent_ReturnTrue()
         {
             var parent = new Hi { HCode = "/22/1/" };

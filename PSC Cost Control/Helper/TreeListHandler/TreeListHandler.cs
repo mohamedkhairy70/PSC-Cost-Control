@@ -28,7 +28,7 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
                 //add code and parent to object
                 var o = (T)n.Tag;
 
-                if (string.IsNullOrEmpty(o.HCode))
+                if (string.IsNullOrEmpty(o.HCode) || !o.IsRoot())
                     o.HCode =$"/{guidInt.Guid()}/";
                 else
                     guidInt.Block(GetLastLevelCode(o.HCode));
@@ -50,7 +50,6 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
                 var o = (T)n.Tag;
                 o.HParent = (T)n.ParentNode.Tag;
 
-                var b = !o.HParent.HasChild(o);
                 if (string.IsNullOrEmpty(o.HCode) || !o.HParent.HasChild(o))
                     o.HCode = $"{code}{guidInt.Guid()}/";
                 else
@@ -97,7 +96,16 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
             }
             return
                 parentArr.Length + 1 == childArr.Length;
-               
+
+        }
+        /// <summary>
+        /// Assert that the the code of the node does not implyes that the node was root before updating. 
+        /// </summary>
+        /// <param name="node">node doubted that it was a root/param>
+        /// <returns>return true if the code of the node implies that it was a root</returns>
+        public static bool IsRoot(this IHireichy node)
+        {
+            return node.HCode.Split('/').Count(s => !string.IsNullOrEmpty(s)) == 1;//level 0
         }
             
     }
