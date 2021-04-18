@@ -291,14 +291,14 @@
     <EmbeddedResource Include="Forms\Unified Code\Frm_Categories_UnifiedCode.resx">
       <DependentUpon>Frm_Categories_UnifiedCode.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Unified Code\Frm_UnifiedCode_Show.resx">
-      <DependentUpon>Frm_UnifiedCode_Show.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Project Code\Frm_Categories_ProjectCode.resx">
       <DependentUpon>Frm_Categories_ProjectCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Project Code\Frm_ProjectCode_Show.resx">
       <DependentUpon>Frm_ProjectCode_Show.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Unified Code\Frm_UnifiedCode_Show.resx">
+      <DependentUpon>Frm_UnifiedCode_Show.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Cost_Main.resx">
       <DependentUpon>Frm_Cost_Main.cs</DependentUpon>
