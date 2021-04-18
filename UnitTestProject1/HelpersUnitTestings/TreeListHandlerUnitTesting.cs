@@ -79,7 +79,7 @@ namespace UnitTestProject1.HelpersUnitTestings
             p1.Tag = new Hi {HCode="/44/", Name = "p1" };
 
             var x1 = p1.Nodes.Add();
-            x1.Tag = new Hi { Name = "x1" };
+            //x1.Tag = new Hi { Name = "x1" };
 
 
             var p2 = tree.Nodes.Add();
@@ -239,5 +239,68 @@ namespace UnitTestProject1.HelpersUnitTestings
             var chid = new Hi { HCode = "/44/1/", HParent = parent };
             Assert.That(!parent.HasChild(chid));
         }
+
+        [Test]
+        public void IsRoot_HireachyCodeHasOneLvel_ReturnTrueAsTheNodeIsARoot()
+        {
+            var node = new Hi { HCode = "/11/" };
+            var IsRoot = node.IsRoot();
+
+            Assert.That(condition: IsRoot);
+        }
+
+        [Test]
+        public void IsRoot_HireachyCodeHasTwoLvel_ReturnFalseAsTheNodeIsNotARoot()
+        {
+            var node = new Hi { HCode = "/11/12/" };
+            var IsRoot = node.IsRoot();
+
+            Assert.That(condition: !IsRoot);
+        }
+
+        [Test]
+        public void IsRoot_HireachyCodeIsASlash_ReturnTrueAsTheNodeIsARoot()
+        {
+            var node = new Hi { HCode = "/" };
+            var IsRoot = node.IsRoot();
+
+            Assert.That(condition: IsRoot);
+        }
+
+        [Test]
+        public void IsRoot_HireachyCodeIsANull_ReturnFalseAsTheNodeIsNotARoot()
+        {
+            var node = new Hi { };
+            var IsRoot = node.IsRoot();
+
+            Assert.That(condition: !IsRoot);
+        }
+
+        [Test]
+        public void ParentCode_NodeIsNotRoot_ReturnCodeOfParent()
+        {
+            var node = new Hi { HCode = "/555/111/" };
+            var parent = node.ParentCode();
+            Assert.That(parent, Is.EqualTo("/555/"));
+        }
+
+        [Test]
+        public void ParentCode_NodeIsARoot_ReturnCodeOfParentIsSlash()
+        {
+            var node = new Hi { HCode = "/555/" };
+            var parent = node.ParentCode();
+            Assert.That(parent, Is.EqualTo("/"));
+        }
+        [Test]
+        public void ParentCode_NodeCodeIsNull_ThrowArgumentNullException()
+        {
+            var node = new Hi {};
+
+            Assert.Throws<ArgumentNullException>(()=>node.ParentCode());
+        }
+
+
+
+
     }
 }
