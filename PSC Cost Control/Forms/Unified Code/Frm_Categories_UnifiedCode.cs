@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PSC_Cost_Control.Services.UnifiedCodesServices;
 using PSC_Cost_Control.Services.ServicesBuilders;
+using System.Linq;
 
 namespace PSC_Cost_Control.Forms.Unified_Code
 {
@@ -26,15 +27,23 @@ namespace PSC_Cost_Control.Forms.Unified_Code
         }
         async Task GetAllData()
         {
-            var Resualt = await _categoryService.GetCategories();
-            dataGridView1.DataSource = Resualt;
+            var ResualtCategories = await _categoryService.GetCategories();
+            var CustomCategories = from cat in ResualtCategories
+                                   select new
+                                   {
+                                       Id = cat.Id,
+                                       Name = cat.Name
+                                   };
+            dataGridView1.DataSource = CustomCategories.ToList();
         }
+
         void AddData(string _Neme)
         {
             //check if name is not null
             if (ValidationData())
             {
                 _categoryService.Add(_Neme);
+                GetAllData();
             }
         }
         bool ValidationData()

@@ -38,5 +38,29 @@ namespace PSC_Cost_Control
             Forms.Project_Code.Frm_Categories_ProjectCode frm = new Forms.Project_Code.Frm_Categories_ProjectCode();
             frm.ShowDialog();
         }
+
+        private void barButtonItem5_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Forms.Unified_Code.Frm_Categories_UnifiedCode frm = new Forms.Unified_Code.Frm_Categories_UnifiedCode();
+            frm.ShowDialog();
+        }
+
+        private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Forms.Unified_Code.Frm_UnifiedCode_Show frm = new Forms.Unified_Code.Frm_UnifiedCode_Show();
+            frm.ShowDialog();
+        }
+
+        private void barButtonItem6_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Forms.Items_Registeration.Frm_ItemsRegisterationBOQItems frm = new Forms.Items_Registeration.Frm_ItemsRegisterationBOQItems();
+            frm.ShowDialog();
+        }
+
+        private void barButtonItem7_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Forms.Items_Registeration.Frm_ItemsRegisterationIndirectCostItem frm = new Forms.Items_Registeration.Frm_ItemsRegisterationIndirectCostItem();
+            frm.ShowDialog();
+        }
     }
 }
