@@ -85,7 +85,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
         {
             using (var context = new ApplicationContext())
             {
-                return context.C_Cost_Project_Codes.Where(c => c.Parent == null).Select(x => new { Code = x.Code, Id = x.Id })
+                return context.C_Cost_Project_Codes.Where(c => c.Parent == null).Select(x => new { x.Code, x.Id })
                      .ToDictionary(c => c.Code, c => c.Id);
             }
         }

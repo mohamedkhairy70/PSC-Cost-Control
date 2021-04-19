@@ -93,10 +93,10 @@ namespace UnitTestProject1.Tracker
 
             Assert.That(n1.Parent, Is.EqualTo(null));
             Assert.That(n2.Parent, Is.EqualTo(n1.Id));
-            Assert.That(p22.Parent, Is.EqualTo(n1.Id));
-            Assert.That(p33.Parent, Is.EqualTo(null));
+            Assert.That(p22.Parent,Is.EqualTo(n1.Id));
+            Assert.That(p33.Parent,Is.EqualTo(null));
             Assert.That(n3.Parent, Is.EqualTo(p33.Id));
-            Assert.That(p10.Parent, Is.EqualTo(p33.Id));
+            Assert.That(p10.Parent,Is.EqualTo(p33.Id));
         }
 
         [Test]

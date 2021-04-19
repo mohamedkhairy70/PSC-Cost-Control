@@ -23,10 +23,11 @@ namespace PSC_Cost_Control.Services.DependencyApis
             {
                 return await Context.Projects
                                     .Where(
-                                    p => DbFunctions.Like(p.Name, $"{name}%")
-                                    ||
-                                    DbFunctions.Like(p.Name, $"%{name}")
-                                    ||
+                                    p =>
+                            //        DbFunctions.Like(p.Name, $"{name}%")
+                            //          ||
+                            //         DbFunctions.Like(p.Name, $"%{name}")
+                                   // ||
                                     p.Name.Contains(name)
                                     )
                                     .AsNoTracking()
@@ -38,7 +39,6 @@ namespace PSC_Cost_Control.Services.DependencyApis
         {
             using (var Context = new ApplicationContext())
             {
-
                 return await Context.BOQs.Where(b => b.ContractId == contractId).AsNoTracking().ToListAsync();
             }
         }

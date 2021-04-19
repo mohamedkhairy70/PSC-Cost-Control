@@ -79,7 +79,7 @@ namespace UnitTestProject1.HelpersUnitTestings
             p1.Tag = new Hi {HCode="/44/", Name = "p1" };
 
             var x1 = p1.Nodes.Add();
-            //x1.Tag = new Hi { Name = "x1" };
+            x1.Tag = new Hi { Name = "x1" };
 
 
             var p2 = tree.Nodes.Add();
