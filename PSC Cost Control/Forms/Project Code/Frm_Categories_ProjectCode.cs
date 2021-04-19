@@ -23,9 +23,9 @@ namespace PSC_Cost_Control.Forms.Project_Code
         {
             txt_Id.Clear();
             txt_Name.Clear();
-            GetAllData().GetAwaiter();
+            GetAllData();
         }
-        async Task GetAllData()
+        async void GetAllData()
         {
             var ResualtCategories = await _categoryService.GetCategories();
             var CustomCategories = from cat in ResualtCategories
@@ -42,6 +42,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             if (ValidationData())
             {
                 _categoryService.Add(_Neme);
+                MessageBox.Show("The data has been saved successfully. ");
             }
         }
         bool ValidationData()
@@ -70,6 +71,8 @@ namespace PSC_Cost_Control.Forms.Project_Code
             {
                 //Add Cateogry
                 AddData(txt_Name.Text);
+                //Clear all Data 
+                ClearAllData();
             }
         }
 
