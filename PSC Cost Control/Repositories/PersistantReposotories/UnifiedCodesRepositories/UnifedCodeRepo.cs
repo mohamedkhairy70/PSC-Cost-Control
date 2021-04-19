@@ -71,8 +71,22 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
         }
         public void UpdateCollection(IEnumerable<C_Cost_Unified_Codes> entities)
         {
-            foreach (var e in entities)
-                Update(e);
+            using (var context = new ApplicationContext())
+            {
+                var proc = new UpdateUnifiedCodeSP
+                {
+                    list = entities.Select(c => new UnifiedCodeUDT
+                    {
+                        Id = c.Id,
+                        Code = c.Code,
+                        CategoryId = c.Category_Id.Value,
+                        parent = c.Parent,
+                        Title = c.Title
+                    }).ToList()
+                };
+                context.Database.ExecuteStoredProcedure(proc);
+            }
+          
         }
 
         public void DeleteCollection(IEnumerable<C_Cost_Unified_Codes> entities)
@@ -85,7 +99,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
         {
             using (var context = new ApplicationContext())
             {
-                return context.C_Cost_Project_Codes.Where(c => c.Parent == null).Select(x => new { x.Code, x.Id })
+                return context.C_Cost_Unified_Codes.Where(c => c.Parent == null).Select(x => new { x.Code, x.Id })
                      .ToDictionary(c => c.Code, c => c.Id);
             }
         }

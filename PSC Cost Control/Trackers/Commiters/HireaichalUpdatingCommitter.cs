@@ -19,7 +19,7 @@ namespace PSC_Cost_Control.Trackers.Commiters
             Hireaical = new Dictionary<string, string>();
         }
 
-        public override void Commit()
+        public async override void Commit()
         {
             Persistent.DeleteCollection(Tracker.GetDeletedEntities());
 
@@ -29,7 +29,7 @@ namespace PSC_Cost_Control.Trackers.Commiters
 
             Tracker.GetNewEntities().InjectIds();//fake Ids 
 
-            Persistent.AddCollection(Tracker.GetNewEntities());
+            await Persistent.AddCollection(Tracker.GetNewEntities());
 
             InjectRealIds();
 

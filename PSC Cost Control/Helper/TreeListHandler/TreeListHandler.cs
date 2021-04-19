@@ -10,7 +10,7 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
     {
         /// <summary>
         /// convert from treeList in devExpress to List with elements have apropriate HireachyId and parent.
-        /// it will generate new code for nodes do not have code(code is empty or NULL).
+        /// it will generate new code for nodes do not have code(code is empty or NULL).and it never changes an existed code.
         /// nodes have a code will not have new code.
         /// </summary>
         /// <typeparam name="T">data type of Tag in TreeListNode</typeparam>
@@ -25,11 +25,11 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
             {
                 //add code and parent to object
                 var o = (T)n.Tag;
-
-                if (string.IsNullOrEmpty(o.HCode) || !o.IsRoot())
+                var lastLevel = GetLastLevelCode(o.HCode);
+                if (string.IsNullOrEmpty(o.HCode) || !o.IsRoot()|| guidInt.IsBlocked(accused:lastLevel))
                     o.HCode = $"/{guidInt.Guid()}/";
                 else
-                    guidInt.Block(GetLastLevelCode(o.HCode));
+                    guidInt.Block(lastLevel);
 
                 o.HParent = null;//root node has no Parent
 
@@ -48,7 +48,9 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
                 var o = (T)n.Tag;
                 o.HParent = (T)n.ParentNode.Tag;
 
-                if (string.IsNullOrEmpty(o.HCode) || !o.HParent.HasChild(o))
+                var lastLevel = GetLastLevelCode(o.HCode);
+
+                if (string.IsNullOrEmpty(o.HCode) || !o.HParent.HasChild(o) || guidInt.IsBlocked(accused: lastLevel))
                     o.HCode = $"{code}{guidInt.Guid()}/";
                 else
                 {

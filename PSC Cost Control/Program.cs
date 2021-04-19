@@ -23,7 +23,7 @@ namespace PSC_Cost_Control
         [STAThread]
         static async Task Main()
         {
-            await Test();
+           // await Test();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Frm_Cost_Main());

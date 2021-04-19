@@ -1,28 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace PSC_Cost_Control.Helper
 {
     public class GuidIntGenerator
     {
-        private HashSet<int> Unique;
-        private int Last;
+        private HashSet<int> _unique;
+        private Random _random;
         public GuidIntGenerator()
         {
-            Unique = new HashSet<int>();
+            _unique = new HashSet<int>();
+            _random = new Random();
         }
         public void Block(int blocked)
         {
-            if (!Unique.Contains(blocked))
-                Unique.Add(blocked);
+            if (!_unique.Contains(blocked))
+                _unique.Add(blocked);
         }
-
+        
         public int Guid()
         {
-            while (Unique.Contains(++Last)) { }
+            int rand ;
+            while (_unique.Contains(rand=_random.Next(100,10000000))) { }
 
-            Unique.Add(Last);
-            return Last;
+            _unique.Add(rand);
+            return rand;
+        }
+
+        public bool IsBlocked(int accused)
+        {
+            return _unique.Contains(accused);
         }
     }
 }

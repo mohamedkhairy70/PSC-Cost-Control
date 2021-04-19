@@ -14,7 +14,7 @@ namespace UnitTestProject1.HelpersUnitTestings
         {
             var generator = new GuidIntGenerator();
             var guid = generator.Guid();
-            Assert.That(guid, Is.EqualTo(1));
+            Assert.That(guid, Is.GreaterThan(100));
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace UnitTestProject1.HelpersUnitTestings
             var generator = new GuidIntGenerator();
             generator.Block(1);
             var guid = generator.Guid();
-            Assert.That(guid, Is.EqualTo(2));
+            Assert.That(guid, Is.Not.Null.Or.EqualTo(1));
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace UnitTestProject1.HelpersUnitTestings
             generator.Block(1);
             generator.Block(2);
             var guid = generator.Guid();
-            Assert.That(guid, Is.EqualTo(3));
+            Assert.That(guid, Is.GreaterThan(100).And.No.EqualTo(1).And.Not.EqualTo(2));
         }
 
         [Test]
