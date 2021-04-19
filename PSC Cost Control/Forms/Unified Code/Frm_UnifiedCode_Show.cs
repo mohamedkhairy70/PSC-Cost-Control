@@ -406,7 +406,8 @@ namespace PSC_Cost_Control.Forms.Unified_Code
 
                             };
             //var UnifiedList = innerJoin.ToList();
-            DataTable table = LINQResultToDataTable(innerJoin);
+            var linqlisti = innerJoin.ToList().AsEnumerable();
+            DataTable table = LINQResultToDataTable(linqlisti);
             //tree_UnifiedCode.OptionsBehavior.PopulateServiceColumns = true;
             if (table.Rows.Count > 0)
             {
@@ -414,56 +415,63 @@ namespace PSC_Cost_Control.Forms.Unified_Code
                 tree_UnifiedCode.ParentFieldName = "UnifiedCode_Parent";
                 //tree_UnifiedCode.DataSource = table;
                 tree_UnifiedCode.ClearNodes();
-                DataRow[] dataRows = table.Select($"Parent = Null");
-                for (int i = 0; i < table.Rows.Count; i++)
+                var linqlist = linqlisti.Where(x => x.UnifiedCode_Parent as int? == null).AsEnumerable();
+                DataTable dataRows = LINQResultToDataTable(linqlist);
+                for (int i = 0; i < dataRows.Rows.Count; i++)
                 {
                     int id, UnifiedCode_Parent, CategoryId;
                     string UnifiedCode_Code, UnifiedCode_Title, Category_Name;
-                    id = Convert.ToInt32(table.Rows[i][0].ToString());
-                    UnifiedCode_Code = table.Rows[i][1].ToString();
-                    UnifiedCode_Title = table.Rows[i][2].ToString();
-                    UnifiedCode_Parent = Convert.ToInt32(table.Rows[i]["UnifiedCode_Parent"].ToString());
-                    CategoryId = Convert.ToInt32(table.Rows[i]["CategoryId"].ToString());
-                    Category_Name = table.Rows[i]["Category_Name"].ToString();
+                    id = Convert.ToInt32(dataRows.Rows[i]["id"].ToString());
+                    UnifiedCode_Code = dataRows.Rows[i]["UnifiedCode_Code"].ToString();
+                    UnifiedCode_Title = dataRows.Rows[i]["UnifiedCode_Title"].ToString();
+                    CategoryId = Convert.ToInt32(dataRows.Rows[i]["CategoryId"].ToString());
+                    Category_Name = dataRows.Rows[i]["Category_Name"].ToString();
 
-                    var _Tag = new Models.C_Cost_Unified_Codes { Id = id, Code = UnifiedCode_Code, Category_Id = CategoryId, Title = UnifiedCode_Title,Parent = UnifiedCode_Parent };
-                    TreeListNode parentNode = tree_UnifiedCode.AppendNode(new object[] { id, UnifiedCode_Code,  UnifiedCode_Title, UnifiedCode_Parent, Category_Name }, null,tag: _Tag);
-                    dataRows = table.Select($"Parent = '{id}'");
-                    for (int j = 0; j < dataRows.Length; j++)
+                    var _Tag = new Models.C_Cost_Unified_Codes { Id = id, Code = UnifiedCode_Code, Category_Id = CategoryId
+                        , Title = UnifiedCode_Title, Parent = null };
+                    TreeListNode parentNode = tree_UnifiedCode.AppendNode(new object[] { id, UnifiedCode_Code,  UnifiedCode_Title, null, Category_Name }, null,tag: _Tag);
+                    
+                    var linqlistj = linqlisti.Where(x => x.UnifiedCode_Parent == id).AsEnumerable();
+                    DataTable dataRowsj = LINQResultToDataTable(linqlistj);
+                    for (int j = 0; j < dataRowsj.Rows.Count; j++)
                     {
-                        id = Convert.ToInt32(table.Rows[j][0].ToString());
-                        UnifiedCode_Code = table.Rows[j][1].ToString();
-                        UnifiedCode_Title = table.Rows[j][2].ToString();
-                        UnifiedCode_Parent = Convert.ToInt32(table.Rows[j]["UnifiedCode_Parent"].ToString());
-                        CategoryId = Convert.ToInt32(table.Rows[j]["CategoryId"].ToString());
-                        Category_Name = table.Rows[j]["Category_Name"].ToString();
+                        id = Convert.ToInt32(dataRowsj.Rows[j][0].ToString());
+                        UnifiedCode_Code = dataRowsj.Rows[j][1].ToString();
+                        UnifiedCode_Title = dataRowsj.Rows[j][2].ToString();
+                        UnifiedCode_Parent = Convert.ToInt32(dataRowsj.Rows[j]["UnifiedCode_Parent"].ToString());
+                        CategoryId = Convert.ToInt32(dataRowsj.Rows[j]["CategoryId"].ToString());
+                        Category_Name = dataRowsj.Rows[j]["Category_Name"].ToString();
 
                         _Tag = new Models.C_Cost_Unified_Codes { Id = id, Code = UnifiedCode_Code, Category_Id = CategoryId, Title = UnifiedCode_Title, Parent = UnifiedCode_Parent };
-                        tree_UnifiedCode.AppendNode(new object[] { id, UnifiedCode_Code, UnifiedCode_Title, UnifiedCode_Parent, Category_Name }, parentNode, tag: _Tag);
-                        dataRows = table.Select($"Parent = '{id}'");
-                        for (int x = 0; x < dataRows.Length; x++)
+                        TreeListNode parentNodex =tree_UnifiedCode.AppendNode(new object[] { id, UnifiedCode_Code, UnifiedCode_Title, UnifiedCode_Parent, Category_Name }, parentNode, tag: _Tag);
+
+                        var linqlistx = innerJoin.Where(x => x.UnifiedCode_Parent == id).AsEnumerable();
+                        DataTable dataRowsx = LINQResultToDataTable(linqlistx);
+                        for (int x = 0; x < dataRowsx.Rows.Count; x++)
                         {
-                            id = Convert.ToInt32(table.Rows[x][0].ToString());
-                            UnifiedCode_Code = table.Rows[x][1].ToString();
-                            UnifiedCode_Title = table.Rows[x][2].ToString();
-                            UnifiedCode_Parent = Convert.ToInt32(table.Rows[x]["UnifiedCode_Parent"].ToString());
-                            CategoryId = Convert.ToInt32(table.Rows[x]["CategoryId"].ToString());
-                            Category_Name = table.Rows[x]["Category_Name"].ToString();
+                            id = Convert.ToInt32(dataRowsx.Rows[x][0].ToString());
+                            UnifiedCode_Code = dataRowsx.Rows[x][1].ToString();
+                            UnifiedCode_Title = dataRowsx.Rows[x][2].ToString();
+                            UnifiedCode_Parent = Convert.ToInt32(dataRowsx.Rows[x]["UnifiedCode_Parent"].ToString());
+                            CategoryId = Convert.ToInt32(dataRowsx.Rows[x]["CategoryId"].ToString());
+                            Category_Name = dataRowsx.Rows[x]["Category_Name"].ToString();
 
                             _Tag = new Models.C_Cost_Unified_Codes { Id = id, Code = UnifiedCode_Code, Category_Id = CategoryId, Title = UnifiedCode_Title, Parent = UnifiedCode_Parent };
-                            tree_UnifiedCode.AppendNode(new object[] { id, UnifiedCode_Code, UnifiedCode_Title, UnifiedCode_Parent, Category_Name }, parentNode, tag: _Tag);
-                            dataRows = table.Select($"Parent = '{id}'");
-                            for (int q = 0; q < dataRows.Length; q++)
+                            TreeListNode parentNodeq = tree_UnifiedCode.AppendNode(new object[] { id, UnifiedCode_Code, UnifiedCode_Title, UnifiedCode_Parent, Category_Name }, parentNodex, tag: _Tag);
+
+                            var linqlistq = innerJoin.Where(m => m.UnifiedCode_Parent == id).AsEnumerable();
+                            DataTable dataRowsq = LINQResultToDataTable(linqlistq);
+                            for (int q = 0; q < dataRowsq.Rows.Count; q++)
                             {
-                                id = Convert.ToInt32(table.Rows[q][0].ToString());
-                                UnifiedCode_Code = table.Rows[q][1].ToString();
-                                UnifiedCode_Title = table.Rows[q][2].ToString();
-                                UnifiedCode_Parent = Convert.ToInt32(table.Rows[q]["UnifiedCode_Parent"].ToString());
-                                CategoryId = Convert.ToInt32(table.Rows[q]["CategoryId"].ToString());
-                                Category_Name = table.Rows[q]["Category_Name"].ToString();
+                                id = Convert.ToInt32(dataRowsq.Rows[q][0].ToString());
+                                UnifiedCode_Code = dataRowsq.Rows[q][1].ToString();
+                                UnifiedCode_Title = dataRowsq.Rows[q][2].ToString();
+                                UnifiedCode_Parent = Convert.ToInt32(dataRowsq.Rows[q]["UnifiedCode_Parent"].ToString());
+                                CategoryId = Convert.ToInt32(dataRowsq.Rows[q]["CategoryId"].ToString());
+                                Category_Name = dataRowsq.Rows[q]["Category_Name"].ToString();
 
                                 _Tag = new Models.C_Cost_Unified_Codes { Id = id, Code = UnifiedCode_Code, Category_Id = CategoryId, Title = UnifiedCode_Title, Parent = UnifiedCode_Parent };
-                                tree_UnifiedCode.AppendNode(new object[] { id, UnifiedCode_Code, UnifiedCode_Title, UnifiedCode_Parent, Category_Name }, parentNode, tag: _Tag);
+                                tree_UnifiedCode.AppendNode(new object[] { id, UnifiedCode_Code, UnifiedCode_Title, UnifiedCode_Parent, Category_Name }, parentNodeq, tag: _Tag);
                             }
                         }
                     }
@@ -479,42 +487,6 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             cm_Categories.Enabled = true;
         }
 
-        //private List<C_Cost_Unified_Codes> ToSequentialList(TreeList tree)
-        //{
-        //    var list = new List<C_Cost_Unified_Codes>();
-        //    var guidInt = new GuidIntGenerator();
-        //    var parents = tree.Nodes.ToList();
-        //    foreach (var n in parents)
-        //    {
-        //        //add code and parent to object
-        //        (C_Cost_Unified_Codes)n.Tag = new C_Cost_Unified_Codes { Id = n.d }
-
-
-        //        list.Add(o);
-        //        ToList_Rec(n, o.HCode, list, guidInt);
-        //    }
-        //    return list;
-        //}
-        //private void ToList_Rec<C_Cost_Unified_Codes>(TreeListNode node, string code, List<T> rt, GuidIntGenerator guidInt) where T : IHireichy
-        //{
-        //    var childs = node.Nodes.ToList();
-        //    foreach (var n in childs)
-        //    {
-        //        var o = (T)n.Tag;
-        //        o.HParent = (T)n.ParentNode.Tag;
-
-        //        var b = !o.HParent.HasChild(o);
-        //        if (string.IsNullOrEmpty(o.HCode) || !o.HParent.HasChild(o))
-        //            o.HCode = $"{code}{guidInt.Guid()}/";
-        //        else
-        //        {
-        //            guidInt.Block(GetLastLevelCode(o.HCode));
-        //        }
-
-        //        rt.Add(o);
-        //        ToList_Rec(n, o.HCode, rt, guidInt);
-        //    }
-        //}
 
         private DataTable LINQResultToDataTable<T>(IEnumerable<T> Linqlist)
         {
@@ -554,20 +526,35 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             }
             return dt;
         }
-        async Task<List<C_Cost_Unified_Codes>> Get()
-        {
-            return (List<C_Cost_Unified_Codes>)await _UnifiedCode.GetUnifiedCodes();
-        }
+
         void SaveProectCode()
         {
-             var Resault = TreeListHandler.ToSequentialList<C_Cost_Unified_Codes>(tree_UnifiedCode).ToList();
-            //if (Get().GetAwaiter().GetResult().Count > 0)
+            //var ResualtCategory = await _categoryService.GetCategories();
+            //var ResualtUnifiedCode = await _unifiedCodeService.GetUnifiedCodes();
+            //var ResualtUnified = await _UnifiedCode.GetUnifiedCodes();
+            var Resault = TreeListHandler.ToSequentialList<C_Cost_Unified_Codes>(tree_UnifiedCode).ToList();
+            //var innerJoin = from p in ResualtUnified
+            //                join c in ResualtCategory on p.Category_Id equals c.Id
+            //                select new
+            //                {
+            //                    Id = p.Id,
+            //                    UnifiedCode_Code = p.Code,
+            //                    UnifiedCode_Title = p.Title,
+            //                    UnifiedCode_Parent = p.Parent,
+            //                    Category_Name = c.Name,
+            //                    CategoryId = c.Id
+
+            //                };
+            ////var UnifiedList = innerJoin.ToList();
+            //var linqlisti = innerJoin.ToList().AsEnumerable();
+            //DataTable table = LINQResultToDataTable(linqlisti);
+            //if (table.Rows.Count > 0)
             //{
-            //_UnifiedCode.Update(Resault);
+                _UnifiedCode.Update(Resault);
             //}
             //else
             //{
-            _UnifiedCode.NewUnifiedCodes(Resault);
+            //    _UnifiedCode.NewUnifiedCodes(Resault);
             //}
 
         }
