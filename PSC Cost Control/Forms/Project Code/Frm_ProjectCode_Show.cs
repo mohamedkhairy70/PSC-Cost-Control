@@ -513,7 +513,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
                         TreeListNode parentNodex = tree_ProjectCode.AppendNode(
                             new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent }
-                        , parentNodej, tag: _Tag);
+                        , parentNodej, tag: _Tagj);
 
                         var linqlistx = innerJoin.Where(x => x.ProjectCode_Parent == id).AsEnumerable();
                         DataTable dataRowsx = LINQResultToDataTable(linqlistx);
@@ -542,7 +542,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
                             TreeListNode parentNodeq = tree_ProjectCode.AppendNode(
                                 new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent }
-                            , parentNodex, tag: _Tag);
+                            , parentNodex, tag: _Tagq);
 
                             var linqlistq = innerJoin.Where(m => m.ProjectCode_Parent == id).AsEnumerable();
                             DataTable dataRowsq = LINQResultToDataTable(linqlistq);
@@ -571,16 +571,20 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
                                 TreeListNode parentNodez = tree_ProjectCode.AppendNode(
                                     new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent }
-                                , parentNodeq, tag: _Tag);
+                                , parentNodeq, tag: _Tagz);
 
                             }
                         }
                     }
                 }
+                //  TreeList.AppendNode adds a new TreeListNode containing the specified values to the XtraTreeList.
+                tree_ProjectCode.ExpandAll();
             }
-
-            //  TreeList.AppendNode adds a new TreeListNode containing the specified values to the XtraTreeList.
-            tree_ProjectCode.ExpandAll();
+            else
+            {
+                tree_ProjectCode.ClearNodes();
+            }
+            
 
 
 
@@ -637,10 +641,10 @@ namespace PSC_Cost_Control.Forms.Project_Code
             var ResualtProjectCode = await _ProjectCodeService.GetProjectCodes(projectId);
             //var ProjectList = innerJoin.ToList();
             var linqlisti = ResualtProjectCode.ToList().AsEnumerable();
-            DataTable table = LINQResultToDataTable(linqlisti);
+            //DataTable table = LINQResultToDataTable(linqlisti);
 
             var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
-            if (table.Rows.Count > 0)
+            if (linqlisti.Any())
             {
                 await _ProjectCodeService.Update(projectId, Resault);
             }
@@ -648,6 +652,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             {
                 await _ProjectCodeService.NewCodesForProject(projectId, Resault);
             }
+            tree_ProjectCode.Nodes.Clear();
             MessageBox.Show("The data has been saved successfully. ");
         }
 
