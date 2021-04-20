@@ -3,6 +3,7 @@ using PSC_Cost_Control.Helper.FakeIDsGenerator;
 using PSC_Cost_Control.Helper.Interfaces;
 using PSC_Cost_Control.Helper.TreeListHandler;
 using PSC_Cost_Control.Trackers.PersistantCruds;
+using PSC_Cost_Control.Trackers.Reducers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,18 +11,18 @@ namespace PSC_Cost_Control.Trackers.Commiters
 {
     public class HireaichalUpdatingCommitter<T> : UpdatingCommiter<T> where T : IHireichy
     {
+        private IReducer<T> _reducer;
         private IDictionary<string, T> _allMap;
         private IEnumerable<T> _all;
         private int _influencedCount;
         public HireaichalUpdatingCommitter(IPersistent<T> persistent, ITracker<T> tracker) : base(persistent, tracker)
         {
-            var add = tracker.GetNewEntities().Count();
-            var updated = tracker.GetUpdatedEntities().Count();
+            _reducer = new Reducer<T>();
         }
 
         public async override void Commit()
         {
-            Persistent.DeleteCollection(Tracker.GetDeletedEntities());
+            Persistent.DeleteCollection(_reducer.Reduce(Tracker.GetDeletedEntities()));
 
             SetAllAndMap();
 

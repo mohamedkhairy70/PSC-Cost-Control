@@ -146,19 +146,6 @@ namespace UnitTestProject1.Tracker
         }
 
         [Test]
-        public void Commit_WhenCalled_InvokeDeleteCollectionWithAlistCountEqualsEntitiesCountOFDeletedEntitiesCountInTracker()
-        {
-            damaged.Add("/22/", 22);
-            damaged.Add("/22/3/", 3);
-            damaged.Add("/44/7/", 7);
-            _commiter.Commit();
-
-            var excpectedCount = _tracker.Object.GetDeletedEntities().Count();
-
-            _persisitent.Verify(p => p.DeleteCollection(It.Is<List<C_Cost_Project_Codes>>(c => c.Count == excpectedCount)));
-        }
-
-        [Test]
         public void Commit_WhenCalled_InvokeInsertCollectionWithAlistCountEqualsEntitiesCountOFNewEntitiesCountInTracker()
         {
             damaged.Add("/22/", 22);
