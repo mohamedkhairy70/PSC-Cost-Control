@@ -15,7 +15,8 @@ namespace PSC_Cost_Control.Trackers.Commiters
         private int _influencedCount;
         public HireaichalUpdatingCommitter(IPersistent<T> persistent, ITracker<T> tracker) : base(persistent, tracker)
         {
-            _influencedCount = tracker.GetNewEntities().Count() + tracker.GetUpdatedEntities().Count();
+            var add = tracker.GetNewEntities().Count();
+            var updated = tracker.GetUpdatedEntities().Count();
         }
 
         public async override void Commit()
@@ -23,6 +24,8 @@ namespace PSC_Cost_Control.Trackers.Commiters
             Persistent.DeleteCollection(Tracker.GetDeletedEntities());
 
             SetAllAndMap();
+
+            SetInFluencedCount();
 
             Tracker.GetNewEntities().InjectFakeIds();//fake Ids 
 
@@ -42,6 +45,11 @@ namespace PSC_Cost_Control.Trackers.Commiters
                 .Concat(Tracker.GetUpdatedEntities())
                 .Concat(Tracker.GetUnChangedEntities());
             _allMap = _all.ToDictionary(t => t.HCode);
+        }
+
+        private void SetInFluencedCount()
+        {
+            _influencedCount = Tracker.GetNewEntities().Count() + Tracker.GetUpdatedEntities().Count();
         }
 
 
