@@ -59,7 +59,7 @@ namespace PSC_Cost_Control
 
         private void barButtonItem7_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Forms.Items_Registeration.Frm_ItemsRegisterationIndirectCostItem frm = new Forms.Items_Registeration.Frm_ItemsRegisterationIndirectCostItem();
+            Forms.Items_Registeration.Frm_ItemsRegisterationIndirectCostItem2 frm = new Forms.Items_Registeration.Frm_ItemsRegisterationIndirectCostItem2();
             frm.ShowDialog();
         }
     }

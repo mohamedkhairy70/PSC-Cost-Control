@@ -7,64 +7,67 @@ using PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices;
 using PSC_Cost_Control.Services.ServicesBuilders;
 using PSC_Cost_Control.Services.DependencyApis;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
     public partial class Frm_ItemsRegisterationBOQItems : DevExpress.XtraEditors.XtraForm
     {
-        IProjectCodeService _IProjectCodeService;
-        IRegisterationService _RegisterationService;
+
         ExternalAPIs _externalAPIs;
         int ProjectId;
         public Frm_ItemsRegisterationBOQItems()
         {
             InitializeComponent();
-            _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
-            _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
+            
             _externalAPIs = new ExternalAPIs();
         }
 
         #region My Method for my From
-        void GetData(string ProjectName)
+        async void GetData(string ProjectName)
         {
             //check if ValidationData is not False
             if (!string.IsNullOrWhiteSpace(ProjectName))
             {
-                var ResaultProjects = _externalAPIs.SearchProjectsBYName(ProjectName).Result;
+                var ResaultProjects = await _externalAPIs.SearchProjectsBYName(ProjectName);
                 ProjectId = Convert.ToInt32(ResaultProjects.SingleOrDefault().ContractId.ToString());
 
-                var ResaultBOQs = _externalAPIs.GetBOQsAsync(ProjectId).Result;
+                var ResaultBOQs = await _externalAPIs.GetBOQsAsync(ProjectId);
                 var CustomResaultBOQs = from boq in ResaultBOQs
                             join pro in ResaultProjects on boq.ContractId equals pro.ContractId
-                            select new  { ProjectName = boq.Id, ProjectId = boq.Id};
+                            select new  { projectId = boq.Id, projectName = pro.Name};
 
                 cm_BOQItem.DataSource = CustomResaultBOQs.ToList();
-                cm_BOQItem.ValueMember = "ProjectId";
-                cm_BOQItem.DisplayMember = "ProjectName";
+                cm_BOQItem.ValueMember = "projectId";
+                cm_BOQItem.DisplayMember = "projectName";
+                IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
 
+                var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(ProjectId);
                 
-                var ResaultProjectCode = _IProjectCodeService.GetProjectCodes(ProjectId).Result;
                 var CustomResaultProjectCode = from ProCode in ResaultProjectCode
                                               select new { ProjectCode_Id = ProCode.Id, ProjectCode_Description = ProCode.Description };
-                
-                
-                DGV_ProjectCode.DataSource = CustomResaultProjectCode;
+                var ResaultProjectCodeList = CustomResaultProjectCode.ToList();
+
+                DGV_ProjectCode.DataSource = ResaultProjectCodeList;
             }
         }
-        void GetDataByBOQs(int Project, int BOQs)
+        async void GetDataByBOQs(int Project, int BOQs)
         {
             if (Project > 0)
-            { 
-                var ResaultBOQItem = _externalAPIs.GetBOQ_ItemsAsync(BOQs).Result;
+            {
+                IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+                IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
+                var ResaultBOQItem = await _externalAPIs.GetBOQ_ItemsAsync(BOQs);
                 var CustomResaultBOQItem = from boq in ResaultBOQItem
                                            select new
                                             {
                                                BoqItemId = boq.Id,
                                                BOQItemDescription = boq.Description 
                                             };
-                DGV_BOQItem.DataSource = CustomResaultBOQItem;
-                var ResaultBOQRegisteration = _RegisterationService.GetBOQRegisteration(Project).Result;
-                var ResaultProjectCode = _IProjectCodeService.GetProjectCodes(Project).Result;
+                var ResaultBOQItemList = CustomResaultBOQItem.ToList();
+                DGV_BOQItem.DataSource = ResaultBOQItemList;
+                var ResaultBOQRegisteration = await _RegisterationService.GetBOQRegisteration(Project);
+                var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(Project);
                 var CustomResaultBOQRegisteration = from boq in ResaultBOQRegisteration
                                                     join BoqItem in ResaultBOQItem on boq.Boq_Item_Id equals BoqItem.BOQId
                                                     join proCode in ResaultProjectCode on boq.Project_Code_Id equals proCode.Id
@@ -76,7 +79,12 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                                                             BoqResisterBoqItemeDescription = BoqItem.Description,
                                                             BoqResisterProjectCodeDescription =  proCode.Description
                                                       };
-                DGV_RegistBOQItem.DataSource = ResaultBOQRegisteration;
+
+                var BOQRegisterationList = ResaultBOQRegisteration.ToList();
+                if (BOQRegisterationList.Count > 0)
+                {
+                    DGV_RegistBOQItem.DataSource = ResaultBOQRegisteration;
+                }
             }
         }
         void ClreaData()
@@ -115,7 +123,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             {
                 if (DGV_ProjectCode.Rows.Count > 0)
                 {
-                    bool isSelected = Convert.ToBoolean(DGV_ProjectCode.Rows[i].Cells["ch_ProjectCode"].Value);
+                    bool isSelected = Convert.ToBoolean(DGV_ProjectCode.Rows[i].Cells["ch_RegisterProjectCode"].Value);
                     if (isSelected)
                     {
                         ProjectCodeId = Convert.ToInt32(DGV_ProjectCode.Rows[i].Cells["ProjectCode_Id"].Value.ToString());
@@ -132,24 +140,26 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             {
                 DGV_RegistBOQItem.Rows.Add(1);
                 int rowindex = DGV_RegistBOQItem.Rows.Count - 1;
-                DGV_RegistBOQItem.Rows[rowindex].Cells[0].Value = 0;
-                DGV_RegistBOQItem.Rows[rowindex].Cells[1].Value = BOQItemDescriptoin;
-                DGV_RegistBOQItem.Rows[rowindex].Cells[2].Value = ProjectCodeDesscription;
-                DGV_RegistBOQItem.Rows[rowindex].Cells[3].Value = BOQItemId;
-                DGV_RegistBOQItem.Rows[rowindex].Cells[4].Value = ProjectCodeId;
+
+                DGV_RegistBOQItem.Rows[rowindex].Cells["BoqRegisterId"].Value = 0;
+                DGV_RegistBOQItem.Rows[rowindex].Cells["BoqResisterBoqItemeId"].Value = BOQItemId;
+                DGV_RegistBOQItem.Rows[rowindex].Cells["BoqResisterProjectCodeId"].Value = ProjectCodeId;
+                DGV_RegistBOQItem.Rows[rowindex].Cells["BoqResisterBoqItemeDescription"].Value = BOQItemDescriptoin;
+                DGV_RegistBOQItem.Rows[rowindex].Cells["BoqResisterProjectCodeDescription"].Value = ProjectCodeDesscription;
             }
 
         }
         bool ValidationDataProjec()
         {
             bool Resualt = false;
-            if (string.IsNullOrEmpty(txt_Projects.Text))
+            if (!string.IsNullOrEmpty(txt_Projects.Text))
             {
-                MessageBox.Show("Can't Find Name Project");                
-                Resualt = false;
+                Resualt = true;
             }
             else
             {
+                MessageBox.Show("Can't Find Name Project");
+               
                 return false;
             }
             return Resualt;
@@ -190,20 +200,28 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Save();
+        }
+        async void Save()
+        {
             if (ValidationDataProjec())
             {
                 if (DGV_RegistBOQItem.Rows.Count > 0)
                 {
+                    IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
                     int BOQItemId = 0, ProjectCodeId = 0, RegisterId = 0;
                     List<Models.C_Cost_Project_Codes_Items> RegisterItem = new List<Models.C_Cost_Project_Codes_Items>();
                     for (int i = 0; i < DGV_RegistBOQItem.RowCount; i++)
                     {
-                        RegisterId = Convert.ToInt32(DGV_RegistBOQItem.Rows[i].Cells[0].Value.ToString());
-                        BOQItemId = Convert.ToInt32(DGV_RegistBOQItem.Rows[i].Cells[3].Value.ToString());
-                        ProjectCodeId = Convert.ToInt32(DGV_RegistBOQItem.Rows[i].Cells[4].Value.ToString());
-                        RegisterItem.Add(new Models.C_Cost_Project_Codes_Items { Id = RegisterId, Boq_Item_Id = BOQItemId, Project_Code_Id = ProjectCodeId });
+                        RegisterId = Convert.ToInt32(DGV_RegistBOQItem.Rows[i].Cells["BoqRegisterId"].Value.ToString());
+                        BOQItemId = Convert.ToInt32(DGV_RegistBOQItem.Rows[i].Cells["BoqResisterBoqItemeId"].Value.ToString());
+                        ProjectCodeId = Convert.ToInt32(DGV_RegistBOQItem.Rows[i].Cells["BoqResisterProjectCodeId"].Value.ToString());
+                        RegisterItem.Add(new Models.C_Cost_Project_Codes_Items 
+                        { Id = RegisterId,BOQ_Items = new Models.BOQ_Items { Id = BOQItemId },C_Cost_Project_Codes = new Models.C_Cost_Project_Codes { Id = ProjectCodeId } });
                     }
-                    if (_RegisterationService.GetBOQRegisteration(ProjectId).Result.Any())
+
+                    var ResualtBOQRegisteration = await _RegisterationService.GetBOQRegisteration(ProjectId);
+                    if (ResualtBOQRegisteration.Any())
                     {
                         _RegisterationService.UpdateBOQItems(ProjectId, RegisterItem);
                     }
@@ -211,25 +229,27 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     {
                         _RegisterationService.RegisterBOQItems(RegisterItem);
                     }
-                    
-                    
+
+                    MessageBox.Show("The data has been saved successfully. ");
+                    ClreaData();
                 }
             }
         }
-
-        private void DGV_RegistBOQItem_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void DGV_RegistBOQItem_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if(DGV_RegistBOQItem.Columns[e.ColumnIndex].Name == "btn_RegisterEdit")
             {
                 try
                 {
                     Frm_EditRegistertionBOQItem frm_Edit = new Frm_EditRegistertionBOQItem();
+                    IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+                    IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
                     frm_Edit.DGV_BOQItem.DataSource = DGV_BOQItem.DataSource;
                     frm_Edit.DGV_ProjectCode.DataSource = DGV_ProjectCode.DataSource;
 
-                    var ResaultProjects = _externalAPIs.SearchProjectsBYName(txt_Projects.Text).Result;
+                    var ResaultProjects = await _externalAPIs.SearchProjectsBYName(txt_Projects.Text);
                     ProjectId = Convert.ToInt32(ResaultProjects.SingleOrDefault().ContractId.ToString());
-                    var ResaultBOQs = _externalAPIs.GetBOQsAsync(ProjectId).Result;
+                    var ResaultBOQs = await _externalAPIs.GetBOQsAsync(ProjectId);
                     var CustomResaultBOQs = from boq in ResaultBOQs
                                             join pro in ResaultProjects on boq.ContractId equals pro.ContractId
                                             select new { ProjectName = boq.Id, ProjectId = boq.Id };
