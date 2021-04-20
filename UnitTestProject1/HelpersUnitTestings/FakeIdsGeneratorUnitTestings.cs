@@ -25,7 +25,7 @@ namespace UnitTestProject1.HelpersUnitTestings
                     Description="desc2"
                 },
             };
-            list.InjectIds();
+            list.InjectFakeIds();
 
             Assert.That(list[0].Id, Is.Not.Null.Or.Zero);
             Assert.That(list[1].Id, Is.Not.Null.Or.Zero);
@@ -43,7 +43,7 @@ namespace UnitTestProject1.HelpersUnitTestings
                 },
             
             };
-            list.InjectIds();
+            list.InjectFakeIds();
 
             Assert.That(list[0].Id, Is.Not.Null.Or.Zero.Or.EqualTo(3));
 

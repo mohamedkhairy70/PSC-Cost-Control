@@ -10,7 +10,9 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
     {
         /// <summary>
         /// convert from treeList in devExpress to List with elements have apropriate HireachyId and parent.
-        /// it will generate new code for nodes do not have code(code is empty or NULL).
+        /// it will generate new code for nodes do not have code(code is empty or NULL)
+        /// .and it never changes an existed code except for the code 
+        /// does not express the level and the parent of the node in the tree
         /// nodes have a code will not have new code.
         /// </summary>
         /// <typeparam name="T">data type of Tag in TreeListNode</typeparam>
@@ -47,6 +49,7 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
             {
                 var o = (T)n.Tag;
                 o.HParent = (T)n.ParentNode.Tag;
+
 
                 if (string.IsNullOrEmpty(o.HCode) || !o.HParent.HasChild(o))
                     o.HCode = $"{code}{guidInt.Guid()}/";
@@ -101,11 +104,12 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
         /// </summary>
         /// <param name="node">node doubted that it was a root/param>
         /// <returns>return true if the code of the node implies that it was a root</returns>
-        public static bool IsRoot(this IHireichy node) {
-            return node.HCode != null 
-                && (node.HCode.Equals("/") 
+        public static bool IsRoot(this IHireichy node)
+        {
+            return node.HCode != null
+                && (node.HCode.Equals("/")
                 || node.HCode.Split('/').Count(s => !string.IsNullOrEmpty(s)) == 1);
-        } 
+        }
 
         /// <summary>
         /// get the code of the node of a parent
@@ -121,7 +125,7 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
             return string.Concat(code.Take(code.LastIndexOf('/') + 1).ToArray());
         }
 
-    
+
     }
 
 }

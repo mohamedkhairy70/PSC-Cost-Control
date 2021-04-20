@@ -14,7 +14,7 @@ namespace PSC_Cost_Control.Helper.FakeIDsGenerator
         /// </summary>
         /// <typeparam name="T">T type that implements IHasId</typeparam>
         /// <param name="list">Enumerable collection needed to have Ids for its elements</param>
-        public static IEnumerable<T> InjectIds<T>(this IEnumerable<T> list) where T:IHasId
+        public static IEnumerable<T> InjectFakeIds<T>(this IEnumerable<T> list) where T : IHasId
         {
             var cnt = 1;
             foreach (var e in list)

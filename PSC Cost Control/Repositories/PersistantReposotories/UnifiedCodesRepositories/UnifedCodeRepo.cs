@@ -11,11 +11,11 @@ using PSC_Cost_Control.Trackers.PersistantCruds;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories
 {
-    public class UnifedCodeRepo : BaseRepo<C_Cost_Unified_Codes>,IHirechicalPersistent<C_Cost_Unified_Codes>, IUnifedCodeRepo
+    public class UnifedCodeRepo : BaseRepo<C_Cost_Unified_Codes>, IHirechicalPersistent<C_Cost_Unified_Codes>, IUnifedCodeRepo
     {
         protected override TablesEnum Table => TablesEnum.C_Cost_Unified_Codes;
 
-        public UnifedCodeRepo() 
+        public UnifedCodeRepo()
         {
         }
 
@@ -66,13 +66,27 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
         {
             using (var Context = new ApplicationContext())
             {
-                Context.f_COST_Delete_By_Id(Table.ToString(), unified.Id);
+                Context.f_Cost_Delete_Parent_With_Childs(Table.ToString(), unified.Id);
             }
         }
         public void UpdateCollection(IEnumerable<C_Cost_Unified_Codes> entities)
         {
-            foreach (var e in entities)
-                Update(e);
+            using (var context = new ApplicationContext())
+            {
+                var proc = new UpdateUnifiedCodeSP
+                {
+                    list = entities.Select(c => new UnifiedCodeUDT
+                    {
+                        Id = c.Id,
+                        Code = c.Code,
+                        CategoryId = c.Category_Id.Value,
+                        parent = c.Parent,
+                        Title = c.Title
+                    }).ToList()
+                };
+                context.Database.ExecuteStoredProcedure(proc);
+            }
+
         }
 
         public void DeleteCollection(IEnumerable<C_Cost_Unified_Codes> entities)
@@ -85,7 +99,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
         {
             using (var context = new ApplicationContext())
             {
-                return context.C_Cost_Project_Codes.Where(c => c.Parent == null).Select(x => new { Code = x.Code, Id = x.Id })
+                return context.C_Cost_Unified_Codes.Where(c => c.Parent == null).Select(x => new { x.Code, x.Id })
                      .ToDictionary(c => c.Code, c => c.Id);
             }
         }

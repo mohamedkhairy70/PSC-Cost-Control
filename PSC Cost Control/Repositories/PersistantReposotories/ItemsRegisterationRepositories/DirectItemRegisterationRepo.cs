@@ -51,9 +51,9 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.ItemsRegisteratio
             using (var Context = new ApplicationContext())
             {
                 return await Context.C_Cost_Project_Codes_Items
-                .Include(c => c.C_Cost_Project_Codes)
-                .Where(c => c.C_Cost_Project_Codes.Project_Id == projectId)
-                .ToListAsync();
+                                .Include(c => c.C_Cost_Project_Codes)
+                                .Where(c => c.C_Cost_Project_Codes.Project_Id == projectId)
+                                .ToListAsync();
             }
         }
 

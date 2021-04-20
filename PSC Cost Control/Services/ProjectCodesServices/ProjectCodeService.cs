@@ -33,7 +33,7 @@ namespace PSC_Cost_Control.Services.ProjectCodesServices
 
         public async Task<IEnumerable<C_Cost_Project_Codes>> NewCodesForProject(int projectId, List<C_Cost_Project_Codes> codes)
         {
-           (codes.InjectIds() as IEnumerable<IHireichy>).ReSolvingHireachicalParentChild();
+           (codes.InjectFakeIds() as IEnumerable<IHireichy>).ReSolvingHireachicalParentChild();
 
             var lUDT = codes.Select(c => {
                 return new ProjectCodeUdT

@@ -1,6 +1,7 @@
 ﻿using PSC_Cost_Control.Helper;
 using PSC_Cost_Control.Helper.FakeIDsGenerator;
 using PSC_Cost_Control.Helper.Interfaces;
+using PSC_Cost_Control.Helper.TreeListHandler;
 using PSC_Cost_Control.Trackers.PersistantCruds;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,61 +10,62 @@ namespace PSC_Cost_Control.Trackers.Commiters
 {
     public class HireaichalUpdatingCommitter<T> : UpdatingCommiter<T> where T : IHireichy
     {
-        private IDictionary<string,T> ALLMap;
-
-        private IEnumerable<T> All;
-        private IDictionary<string,string> Hireaical;
-        
+        private IDictionary<string, T> _allMap;
+        private IEnumerable<T> _all;
+        private int _influencedCount;
         public HireaichalUpdatingCommitter(IPersistent<T> persistent, ITracker<T> tracker) : base(persistent, tracker)
         {
-            Hireaical = new Dictionary<string, string>();
+            var add = tracker.GetNewEntities().Count();
+            var updated = tracker.GetUpdatedEntities().Count();
         }
 
-        public override void Commit()
+        public async override void Commit()
         {
             Persistent.DeleteCollection(Tracker.GetDeletedEntities());
 
             SetAllAndMap();
 
-            SnapShotHireacalParent_Child();
+            SetInFluencedCount();
 
-            Tracker.GetNewEntities().InjectIds();//fake Ids 
+            Tracker.GetNewEntities().InjectFakeIds();//fake Ids 
 
-            Persistent.AddCollection(Tracker.GetNewEntities());
+            await Persistent.AddCollection(Tracker.GetNewEntities());
 
             InjectRealIds();
 
             SolveHireachy();
 
-            Persistent.UpdateCollection(All);
+            Persistent.UpdateCollection(_all.Take(_influencedCount).ToList());
         }
-        private void SnapShotHireacalParent_Child()
-        {
-              Hireaical = All
-                .Select(c => new { Code = c.HCode, ParentCode = c.HParent?.HCode })
-                .ToDictionary(c => c.Code, c => c.ParentCode);
-        }
-       
+
         private void SetAllAndMap()
         {
-            All = Tracker
+            _all = Tracker
                 .GetNewEntities()
                 .Concat(Tracker.GetUpdatedEntities())
                 .Concat(Tracker.GetUnChangedEntities());
-
-            ALLMap= All.ToDictionary(t => t.HCode);
+            _allMap = _all.ToDictionary(t => t.HCode);
         }
+
+        private void SetInFluencedCount()
+        {
+            _influencedCount = Tracker.GetNewEntities().Count() + Tracker.GetUpdatedEntities().Count();
+        }
+
 
         private void InjectRealIds()
         {
-            var damaged=(Persistent as IHirechicalPersistent<T>).GetDamagedHiraichals();
-            damaged.ForEach(d => ALLMap[d.Key].Id = d.Value);
+            var damaged = (Persistent as IHirechicalPersistent<T>).GetDamagedHiraichals();
+            damaged.ForEach(d => _allMap[d.Key].Id = d.Value);
         }
 
         private void SolveHireachy()
         {
-             ALLMap.ForEach
-                (c => c.Value.ParentId = Hireaical[c.Value.HCode] is null?null: ALLMap[Hireaical[c.Value?.HCode]]?.Id);
+            _allMap.ForEach(c =>
+            {
+                var parentCode = c.Value.ParentCode();
+                c.Value.ParentId = parentCode.Equals("/") ? (int?)null : _allMap[parentCode].Id;
+            });
         }
     }
 }
