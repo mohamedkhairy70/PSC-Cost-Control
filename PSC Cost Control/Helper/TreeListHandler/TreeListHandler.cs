@@ -28,11 +28,10 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
                 //add code and parent to object
                 var o = (T)n.Tag;
 
-                var accused = GetLastLevelCode(o.HCode);
-                if (string.IsNullOrEmpty(o.HCode) || !o.IsRoot() || guidInt.IsBlocked(accused))
+                if (string.IsNullOrEmpty(o.HCode) || !o.IsRoot())
                     o.HCode = $"/{guidInt.Guid()}/";
                 else
-                    guidInt.Block(accused);
+                    guidInt.Block(GetLastLevelCode(o.HCode));
 
                 o.HParent = null;//root node has no Parent
 
@@ -51,9 +50,8 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
                 var o = (T)n.Tag;
                 o.HParent = (T)n.ParentNode.Tag;
 
-                var accused = GetLastLevelCode(o.HCode);
 
-                if (string.IsNullOrEmpty(o.HCode) || !o.HParent.HasChild(o) || guidInt.IsBlocked(accused))
+                if (string.IsNullOrEmpty(o.HCode) || !o.HParent.HasChild(o))
                     o.HCode = $"{code}{guidInt.Guid()}/";
                 else
                 {
@@ -117,7 +115,7 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
         /// get the code of the node of a parent
         /// </summary>
         /// <param name="node"></param>
-        /// <returns>parent code .if the node is root ,it will return / </returns>
+        /// <returns>parent code</returns>
         public static string ParentCode(this IHireichy node)
         {
             if (node is null || node.HCode is null)
