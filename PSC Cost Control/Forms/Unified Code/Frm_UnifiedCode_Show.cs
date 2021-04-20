@@ -27,18 +27,12 @@ namespace PSC_Cost_Control.Forms.Unified_Code
     public partial class Frm_UnifiedCode_Show : DevExpress.XtraEditors.XtraForm
     {
         public ExternalAPIs _externalAPIs;
-        public IUnifiedCodeCategoryService _categoryService;
-        public IUnifiedCodeService _UnifiedCode;
-        public IUnifiedCodeService _unifiedCodeService;
 
         readonly Static st = new Static();
         public Frm_UnifiedCode_Show()
         {
             InitializeComponent();
             _externalAPIs = new ExternalAPIs();
-            _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
-            _UnifiedCode = ServiceBuilder.Build<IUnifiedCodeService>();
-            _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
 
         }
 
@@ -117,15 +111,15 @@ namespace PSC_Cost_Control.Forms.Unified_Code
                         MessageBox.Show("There's no data on the Unified Code table. ");
                     }
                     //Clear Combobox Categore and text Description
-                    MessageBox.Show("The data has been saved successfully. ");
-                    ClearAllDataUnifiedCode();
+                   
+                    ClearAllDataUnified();
                 }
                 
             }
 
         }
 
-        private async void Frm_UnifiedCode_Show_Load(object sender, EventArgs e)
+        private void Frm_UnifiedCode_Show_Load(object sender, EventArgs e)
         {
             ClearAllDataUnified();
             CreateColumns(tree_UnifiedCode);
@@ -238,7 +232,7 @@ namespace PSC_Cost_Control.Forms.Unified_Code
         #region Methods For my Form
         async void ClearAllDataUnified()
         {
-
+            IUnifiedCodeCategoryService _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
             var ResualtCategories = await _categoryService.GetCategories();
             var CustomCategories = from cat in ResualtCategories
                                    select new
@@ -390,10 +384,11 @@ namespace PSC_Cost_Control.Forms.Unified_Code
 
         async void GetUnifiedCode()
         {
+            IUnifiedCodeCategoryService _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
+            IUnifiedCodeService  _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
             var ResualtCategory = await _categoryService.GetCategories();
             var ResualtUnifiedCode = await _unifiedCodeService.GetUnifiedCodes();
-            var ResualtUnified = await _UnifiedCode.GetUnifiedCodes();
-            var innerJoin = from p in ResualtUnified
+            var innerJoin = from p in ResualtUnifiedCode
                             join c in ResualtCategory on p.Category_Id equals c.Id
                             select new
                             {
@@ -527,36 +522,24 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             return dt;
         }
 
-        void SaveProectCode()
+        async void SaveProectCode()
         {
-            //var ResualtCategory = await _categoryService.GetCategories();
-            //var ResualtUnifiedCode = await _unifiedCodeService.GetUnifiedCodes();
-            //var ResualtUnified = await _UnifiedCode.GetUnifiedCodes();
+            IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
+            var ResualtUnifiedCode = await _unifiedCodeService.GetUnifiedCodes();
+            //var UnifiedList = innerJoin.ToList();
+            var linqlisti = ResualtUnifiedCode.ToList().AsEnumerable();
+            DataTable table = LINQResultToDataTable(linqlisti);
+
             var Resault = TreeListHandler.ToSequentialList<C_Cost_Unified_Codes>(tree_UnifiedCode).ToList();
-            //var innerJoin = from p in ResualtUnified
-            //                join c in ResualtCategory on p.Category_Id equals c.Id
-            //                select new
-            //                {
-            //                    Id = p.Id,
-            //                    UnifiedCode_Code = p.Code,
-            //                    UnifiedCode_Title = p.Title,
-            //                    UnifiedCode_Parent = p.Parent,
-            //                    Category_Name = c.Name,
-            //                    CategoryId = c.Id
-
-            //                };
-            ////var UnifiedList = innerJoin.ToList();
-            //var linqlisti = innerJoin.ToList().AsEnumerable();
-            //DataTable table = LINQResultToDataTable(linqlisti);
-            //if (table.Rows.Count > 0)
-            //{
-                _UnifiedCode.Update(Resault);
-            //}
-            //else
-            //{
-            //    _UnifiedCode.NewUnifiedCodes(Resault);
-            //}
-
+            if (table.Rows.Count > 0)
+            {
+                await _unifiedCodeService.Update(Resault);
+            }
+            else
+            {
+                await _unifiedCodeService.NewUnifiedCodes(Resault);
+            }
+            MessageBox.Show("The data has been saved successfully. ");
         }
 
         #endregion Methods For my Form

@@ -104,6 +104,12 @@
     <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationBOQItems.Designer.cs">
       <DependentUpon>Frm_ItemsRegisterationBOQItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Project Code\Frm_ProjectCode_Show.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Project Code\Frm_ProjectCode_Show.Designer.cs">
+      <DependentUpon>Frm_ProjectCode_Show.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Unified Code\Frm_Categories_UnifiedCode.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -243,12 +249,6 @@
     <Compile Include="Forms\Project Code\Frm_Categories_ProjectCode.Designer.cs">
       <DependentUpon>Frm_Categories_ProjectCode.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Project Code\Frm_ProjectCode_Show.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Project Code\Frm_ProjectCode_Show.Designer.cs">
-      <DependentUpon>Frm_ProjectCode_Show.cs</DependentUpon>
-    </Compile>
     <Compile Include="Frm_Cost_Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -288,14 +288,14 @@
     <EmbeddedResource Include="Forms\Items Registeration\Frm_ItemsRegisterationBOQItems.resx">
       <DependentUpon>Frm_ItemsRegisterationBOQItems.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Project Code\Frm_ProjectCode_Show.resx">
+      <DependentUpon>Frm_ProjectCode_Show.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Unified Code\Frm_Categories_UnifiedCode.resx">
       <DependentUpon>Frm_Categories_UnifiedCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Project Code\Frm_Categories_ProjectCode.resx">
       <DependentUpon>Frm_Categories_ProjectCode.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Project Code\Frm_ProjectCode_Show.resx">
-      <DependentUpon>Frm_ProjectCode_Show.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Unified Code\Frm_UnifiedCode_Show.resx">
       <DependentUpon>Frm_UnifiedCode_Show.cs</DependentUpon>

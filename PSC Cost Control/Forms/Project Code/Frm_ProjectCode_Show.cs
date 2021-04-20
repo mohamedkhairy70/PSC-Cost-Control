@@ -1,9 +1,12 @@
 ﻿using DevExpress.XtraEditors;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using PSC_Cost_Control.Models;
 using PSC_Cost_Control.Helper;
@@ -17,26 +20,20 @@ using PSC_Cost_Control.Helper.TreeListHandler;
 using PSC_Cost_Control.Services.DependencyApis;
 using PSC_Cost_Control.Services.ProjectCodesServices;
 using PSC_Cost_Control.Services.ServicesBuilders;
+using System.Reflection;
 using PSC_Cost_Control.Services.UnifiedCodesServices;
-using System.Threading.Tasks;
 
 namespace PSC_Cost_Control.Forms.Project_Code
 {
     public partial class Frm_ProjectCode_Show : DevExpress.XtraEditors.XtraForm
     {
         public ExternalAPIs _externalAPIs;
-        public IProjectCodeCategoryService _categoryService;
-        public IProjectCodeService _projectCode;
-        public IUnifiedCodeService _unifiedCodeService;
 
         readonly Static st = new Static();
         public Frm_ProjectCode_Show()
         {
             InitializeComponent();
             _externalAPIs = new ExternalAPIs();
-            _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
-            _projectCode = ServiceBuilder.Build<IProjectCodeService>();
-            _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
 
         }
 
@@ -51,7 +48,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             else if (btn.Caption == "New Project")
             {
                 //Clear all Data from Project Code Combobox Categore and text Description and Project
-                ClearAllDataProject().GetAwaiter();
+                ClearAllDataProject();
             }
             else if (btn.Caption == "Add Root")
             {
@@ -63,10 +60,12 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     if (validationProjectCode())
                     {
                         //Add Root Project Code To Treelist
-                        AddRootProjectCode(cm_Categories.Text, txt_Description.Text,cm_UnifiedCode.Text, Convert.ToInt32(cm_Categories.SelectedValue), Convert.ToInt32(cm_UnifiedCode.SelectedValue));
+                        AddRootProjectCode(cm_Categories.Text, txt_Description.Text, cm_UnifiedCode.Text
+                            , Convert.ToInt32(cm_Categories.SelectedValue), Convert.ToInt32(cm_UnifiedCode.SelectedValue),
+                            Convert.ToInt32(cm_Project.SelectedValue));
 
                         //Clear Combobox Categore and text Description
-                        ClearAllDataProjectCode();
+                         ClearAllDataProjectCode();
                     }
                 }
             }
@@ -80,13 +79,14 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     if (validationProjectCode())
                     {
                         //Add Child Project Code To Treelist
-                        AddChildProjectCode(cm_Categories.Text, txt_Description.Text, cm_UnifiedCode.Text, Convert.ToInt32(cm_Categories.SelectedValue),Convert.ToInt32(cm_UnifiedCode.SelectedValue));
+                        AddChildProjectCode(cm_Categories.Text, txt_Description.Text, cm_UnifiedCode.Text
+                            , Convert.ToInt32(cm_Categories.SelectedValue), Convert.ToInt32(cm_UnifiedCode.SelectedValue),
+                            Convert.ToInt32(cm_Project.SelectedValue));
 
                         //Clear Combobox Categore and text Description
                         ClearAllDataProjectCode();
                     }
                 }
-                
             }
             else if (btn.Caption == "Delete")
             {
@@ -108,14 +108,14 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     //Add Project Code To Treelist
                     if (tree_ProjectCode.AllNodesCount > 0)
                     {
-                        SaveProectCode(Convert.ToInt32(cm_Projects.SelectedValue));
+                        SaveProectCode(Convert.ToInt32(cm_Project.SelectedValue));
                     }
                     else
                     {
                         MessageBox.Show("There's no data on the Project Code table. ");
                     }
                     //Clear Combobox Categore and text Description
-                    ClearAllDataProjectCode();
+                    ClearAllDataProject();
                 }
                 
             }
@@ -124,28 +124,17 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
         private void Frm_ProjectCode_Show_Load(object sender, EventArgs e)
         {
-            ClearAllDataProject().GetAwaiter();
+            ClearAllDataProject();
             CreateColumns(tree_ProjectCode);
-            tree_ProjectCode.ExpandAll();
+
+
+
             DragDropManager.Default.DragOver += OnDragOver;
             DragDropManager.Default.DragDrop += OnDragDrop;
-            
+
+            tree_ProjectCode.ExpandAll();
         }
 
-        private void cm_Projects_DropDownClosed(object sender, EventArgs e)
-        {
-            try
-            {
-                if (cm_Projects.SelectedValue != null)
-                {
-                    int IdProject = Convert.ToInt32(cm_Projects.SelectedValue);
-                    GetProjectCode(IdProject).GetAwaiter();
-                    if (IdProject > 0)
-                        cm_Projects.Enabled = false;
-                }
-            }
-            catch { }
-        }
 
         private void tree_ProjectCode_NodeChanged(object sender, NodeChangedEventArgs e)
         {
@@ -153,32 +142,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
         }
 
         #region Method for Create TreeList
-        private void CreateColumns(TreeList tl)
-        {
-            // Create three columns.
-            tl.BeginUpdate();
-            TreeListColumn col1 = tl.Columns.Add();
-            col1.Caption = "Project Code";
-            col1.Name = "ProjectCode_Code";
-            col1.VisibleIndex = 0;
-            TreeListColumn col2 = tl.Columns.Add();
-            col2.Caption = "Project Code Description";
-            col2.Name = "ProjectCode_Description";
-            col2.VisibleIndex = 1;
-            TreeListColumn col3 = tl.Columns.Add();
-            col3.Caption = "Category Name";
-            col3.Name = "Category_Name";
-            col3.VisibleIndex = 2;
-            TreeListColumn col4 = tl.Columns.Add();
-            col4.Caption = "Unified Code Name";
-            col4.Name = "UnifiedCode_Name";
-            col4.VisibleIndex = 3;
-            TreeListColumn col5 = tl.Columns.Add();
-            col5.Caption = "Project Code Parent";
-            col5.Name = "ProjectCode_Parent";
-            col5.VisibleIndex = 4;
-            tl.EndUpdate();
-        }
+
 
         private void OnDragDrop(object sender, DragDropEventArgs e)
         {
@@ -268,9 +232,11 @@ namespace PSC_Cost_Control.Forms.Project_Code
         #endregion Method for Create TreeList
 
         #region Methods For my Form
-        async Task ClearAllDataProject()
+        async void ClearAllDataProject()
         {
-            cm_Categories.Enabled = false;
+            IProjectCodeCategoryService _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
+            IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
+
             var ResualtCategories = await _categoryService.GetCategories();
             var CustomCategories = from cat in ResualtCategories
                                    select new
@@ -284,15 +250,13 @@ namespace PSC_Cost_Control.Forms.Project_Code
             cm_Categories.SelectedItem = -1;
 
             txt_Description.Text = "";
-            txt_Description.Enabled = false;
 
-            cm_Projects.Enabled = true;
             var ProjectList = await _externalAPIs.GetProjectsAsync();
-            
-            cm_Projects.DataSource = ProjectList;
-            cm_Projects.DisplayMember = "Name";
-            cm_Projects.ValueMember = "ContractId";
-            cm_Projects.SelectedItem = -1;
+
+            cm_Project.DataSource = ProjectList;
+            cm_Project.DisplayMember = "Name";
+            cm_Project.ValueMember = "ContractId";
+            cm_Project.SelectedItem = -1;
 
             var UnifiedCodeList = await _unifiedCodeService.GetUnifiedCodes();
 
@@ -302,29 +266,30 @@ namespace PSC_Cost_Control.Forms.Project_Code
             cm_UnifiedCode.SelectedItem = -1;
 
             tree_ProjectCode.DataSource = null;
+            txt_Description.Enabled = false;
+            cm_Categories.Enabled = false;
         }
 
         void ClearAllDataProjectCode()
         {
             cm_Categories.SelectedItem = -1;
-            cm_UnifiedCode.SelectedItem = -1;
             txt_Description.Text = "";
-
-            cm_Projects.Enabled = false;
+            
         }
 
         bool validationProjects()
         {
             bool result;
-            if(cm_Projects.SelectedIndex < 0)
+            if (cm_Project.SelectedIndex < 0)
             {
-                MessageBox.Show("Please choose the project first.");
-                return  false;
+                MessageBox.Show("Please choose the Project first.");
+                return false;
             }
             else
             {
                 result = true;
             }
+            
            
             return result;
         }
@@ -342,11 +307,21 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 MessageBox.Show("Please choose the category to add the Project Code.");
                 return false;
             }
+            if (Convert.ToInt32(cm_UnifiedCode.SelectedValue) > 0)
+            {
+                result = true;
+
+            }
+            else
+            {
+                MessageBox.Show("Please choose the Unified Code to add the Project Code.");
+                return false;
+            }
             if (string.IsNullOrWhiteSpace(txt_Description.Text))
             {
                 MessageBox.Show("Please add the description of the Project Code to add the Project Code.");
                 return false;
-            }
+            } 
             else
             {
                 result = true;
@@ -354,14 +329,22 @@ namespace PSC_Cost_Control.Forms.Project_Code
             return result;
         }
 
-        void AddRootProjectCode(string Category, string Description,string UnifiedCodeTitle,int CategoryId,int UnifiedCodeTitleId)
+        void AddRootProjectCode(string Category, string ProjectCode_Description, string UnidiedCodeTitle, int CategoryId, int UnidiedCodeId, int ProjectId)
         {
+            var _Tag = new Models.C_Cost_Project_Codes { Category_Id = CategoryId, Description = ProjectCode_Description, Unified_Code_Id = UnidiedCodeId, Project_Id = ProjectId };
+            //TreeListNode newNode = tree_ProjectCode.AppendNode(
+            //    nodeData: new object[] { "/" + (tree_ProjectCode.Nodes.Count +1)
+            //    , Category, ProjectCodeTitle },parentNode: null);
+            //tree_ProjectCode.FocusedNode = newNode;
 
-            var tag = new Models.C_Cost_Project_Codes { Category_Id = CategoryId, Description = Description, Unified_Code_Id = UnifiedCodeTitleId };
-            tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(new object[] { "/" + (tree_ProjectCode.Nodes.Count +1), Category, Description, UnifiedCodeTitle,null }, parentNode: null, tag);
+
+             tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(
+                nodeData: new object[] {0, "/" + (tree_ProjectCode.Nodes.Count +1)
+                , ProjectCode_Description, UnidiedCodeTitle, Category, 0 }, parentNode: null, tag: _Tag);
+
         }
 
-        void AddChildProjectCode(string Category, string Description,string UnifiedCodeTitle, int CategoryId, int UnifiedCodeTitleId)
+        void AddChildProjectCode(string Category,string ProjectCode_Description, string UnidiedCodeTitle, int CategoryId, int UnidiedCodeId, int ProjectId)
         {
             if (tree_ProjectCode.FocusedNode != null)
             {
@@ -374,17 +357,17 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     string IdNode = " ";
                     if (tree_ProjectCode.FocusedNode.Level+1 > 0)
                     {
-                        var tag = new Models.C_Cost_Project_Codes { Category_Id = CategoryId, Description = Description, Unified_Code_Id = UnifiedCodeTitleId };
-                        var vs = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.FocusedNode);
-                        IList objectList = vs as IList;
-                        string NodeCode = objectList[0].ToString();
-                        IdNode = (NodeCode
+                        var _Tag = new Models.C_Cost_Project_Codes { Category_Id = CategoryId, Description = ProjectCode_Description,Unified_Code_Id = UnidiedCodeId,Project_Id = ProjectId };
+                        //var vs = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.FocusedNode);
+                        //IList objectList = vs as IList;
+                        //string NodeCode = objectList[0].ToString();
+                        IdNode = (tree_ProjectCode.FocusedNode.Level.ToString()
                             + "/"
-                            + (tree_ProjectCode.FocusedNode.Nodes.Count +1).ToString());
+                            + (tree_ProjectCode.FocusedNode.Nodes.Count + 1).ToString());
 
                         tree_ProjectCode.FocusedNode =  tree_ProjectCode.AppendNode(
-                                new object[] { IdNode, Category, Description, UnifiedCodeTitle,null }
-                                , tree_ProjectCode.FocusedNode,tag:tag);
+                                nodeData: new object[] { 0, IdNode, ProjectCode_Description, UnidiedCodeTitle, Category, 0 }
+                                , parentNode: tree_ProjectCode.FocusedNode, tag: _Tag);
                     }             
                 }
             }
@@ -398,192 +381,286 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     tree_ProjectCode.DeleteNode(tree_ProjectCode.FocusedNode);
         }
 
-        async Task GetProjectCode(int _ProjectId)
+        private void CreateColumns(TreeList tl)
         {
+            // Create three columns.
+            tl.BeginUpdate();
+            TreeListColumn col1 = tl.Columns.Add();
+            col1.Caption = "Id";
+            col1.Name = "Id";
+            col1.VisibleIndex = 0;
+            col1.Visible = false;
+            TreeListColumn col2 = tl.Columns.Add();
+            col2.Caption = "Project Code";
+            col2.Name = "ProjectCode_Code";
+            col2.VisibleIndex = 1;
+            col2.Visible = true;
+            TreeListColumn col3 = tl.Columns.Add();
+            col3.Caption = "Project Code Description";
+            col3.Name = "ProjectCode_Description";
+            col3.VisibleIndex = 2;
+            col3.Visible = true;
+            TreeListColumn col4 = tl.Columns.Add();
+            col4.Caption = "Project Code Title";
+            col4.Name = "ProjectCode_Title";
+            col4.VisibleIndex = 3;
+            col4.Visible = true;
+            TreeListColumn col5 = tl.Columns.Add();
+            col5.Caption = "Category Name";
+            col5.Name = "Category_Name";
+            col5.VisibleIndex = 4;
+            col5.Visible = true;
+            TreeListColumn col7 = tl.Columns.Add();
+            col7.Caption = "Project Code Parent";
+            col7.Name = "ProjectCode_Parent";
+            col7.VisibleIndex = 5;
+            col7.Visible = false;
+            tl.EndUpdate();
+        }
+
+        async void GetProjectCode(int projectId)
+        {
+            IProjectCodeCategoryService _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
+            IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
+            IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
             var ResualtCategory = await _categoryService.GetCategories();
+            var ResualtProjectCode = await _ProjectCodeService.GetProjectCodes(projectId);
+            var ResualtProject = await _externalAPIs.GetProjectsAsync();
             var ResualtUnifiedCode = await _unifiedCodeService.GetUnifiedCodes();
-            var ResualtProject = await _projectCode.GetProjectCodes(_ProjectId);
-            var innerJoin = from p in ResualtProject
+            var innerJoin = from p in ResualtProjectCode
                             join c in ResualtCategory on p.Category_Id equals c.Id
-                            join U in ResualtUnifiedCode on p.Unified_Code_Id equals U.Id
+                            join Pro in ResualtProject on p.Project_Id equals Pro.ContractId
+                            join u in ResualtUnifiedCode on p.Unified_Code_Id equals u.Id
                             select new
                             {
+                                Id = p.Id,
                                 ProjectCode_Code = p.Code,
                                 ProjectCode_Description = p.Description,
-                                ProjectCode_Parent = p.HParent,
+                                UnifiedCode_Title = u.Title,
                                 Category_Name = c.Name,
-                                UnifiedCode_Name = U.Title
+                                ProjectName = Pro.Name,
+
+                                ProjectCode_Parent = p.Parent,
+                                CategoryId = c.Id,
+                                ProjectId = Pro.ContractId,
+                                UnifiedCode_Id = p.Unified_Code_Id,
                             };
-            if (ResualtProject.Count() > 0)
+            //var ProjectList = innerJoin.ToList();
+            var linqlisti = innerJoin.ToList().AsEnumerable();
+            DataTable table = LINQResultToDataTable(linqlisti);
+            //tree_ProjectCode.OptionsBehavior.PopulateServiceColumns = true;
+            if (table.Rows.Count > 0)
             {
-                tree_ProjectCode.DataSource = innerJoin;
-                tree_ProjectCode.KeyFieldName = "ProjectCode_Code";
+                tree_ProjectCode.KeyFieldName = "Id";
                 tree_ProjectCode.ParentFieldName = "ProjectCode_Parent";
+                //tree_ProjectCode.DataSource = table;
+                tree_ProjectCode.ClearNodes();
+                var linqlist = linqlisti.Where(x => x.ProjectCode_Parent as int? == null).AsEnumerable();
+                DataTable dataRows = LINQResultToDataTable(linqlist);
+                for (int i = 0; i < dataRows.Rows.Count; i++)
+                {
+                    int id, ProjectCode_Parent, CategoryId, UnidiedCodeId, ProjectId;
+                    string ProjectCode_Code, ProjectCode_Description, Category_Name, UnidiedCodeTitle;
+                    id = Convert.ToInt32(dataRows.Rows[i]["id"].ToString());
+                    ProjectCode_Code = dataRows.Rows[i]["ProjectCode_Code"].ToString();
+                    ProjectCode_Description = dataRows.Rows[i]["ProjectCode_Description"].ToString();
+                    UnidiedCodeTitle = dataRows.Rows[i]["UnifiedCode_Title"].ToString();
+                    CategoryId = Convert.ToInt32(dataRows.Rows[i]["CategoryId"].ToString());
+                    UnidiedCodeId = Convert.ToInt32(dataRows.Rows[i]["UnifiedCode_Id"].ToString());
+                    ProjectId = Convert.ToInt32(dataRows.Rows[i]["ProjectId"].ToString());
+                    Category_Name = dataRows.Rows[i]["Category_Name"].ToString();
+
+                    var _Tag = new Models.C_Cost_Project_Codes
+                    {
+                        Id = id,
+                        Code = ProjectCode_Code,
+                        Category_Id = CategoryId,
+                        Description = ProjectCode_Description,
+                        Unified_Code_Id = UnidiedCodeId,
+                        Project_Id = ProjectId,
+                        Parent = null
+                    };
+
+                    TreeListNode parentNodej = tree_ProjectCode.AppendNode(
+                        new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, null }
+                    , null, tag: _Tag);
+
+                    
+                    var linqlistj = linqlisti.Where(x => x.ProjectCode_Parent == id).AsEnumerable();
+                    DataTable dataRowsj = LINQResultToDataTable(linqlistj);
+                    for (int j = 0; j < dataRowsj.Rows.Count; j++)
+                    {
+                        id = Convert.ToInt32(dataRowsj.Rows[j]["id"].ToString());
+                        ProjectCode_Code = dataRowsj.Rows[j]["ProjectCode_Code"].ToString();
+                        ProjectCode_Description = dataRowsj.Rows[j]["ProjectCode_Description"].ToString();
+                        UnidiedCodeTitle = dataRowsj.Rows[j]["UnifiedCode_Title"].ToString();
+                        CategoryId = Convert.ToInt32(dataRowsj.Rows[j]["CategoryId"].ToString());
+                        UnidiedCodeId = Convert.ToInt32(dataRowsj.Rows[j]["UnifiedCode_Id"].ToString());
+                        ProjectId = Convert.ToInt32(dataRowsj.Rows[j]["ProjectId"].ToString());
+                        Category_Name = dataRowsj.Rows[j]["Category_Name"].ToString();
+                        ProjectCode_Parent = Convert.ToInt32(dataRowsj.Rows[j]["ProjectCode_Parent"].ToString());
+
+                        var _Tagj = new Models.C_Cost_Project_Codes
+                        {
+                            Id = id,
+                            Code = ProjectCode_Code,
+                            Category_Id = CategoryId,
+                            Description = ProjectCode_Description,
+                            Unified_Code_Id = UnidiedCodeId,
+                            Project_Id = ProjectId,
+                            Parent = ProjectCode_Parent
+                        };
+
+                        TreeListNode parentNodex = tree_ProjectCode.AppendNode(
+                            new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent }
+                        , parentNodej, tag: _Tag);
+
+                        var linqlistx = innerJoin.Where(x => x.ProjectCode_Parent == id).AsEnumerable();
+                        DataTable dataRowsx = LINQResultToDataTable(linqlistx);
+                        for (int x = 0; x < dataRowsx.Rows.Count; x++)
+                        {
+                            id = Convert.ToInt32(dataRowsx.Rows[x]["id"].ToString());
+                            ProjectCode_Code = dataRowsx.Rows[x]["ProjectCode_Code"].ToString();
+                            ProjectCode_Description = dataRowsx.Rows[x]["ProjectCode_Description"].ToString();
+                            UnidiedCodeTitle = dataRowsx.Rows[x]["UnifiedCode_Title"].ToString();
+                            CategoryId = Convert.ToInt32(dataRowsx.Rows[x]["CategoryId"].ToString());
+                            UnidiedCodeId = Convert.ToInt32(dataRowsx.Rows[x]["UnifiedCode_Id"].ToString());
+                            ProjectId = Convert.ToInt32(dataRowsx.Rows[x]["ProjectId"].ToString());
+                            Category_Name = dataRowsx.Rows[x]["Category_Name"].ToString();
+                            ProjectCode_Parent = Convert.ToInt32(dataRowsx.Rows[x]["ProjectCode_Parent"].ToString());
+
+                            var _Tagq = new Models.C_Cost_Project_Codes
+                            {
+                                Id = id,
+                                Code = ProjectCode_Code,
+                                Category_Id = CategoryId,
+                                Description = ProjectCode_Description,
+                                Unified_Code_Id = UnidiedCodeId,
+                                Project_Id = ProjectId,
+                                Parent = ProjectCode_Parent
+                            };
+
+                            TreeListNode parentNodeq = tree_ProjectCode.AppendNode(
+                                new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent }
+                            , parentNodex, tag: _Tag);
+
+                            var linqlistq = innerJoin.Where(m => m.ProjectCode_Parent == id).AsEnumerable();
+                            DataTable dataRowsq = LINQResultToDataTable(linqlistq);
+                            for (int q = 0; q < dataRowsq.Rows.Count; q++)
+                            {
+                                id = Convert.ToInt32(dataRowsq.Rows[q]["id"].ToString());
+                                ProjectCode_Code = dataRowsq.Rows[q]["ProjectCode_Code"].ToString();
+                                ProjectCode_Description = dataRowsq.Rows[q]["ProjectCode_Description"].ToString();
+                                UnidiedCodeTitle = dataRowsq.Rows[q]["UnifiedCode_Title"].ToString();
+                                CategoryId = Convert.ToInt32(dataRowsq.Rows[q]["CategoryId"].ToString());
+                                UnidiedCodeId = Convert.ToInt32(dataRowsq.Rows[q]["UnifiedCode_Id"].ToString());
+                                ProjectId = Convert.ToInt32(dataRowsq.Rows[q]["ProjectId"].ToString());
+                                Category_Name = dataRowsq.Rows[q]["Category_Name"].ToString();
+                                ProjectCode_Parent = Convert.ToInt32(dataRowsq.Rows[q]["ProjectCode_Parent"].ToString());
+
+                                var _Tagz = new Models.C_Cost_Project_Codes
+                                {
+                                    Id = id,
+                                    Code = ProjectCode_Code,
+                                    Category_Id = CategoryId,
+                                    Description = ProjectCode_Description,
+                                    Unified_Code_Id = UnidiedCodeId,
+                                    Project_Id = ProjectId,
+                                    Parent = ProjectCode_Parent
+                                };
+
+                                TreeListNode parentNodez = tree_ProjectCode.AppendNode(
+                                    new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent }
+                                , parentNodeq, tag: _Tag);
+
+                            }
+                        }
+                    }
+                }
             }
+
+            //  TreeList.AppendNode adds a new TreeListNode containing the specified values to the XtraTreeList.
+            tree_ProjectCode.ExpandAll();
+
+
+
+
             txt_Description.Enabled = true;
             cm_Categories.Enabled = true;
         }
-        async Task<List<C_Cost_Project_Codes>> Get(int _ProjectId)
+
+
+        private DataTable LINQResultToDataTable<T>(IEnumerable<T> Linqlist)
         {
-            return (List<C_Cost_Project_Codes>)await _projectCode.GetProjectCodes(_ProjectId);
-        }
-        void SaveProectCode(int _ProjectId)
-        {
-            var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
-            if (Get(_ProjectId).GetAwaiter().GetResult().Count > 0)
+            DataTable dt = new DataTable();
+            PropertyInfo[] columns = null;
+
+            if (Linqlist == null) return dt;
+            foreach (T Record in Linqlist)
             {
-                _projectCode.Update(_ProjectId, Resault);
+
+                if (columns == null)
+                {
+                    columns = ((Type)Record.GetType()).GetProperties();
+                    foreach (PropertyInfo GetProperty in columns)
+                    {
+                        Type colType = GetProperty.PropertyType;
+
+                        if ((colType.IsGenericType) && (colType.GetGenericTypeDefinition()
+                        == typeof(Nullable<>)))
+                        {
+                            colType = colType.GetGenericArguments()[0];
+                        }
+
+                        dt.Columns.Add(new DataColumn(GetProperty.Name, colType));
+                    }
+                }
+
+                DataRow dr = dt.NewRow();
+
+                foreach (PropertyInfo pinfo in columns)
+                {
+                    dr[pinfo.Name] = pinfo.GetValue(Record, null) == null ? DBNull.Value : pinfo.GetValue
+                    (Record, null);
+                }
+
+                dt.Rows.Add(dr);
+            }
+            return dt;
+        }
+
+        async void SaveProectCode(int projectId)
+        {
+
+            IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+
+            var ResualtProjectCode = await _ProjectCodeService.GetProjectCodes(projectId);
+            //var ProjectList = innerJoin.ToList();
+            var linqlisti = ResualtProjectCode.ToList().AsEnumerable();
+            DataTable table = LINQResultToDataTable(linqlisti);
+
+            var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
+            if (table.Rows.Count > 0)
+            {
+                await _ProjectCodeService.Update(projectId, Resault);
             }
             else
             {
-                _projectCode.NewCodesForProject(_ProjectId, Resault);
+                await _ProjectCodeService.NewCodesForProject(projectId, Resault);
             }
-            
+            MessageBox.Show("The data has been saved successfully. ");
         }
+
 
         #endregion Methods For my Form
 
-        #region My Old Method
-        public void Add_Oold()
+        private void cm_Project_DropDownClosed(object sender, EventArgs e)
         {
-            for (int i = 0; i < tree_ProjectCode.AllNodesCount; i++)
+
+            if (Convert.ToInt32(cm_Project.SelectedValue) > 0)
             {
-                var dt = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.Nodes[i]);
-                //int KeyName = tree_ProjectCode.KeyFieldName[tree_ProjectCode.Nodes[i].ParentNode.Id];
-                //int keyparent = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].ParentNode.Id];
-                int NodeCountx = tree_ProjectCode.Nodes[i].Nodes.Count;
-                if (NodeCountx > 0)
-                {
-                    if (NodeCountx == 1)
-                    {
-                        var dt2 = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.Nodes[i]);
-                        int KeyName2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].ParentNode.Id];
-                        //int keyparent2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].Nodes[c].Id];
-                        for (int x = 0; x < NodeCountx; x++)
-                        {
-                            dt2 = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.Nodes[i].Nodes[x]);
-                            KeyName2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].Nodes[x].ParentNode.Id];
-                            //int keyparent2 = tree_ProjectCode.ParentFieldName[tree_ProjectCode.Nodes[i].Nodes[c].Id];
-                        }
-                    }
-                    else if (NodeCountx == 2)
-                    {
-                        for (int x = 0; x < NodeCountx; x++)
-                        {
-                            int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
-                            for (int c = 0; c < NodeCountc; c++)
-                            {
-
-                            }
-                        }
-                    }
-                    else if (NodeCountx == 3)
-                    {
-                        for (int x = 0; x < NodeCountx; x++)
-                        {
-                            int NodeCountc = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes.Count;
-                            for (int c = 0; c < NodeCountc; c++)
-                            {
-                                int NodeCountv = tree_ProjectCode.Nodes[i].Nodes[NodeCountx].Nodes[NodeCountc].Nodes.Count;
-                                for (int v = 0; v < NodeCountv; v++)
-                                {
-
-                                }
-                            }
-                        }
-                    }
-
-                }
-                else
-                {
-
-                }
+                GetProjectCode(Convert.ToInt32(cm_Project.SelectedValue));
             }
         }
-
-        public void AppendingNodes(TreeList treeList)
-        {
-            SimpleButton appendNodeButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Append node" };
-            // UI Binding
-            appendNodeButton.Click += (sender, e) => {
-                // Appending a new Node
-                TreeListNode newNode = treeList.AppendNode(
-                    nodeData: new object[] {
-                        "/"+((treeList.FocusedNode != null) ? treeList.FocusedNode.Id : -1)+ "/"+ treeList.AllNodesCount +"/", "Suyama, Michael", "Obere Str. 55"
-                    },
-                    parentNode: treeList.FocusedNode
-                );
-                // Using the newly added node
-                treeList.FocusedNode = newNode;
-            };
-        }
-
-        public void RemovingSelectedNodes(TreeList treeList)
-        {
-            SimpleButton deleteButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Delete selected nodes" };
-            // Enable multi-selection
-            treeList.OptionsSelection.MultiSelect = true;
-            treeList.OptionsSelection.MultiSelectMode = TreeListMultiSelectMode.RowSelect;
-            // UI Binding
-            deleteButton.Click += (sender, e) => {
-                int count = treeList.Selection.Count;
-                if (count == 0)
-                    return;
-                string msg = string.Format("{0} nodes is about to be deleted. Do you want to proceed?", count);
-                if (XtraMessageBox.Show(msg, "Deleting node", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    // Delete selected nodes
-                    treeList.DeleteSelectedNodes();
-                }
-            };
-        }
-
-        public void RemovingNode(TreeList treeList)
-        {
-            SimpleButton deleteButton = new SimpleButton() { Dock = DockStyle.Top, Parent = treeList.Parent, Text = "Delete focused node" };
-            // Delete node action with confirmation
-            Action<TreeListNode> deleteNodeWithConfirmation = (node) => {
-                if (node == null)
-                    return;
-                string msg = string.Format("The node {0} is about to be deleted. Do you want to proceed?", node["Name"]);
-                if (XtraMessageBox.Show(msg, "Deleting node", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    // Delete Node
-                    treeList.DeleteNode(node);
-                    // or you can use the TreeListNode.Remove() method
-                    // node.Remove();
-                }
-            };
-            // UI Bindings
-            treeList.KeyDown += (sender, e) => {
-                if (e.KeyCode == Keys.Delete && e.Modifiers == Keys.Control)
-                    deleteNodeWithConfirmation(treeList.FocusedNode);
-            };
-            deleteButton.Click += (sender, e) => {
-                deleteNodeWithConfirmation(treeList.FocusedNode);
-            };
-        }
-
-        private void CreateNodes(TreeList tl)
-        {
-            tl.BeginUnboundLoad();
-            // Create a root node .
-            TreeListNode parentForRootNodes = null;
-            TreeListNode rootNode = tl.AppendNode(
-                new object[] { "/1", "Alfreds Futterkiste", "Germany, Obere Str. 57" }, parentForRootNodes);
-            TreeListNode rootNode2 = tl.AppendNode(
-               new object[] { "/2", "Alfreds Futterkiste", "Germany, Obere Str. 57" }, parentForRootNodes);
-
-            // Create a child of the rootNode
-            tl.AppendNode(new object[] { (rootNode[0]).ToString() + "/1", "Suyama, Michael", "Obere Str. 55" }, rootNode);
-            tl.AppendNode(new object[] { (rootNode[0]).ToString() + "/2", "Suyama, Michael", "Obere Str. 55" }, rootNode);
-
-            // Create a child of the rootNode2
-            tl.AppendNode(new object[] { (rootNode2[0]).ToString() + "/1", "Suyama, Michael", "Obere Str. 55" }, rootNode2);
-            tl.AppendNode(new object[] { (rootNode2[0]).ToString() + "/2", "Suyama, Michael", "Obere Str. 55" }, rootNode2);
-            tl.EndUnboundLoad();
-        }
-        #endregion My Old Method
-
     }
 }
