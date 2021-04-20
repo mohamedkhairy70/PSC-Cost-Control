@@ -28,11 +28,11 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
                 //add code and parent to object
                 var o = (T)n.Tag;
 
-
-                if (string.IsNullOrEmpty(o.HCode) || !o.IsRoot())
+                var accused = GetLastLevelCode(o.HCode);
+                if (string.IsNullOrEmpty(o.HCode) || !o.IsRoot() || guidInt.IsBlocked(accused))
                     o.HCode = $"/{guidInt.Guid()}/";
                 else
-                    guidInt.Block(GetLastLevelCode(o.HCode));
+                    guidInt.Block(accused);
 
                 o.HParent = null;//root node has no Parent
 
@@ -51,8 +51,9 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
                 var o = (T)n.Tag;
                 o.HParent = (T)n.ParentNode.Tag;
 
+                var accused = GetLastLevelCode(o.HCode);
 
-                if (string.IsNullOrEmpty(o.HCode) || !o.HParent.HasChild(o) )
+                if (string.IsNullOrEmpty(o.HCode) || !o.HParent.HasChild(o) || guidInt.IsBlocked(accused))
                     o.HCode = $"{code}{guidInt.Guid()}/";
                 else
                 {
@@ -105,17 +106,18 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
         /// </summary>
         /// <param name="node">node doubted that it was a root/param>
         /// <returns>return true if the code of the node implies that it was a root</returns>
-        public static bool IsRoot(this IHireichy node) {
-            return node.HCode != null 
-                && (node.HCode.Equals("/") 
+        public static bool IsRoot(this IHireichy node)
+        {
+            return node.HCode != null
+                && (node.HCode.Equals("/")
                 || node.HCode.Split('/').Count(s => !string.IsNullOrEmpty(s)) == 1);
-        } 
+        }
 
         /// <summary>
         /// get the code of the node of a parent
         /// </summary>
         /// <param name="node"></param>
-        /// <returns>parent code</returns>
+        /// <returns>parent code .if the node is root ,it will return / </returns>
         public static string ParentCode(this IHireichy node)
         {
             if (node is null || node.HCode is null)
@@ -125,7 +127,7 @@ namespace PSC_Cost_Control.Helper.TreeListHandler
             return string.Concat(code.Take(code.LastIndexOf('/') + 1).ToArray());
         }
 
-    
+
     }
 
 }

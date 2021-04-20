@@ -11,11 +11,11 @@ using PSC_Cost_Control.Trackers.PersistantCruds;
 
 namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepositories
 {
-    public class UnifedCodeRepo : BaseRepo<C_Cost_Unified_Codes>,IHirechicalPersistent<C_Cost_Unified_Codes>, IUnifedCodeRepo
+    public class UnifedCodeRepo : BaseRepo<C_Cost_Unified_Codes>, IHirechicalPersistent<C_Cost_Unified_Codes>, IUnifedCodeRepo
     {
         protected override TablesEnum Table => TablesEnum.C_Cost_Unified_Codes;
 
-        public UnifedCodeRepo() 
+        public UnifedCodeRepo()
         {
         }
 
@@ -66,7 +66,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
         {
             using (var Context = new ApplicationContext())
             {
-                Context.f_COST_Delete_By_Id(Table.ToString(), unified.Id);
+                Context.f_Cost_Delete_Parent_With_Childs(Table.ToString(), unified.Id);
             }
         }
         public void UpdateCollection(IEnumerable<C_Cost_Unified_Codes> entities)
@@ -86,7 +86,7 @@ namespace PSC_Cost_Control.Repositories.PersistantReposotories.UnifiedCodesRepos
                 };
                 context.Database.ExecuteStoredProcedure(proc);
             }
-          
+
         }
 
         public void DeleteCollection(IEnumerable<C_Cost_Unified_Codes> entities)

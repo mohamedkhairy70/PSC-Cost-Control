@@ -35,7 +35,7 @@ namespace PSC_Cost_Control.Services.UnifiedCodesServices
 
         public async Task NewUnifiedCodes(List<C_Cost_Unified_Codes> codes)
         {
-            (codes.InjectIds() as IEnumerable<IHireichy>).ReSolvingHireachicalParentChild();
+            (codes.InjectFakeIds() as IEnumerable<IHireichy>).ReSolvingHireachicalParentChild();
 
             await _unifiedCodesRepo.AddUnifiedCodesAsync(codes);
         }
