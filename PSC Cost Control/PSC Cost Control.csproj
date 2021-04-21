@@ -104,6 +104,12 @@
     <Compile Include="Forms\Items Registeration\Frm_ItemsRegisterationBOQItems.Designer.cs">
       <DependentUpon>Frm_ItemsRegisterationBOQItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Project Code\Frm_ProjectCodeCopy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Project Code\Frm_ProjectCodeCopy.Designer.cs">
+      <DependentUpon>Frm_ProjectCodeCopy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Project Code\Frm_ProjectCode_Show.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -291,6 +297,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Items Registeration\Frm_ItemsRegisterationBOQItems.resx">
       <DependentUpon>Frm_ItemsRegisterationBOQItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Project Code\Frm_ProjectCodeCopy.resx">
+      <DependentUpon>Frm_ProjectCodeCopy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Project Code\Frm_ProjectCode_Show.resx">
       <DependentUpon>Frm_ProjectCode_Show.cs</DependentUpon>

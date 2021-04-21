@@ -24,11 +24,11 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         {
 
         }
-        void GetDataByBOQs(int Project, int BOQs)
+        async void GetDataByBOQs(int Project, int BOQs)
         {
             if (Project > 0)
             {
-                var ResaultBOQItem = _externalAPIs.GetBOQ_ItemsAsync(BOQs).Result;
+                var ResaultBOQItem = await _externalAPIs.GetBOQ_ItemsAsync(BOQs);
                 var CustomResaultBOQItem = from boq in ResaultBOQItem
                                            select new
                                            {
@@ -36,8 +36,8 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                                                BOQItemDescription = boq.Description
                                            };
                 DGV_BOQItem.DataSource = CustomResaultBOQItem;
-                var ResaultBOQRegisteration = _RegisterationService.GetBOQRegisteration(Project).Result;
-                var ResaultProjectCode = _IProjectCodeService.GetProjectCodes(Project).Result;
+                var ResaultBOQRegisteration = await _RegisterationService.GetBOQRegisteration(Project);
+                var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(Project);
             }
         }
 

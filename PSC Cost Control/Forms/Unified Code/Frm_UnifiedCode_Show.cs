@@ -534,11 +534,9 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
             var ResualtUnifiedCode = await _unifiedCodeService.GetUnifiedCodes();
             //var UnifiedList = innerJoin.ToList();
-            var linqlisti = ResualtUnifiedCode.ToList().AsEnumerable();
-            DataTable table = LINQResultToDataTable(linqlisti);
 
             var Resault = TreeListHandler.ToSequentialList<C_Cost_Unified_Codes>(tree_UnifiedCode).ToList();
-            if (table.Rows.Count > 0)
+            if (ResualtUnifiedCode.Any())
             {
                 await _unifiedCodeService.Update(Resault);
             }

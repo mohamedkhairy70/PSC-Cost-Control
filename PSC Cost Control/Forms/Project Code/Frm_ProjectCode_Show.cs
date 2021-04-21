@@ -639,12 +639,9 @@ namespace PSC_Cost_Control.Forms.Project_Code
             IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
 
             var ResualtProjectCode = await _ProjectCodeService.GetProjectCodes(projectId);
-            //var ProjectList = innerJoin.ToList();
-            var linqlisti = ResualtProjectCode.ToList().AsEnumerable();
-            //DataTable table = LINQResultToDataTable(linqlisti);
 
             var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
-            if (linqlisti.Any())
+            if (ResualtProjectCode.Any())
             {
                 await _ProjectCodeService.Update(projectId, Resault);
             }
@@ -666,6 +663,16 @@ namespace PSC_Cost_Control.Forms.Project_Code
             {
                 GetProjectCode(Convert.ToInt32(cm_Project.SelectedValue));
             }
+        }
+
+        private void windowsUIButtonPanel1_Click(object sender, EventArgs e)
+        {
+            Frm_ProjectCodeCopy frm = new Frm_ProjectCodeCopy();
+            frm.ShowDialog();
+            var ProjectToId = frm.ProjectTo_Id;
+            ClearAllDataProject();
+
+            GetProjectCode(ProjectToId);
         }
     }
 }
