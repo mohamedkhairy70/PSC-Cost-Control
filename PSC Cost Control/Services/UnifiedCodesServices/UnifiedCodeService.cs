@@ -19,13 +19,13 @@ namespace PSC_Cost_Control.Services.UnifiedCodesServices
     {
         private IUnifedCodeRepo _unifiedCodesRepo;
         private ITracker<C_Cost_Unified_Codes> _tracker;
-        private UpdatingCommiter<C_Cost_Unified_Codes> _committer;
+        private HireaichalUpdatingCommitter<C_Cost_Unified_Codes> _committer;
         public UnifiedCodeService(IUnifedCodeRepo codesRepo, ITracker<C_Cost_Unified_Codes> tracker)
         {
             _unifiedCodesRepo = codesRepo;
             _tracker = tracker;
-            _committer = new HireaichalUpdatingCommitter< C_Cost_Unified_Codes >
-                ((IPersistent <C_Cost_Unified_Codes>)_unifiedCodesRepo, _tracker);
+            _committer = new UnifiedCodeHireaichalUpdatingCommitter
+                ((IPersistent<C_Cost_Unified_Codes>)_unifiedCodesRepo, _tracker);
         }
 
         public async Task<IEnumerable<C_Cost_Unified_Codes>> GetUnifiedCodes()

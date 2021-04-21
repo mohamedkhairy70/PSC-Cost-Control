@@ -8,18 +8,22 @@ using System.Threading.Tasks;
 
 namespace PSC_Cost_Control.Trackers.Commiters
 {
-    public class NonHireaichalUpdatingCommitter<T>: UpdatingCommiter<T> where T : IHasId
+    public class NonHireaichalUpdatingCommitter<T> : IUpdatingCommiter where T : IHasId
     {
+        private IPersistent<T> _persistent;
+        private ITracker<T> _tracker;
         public NonHireaichalUpdatingCommitter(IPersistent<T> persistent, ITracker<T> tracker)
-            : base(persistent, tracker)
         {
+            _persistent = persistent;
+            _tracker = tracker;
+
         }
 
-        public override void Commit()
+        public void Commit()
         {
-            Persistent.DeleteCollection(Tracker.GetDeletedEntities());
-            Persistent.AddCollection(Tracker.GetNewEntities());
-            Persistent.UpdateCollection(Tracker.GetUpdatedEntities());
+            _persistent.DeleteCollection(_tracker.GetDeletedEntities());
+            _persistent.AddCollection(_tracker.GetNewEntities());
+            _persistent.UpdateCollection(_tracker.GetUpdatedEntities());
         }
 
     }

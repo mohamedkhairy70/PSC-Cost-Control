@@ -16,35 +16,36 @@ namespace PSC_Cost_Control.Services.ProjectCodesServices
     {
         private readonly IProjectCodesRepo _projectCodesRepo;
         private readonly ITracker<C_Cost_Project_Codes> _tracker;
-        private readonly UpdatingCommiter<C_Cost_Project_Codes> _commiter;
+        private readonly HireaichalUpdatingCommitter<C_Cost_Project_Codes> _commiter;
 
-        public ProjectCodeService(IProjectCodesRepo codesRepo,ITracker<C_Cost_Project_Codes> tracker)
+        public ProjectCodeService(IProjectCodesRepo codesRepo, ITracker<C_Cost_Project_Codes> tracker)
         {
             _projectCodesRepo = codesRepo;
             _tracker = new Tracker<C_Cost_Project_Codes>();
-             _commiter = new HireaichalUpdatingCommitter<C_Cost_Project_Codes>
-               ((IPersistent<C_Cost_Project_Codes>)_projectCodesRepo, tracker);
+            _commiter = new ProjectCodeHireaichalUpdatingCommitter
+              ((IPersistent<C_Cost_Project_Codes>)_projectCodesRepo, _tracker);
         }
         public async Task<IEnumerable<C_Cost_Project_Codes>> GetProjectCodes(int projectId)
         {
-            var rt= await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId);
+            var rt = await _projectCodesRepo.GetProjectCodesWithItsItsUnifiedAsync(projectId);
             return rt;
         }
 
         public async Task<IEnumerable<C_Cost_Project_Codes>> NewCodesForProject(int projectId, List<C_Cost_Project_Codes> codes)
         {
-           (codes.InjectFakeIds() as IEnumerable<IHireichy>).ReSolvingHireachicalParentChild();
+            (codes.InjectFakeIds() as IEnumerable<IHireichy>).ReSolvingHireachicalParentChild();
 
-            var lUDT = codes.Select(c => {
+            var lUDT = codes.Select(c =>
+            {
                 return new ProjectCodeUdT
                 {
-                    Id=c.Id,
+                    Id = c.Id,
                     CategoryId = c.Category_Id.Value,
                     ProjectId = projectId,
                     Description = c.Description,
                     UnifiedCodeId = c.Unified_Code_Id.Value,
                     Code = c.Code,
-                    parent =c.ParentId
+                    parent = c.ParentId
                 };
             }).ToList();
             await _projectCodesRepo.AddProjectCodes(lUDT);

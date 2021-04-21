@@ -64,7 +64,7 @@ namespace UnitTestProject1.Tracker
 
 
             _persisitent.Setup(c => c.GetDamagedHiraichals(null)).Returns(damaged);
-            _commiter = new HireaichalUpdatingCommitter<C_Cost_Project_Codes>(_persisitent.Object, _tracker.Object);
+            _commiter = new ProjectCodeHireaichalUpdatingCommitter(_persisitent.Object, _tracker.Object);
 
         }
 

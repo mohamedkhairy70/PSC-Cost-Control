@@ -15,21 +15,21 @@ namespace PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices
         private readonly IndirectCostItemRegisterationRepo _indirectRepo;
         private readonly ITracker<C_Cost_Project_Codes_Items> _directTracker;
         private readonly ITracker<C_Cost_Indirect_Project_Code_Summerizing> _inDirectTracker;
-        private readonly UpdatingCommiter<C_Cost_Project_Codes_Items> _directComitter;
-        private readonly UpdatingCommiter<C_Cost_Indirect_Project_Code_Summerizing> _InDirectComitter;
+        private readonly IUpdatingCommiter _directComitter;
+        private readonly IUpdatingCommiter _InDirectComitter;
 
 
         public ItemsRegisterationService
             (DirectItemRegisterationRepo directRepo
             , IndirectCostItemRegisterationRepo indirectRepo
-            , ITracker<C_Cost_Project_Codes_Items>  directTracker
+            , ITracker<C_Cost_Project_Codes_Items> directTracker
             , ITracker<C_Cost_Indirect_Project_Code_Summerizing> inDirectTracker)
         {
             _directRepo = directRepo;
             _indirectRepo = indirectRepo;
             _directTracker = directTracker;
             _inDirectTracker = inDirectTracker;
-            _directComitter= new NonHireaichalUpdatingCommitter<C_Cost_Project_Codes_Items>(_directRepo,_directTracker);
+            _directComitter = new NonHireaichalUpdatingCommitter<C_Cost_Project_Codes_Items>(_directRepo, _directTracker);
             _InDirectComitter = new NonHireaichalUpdatingCommitter<C_Cost_Indirect_Project_Code_Summerizing>(_indirectRepo, _inDirectTracker);
         }
 
@@ -56,7 +56,7 @@ namespace PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices
                     }));
         }
 
-      
+
         public void RegisterInDirectItems(IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> itemsCodes)
         {
             _indirectRepo
@@ -69,14 +69,14 @@ namespace PSC_Cost_Control.Services.ProjectCodeItemRegisterationServices
                     }));
         }
 
-        public void UpdateBOQItems(int projectId,IEnumerable<C_Cost_Project_Codes_Items> itemsCodes)
+        public void UpdateBOQItems(int projectId, IEnumerable<C_Cost_Project_Codes_Items> itemsCodes)
         {
             _directTracker.SetOrigin(_directRepo.GetRegisterationsAsync(projectId).Result);
             _directTracker.TrackCollection(itemsCodes);
             _directComitter.Commit();
         }
 
-        public void UpdateInDirectItems(int projecId,IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> itemsCodes)
+        public void UpdateInDirectItems(int projecId, IEnumerable<C_Cost_Indirect_Project_Code_Summerizing> itemsCodes)
         {
             _inDirectTracker.SetOrigin(_indirectRepo.GetRegisterationsAsync(projecId).Result);
             _inDirectTracker.TrackCollection(itemsCodes);
