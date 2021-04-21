@@ -30,29 +30,32 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             if (!string.IsNullOrWhiteSpace(ProjectName))
             {
                 var ResaultProjects = await _externalAPIs.SearchProjectsBYName(ProjectName);
-                ProjectId = Convert.ToInt32(ResaultProjects.SingleOrDefault().ContractId.ToString());
-
-                var ResaultBOQs = await _externalAPIs.GetBOQsAsync(ProjectId);
-                var CustomResaultBOQs = from boq in ResaultBOQs
-                            join pro in ResaultProjects on boq.ContractId equals pro.ContractId
-                            select new  { projectId = boq.Id, projectName = pro.Name};
-                if (ResaultBOQs.Any())
+                if (ResaultProjects.Any())
                 {
-                    cm_SearchByIndirectCost.DataSource = CustomResaultBOQs.ToList();
-                    cm_SearchByIndirectCost.ValueMember = "projectId";
-                    cm_SearchByIndirectCost.DisplayMember = "projectName";
-                }
+                    ProjectId = Convert.ToInt32(ResaultProjects.SingleOrDefault().ContractId.ToString());
 
-                IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+                    var ResaultBOQs = await _externalAPIs.GetBOQsAsync(ProjectId);
+                    var CustomResaultBOQs = from boq in ResaultBOQs
+                                            join pro in ResaultProjects on boq.ContractId equals pro.ContractId
+                                            select new { projectId = boq.Id, projectName = pro.Name };
+                    if (ResaultBOQs.Any())
+                    {
+                        cm_SearchByIndirectCost.DataSource = CustomResaultBOQs.ToList();
+                        cm_SearchByIndirectCost.ValueMember = "projectId";
+                        cm_SearchByIndirectCost.DisplayMember = "projectName";
+                    }
 
-                var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(ProjectId);
-                if (ResaultProjectCode.Any())
-                {
-                    var CustomResaultProjectCode = from ProCode in ResaultProjectCode
-                                                   select new { ProjectCode_Id = ProCode.Id, ProjectCode_Description = ProCode.Description };
-                    var ResaultProjectCodeList = CustomResaultProjectCode.ToList();
+                    IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
 
-                    DGV_ProjectCode.DataSource = ResaultProjectCodeList;
+                    var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(ProjectId);
+                    if (ResaultProjectCode.Any())
+                    {
+                        var CustomResaultProjectCode = from ProCode in ResaultProjectCode
+                                                       select new { ProjectCode_Id = ProCode.Id, ProjectCode_Description = ProCode.Description };
+                        var ResaultProjectCodeList = CustomResaultProjectCode.ToList();
+
+                        DGV_ProjectCode.DataSource = ResaultProjectCodeList;
+                    }
                 }
             }
         }
