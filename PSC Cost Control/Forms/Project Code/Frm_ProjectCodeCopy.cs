@@ -14,14 +14,14 @@ using System.Reflection;
 using System.Collections.Generic;
 using PSC_Cost_Control.Helper.TreeListHandler;
 using PSC_Cost_Control.Models;
+using DevExpress.XtraTreeList.Columns;
 
 namespace PSC_Cost_Control.Forms.Project_Code
 {
     public partial class Frm_ProjectCodeCopy : DevExpress.XtraEditors.XtraForm
     {
-        IProjectCodeCategoryService _categoryService;
         ExternalAPIs _externalAPIs;
-        TreeList tree_ProjectCode = new TreeList();
+        
         public int ProjectTo_Id = 0;
         public Frm_ProjectCodeCopy()
         {
@@ -38,11 +38,13 @@ namespace PSC_Cost_Control.Forms.Project_Code
             cm_ProjectTo.DisplayMember = "Name";
             cm_ProjectTo.ValueMember = "ContractId";
             cm_ProjectTo.SelectedItem = -1;
-
-            cm_ProjectFrom.DataSource = ProjectList;
+            var ProjectList2 = await _externalAPIs.GetProjectsAsync();
+            cm_ProjectFrom.DataSource = ProjectList2;
             cm_ProjectFrom.DisplayMember = "Name";
             cm_ProjectFrom.ValueMember = "ContractId";
             cm_ProjectFrom.SelectedItem = -1;
+
+            
         }
         private DataTable LINQResultToDataTable<T>(IEnumerable<T> Linqlist)
         {
@@ -83,9 +85,10 @@ namespace PSC_Cost_Control.Forms.Project_Code
             return dt;
         }
 
-        async void GetProjectCode(int projectId)
+        async Task<TreeList> GetProjectCode(int projectId)
         {
-            
+            TreeList tree_ProjectCode = new TreeList();
+            CreateColumns(tree_ProjectCode);
             IProjectCodeCategoryService _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
             IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
             IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
@@ -250,15 +253,9 @@ namespace PSC_Cost_Control.Forms.Project_Code
             {
                 tree_ProjectCode.ClearNodes();
             }
-
+            return tree_ProjectCode;
         }
 
-        async Task<bool> CheckProjectCodeAsync(int ProjectId)
-        {
-            IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
-            var ResualtProjectCode = await _ProjectCodeService.GetProjectCodes(ProjectId);
-            return ResualtProjectCode.Any();
-        }
 
         bool ValidationData()
         {
@@ -293,29 +290,65 @@ namespace PSC_Cost_Control.Forms.Project_Code
             if (btn.Caption == "Clone")
             {
                 //Add Cateogry
-                SaveProectCode(Convert.ToInt32(cm_ProjectTo.SelectedValue));
+                SaveProectCode(Convert.ToInt32(cm_ProjectFrom.SelectedValue), Convert.ToInt32(cm_ProjectTo.SelectedValue));
                 //Clear all Data 
                 ClearAllData();
             }
         }
-        async void SaveProectCode(int projectId)
+
+        private void CreateColumns(TreeList tl)
+        {
+            // Create three columns.
+            tl.BeginUpdate();
+            TreeListColumn col1 = tl.Columns.Add();
+            col1.Caption = "Id";
+            col1.Name = "Id";
+            col1.VisibleIndex = 0;
+            col1.Visible = false;
+            TreeListColumn col2 = tl.Columns.Add();
+            col2.Caption = "Project Code";
+            col2.Name = "ProjectCode_Code";
+            col2.VisibleIndex = 1;
+            col2.Visible = true;
+            TreeListColumn col3 = tl.Columns.Add();
+            col3.Caption = "Project Code Description";
+            col3.Name = "ProjectCode_Description";
+            col3.VisibleIndex = 2;
+            col3.Visible = true;
+            TreeListColumn col4 = tl.Columns.Add();
+            col4.Caption = "Project Code Title";
+            col4.Name = "ProjectCode_Title";
+            col4.VisibleIndex = 3;
+            col4.Visible = true;
+            TreeListColumn col5 = tl.Columns.Add();
+            col5.Caption = "Category Name";
+            col5.Name = "Category_Name";
+            col5.VisibleIndex = 4;
+            col5.Visible = true;
+            TreeListColumn col7 = tl.Columns.Add();
+            col7.Caption = "Project Code Parent";
+            col7.Name = "ProjectCode_Parent";
+            col7.VisibleIndex = 5;
+            col7.Visible = false;
+            tl.EndUpdate();
+        }
+        async void SaveProectCode(int projectIdOld, int projectIdNew)
         {
             if (ValidationData())
             {
                 IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
 
-                var ResualtProjectCode = await _ProjectCodeService.GetProjectCodes(projectId);
-                GetProjectCode(projectId);
-                var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
+                var ResualtProjectCode = await _ProjectCodeService.GetProjectCodes(projectIdNew);
+                var TreeResualt = await GetProjectCode(projectIdOld);
+                var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(TreeResualt).ToList();
                 if (ResualtProjectCode.Any())
                 {
-                    await _ProjectCodeService.Update(projectId, Resault);
+                    await _ProjectCodeService.Update(projectIdNew, Resault);
                 }
                 else
                 {
-                    await _ProjectCodeService.NewCodesForProject(projectId, Resault);
+                    await _ProjectCodeService.NewCodesForProject(projectIdNew, Resault);
                 }
-                tree_ProjectCode.Nodes.Clear();
                 MessageBox.Show("The data has been saved successfully. ");
             }
         }
@@ -332,8 +365,9 @@ namespace PSC_Cost_Control.Forms.Project_Code
             {
                 if (Convert.ToInt32(cm_ProjectFrom.SelectedValue) > 0)
                 {
-                    var Resualt = await CheckProjectCodeAsync(Convert.ToInt32(cm_ProjectFrom.SelectedValue));
-                    if (!Resualt)
+                    IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+                    var Resualt = await _ProjectCodeService.GetProjectCodes(Convert.ToInt32(cm_ProjectFrom.SelectedValue));
+                    if (!Resualt.Any())
                     {
                         MessageBox.Show("Plase choose Project Not Epmty Project Code  .");
                         cm_ProjectFrom.SelectedIndex = -1;
@@ -353,8 +387,9 @@ namespace PSC_Cost_Control.Forms.Project_Code
             {
                 if (Convert.ToInt32(cm_ProjectTo.SelectedValue) > 0)
                 {
-                    var Resualt = await CheckProjectCodeAsync(Convert.ToInt32(cm_ProjectTo.SelectedValue));
-                    if (Resualt)
+                    IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+                    var Resualt = await _ProjectCodeService.GetProjectCodes(Convert.ToInt32(cm_ProjectTo.SelectedValue));
+                   if (Resualt.Any())
                     {
                         MessageBox.Show("Plase choose Project Epmty Project Code  .");
                         cm_ProjectTo.SelectedIndex = -1;
