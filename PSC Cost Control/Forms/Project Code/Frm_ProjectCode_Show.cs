@@ -413,6 +413,12 @@ namespace PSC_Cost_Control.Forms.Project_Code
             col7.Name = "ProjectCode_Parent";
             col7.VisibleIndex = 5;
             col7.Visible = false;
+            //TreeListColumn col8 = tl.Columns.Add();
+            //col8.Caption = "Edit";
+            //col8.Name = "Edit";
+            //col8.VisibleIndex = 6;
+            //col8.Visible = false;
+            //col8.ColumnType.;
             tl.EndUpdate();
         }
 
@@ -662,16 +668,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 GetProjectCode(Convert.ToInt32(cm_Project.SelectedValue));
             }
         }
-        //var ResaultTag = new Models.C_Cost_Project_Codes();
-        //var _Tag = (Models.C_Cost_Project_Codes)e.Node.Tag;
+        
 
-        //var _TagEdit = new Models.C_Cost_Project_Codes { Category_Id = 0, Code = "", Description = "", HCode = "", ParentId = 0, Unified_Code_Id = 0, Project_Id = 0 };
-
-        //e.Node.Tag = _Tag;
-
-        private void tree_ProjectCode_CustomNodeCellEdit(object sender, GetCustomNodeCellEditEventArgs e)
-        {
-            MessageBox.Show("Check");
-        }
     }
 }
