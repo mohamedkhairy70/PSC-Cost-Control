@@ -32,7 +32,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 var ResaultProjects = await _externalAPIs.SearchProjectsBYName(ProjectName);
                 if (ResaultProjects.Any())
                 {
-                    ProjectId = Convert.ToInt32(ResaultProjects.SingleOrDefault().ContractId.ToString());
+                    ProjectId = Convert.ToInt32(ResaultProjects.First().ContractId.ToString());
 
                     var ResaultBOQs = await _externalAPIs.GetBOQsAsync(ProjectId);
                     var CustomResaultBOQs = from boq in ResaultBOQs
