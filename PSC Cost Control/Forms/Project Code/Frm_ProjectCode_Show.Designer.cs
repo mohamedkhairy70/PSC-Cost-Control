@@ -225,7 +225,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.windowsUIButtonPanel1.TabIndex = 0;
             this.windowsUIButtonPanel1.Text = "windowsUIButtonPanel1";
             this.windowsUIButtonPanel1.ButtonClick += new DevExpress.XtraBars.Docking2010.ButtonEventHandler(this.windowsUIButtonPanel1_ButtonClick);
-            this.windowsUIButtonPanel1.Click += new System.EventHandler(this.windowsUIButtonPanel1_Click);
             // 
             // panelControl3
             // 
@@ -262,7 +261,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             this.tree_ProjectCode.ParentFieldName = "GetLevelNode";
             this.tree_ProjectCode.Size = new System.Drawing.Size(1041, 327);
             this.tree_ProjectCode.TabIndex = 0;
-            this.tree_ProjectCode.NodeChanged += new DevExpress.XtraTreeList.NodeChangedEventHandler(this.tree_ProjectCode_NodeChanged);
             // 
             // Frm_ProjectCode_Show
             // 

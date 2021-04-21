@@ -36,7 +36,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             _externalAPIs = new ExternalAPIs();
 
         }
-
+        
         private void windowsUIButtonPanel1_ButtonClick(object sender, ButtonEventArgs e)
         {
             WindowsUIButton btn = e.Button as WindowsUIButton;
@@ -118,6 +118,14 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     ClearAllDataProject();
                 }
                 
+            }else if(btn.Caption == "copy from another Project")
+            {
+                Frm_ProjectCodeCopy frm = new Frm_ProjectCodeCopy();
+                frm.ShowDialog();
+                var ProjectToId = frm.ProjectTo_Id;
+                ClearAllDataProject();
+
+                GetProjectCode(ProjectToId);
             }
 
         }
@@ -135,11 +143,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
             tree_ProjectCode.ExpandAll();
         }
 
-
-        private void tree_ProjectCode_NodeChanged(object sender, NodeChangedEventArgs e)
-        {
-
-        }
 
         #region Method for Create TreeList
 
@@ -332,11 +335,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
         void AddRootProjectCode(string Category, string ProjectCode_Description, string UnidiedCodeTitle, int CategoryId, int UnidiedCodeId, int ProjectId)
         {
             var _Tag = new Models.C_Cost_Project_Codes { Category_Id = CategoryId, Description = ProjectCode_Description, Unified_Code_Id = UnidiedCodeId, Project_Id = ProjectId };
-            //TreeListNode newNode = tree_ProjectCode.AppendNode(
-            //    nodeData: new object[] { "/" + (tree_ProjectCode.Nodes.Count +1)
-            //    , Category, ProjectCodeTitle },parentNode: null);
-            //tree_ProjectCode.FocusedNode = newNode;
-
 
              tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(
                 nodeData: new object[] {0, "/" + (tree_ProjectCode.Nodes.Count +1)
@@ -664,15 +662,16 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 GetProjectCode(Convert.ToInt32(cm_Project.SelectedValue));
             }
         }
+        //var ResaultTag = new Models.C_Cost_Project_Codes();
+        //var _Tag = (Models.C_Cost_Project_Codes)e.Node.Tag;
 
-        private void windowsUIButtonPanel1_Click(object sender, EventArgs e)
+        //var _TagEdit = new Models.C_Cost_Project_Codes { Category_Id = 0, Code = "", Description = "", HCode = "", ParentId = 0, Unified_Code_Id = 0, Project_Id = 0 };
+
+        //e.Node.Tag = _Tag;
+
+        private void tree_ProjectCode_CustomNodeCellEdit(object sender, GetCustomNodeCellEditEventArgs e)
         {
-            Frm_ProjectCodeCopy frm = new Frm_ProjectCodeCopy();
-            frm.ShowDialog();
-            var ProjectToId = frm.ProjectTo_Id;
-            ClearAllDataProject();
-
-            GetProjectCode(ProjectToId);
+            MessageBox.Show("Check");
         }
     }
 }
