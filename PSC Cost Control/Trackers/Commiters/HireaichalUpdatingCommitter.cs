@@ -9,56 +9,66 @@ using System.Linq;
 
 namespace PSC_Cost_Control.Trackers.Commiters
 {
-    public class HireaichalUpdatingCommitter<T> : UpdatingCommiter<T> where T : IHireichy
+    public abstract class HireaichalUpdatingCommitter<T> : IUpdatingCommiter where T : IHireichy
     {
-        private IReducer<T> _reducer;
-        private IDictionary<string, T> _allMap;
-        private IEnumerable<T> _all;
+        protected IReducer<T> _reducer;
+        protected IDictionary<string, T> _allMap;
         private int _influencedCount;
-        public HireaichalUpdatingCommitter(IPersistent<T> persistent, ITracker<T> tracker) : base(persistent, tracker)
+        protected IPersistent<T> _persistent;
+        protected ITracker<T> _tracker;
+
+
+        protected HireaichalUpdatingCommitter(IPersistent<T> persistent, ITracker<T> tracker)
         {
             _reducer = new Reducer<T>();
+            _persistent = persistent;
+            _tracker = tracker;
         }
 
-        public async override void Commit()
-        {
-            Persistent.DeleteCollection(_reducer.Reduce(Tracker.GetDeletedEntities()));
+        public abstract IDictionary<string, int> GetDamaged();
 
-            SetAllAndMap();
+        public async void Commit()
+        {
+            _persistent.DeleteCollection(_reducer.Reduce(_tracker.GetDeletedEntities()));
+
+            SetMap();
 
             SetInFluencedCount();
 
-            Tracker.GetNewEntities().InjectFakeIds();//fake Ids 
+            _tracker.GetNewEntities().InjectFakeIds();//fake Ids 
 
-            await Persistent.AddCollection(Tracker.GetNewEntities());
+            await _persistent.AddCollection(_tracker.GetNewEntities());
+
+            _persistent.UpdateCollection(_tracker.GetUpdatedEntities());
 
             InjectRealIds();
 
             SolveHireachy();
 
-            Persistent.UpdateCollection(_all.Take(_influencedCount).ToList());
+            _persistent.UpdateCollection(_allMap.Values.Take(_influencedCount).ToList());
         }
 
-        private void SetAllAndMap()
+        private void SetMap()
         {
-            _all = Tracker
+            _allMap = _tracker
                 .GetNewEntities()
-                .Concat(Tracker.GetUpdatedEntities())
-                .Concat(Tracker.GetUnChangedEntities());
-            _allMap = _all.ToDictionary(t => t.HCode);
+                .Concat(_tracker.GetUpdatedEntities())
+                .Concat(_tracker.GetUnChangedEntities())
+                .ToDictionary(t => t.HCode);
         }
 
         private void SetInFluencedCount()
         {
-            _influencedCount = Tracker.GetNewEntities().Count() + Tracker.GetUpdatedEntities().Count();
+            _influencedCount = _tracker.GetNewEntities().Count() + _tracker.GetUpdatedEntities().Count();
         }
 
 
         private void InjectRealIds()
         {
-            var damaged = (Persistent as IHirechicalPersistent<T>).GetDamagedHiraichals();
+            var damaged = GetDamaged();
             damaged.ForEach(d => _allMap[d.Key].Id = d.Value);
         }
+
 
         private void SolveHireachy()
         {
