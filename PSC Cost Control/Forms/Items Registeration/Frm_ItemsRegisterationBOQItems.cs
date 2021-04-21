@@ -36,19 +36,23 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 var CustomResaultBOQs = from boq in ResaultBOQs
                             join pro in ResaultProjects on boq.ContractId equals pro.ContractId
                             select new  { projectId = boq.Id, projectName = pro.Name};
-
-                cm_BOQItem.DataSource = CustomResaultBOQs.ToList();
-                cm_BOQItem.ValueMember = "projectId";
-                cm_BOQItem.DisplayMember = "projectName";
+                if (ResaultBOQs.Any())
+                {
+                    cm_BOQItem.DataSource = CustomResaultBOQs.ToList();
+                    cm_BOQItem.ValueMember = "projectId";
+                    cm_BOQItem.DisplayMember = "projectName";
+                }
                 IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
 
                 var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(ProjectId);
-                
-                var CustomResaultProjectCode = from ProCode in ResaultProjectCode
-                                              select new { ProjectCode_Id = ProCode.Id, ProjectCode_Description = ProCode.Description };
-                var ResaultProjectCodeList = CustomResaultProjectCode.ToList();
+                if (ResaultProjectCode.Any())
+                {
+                    var CustomResaultProjectCode = from ProCode in ResaultProjectCode
+                                                   select new { ProjectCode_Id = ProCode.Id, ProjectCode_Description = ProCode.Description };
+                    var ResaultProjectCodeList = CustomResaultProjectCode.ToList();
 
-                DGV_ProjectCode.DataSource = ResaultProjectCodeList;
+                    DGV_ProjectCode.DataSource = ResaultProjectCodeList;
+                }
             }
         }
         async void GetDataByBOQs(int Project, int BOQs)
