@@ -300,22 +300,24 @@ namespace PSC_Cost_Control.Forms.Project_Code
         }
         async void SaveProectCode(int projectId)
         {
-
-            IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
-
-            var ResualtProjectCode = await _ProjectCodeService.GetProjectCodes(projectId);
-
-            var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
-            if (ResualtProjectCode.Any())
+            if (ValidationData())
             {
-                await _ProjectCodeService.Update(projectId, Resault);
+                IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+
+                var ResualtProjectCode = await _ProjectCodeService.GetProjectCodes(projectId);
+                GetProjectCode(projectId);
+                var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
+                if (ResualtProjectCode.Any())
+                {
+                    await _ProjectCodeService.Update(projectId, Resault);
+                }
+                else
+                {
+                    await _ProjectCodeService.NewCodesForProject(projectId, Resault);
+                }
+                tree_ProjectCode.Nodes.Clear();
+                MessageBox.Show("The data has been saved successfully. ");
             }
-            else
-            {
-                await _ProjectCodeService.NewCodesForProject(projectId, Resault);
-            }
-            tree_ProjectCode.Nodes.Clear();
-            MessageBox.Show("The data has been saved successfully. ");
         }
 
         private void Frm_Categories_ProjectCode_Load(object sender, EventArgs e)
