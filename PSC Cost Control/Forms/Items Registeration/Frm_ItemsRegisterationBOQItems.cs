@@ -16,6 +16,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
 
         ExternalAPIs _externalAPIs;
         int ProjectId;
+
         public Frm_ItemsRegisterationBOQItems()
         {
             InitializeComponent();
@@ -38,7 +39,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     var ResaultBOQs = await _externalAPIs.GetBOQsAsync(ProjectId);
                     var CustomResaultBOQs = from boq in ResaultBOQs
                                             join pro in ResaultProjects on boq.ContractId equals pro.ContractId
-                                            select new { projectId = boq.Id, projectName = pro.Name };
+                                            select new { projectId = boq.Id, projectName = (boq.Id.ToString() + " " + boq.RevDate.ToString()) };
                     if (ResaultBOQs.Any())
                     {
                         cm_BOQItem.DataSource = CustomResaultBOQs.ToList();
@@ -59,6 +60,120 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 }
             }
         }
+        async void SearchDataProjectCode(int Project, string ProDescription)
+        {
+            IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+            if (!string.IsNullOrEmpty(ProDescription))
+            {
+               
+
+                var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(Project);
+                if (ResaultProjectCode.Any())
+                {
+                    var SearchProjectCode = ResaultProjectCode.Where(x => x.Description == ProDescription).ToList();
+                    var CustomResaultProjectCode = from ProCode in ResaultProjectCode
+                                                   select new { ProjectCode_Id = ProCode.Id, ProjectCode_Description = ProCode.Description };
+                    var ResaultProjectCodeList = CustomResaultProjectCode.ToList();
+
+                    DGV_ProjectCode.DataSource = ResaultProjectCodeList;
+                }
+            }
+            else
+            {
+                var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(Project);
+                if (ResaultProjectCode.Any())
+                {
+                    var CustomResaultProjectCode = from ProCode in ResaultProjectCode
+                                                   select new { ProjectCode_Id = ProCode.Id, ProjectCode_Description = ProCode.Description };
+                    var ResaultProjectCodeList = CustomResaultProjectCode.ToList();
+
+                    DGV_ProjectCode.DataSource = ResaultProjectCodeList;
+                }
+            }
+        }
+        async void SearchDataBOQsItem(string BOQsIteme,int BOQs)
+        {
+            IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
+            if (BOQs > 0)
+            {
+                if (!string.IsNullOrEmpty(BOQsIteme))
+                {
+                    var ResaultBOQItem = await _externalAPIs.GetBOQ_ItemsAsync(BOQs);
+                    var CustomResaultBOQItem = from boq in ResaultBOQItem
+                                               select new
+                                               {
+                                                   BoqItemId = boq.Id,
+                                                   BOQItemDescription = boq.Description
+                                               };
+                    if (CustomResaultBOQItem.Any())
+                    {
+                        var ResaultBOQItemList = CustomResaultBOQItem.Where(x => x.BOQItemDescription == BOQsIteme).ToList();
+                        DGV_BOQItem.DataSource = ResaultBOQItemList;
+                    }
+                }
+                else
+                {
+                    var ResaultBOQItem = await _externalAPIs.GetBOQ_ItemsAsync(BOQs);
+                    var CustomResaultBOQItem = from boq in ResaultBOQItem
+                                               select new
+                                               {
+                                                   BoqItemId = boq.Id,
+                                                   BOQItemDescription = boq.Description
+                                               };
+                    if (CustomResaultBOQItem.Any())
+                    {
+                        var ResaultBOQItemList = CustomResaultBOQItem.ToList();
+                        DGV_BOQItem.DataSource = ResaultBOQItemList;
+                    }
+                }
+            }
+        }
+        async void SearchDataRegistraion(int Project, int BOQs, string ItemDescription)
+        {
+            if (Project > 0)
+            {
+                if (!string.IsNullOrEmpty(ItemDescription))
+                {
+                    IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+                    IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
+                    var ResaultBOQItem = await _externalAPIs.GetBOQ_ItemsAsync(BOQs);
+                    var CustomResaultBOQItem = from boq in ResaultBOQItem
+                                               select new
+                                               {
+                                                   BoqItemId = boq.Id,
+                                                   BOQItemDescription = boq.Description
+                                               };
+                    if (CustomResaultBOQItem.Any())
+                    {
+                        var ResaultBOQRegisteration = await _RegisterationService.GetBOQRegisteration(Project);
+                        var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(Project);
+                        var CustomResaultBOQRegisteration = from boq in ResaultBOQRegisteration
+                                                            join BoqItem in ResaultBOQItem on boq.Boq_Item_Id equals BoqItem.BOQId
+                                                            join proCode in ResaultProjectCode on boq.Project_Code_Id equals proCode.Id
+                                                            select new
+                                                            {
+                                                                BoqRegisterId = boq.Id,
+                                                                BoqResisterBoqItemeId = boq.Boq_Item_Id,
+                                                                BoqResisterProjectCodeId = boq.Project_Code_Id,
+                                                                BoqResisterBoqItemeDescription = BoqItem.Description,
+                                                                BoqResisterProjectCodeDescription = proCode.Description
+                                                            };
+                        var BOQRegisterationList = CustomResaultBOQRegisteration.Where(x => x.BoqResisterBoqItemeDescription == ItemDescription || x.BoqResisterProjectCodeDescription == ItemDescription).ToList();
+                        if (BOQRegisterationList.Any())
+                        {
+
+                            DGV_RegistBOQItem.DataSource = BOQRegisterationList;
+                        }
+
+                    }
+                }
+                else
+                {
+                    GetDataByBOQs(Project, BOQs);
+                }
+            }
+        }
+
         async void GetDataByBOQs(int Project, int BOQs)
         {
             if (Project > 0)
@@ -72,26 +187,29 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                                                BoqItemId = boq.Id,
                                                BOQItemDescription = boq.Description 
                                             };
-                var ResaultBOQItemList = CustomResaultBOQItem.ToList();
-                DGV_BOQItem.DataSource = ResaultBOQItemList;
-                var ResaultBOQRegisteration = await _RegisterationService.GetBOQRegisteration(Project);
-                var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(Project);
-                var CustomResaultBOQRegisteration = from boq in ResaultBOQRegisteration
-                                                    join BoqItem in ResaultBOQItem on boq.Boq_Item_Id equals BoqItem.BOQId
-                                                    join proCode in ResaultProjectCode on boq.Project_Code_Id equals proCode.Id
-                                                    select new
-                                                      {
-                                                            BoqRegisterId =  boq.Id ,
+                if (CustomResaultBOQItem.Any())
+                {
+                    var ResaultBOQItemList = CustomResaultBOQItem.ToList();
+                    DGV_BOQItem.DataSource = ResaultBOQItemList;
+                    var ResaultBOQRegisteration = await _RegisterationService.GetBOQRegisteration(Project);
+                    var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(Project);
+                    var CustomResaultBOQRegisteration = from boq in ResaultBOQRegisteration
+                                                        join BoqItem in ResaultBOQItem on boq.Boq_Item_Id equals BoqItem.BOQId
+                                                        join proCode in ResaultProjectCode on boq.Project_Code_Id equals proCode.Id
+                                                        select new
+                                                        {
+                                                            BoqRegisterId = boq.Id,
                                                             BoqResisterBoqItemeId = boq.Boq_Item_Id,
                                                             BoqResisterProjectCodeId = boq.Project_Code_Id,
                                                             BoqResisterBoqItemeDescription = BoqItem.Description,
-                                                            BoqResisterProjectCodeDescription =  proCode.Description
-                                                      };
+                                                            BoqResisterProjectCodeDescription = proCode.Description
+                                                        };
 
-                var BOQRegisterationList = ResaultBOQRegisteration.ToList();
-                if (BOQRegisterationList.Count > 0)
-                {
-                    DGV_RegistBOQItem.DataSource = ResaultBOQRegisteration;
+                    var BOQRegisterationList = CustomResaultBOQRegisteration.ToList();
+                    if (BOQRegisterationList.Count > 0)
+                    {
+                        DGV_RegistBOQItem.DataSource = BOQRegisterationList;
+                    }
                 }
             }
         }
@@ -295,6 +413,42 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     }
                 }
                 catch { }
+            }
+        }
+
+        private void txt_SearchByBOQItem_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                var ValueSaerch = txt_SearchByBOQItem.Text;
+                if (!string.IsNullOrEmpty(ValueSaerch))
+                {
+                    SearchDataBOQsItem(ValueSaerch, Convert.ToInt32(cm_BOQItem.SelectedValue));
+                }
+            }
+        }
+
+        private void txt_SearchByProjectCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                var ValueSaerch = txt_SearchByProjectCode.Text;
+                if (!string.IsNullOrEmpty(ValueSaerch))
+                {
+                    SearchDataProjectCode(ProjectId, ValueSaerch);
+                }
+            }
+        }
+
+        private void txt_SearchByRegistBOQItem_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                var ValueSaerch = txt_SearchByProjectCode.Text;
+                if (!string.IsNullOrEmpty(ValueSaerch))
+                {
+                    SearchDataRegistraion(ProjectId, Convert.ToInt32(cm_BOQItem.SelectedValue), ValueSaerch);
+                }
             }
         }
     }

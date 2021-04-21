@@ -16,6 +16,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
 
         ExternalAPIs _externalAPIs;
         int ProjectId;
+
         public Frm_ItemsRegisterationIndirectCostItem()
         {
             InitializeComponent();
@@ -92,6 +93,126 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 if (IndirectCostRegisterationList.Count > 0)
                 {
                     DGV_RegistBOQItem.DataSource = IndirectCostRegisterationList;
+                }
+            }
+        }
+        async void SearchDataProjectCode(int Project, string ProDescription)
+        {
+            IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+            if (!string.IsNullOrEmpty(ProDescription))
+            {
+
+
+                var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(Project);
+                if (ResaultProjectCode.Any())
+                {
+                    var SearchProjectCode = ResaultProjectCode.Where(x => x.Description == ProDescription).ToList();
+                    var CustomResaultProjectCode = from ProCode in ResaultProjectCode
+                                                   select new { ProjectCode_Id = ProCode.Id, ProjectCode_Description = ProCode.Description };
+                    var ResaultProjectCodeList = CustomResaultProjectCode.ToList();
+
+                    DGV_ProjectCode.DataSource = ResaultProjectCodeList;
+                }
+            }
+            else
+            {
+                var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(Project);
+                if (ResaultProjectCode.Any())
+                {
+                    var CustomResaultProjectCode = from ProCode in ResaultProjectCode
+                                                   select new { ProjectCode_Id = ProCode.Id, ProjectCode_Description = ProCode.Description };
+                    var ResaultProjectCodeList = CustomResaultProjectCode.ToList();
+
+                    DGV_ProjectCode.DataSource = ResaultProjectCodeList;
+                }
+            }
+        }
+        async void SearchDataIndirectCost(string BOQsIteme, int BOQs)
+        {
+            IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
+            if (BOQs > 0)
+            {
+                if (!string.IsNullOrEmpty(BOQsIteme))
+                {
+                    var ResaultIndirectCostId = await _externalAPIs.GetIndirectItems(BOQs);
+                    var CustomResaultBOQItem = from boq in ResaultIndirectCostId
+                                               select new
+                                               {
+                                                   IndirectCostId = boq.Id,
+                                                   IndirectCostDescription = boq.Description
+                                               };
+                    var ResaultBOQItemList = CustomResaultBOQItem.Where(x => x.IndirectCostDescription == BOQsIteme).ToList();
+                    if (CustomResaultBOQItem.Any())
+                    {
+                        DGV_IndirectCost.DataSource = ResaultBOQItemList;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Can not Find");
+                    }
+                }
+                else
+                {
+                    var ResaultIndirectCostId = await _externalAPIs.GetIndirectItems(BOQs);
+                    var CustomResaultBOQItem = from boq in ResaultIndirectCostId
+                                               select new
+                                               {
+                                                   IndirectCostId = boq.Id,
+                                                   IndirectCostDescription = boq.Description
+                                               };
+                    if (CustomResaultBOQItem.Any())
+                    {
+                        var ResaultBOQItemList = CustomResaultBOQItem.ToList();
+                        DGV_IndirectCost.DataSource = ResaultBOQItemList;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Can not Find");
+                    }
+                }
+            }
+        }
+        async void SearchDataRegistraion(int Project, int BOQs, string ItemDescription)
+        {
+            if (Project > 0)
+            {
+                if (!string.IsNullOrEmpty(ItemDescription))
+                {
+                    IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+                    IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
+                    var ResaultIndirectCostId = await _externalAPIs.GetIndirectItems(BOQs);
+                    var CustomResaultBOQItem = from boq in ResaultIndirectCostId
+                                               select new
+                                               {
+                                                   IndirectCostId = boq.Id,
+                                                   IndirectCostDescription = boq.Description
+                                               };
+                    if (ResaultIndirectCostId.Any())
+                    {
+                        var ResaultIndirectCostRegisteration = await _RegisterationService.GetIndirectItemRegisteration(Project);
+                        var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(Project);
+                        var CustomResaultIndirectCosRegisteration = from boq in ResaultIndirectCostRegisteration
+                                                                    join IndirectCostId in ResaultIndirectCostId on boq.Indirect_Cost_Item_Id equals IndirectCostId.Id
+                                                                    join proCode in ResaultProjectCode on boq.Projcet_Code_Id equals proCode.Id
+                                                                    select new
+                                                                    {
+                                                                        BoqRegisterId = boq.Id,
+                                                                        BoqResisterIndirectCostId = boq.Indirect_Cost_Item_Id,
+                                                                        BoqResisterProjectCodeId = boq.Projcet_Code_Id,
+                                                                        BoqResisterIndirectCostDescription = IndirectCostId.Description,
+                                                                        BoqResisterProjectCodeDescription = proCode.Description
+                                                                    };
+                        var BOQRegisterationList = CustomResaultIndirectCosRegisteration.Where(x => x.BoqResisterIndirectCostDescription == ItemDescription || x.BoqResisterProjectCodeDescription == ItemDescription).ToList();
+                        if (BOQRegisterationList.Where(x => x.BoqResisterIndirectCostDescription == ItemDescription).Any())
+                        {
+                            DGV_RegistBOQItem.DataSource = BOQRegisterationList;
+                            
+                        }
+                    }
+                }
+                else
+                {
+                    GetDataByBOQs(Project, BOQs);
                 }
             }
         }
@@ -295,6 +416,42 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     }
                 }
                 catch { }
+            }
+        }
+
+        private void txt_SearchByIndirectCost_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                var ValueSaerch = txt_SearchByIndirectCost.Text;
+                if (!string.IsNullOrEmpty(ValueSaerch))
+                {
+                    SearchDataIndirectCost(ValueSaerch, Convert.ToInt32(cm_SearchByIndirectCost.SelectedValue));
+                }
+            }
+        }
+
+        private void txt_SearchByProjectCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                var ValueSaerch = txt_SearchByProjectCode.Text;
+                if (!string.IsNullOrEmpty(ValueSaerch))
+                {
+                    SearchDataProjectCode(ProjectId, ValueSaerch);
+                }
+            }
+        }
+
+        private void txt_SearchByRegistBOQItem_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                var ValueSaerch = txt_SearchByRegistBOQItem.Text;
+                if (!string.IsNullOrEmpty(ValueSaerch))
+                {
+                    SearchDataRegistraion(ProjectId, Convert.ToInt32(cm_SearchByIndirectCost.SelectedValue), ValueSaerch);
+                }
             }
         }
     }

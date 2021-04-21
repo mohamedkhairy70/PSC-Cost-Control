@@ -37,6 +37,10 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.button1 = new System.Windows.Forms.Button();
             this.btn_Regiter = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.DGV_BOQItem = new System.Windows.Forms.DataGridView();
+            this.ch_RegisterBOQItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.BoqItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BOQItemDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel8 = new System.Windows.Forms.Panel();
             this.cm_BOQItem = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -46,6 +50,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.DGV_ProjectCode = new System.Windows.Forms.DataGridView();
+            this.ch_RegisterProjectCode = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ProjectCode_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProjectCode_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel6 = new System.Windows.Forms.Panel();
             this.txt_SearchByProjectCode = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -53,29 +60,23 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label1 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.DGV_RegistBOQItem = new System.Windows.Forms.DataGridView();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.txt_SearchByRegistBOQItem = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.DGV_BOQItem = new System.Windows.Forms.DataGridView();
-            this.ch_RegisterProjectCode = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ProjectCode_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProjectCode_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ch_RegisterBOQItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.BoqItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BOQItemDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_RegisterEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.BoqRegisterId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BoqResisterBoqItemeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BoqResisterProjectCodeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BoqResisterBoqItemeDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BoqResisterProjectCodeDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.txt_SearchByRegistBOQItem = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_BOQItem)).BeginInit();
             this.panel8.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -86,7 +87,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             ((System.ComponentModel.ISupportInitialize)(this.DGV_RegistBOQItem)).BeginInit();
             this.panel7.SuspendLayout();
             this.panel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_BOQItem)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -178,6 +178,41 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel3.Size = new System.Drawing.Size(360, 439);
             this.panel3.TabIndex = 2;
             // 
+            // DGV_BOQItem
+            // 
+            this.DGV_BOQItem.AllowUserToAddRows = false;
+            this.DGV_BOQItem.AllowUserToDeleteRows = false;
+            this.DGV_BOQItem.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_BOQItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_BOQItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ch_RegisterBOQItem,
+            this.BoqItemId,
+            this.BOQItemDescription});
+            this.DGV_BOQItem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DGV_BOQItem.Location = new System.Drawing.Point(0, 139);
+            this.DGV_BOQItem.Margin = new System.Windows.Forms.Padding(4);
+            this.DGV_BOQItem.Name = "DGV_BOQItem";
+            this.DGV_BOQItem.Size = new System.Drawing.Size(358, 298);
+            this.DGV_BOQItem.TabIndex = 3;
+            // 
+            // ch_RegisterBOQItem
+            // 
+            this.ch_RegisterBOQItem.HeaderText = "Register BOQ Item";
+            this.ch_RegisterBOQItem.Name = "ch_RegisterBOQItem";
+            this.ch_RegisterBOQItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // BoqItemId
+            // 
+            this.BoqItemId.DataPropertyName = "BoqItemId";
+            this.BoqItemId.HeaderText = "BOQ Item Id";
+            this.BoqItemId.Name = "BoqItemId";
+            // 
+            // BOQItemDescription
+            // 
+            this.BOQItemDescription.DataPropertyName = "BOQItemDescription";
+            this.BOQItemDescription.HeaderText = "BOQ Item Description";
+            this.BOQItemDescription.Name = "BOQItemDescription";
+            // 
             // panel8
             // 
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -224,6 +259,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.txt_SearchByBOQItem.Name = "txt_SearchByBOQItem";
             this.txt_SearchByBOQItem.Size = new System.Drawing.Size(204, 26);
             this.txt_SearchByBOQItem.TabIndex = 6;
+            this.txt_SearchByBOQItem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_SearchByBOQItem_KeyDown);
             // 
             // label6
             // 
@@ -285,6 +321,24 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_ProjectCode.Size = new System.Drawing.Size(421, 298);
             this.DGV_ProjectCode.TabIndex = 1;
             // 
+            // ch_RegisterProjectCode
+            // 
+            this.ch_RegisterProjectCode.HeaderText = "Register Project Code";
+            this.ch_RegisterProjectCode.Name = "ch_RegisterProjectCode";
+            this.ch_RegisterProjectCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // ProjectCode_Description
+            // 
+            this.ProjectCode_Description.DataPropertyName = "ProjectCode_Description";
+            this.ProjectCode_Description.HeaderText = "Project Code Description";
+            this.ProjectCode_Description.Name = "ProjectCode_Description";
+            // 
+            // ProjectCode_Id
+            // 
+            this.ProjectCode_Id.DataPropertyName = "ProjectCode_Id";
+            this.ProjectCode_Id.HeaderText = "Project Code Id";
+            this.ProjectCode_Id.Name = "ProjectCode_Id";
+            // 
             // panel6
             // 
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -305,6 +359,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.txt_SearchByProjectCode.Name = "txt_SearchByProjectCode";
             this.txt_SearchByProjectCode.Size = new System.Drawing.Size(212, 26);
             this.txt_SearchByProjectCode.TabIndex = 2;
+            this.txt_SearchByProjectCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_SearchByProjectCode_KeyDown);
             // 
             // label4
             // 
@@ -371,112 +426,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_RegistBOQItem.TabIndex = 2;
             this.DGV_RegistBOQItem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_RegistBOQItem_CellContentClick);
             // 
-            // panel7
-            // 
-            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel7.Controls.Add(this.txt_SearchByRegistBOQItem);
-            this.panel7.Controls.Add(this.label5);
-            this.panel7.Controls.Add(this.panel10);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel7.Location = new System.Drawing.Point(0, 0);
-            this.panel7.Margin = new System.Windows.Forms.Padding(4);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(522, 139);
-            this.panel7.TabIndex = 0;
-            this.panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.panel7_Paint);
-            // 
-            // txt_SearchByRegistBOQItem
-            // 
-            this.txt_SearchByRegistBOQItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.txt_SearchByRegistBOQItem.Location = new System.Drawing.Point(117, 90);
-            this.txt_SearchByRegistBOQItem.Name = "txt_SearchByRegistBOQItem";
-            this.txt_SearchByRegistBOQItem.Size = new System.Drawing.Size(228, 26);
-            this.txt_SearchByRegistBOQItem.TabIndex = 4;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 58);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(151, 19);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Search By Item Name :";
-            // 
-            // panel10
-            // 
-            this.panel10.BackColor = System.Drawing.Color.Moccasin;
-            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel10.Controls.Add(this.label2);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel10.Location = new System.Drawing.Point(0, 0);
-            this.panel10.Margin = new System.Windows.Forms.Padding(4);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(520, 36);
-            this.panel10.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(134, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(162, 19);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Registeration BOQ Items";
-            // 
-            // DGV_BOQItem
-            // 
-            this.DGV_BOQItem.AllowUserToAddRows = false;
-            this.DGV_BOQItem.AllowUserToDeleteRows = false;
-            this.DGV_BOQItem.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DGV_BOQItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_BOQItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ch_RegisterBOQItem,
-            this.BoqItemId,
-            this.BOQItemDescription});
-            this.DGV_BOQItem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DGV_BOQItem.Location = new System.Drawing.Point(0, 139);
-            this.DGV_BOQItem.Margin = new System.Windows.Forms.Padding(4);
-            this.DGV_BOQItem.Name = "DGV_BOQItem";
-            this.DGV_BOQItem.Size = new System.Drawing.Size(358, 298);
-            this.DGV_BOQItem.TabIndex = 3;
-            // 
-            // ch_RegisterProjectCode
-            // 
-            this.ch_RegisterProjectCode.HeaderText = "Register Project Code";
-            this.ch_RegisterProjectCode.Name = "ch_RegisterProjectCode";
-            this.ch_RegisterProjectCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // ProjectCode_Description
-            // 
-            this.ProjectCode_Description.DataPropertyName = "ProjectCode_Description";
-            this.ProjectCode_Description.HeaderText = "Project Code Description";
-            this.ProjectCode_Description.Name = "ProjectCode_Description";
-            // 
-            // ProjectCode_Id
-            // 
-            this.ProjectCode_Id.DataPropertyName = "ProjectCode_Id";
-            this.ProjectCode_Id.HeaderText = "Project Code Id";
-            this.ProjectCode_Id.Name = "ProjectCode_Id";
-            // 
-            // ch_RegisterBOQItem
-            // 
-            this.ch_RegisterBOQItem.HeaderText = "Register BOQ Item";
-            this.ch_RegisterBOQItem.Name = "ch_RegisterBOQItem";
-            this.ch_RegisterBOQItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // BoqItemId
-            // 
-            this.BoqItemId.DataPropertyName = "BoqItemId";
-            this.BoqItemId.HeaderText = "BOQ Item Id";
-            this.BoqItemId.Name = "BoqItemId";
-            // 
-            // BOQItemDescription
-            // 
-            this.BOQItemDescription.DataPropertyName = "BOQItemDescription";
-            this.BOQItemDescription.HeaderText = "BOQ Item Description";
-            this.BOQItemDescription.Name = "BOQItemDescription";
-            // 
             // btn_RegisterEdit
             // 
             this.btn_RegisterEdit.HeaderText = "Register Edit";
@@ -523,6 +472,60 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.BoqResisterProjectCodeDescription.Name = "BoqResisterProjectCodeDescription";
             this.BoqResisterProjectCodeDescription.ReadOnly = true;
             // 
+            // panel7
+            // 
+            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel7.Controls.Add(this.txt_SearchByRegistBOQItem);
+            this.panel7.Controls.Add(this.label5);
+            this.panel7.Controls.Add(this.panel10);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel7.Location = new System.Drawing.Point(0, 0);
+            this.panel7.Margin = new System.Windows.Forms.Padding(4);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(522, 139);
+            this.panel7.TabIndex = 0;
+            this.panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.panel7_Paint);
+            // 
+            // txt_SearchByRegistBOQItem
+            // 
+            this.txt_SearchByRegistBOQItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.txt_SearchByRegistBOQItem.Location = new System.Drawing.Point(117, 90);
+            this.txt_SearchByRegistBOQItem.Name = "txt_SearchByRegistBOQItem";
+            this.txt_SearchByRegistBOQItem.Size = new System.Drawing.Size(228, 26);
+            this.txt_SearchByRegistBOQItem.TabIndex = 4;
+            this.txt_SearchByRegistBOQItem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_SearchByRegistBOQItem_KeyDown);
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 58);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(151, 19);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Search By Item Name :";
+            // 
+            // panel10
+            // 
+            this.panel10.BackColor = System.Drawing.Color.Moccasin;
+            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel10.Controls.Add(this.label2);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel10.Location = new System.Drawing.Point(0, 0);
+            this.panel10.Margin = new System.Windows.Forms.Padding(4);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(520, 36);
+            this.panel10.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(134, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(162, 19);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Registeration BOQ Items";
+            // 
             // Frm_ItemsRegisterationBOQItems
             // 
             this.Appearance.Options.UseFont = true;
@@ -545,6 +548,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.groupControl1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_BOQItem)).EndInit();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.panel11.ResumeLayout(false);
@@ -561,7 +565,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.panel7.PerformLayout();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_BOQItem)).EndInit();
             this.ResumeLayout(false);
 
         }
