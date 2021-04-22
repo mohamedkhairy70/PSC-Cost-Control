@@ -35,7 +35,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 {
                     var OneResualt = ResaultProjects.First();
                     ProjectId = OneResualt.ContractId;
-
+                    txt_Projects.Text = OneResualt.Name;
                     var ResaultBOQs = await _externalAPIs.GetBOQsAsync(ProjectId);
                     var CustomResaultBOQs = from boq in ResaultBOQs
                                             join pro in ResaultProjects on boq.ContractId equals pro.ContractId
@@ -193,7 +193,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     var ResaultBOQRegisteration = await _RegisterationService.GetBOQRegisteration(Project);
                     var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(Project);
                     var CustomResaultBOQRegisteration = from boq in ResaultBOQRegisteration
-                                                        join BoqItem in ResaultBOQItem on boq.Boq_Item_Id equals BoqItem.BOQId
+                                                        join BoqItem in ResaultBOQItem on boq.Boq_Item_Id equals BoqItem.Id
                                                         join proCode in ResaultProjectCode on boq.Project_Code_Id equals proCode.Id
                                                         select new
                                                         {
@@ -372,7 +372,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     Frm_EditRegistertionBOQItem frm_Edit = new Frm_EditRegistertionBOQItem();
                     IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
                     IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
-                    frm_Edit.DGV_BOQItem.DataSource = DGV_BOQItem.DataSource;
                     frm_Edit.DGV_ProjectCode.DataSource = DGV_ProjectCode.DataSource;
 
                     var ResaultProjects = await _externalAPIs.SearchProjectsBYName(txt_Projects.Text);
@@ -382,13 +381,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                                             join pro in ResaultProjects on boq.ContractId equals pro.ContractId
                                             select new { ProjectName = boq.Id, ProjectId = boq.Id };
 
-                    frm_Edit.cm_BOQItemOld.DataSource = CustomResaultBOQs.ToList();
-                    frm_Edit.cm_BOQItemOld.ValueMember = "ProjectId";
-                    frm_Edit.cm_BOQItemOld.DisplayMember = "ProjectName";
-
                     frm_Edit._IProjectCodeService = _IProjectCodeService;
-                    frm_Edit._RegisterationService = _RegisterationService;
-                    frm_Edit._externalAPIs = _externalAPIs;
 
                     frm_Edit.txt_NameProjectOld.Text = txt_Projects.Text;
 
@@ -399,19 +392,15 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     
                     frm_Edit.ShowDialog();
 
-                    string _BOQItemDescriptoin, _ProjectCodeDesscription;
-                    _BOQItemDescriptoin = frm_Edit.BOQItemDescriptoin;
+                    string  _ProjectCodeDesscription;
                     _ProjectCodeDesscription = frm_Edit.ProjectCodeDesscription;
-                    int _BOQItemId, _ProjectCodeId;
-                    _BOQItemId = frm_Edit.BOQItemId;
+                    int  _ProjectCodeId;
                     _ProjectCodeId = frm_Edit.ProjectCodeId;
 
-                    if(!string.IsNullOrEmpty(_BOQItemDescriptoin) && !string.IsNullOrEmpty(_ProjectCodeDesscription))
+                    if(!string.IsNullOrEmpty(_ProjectCodeDesscription))
                     {
-                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells[1].Value = _BOQItemDescriptoin;
-                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells[2].Value = _ProjectCodeDesscription;
-                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells[3].Value = _BOQItemId;
-                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells[4].Value = _ProjectCodeId;
+                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells["BoqResisterProjectCodeDescription"].Value = _ProjectCodeDesscription;
+                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells["BoqResisterProjectCodeId"].Value = _ProjectCodeId;
                     }
                 }
                 catch { }

@@ -33,8 +33,8 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 var ResaultProjects = await _externalAPIs.SearchProjectsBYName(ProjectName);
                 if (ResaultProjects.Any())
                 {
-                    ProjectId = Convert.ToInt32(ResaultProjects.First().ContractId.ToString());
-
+                    ProjectId = Convert.ToInt32(ResaultProjects.FirstOrDefault().ContractId.ToString());
+                    txt_Projects.Text = ResaultProjects.FirstOrDefault().Name;
                     var ResaultBOQs = await _externalAPIs.GetBOQsAsync(ProjectId);
                     var CustomResaultBOQs = from boq in ResaultBOQs
                                             join pro in ResaultProjects on boq.ContractId equals pro.ContractId
@@ -60,6 +60,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 }
             }
         }
+
         async void GetDataByBOQs(int Project, int BOQs)
         {
             if (Project > 0)
@@ -96,6 +97,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 }
             }
         }
+
         async void SearchDataProjectCode(int Project, string ProDescription)
         {
             IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
@@ -127,6 +129,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 }
             }
         }
+
         async void SearchDataIndirectCost(string BOQsIteme, int BOQs)
         {
             IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
@@ -172,6 +175,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 }
             }
         }
+
         async void SearchDataRegistraion(int Project, int BOQs, string ItemDescription)
         {
             if (Project > 0)
@@ -216,6 +220,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 }
             }
         }
+
         void ClreaData()
         {
             txt_Projects.Clear();
@@ -225,6 +230,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             cm_SearchByIndirectCost.SelectedIndex = -1;
             ProjectId = 0;
         }
+
         void Registretion()
         {
             int IndirectCostRow, IndirectCostId = 0, ProjectCodeRow, ProjectCodeId = 0;
@@ -278,6 +284,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             }
 
         }
+
         bool ValidationDataProjec()
         {
             bool Resualt = false;
@@ -373,22 +380,12 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     Frm_EditRegistertionIndirectCostItem frm_Edit = new Frm_EditRegistertionIndirectCostItem();
                     IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
                     IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
-                    frm_Edit.DGV_IndirectCostItem.DataSource = DGV_IndirectCost.DataSource;
                     frm_Edit.DGV_ProjectCode.DataSource = DGV_ProjectCode.DataSource;
 
                     var ResaultProjects = await _externalAPIs.SearchProjectsBYName(txt_Projects.Text);
                     ProjectId = Convert.ToInt32(ResaultProjects.SingleOrDefault().ContractId.ToString());
-                    var ResaultBOQs = await _externalAPIs.GetBOQsAsync(ProjectId);
-                    var CustomResaultBOQs = from boq in ResaultBOQs
-                                            join pro in ResaultProjects on boq.ContractId equals pro.ContractId
-                                            select new { ProjectName = boq.Id, ProjectId = boq.Id };
-
-                    frm_Edit.cm_BOQItemOld.DataSource = CustomResaultBOQs.ToList();
-                    frm_Edit.cm_BOQItemOld.ValueMember = "ProjectId";
-                    frm_Edit.cm_BOQItemOld.DisplayMember = "ProjectName";
 
                     frm_Edit._IProjectCodeService = _IProjectCodeService;
-                    frm_Edit._RegisterationService = _RegisterationService;
                     frm_Edit._externalAPIs = _externalAPIs;
 
                     frm_Edit.txt_NameProjectOld.Text = txt_Projects.Text;
@@ -400,19 +397,15 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     
                     frm_Edit.ShowDialog();
 
-                    string _IndirectCostDescriptoin, _ProjectCodeDesscription;
-                    _IndirectCostDescriptoin = frm_Edit._IndirectCostItemDescriptoin;
+                    string _ProjectCodeDesscription;
                     _ProjectCodeDesscription = frm_Edit._ProjectCodeDesscription;
-                    int _IndirectCostId, _ProjectCodeId;
-                    _IndirectCostId = frm_Edit._IndirectCostItemId;
+                    int _ProjectCodeId;
                     _ProjectCodeId = frm_Edit._ProjectCodeId;
 
-                    if(!string.IsNullOrEmpty(_IndirectCostDescriptoin) && !string.IsNullOrEmpty(_ProjectCodeDesscription))
+                    if(!string.IsNullOrEmpty(_ProjectCodeDesscription))
                     {
-                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells[1].Value = _IndirectCostDescriptoin;
-                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells[2].Value = _ProjectCodeDesscription;
-                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells[3].Value = _IndirectCostId;
-                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells[4].Value = _ProjectCodeId;
+                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells["BoqResisterProjectCodeDescription"].Value = _ProjectCodeDesscription;
+                        DGV_RegistBOQItem.Rows[e.RowIndex].Cells["BoqResisterProjectCodeId"].Value = _ProjectCodeId;
                     }
                 }
                 catch { }

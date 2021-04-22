@@ -60,17 +60,17 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label1 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.DGV_RegistBOQItem = new System.Windows.Forms.DataGridView();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.txt_SearchByRegistBOQItem = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.btn_RegisterEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.BoqRegisterId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BoqResisterBoqItemeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BoqResisterProjectCodeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BoqResisterBoqItemeDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BoqResisterProjectCodeDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.txt_SearchByRegistBOQItem = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
@@ -421,56 +421,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_RegistBOQItem.Location = new System.Drawing.Point(0, 139);
             this.DGV_RegistBOQItem.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_RegistBOQItem.Name = "DGV_RegistBOQItem";
-            this.DGV_RegistBOQItem.ReadOnly = true;
             this.DGV_RegistBOQItem.Size = new System.Drawing.Size(522, 298);
             this.DGV_RegistBOQItem.TabIndex = 2;
             this.DGV_RegistBOQItem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_RegistBOQItem_CellContentClick);
-            // 
-            // btn_RegisterEdit
-            // 
-            this.btn_RegisterEdit.HeaderText = "Register Edit";
-            this.btn_RegisterEdit.Name = "btn_RegisterEdit";
-            this.btn_RegisterEdit.ReadOnly = true;
-            this.btn_RegisterEdit.Text = "Register Edit";
-            this.btn_RegisterEdit.ToolTipText = "Register Edit";
-            this.btn_RegisterEdit.UseColumnTextForButtonValue = true;
-            // 
-            // BoqRegisterId
-            // 
-            this.BoqRegisterId.DataPropertyName = "BoqRegisterId";
-            this.BoqRegisterId.HeaderText = "Boq Register Id";
-            this.BoqRegisterId.Name = "BoqRegisterId";
-            this.BoqRegisterId.ReadOnly = true;
-            // 
-            // BoqResisterBoqItemeId
-            // 
-            this.BoqResisterBoqItemeId.DataPropertyName = "BoqResisterBoqItemeId";
-            this.BoqResisterBoqItemeId.HeaderText = "Boq Resister Boq Iteme Id";
-            this.BoqResisterBoqItemeId.Name = "BoqResisterBoqItemeId";
-            this.BoqResisterBoqItemeId.ReadOnly = true;
-            this.BoqResisterBoqItemeId.Visible = false;
-            // 
-            // BoqResisterProjectCodeId
-            // 
-            this.BoqResisterProjectCodeId.DataPropertyName = "BoqResisterProjectCodeId";
-            this.BoqResisterProjectCodeId.HeaderText = "Boq Resister Project Code Id";
-            this.BoqResisterProjectCodeId.Name = "BoqResisterProjectCodeId";
-            this.BoqResisterProjectCodeId.ReadOnly = true;
-            this.BoqResisterProjectCodeId.Visible = false;
-            // 
-            // BoqResisterBoqItemeDescription
-            // 
-            this.BoqResisterBoqItemeDescription.DataPropertyName = "BoqResisterBoqItemeDescription";
-            this.BoqResisterBoqItemeDescription.HeaderText = "Boq Iteme Description";
-            this.BoqResisterBoqItemeDescription.Name = "BoqResisterBoqItemeDescription";
-            this.BoqResisterBoqItemeDescription.ReadOnly = true;
-            // 
-            // BoqResisterProjectCodeDescription
-            // 
-            this.BoqResisterProjectCodeDescription.DataPropertyName = "BoqResisterProjectCodeDescription";
-            this.BoqResisterProjectCodeDescription.HeaderText = "Project Code Description";
-            this.BoqResisterProjectCodeDescription.Name = "BoqResisterProjectCodeDescription";
-            this.BoqResisterProjectCodeDescription.ReadOnly = true;
             // 
             // panel7
             // 
@@ -525,6 +478,51 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label2.Size = new System.Drawing.Size(162, 19);
             this.label2.TabIndex = 1;
             this.label2.Text = "Registeration BOQ Items";
+            // 
+            // btn_RegisterEdit
+            // 
+            this.btn_RegisterEdit.HeaderText = "Register Edit";
+            this.btn_RegisterEdit.Name = "btn_RegisterEdit";
+            this.btn_RegisterEdit.Text = "Register Edit";
+            this.btn_RegisterEdit.ToolTipText = "Register Edit";
+            this.btn_RegisterEdit.UseColumnTextForButtonValue = true;
+            // 
+            // BoqRegisterId
+            // 
+            this.BoqRegisterId.DataPropertyName = "BoqRegisterId";
+            this.BoqRegisterId.HeaderText = "Boq Register Id";
+            this.BoqRegisterId.Name = "BoqRegisterId";
+            this.BoqRegisterId.ReadOnly = true;
+            // 
+            // BoqResisterBoqItemeId
+            // 
+            this.BoqResisterBoqItemeId.DataPropertyName = "BoqResisterBoqItemeId";
+            this.BoqResisterBoqItemeId.HeaderText = "Boq Resister Boq Iteme Id";
+            this.BoqResisterBoqItemeId.Name = "BoqResisterBoqItemeId";
+            this.BoqResisterBoqItemeId.ReadOnly = true;
+            this.BoqResisterBoqItemeId.Visible = false;
+            // 
+            // BoqResisterProjectCodeId
+            // 
+            this.BoqResisterProjectCodeId.DataPropertyName = "BoqResisterProjectCodeId";
+            this.BoqResisterProjectCodeId.HeaderText = "Boq Resister Project Code Id";
+            this.BoqResisterProjectCodeId.Name = "BoqResisterProjectCodeId";
+            this.BoqResisterProjectCodeId.ReadOnly = true;
+            this.BoqResisterProjectCodeId.Visible = false;
+            // 
+            // BoqResisterBoqItemeDescription
+            // 
+            this.BoqResisterBoqItemeDescription.DataPropertyName = "BoqResisterBoqItemeDescription";
+            this.BoqResisterBoqItemeDescription.HeaderText = "Boq Iteme Description";
+            this.BoqResisterBoqItemeDescription.Name = "BoqResisterBoqItemeDescription";
+            this.BoqResisterBoqItemeDescription.ReadOnly = true;
+            // 
+            // BoqResisterProjectCodeDescription
+            // 
+            this.BoqResisterProjectCodeDescription.DataPropertyName = "BoqResisterProjectCodeDescription";
+            this.BoqResisterProjectCodeDescription.HeaderText = "Project Code Description";
+            this.BoqResisterProjectCodeDescription.Name = "BoqResisterProjectCodeDescription";
+            this.BoqResisterProjectCodeDescription.ReadOnly = true;
             // 
             // Frm_ItemsRegisterationBOQItems
             // 
