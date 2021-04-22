@@ -173,7 +173,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 }
             }
         }
-
         async void GetDataByBOQs(int Project, int BOQs)
         {
             if (Project > 0)
@@ -301,7 +300,10 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         {
             if(e.KeyCode == Keys.Enter)
             {
+                
                 GetData(txt_Projects.Text);
+                
+                
             }
         }
 

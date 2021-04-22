@@ -338,7 +338,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
              tree_ProjectCode.FocusedNode = tree_ProjectCode.AppendNode(
                 nodeData: new object[] {0, "/" + (tree_ProjectCode.Nodes.Count +1)
-                , ProjectCode_Description, UnidiedCodeTitle, Category, 0 }, parentNode: null, tag: _Tag);
+                , ProjectCode_Description, UnidiedCodeTitle, Category, 0,"Edit" }, parentNode: null, tag: _Tag);
 
         }
 
@@ -364,7 +364,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                             + (tree_ProjectCode.FocusedNode.Nodes.Count + 1).ToString());
 
                         tree_ProjectCode.FocusedNode =  tree_ProjectCode.AppendNode(
-                                nodeData: new object[] { 0, IdNode, ProjectCode_Description, UnidiedCodeTitle, Category, 0 }
+                                nodeData: new object[] { 0, IdNode, ProjectCode_Description, UnidiedCodeTitle, Category, 0 , "Edit" }
                                 , parentNode: tree_ProjectCode.FocusedNode, tag: _Tag);
                     }             
                 }
@@ -413,12 +413,11 @@ namespace PSC_Cost_Control.Forms.Project_Code
             col7.Name = "ProjectCode_Parent";
             col7.VisibleIndex = 5;
             col7.Visible = false;
-            //TreeListColumn col8 = tl.Columns.Add();
-            //col8.Caption = "Edit";
-            //col8.Name = "Edit";
-            //col8.VisibleIndex = 6;
-            //col8.Visible = false;
-            //col8.ColumnType.;
+            TreeListColumn col8 = tl.Columns.Add();
+            col8.Caption = "Edit";
+            col8.Name = "Edit";
+            col8.VisibleIndex = 6;
+            col8.Visible = true;
             tl.EndUpdate();
         }
 
@@ -486,7 +485,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                     };
 
                     TreeListNode parentNodej = tree_ProjectCode.AppendNode(
-                        new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, null }
+                        new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, null, "Edit" }
                     , null, tag: _Tag);
 
                     
@@ -516,7 +515,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                         };
 
                         TreeListNode parentNodex = tree_ProjectCode.AppendNode(
-                            new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent }
+                            new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent, "Edit" }
                         , parentNodej, tag: _Tagj);
 
                         var linqlistx = innerJoin.Where(x => x.ProjectCode_Parent == id).AsEnumerable();
@@ -545,7 +544,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                             };
 
                             TreeListNode parentNodeq = tree_ProjectCode.AppendNode(
-                                new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent }
+                                new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent, "Edit" }
                             , parentNodex, tag: _Tagq);
 
                             var linqlistq = innerJoin.Where(m => m.ProjectCode_Parent == id).AsEnumerable();
@@ -574,7 +573,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                                 };
 
                                 TreeListNode parentNodez = tree_ProjectCode.AppendNode(
-                                    new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent }
+                                    new object[] { id, ProjectCode_Code, ProjectCode_Description, UnidiedCodeTitle, Category_Name, ProjectCode_Parent, "Edit" }
                                 , parentNodeq, tag: _Tagz);
 
                             }
@@ -668,7 +667,59 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 GetProjectCode(Convert.ToInt32(cm_Project.SelectedValue));
             }
         }
-        
+
+        private void tree_ProjectCode_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
+        {
+            var x = e.Node.Focused.ToString();
+        }
+
+        private void Edit_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("asd");
+        }
+
+        private async void tree_ProjectCode_RowClick(object sender, RowClickEventArgs e)
+        {
+
+            if (e.HitInfo.Column.Name == "Edit")
+            {
+                IProjectCodeCategoryService _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
+                IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
+                var ResaultTag = new Models.C_Cost_Project_Codes();
+                var _Tag = (Models.C_Cost_Project_Codes)e.Node.Tag;
+               
+                Frm_ProjectCodeEdit frm = new Frm_ProjectCodeEdit();
+                var Cat = await _categoryService.GetCategories();
+                var Unified = await _unifiedCodeService.GetUnifiedCodes();
+                frm.Title = Unified.Where(x => x.Id == _Tag.Unified_Code_Id).FirstOrDefault().Title;
+                frm.Category = Cat.Where(x => x.Id == _Tag.Category_Id).FirstOrDefault().Name;
+                frm.Discription = _Tag.Description;
+                frm.ShowDialog();
+                var _UnifiedId = frm.UnifiedId;
+                var _CategroyId = frm.CategoryId;
+                var _Title = frm.Title;
+                var _Categroy = frm.Category;
+                var _Description = frm.Discription;
+                var _TagEdit = new Models.C_Cost_Project_Codes 
+                { Category_Id = _CategroyId, Code = _Tag.Code, Description = _Description, HCode = _Tag.HCode,
+                    ParentId = _Tag.ParentId, Unified_Code_Id = _UnifiedId, Project_Id = _Tag.Project_Id,Id = _Tag.Id };
+                e.Node.Tag = _TagEdit;
+
+                SaveProectCode(Convert.ToInt32(_Tag.Project_Id));
+                GetProjectCode(Convert.ToInt32(_Tag.Project_Id));
+
+
+                //TreeListNode parentNodej = tree_ProjectCode.AppendNode(
+                //        new object[] { _Tag.Id, _Tag.Code, _Description, _Title, _Categroy, _Tag.ParentId, "Edit" },parentNode: e.Node.ParentNode,tag: _TagEdit);
+
+
+
+                //e.Node.SetValue("ProjectCode_Description", _Description);
+                //e.Node.SetValue("ProjectCode_Title", _Title);
+                //e.Node.SetValue("Category_Name", _Categroy);
+            }
+        }
+
 
     }
 }

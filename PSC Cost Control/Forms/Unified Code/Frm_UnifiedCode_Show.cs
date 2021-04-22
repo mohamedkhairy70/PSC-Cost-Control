@@ -547,8 +547,41 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             MessageBox.Show("The data has been saved successfully. ");
         }
 
+
         #endregion Methods For my Form
 
+        private async void tree_UnifiedCode_RowClick(object sender, RowClickEventArgs e)
+        {
+            if (e.HitInfo.Column.Name == "Edit")
+            {
+                IUnifiedCodeCategoryService _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
+                IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
+                var ResaultTag = new Models.C_Cost_Project_Codes();
+                var _Tag = (Models.C_Cost_Unified_Codes)e.Node.Tag;
 
+                Frm_UnifiedCodeEdit frm = new Frm_UnifiedCodeEdit();
+                var Cat = await _categoryService.GetCategories();
+                var Unified = await _unifiedCodeService.GetUnifiedCodes();
+                frm.Title = _Tag.Title;
+                frm.Category = Cat.Where(x => x.Id == _Tag.Category_Id).FirstOrDefault().Name;
+                frm.ShowDialog();
+                var _CategroyId = frm.CategoryId;
+                var _Title = frm.Title;
+                var _Categroy = frm.Category;
+                var _TagEdit = new Models.C_Cost_Unified_Codes
+                {
+                    Category_Id = _CategroyId,
+                    Code = _Tag.Code,
+                    Title = _Title,
+                    HCode = _Tag.HCode,
+                    ParentId = _Tag.ParentId,
+                    Id = _Tag.Id
+                };
+                e.Node.Tag = _TagEdit;
+
+                SaveProectCode();
+                GetUnifiedCode();
+            }
+        }
     }
 }

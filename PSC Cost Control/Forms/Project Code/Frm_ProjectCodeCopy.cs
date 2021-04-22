@@ -330,6 +330,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
             col7.Name = "ProjectCode_Parent";
             col7.VisibleIndex = 5;
             col7.Visible = false;
+            
             tl.EndUpdate();
         }
         async void SaveProectCode(int projectIdOld, int projectIdNew)

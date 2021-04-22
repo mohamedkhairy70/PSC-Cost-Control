@@ -236,9 +236,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.cm_BOQItem.Items.AddRange(new object[] {
             "Structure",
             "indirect"});
-            this.cm_BOQItem.Location = new System.Drawing.Point(81, 39);
+            this.cm_BOQItem.Location = new System.Drawing.Point(88, 57);
             this.cm_BOQItem.Name = "cm_BOQItem";
-            this.cm_BOQItem.Size = new System.Drawing.Size(238, 27);
+            this.cm_BOQItem.Size = new System.Drawing.Size(191, 27);
             this.cm_BOQItem.TabIndex = 8;
             this.cm_BOQItem.DropDownClosed += new System.EventHandler(this.cm_BOQItem_DropDown);
             // 
@@ -246,7 +246,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 42);
+            this.label7.Location = new System.Drawing.Point(15, 62);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(56, 19);
             this.label7.TabIndex = 7;
@@ -255,9 +255,9 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // txt_SearchByBOQItem
             // 
             this.txt_SearchByBOQItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.txt_SearchByBOQItem.Location = new System.Drawing.Point(141, 105);
+            this.txt_SearchByBOQItem.Location = new System.Drawing.Point(21, 108);
             this.txt_SearchByBOQItem.Name = "txt_SearchByBOQItem";
-            this.txt_SearchByBOQItem.Size = new System.Drawing.Size(204, 26);
+            this.txt_SearchByBOQItem.Size = new System.Drawing.Size(269, 26);
             this.txt_SearchByBOQItem.TabIndex = 6;
             this.txt_SearchByBOQItem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_SearchByBOQItem_KeyDown);
             // 
@@ -265,7 +265,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(17, 83);
+            this.label6.Location = new System.Drawing.Point(17, 87);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(151, 19);
             this.label6.TabIndex = 5;

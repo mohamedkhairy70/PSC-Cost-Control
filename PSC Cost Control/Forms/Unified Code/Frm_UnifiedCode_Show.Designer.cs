@@ -197,6 +197,7 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             this.tree_UnifiedCode.ParentFieldName = "GetLevelNode";
             this.tree_UnifiedCode.Size = new System.Drawing.Size(1041, 379);
             this.tree_UnifiedCode.TabIndex = 0;
+            this.tree_UnifiedCode.RowClick += new DevExpress.XtraTreeList.RowClickEventHandler(this.tree_UnifiedCode_RowClick);
             this.tree_UnifiedCode.NodeChanged += new DevExpress.XtraTreeList.NodeChangedEventHandler(this.tree_UnifiedCode_NodeChanged);
             // 
             // Frm_UnifiedCode_Show
