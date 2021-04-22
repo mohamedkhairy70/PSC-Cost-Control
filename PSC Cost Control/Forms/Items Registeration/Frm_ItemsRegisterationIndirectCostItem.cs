@@ -38,7 +38,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                     var ResaultBOQs = await _externalAPIs.GetBOQsAsync(ProjectId);
                     var CustomResaultBOQs = from boq in ResaultBOQs
                                             join pro in ResaultProjects on boq.ContractId equals pro.ContractId
-                                            select new { projectId = boq.Id, projectName = pro.Name };
+                                            select new { projectId = boq.Id, projectName = (boq.ContractId.ToString() + " " + boq.RevDate.ToString("MM/dd/yyyy")).ToString() };
                     if (ResaultBOQs.Any())
                     {
                         cm_SearchByIndirectCost.DataSource = CustomResaultBOQs.ToList();
