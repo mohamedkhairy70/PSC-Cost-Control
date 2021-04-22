@@ -115,7 +115,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.txt_Projects.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_Projects.Location = new System.Drawing.Point(121, 29);
             this.txt_Projects.Name = "txt_Projects";
-            this.txt_Projects.Size = new System.Drawing.Size(322, 32);
+            this.txt_Projects.Size = new System.Drawing.Size(322, 38);
             this.txt_Projects.TabIndex = 5;
             this.txt_Projects.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Projects_KeyDown);
             // 
@@ -125,7 +125,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.labelControl1.Appearance.Options.UseFont = true;
             this.labelControl1.Location = new System.Drawing.Point(36, 32);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(79, 23);
+            this.labelControl1.Size = new System.Drawing.Size(100, 31);
             this.labelControl1.TabIndex = 0;
             this.labelControl1.Text = "Projects :";
             // 
@@ -192,12 +192,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_IndirectCost.Location = new System.Drawing.Point(0, 139);
             this.DGV_IndirectCost.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_IndirectCost.Name = "DGV_IndirectCost";
+            this.DGV_IndirectCost.RowHeadersWidth = 51;
             this.DGV_IndirectCost.Size = new System.Drawing.Size(358, 298);
             this.DGV_IndirectCost.TabIndex = 3;
             // 
             // ch_RegisterIndirectCostItem
             // 
             this.ch_RegisterIndirectCostItem.HeaderText = "Register Indirect Cost Item";
+            this.ch_RegisterIndirectCostItem.MinimumWidth = 6;
             this.ch_RegisterIndirectCostItem.Name = "ch_RegisterIndirectCostItem";
             this.ch_RegisterIndirectCostItem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
@@ -205,12 +207,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.IndirectCostId.DataPropertyName = "IndirectCostId";
             this.IndirectCostId.HeaderText = "Indirect Cost Id";
+            this.IndirectCostId.MinimumWidth = 6;
             this.IndirectCostId.Name = "IndirectCostId";
             // 
             // IndirectCostDescription
             // 
             this.IndirectCostDescription.DataPropertyName = "IndirectCostDescription";
             this.IndirectCostDescription.HeaderText = "BOQ Item Description";
+            this.IndirectCostDescription.MinimumWidth = 6;
             this.IndirectCostDescription.Name = "IndirectCostDescription";
             // 
             // panel8
@@ -238,7 +242,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             "indirect"});
             this.cm_SearchByIndirectCost.Location = new System.Drawing.Point(81, 39);
             this.cm_SearchByIndirectCost.Name = "cm_SearchByIndirectCost";
-            this.cm_SearchByIndirectCost.Size = new System.Drawing.Size(238, 27);
+            this.cm_SearchByIndirectCost.Size = new System.Drawing.Size(238, 30);
             this.cm_SearchByIndirectCost.TabIndex = 8;
             this.cm_SearchByIndirectCost.DropDownClosed += new System.EventHandler(this.cm_BOQItem_DropDown);
             // 
@@ -248,7 +252,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 42);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(56, 19);
+            this.label7.Size = new System.Drawing.Size(70, 22);
             this.label7.TabIndex = 7;
             this.label7.Text = "BOQs :";
             // 
@@ -257,7 +261,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.txt_SearchByIndirectCost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.txt_SearchByIndirectCost.Location = new System.Drawing.Point(141, 105);
             this.txt_SearchByIndirectCost.Name = "txt_SearchByIndirectCost";
-            this.txt_SearchByIndirectCost.Size = new System.Drawing.Size(204, 26);
+            this.txt_SearchByIndirectCost.Size = new System.Drawing.Size(204, 30);
             this.txt_SearchByIndirectCost.TabIndex = 6;
             this.txt_SearchByIndirectCost.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_SearchByIndirectCost_KeyDown);
             // 
@@ -267,7 +271,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(17, 83);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(151, 19);
+            this.label6.Size = new System.Drawing.Size(192, 22);
             this.label6.TabIndex = 5;
             this.label6.Text = "Search By Item Name :";
             // 
@@ -288,7 +292,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(159, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 19);
+            this.label3.Size = new System.Drawing.Size(112, 22);
             this.label3.TabIndex = 1;
             this.label3.Text = "Indirect Cost";
             // 
@@ -318,12 +322,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_ProjectCode.Location = new System.Drawing.Point(0, 139);
             this.DGV_ProjectCode.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_ProjectCode.Name = "DGV_ProjectCode";
+            this.DGV_ProjectCode.RowHeadersWidth = 51;
             this.DGV_ProjectCode.Size = new System.Drawing.Size(421, 298);
             this.DGV_ProjectCode.TabIndex = 1;
             // 
             // ch_RegisterProjectCode
             // 
             this.ch_RegisterProjectCode.HeaderText = "Register Project Code";
+            this.ch_RegisterProjectCode.MinimumWidth = 6;
             this.ch_RegisterProjectCode.Name = "ch_RegisterProjectCode";
             this.ch_RegisterProjectCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
@@ -331,12 +337,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.ProjectCode_Description.DataPropertyName = "ProjectCode_Description";
             this.ProjectCode_Description.HeaderText = "Project Code Description";
+            this.ProjectCode_Description.MinimumWidth = 6;
             this.ProjectCode_Description.Name = "ProjectCode_Description";
             // 
             // ProjectCode_Id
             // 
             this.ProjectCode_Id.DataPropertyName = "ProjectCode_Id";
             this.ProjectCode_Id.HeaderText = "Project Code Id";
+            this.ProjectCode_Id.MinimumWidth = 6;
             this.ProjectCode_Id.Name = "ProjectCode_Id";
             // 
             // panel6
@@ -357,7 +365,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.txt_SearchByProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.txt_SearchByProjectCode.Location = new System.Drawing.Point(106, 90);
             this.txt_SearchByProjectCode.Name = "txt_SearchByProjectCode";
-            this.txt_SearchByProjectCode.Size = new System.Drawing.Size(212, 26);
+            this.txt_SearchByProjectCode.Size = new System.Drawing.Size(212, 30);
             this.txt_SearchByProjectCode.TabIndex = 2;
             this.txt_SearchByProjectCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_SearchByProjectCode_KeyDown);
             // 
@@ -367,7 +375,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(2, 58);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(151, 19);
+            this.label4.Size = new System.Drawing.Size(192, 22);
             this.label4.TabIndex = 1;
             this.label4.Text = "Search By Item Name :";
             // 
@@ -388,7 +396,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(147, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 19);
+            this.label1.Size = new System.Drawing.Size(114, 22);
             this.label1.TabIndex = 0;
             this.label1.Text = "Project Code";
             // 
@@ -422,13 +430,16 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.DGV_RegistBOQItem.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_RegistBOQItem.Name = "DGV_RegistBOQItem";
             this.DGV_RegistBOQItem.ReadOnly = true;
+            this.DGV_RegistBOQItem.RowHeadersWidth = 51;
             this.DGV_RegistBOQItem.Size = new System.Drawing.Size(522, 298);
             this.DGV_RegistBOQItem.TabIndex = 2;
             this.DGV_RegistBOQItem.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_RegistBOQItem_CellContentClick);
+            this.DGV_RegistBOQItem.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DGV_RegistBOQItem_DataError);
             // 
             // btn_RegisterEdit
             // 
             this.btn_RegisterEdit.HeaderText = "Register Edit";
+            this.btn_RegisterEdit.MinimumWidth = 6;
             this.btn_RegisterEdit.Name = "btn_RegisterEdit";
             this.btn_RegisterEdit.ReadOnly = true;
             this.btn_RegisterEdit.Text = "Register Edit";
@@ -439,6 +450,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.BoqRegisterId.DataPropertyName = "BoqRegisterId";
             this.BoqRegisterId.HeaderText = "Boq Register Id";
+            this.BoqRegisterId.MinimumWidth = 6;
             this.BoqRegisterId.Name = "BoqRegisterId";
             this.BoqRegisterId.ReadOnly = true;
             // 
@@ -446,6 +458,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.BoqResisterIndirectCostId.DataPropertyName = "BoqResisterIndirectCostId";
             this.BoqResisterIndirectCostId.HeaderText = "Boq Resister Indirect Cost Id";
+            this.BoqResisterIndirectCostId.MinimumWidth = 6;
             this.BoqResisterIndirectCostId.Name = "BoqResisterIndirectCostId";
             this.BoqResisterIndirectCostId.ReadOnly = true;
             this.BoqResisterIndirectCostId.Visible = false;
@@ -454,6 +467,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.BoqResisterProjectCodeId.DataPropertyName = "BoqResisterProjectCodeId";
             this.BoqResisterProjectCodeId.HeaderText = "Boq Resister Project Code Id";
+            this.BoqResisterProjectCodeId.MinimumWidth = 6;
             this.BoqResisterProjectCodeId.Name = "BoqResisterProjectCodeId";
             this.BoqResisterProjectCodeId.ReadOnly = true;
             this.BoqResisterProjectCodeId.Visible = false;
@@ -462,6 +476,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.BoqResisterIndirectCostDescription.DataPropertyName = "BoqResisterIndirectCostDescription";
             this.BoqResisterIndirectCostDescription.HeaderText = "Indirect Cost Description";
+            this.BoqResisterIndirectCostDescription.MinimumWidth = 6;
             this.BoqResisterIndirectCostDescription.Name = "BoqResisterIndirectCostDescription";
             this.BoqResisterIndirectCostDescription.ReadOnly = true;
             // 
@@ -469,6 +484,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             // 
             this.BoqResisterProjectCodeDescription.DataPropertyName = "BoqResisterProjectCodeDescription";
             this.BoqResisterProjectCodeDescription.HeaderText = "Project Code Description";
+            this.BoqResisterProjectCodeDescription.MinimumWidth = 6;
             this.BoqResisterProjectCodeDescription.Name = "BoqResisterProjectCodeDescription";
             this.BoqResisterProjectCodeDescription.ReadOnly = true;
             // 
@@ -491,7 +507,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.txt_SearchByRegistBOQItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.txt_SearchByRegistBOQItem.Location = new System.Drawing.Point(117, 90);
             this.txt_SearchByRegistBOQItem.Name = "txt_SearchByRegistBOQItem";
-            this.txt_SearchByRegistBOQItem.Size = new System.Drawing.Size(228, 26);
+            this.txt_SearchByRegistBOQItem.Size = new System.Drawing.Size(228, 30);
             this.txt_SearchByRegistBOQItem.TabIndex = 4;
             this.txt_SearchByRegistBOQItem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_SearchByRegistBOQItem_KeyDown);
             // 
@@ -501,7 +517,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 58);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(151, 19);
+            this.label5.Size = new System.Drawing.Size(192, 22);
             this.label5.TabIndex = 3;
             this.label5.Text = "Search By Item Name :";
             // 
@@ -522,14 +538,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(134, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(162, 19);
+            this.label2.Size = new System.Drawing.Size(208, 22);
             this.label2.TabIndex = 1;
             this.label2.Text = "Registeration BOQ Items";
             // 
             // Frm_ItemsRegisterationIndirectCostItem
             // 
             this.Appearance.Options.UseFont = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1307, 599);
             this.Controls.Add(this.panel5);

@@ -16,7 +16,7 @@ namespace PSC_Cost_Control.Models
         public override bool Equals(object obj)
         {
             var o = obj as C_Cost_Project_Codes;
-            return o.Description.Equals(Description)
+                return o != null&&o.Description.Equals(Description)
                 &&
                 o.Parent.Equals(Parent)
                 &&

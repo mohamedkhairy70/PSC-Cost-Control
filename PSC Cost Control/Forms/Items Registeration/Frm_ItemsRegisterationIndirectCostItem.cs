@@ -8,7 +8,6 @@ using PSC_Cost_Control.Services.ServicesBuilders;
 using PSC_Cost_Control.Services.DependencyApis;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Reflection;
 
 namespace PSC_Cost_Control.Forms.Items_Registeration
 {
@@ -91,72 +90,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                                                             BoqResisterProjectCodeDescription =  proCode.Description
                                                       };
 
-                DataTable dt = LINQResultToDataTable(CustomResaultIndirectCosRegisteration);
-                for (int i = 0; i < dt.Rows.Count; i++)
+                var IndirectCostRegisterationList = ResaultIndirectCostRegisteration.ToList();
+                if (IndirectCostRegisterationList.Count > 0)
                 {
-                    DataRow DR = dtGridView.NewRow();
-                    DR[0] = dt.Rows[i][0];
-                    DR[1] = dt.Rows[i][1];
-                    DR[2] = dt.Rows[i][2];
-                    DR[3] = dt.Rows[i][3];
-                    DR[4] = dt.Rows[i][4];
-                    dtGridView.Rows.Add(DR);
-                    DGV_RegistBOQItem.DataSource = dtGridView;
+                    DGV_RegistBOQItem.DataSource = IndirectCostRegisterationList;
                 }
             }
         }
-        private DataTable LINQResultToDataTable<T>(IEnumerable<T> Linqlist)
-        {
-            DataTable dt = new DataTable();
-            PropertyInfo[] columns = null;
 
-            if (Linqlist == null) return dt;
-            foreach (T Record in Linqlist)
-            {
-
-                if (columns == null)
-                {
-                    columns = ((Type)Record.GetType()).GetProperties();
-                    foreach (PropertyInfo GetProperty in columns)
-                    {
-                        Type colType = GetProperty.PropertyType;
-
-                        if ((colType.IsGenericType) && (colType.GetGenericTypeDefinition()
-                        == typeof(Nullable<>)))
-                        {
-                            colType = colType.GetGenericArguments()[0];
-                        }
-
-                        dt.Columns.Add(new DataColumn(GetProperty.Name, colType));
-                    }
-                }
-
-                DataRow dr = dt.NewRow();
-
-                foreach (PropertyInfo pinfo in columns)
-                {
-                    dr[pinfo.Name] = pinfo.GetValue(Record, null) == null ? DBNull.Value : pinfo.GetValue
-                    (Record, null);
-                }
-
-                dt.Rows.Add(dr);
-            }
-            return dt;
-        }
-        DataTable dtGridView = new DataTable();
-        void CreateDataTable()
-        {
-            //لكي الضف حقول في الداتات جريد فيو 
-            dtGridView.Columns.Clear();
-            dtGridView.Columns.Add(new DataColumn { ColumnName = "BoqRegisterId" });
-            dtGridView.Columns.Add(new DataColumn { ColumnName = "BoqResisterBoqItemeId" });
-            dtGridView.Columns.Add(new DataColumn { ColumnName = "BoqResisterProjectCodeId" });
-            dtGridView.Columns.Add(new DataColumn { ColumnName = "BoqResisterBoqItemeDescription" });
-            dtGridView.Columns.Add(new DataColumn { ColumnName = "BoqResisterProjectCodeDescription" });
-
-
-
-        }
         async void SearchDataProjectCode(int Project, string ProDescription)
         {
             IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
@@ -300,12 +241,12 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             {
                 if (DGV_IndirectCost.Rows.Count > 0)
                 {
-                    bool isSelected = Convert.ToBoolean(DGV_IndirectCost.Rows[i].Cells["ch_RegisterBOQItem"].Value);
+                    bool isSelected = Convert.ToBoolean(DGV_IndirectCost.Rows[i].Cells["ch_RegisterIndirectCostItem"].Value);
                     if (isSelected)
                     {
-                        IndirectCostId = Convert.ToInt32(DGV_IndirectCost.Rows[i].Cells["BoqItemId"].Value.ToString());
+                        IndirectCostId = Convert.ToInt32(DGV_IndirectCost.Rows[i].Cells["IndirectCostId"].Value.ToString());
                         IndirectCostRow = i;
-                        IndirectCostDescriptoin = DGV_IndirectCost.Rows[i].Cells["BOQItemDescription"].Value.ToString();
+                        IndirectCostDescriptoin = DGV_IndirectCost.Rows[i].Cells["IndirectCostDescription"].Value.ToString();
                         break;
                     }
 
@@ -332,15 +273,14 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
 
             if (!string.IsNullOrEmpty(IndirectCostDescriptoin) && !string.IsNullOrEmpty(ProjectCodeDesscription))
             {
+                DGV_RegistBOQItem.Rows.Add(1);
+                int rowindex = DGV_RegistBOQItem.Rows.Count - 1;
 
-                DataRow DR = dtGridView.NewRow();
-                DR[0] = 0;
-                DR[1] = IndirectCostId;
-                DR[2] = ProjectCodeId;
-                DR[3] = IndirectCostDescriptoin;
-                DR[4] = ProjectCodeDesscription;
-                dtGridView.Rows.Add(DR);
-                DGV_RegistBOQItem.DataSource = dtGridView;
+                DGV_RegistBOQItem.Rows[rowindex].Cells["BoqRegisterId"].Value = 0;
+                DGV_RegistBOQItem.Rows[rowindex].Cells["BoqResisterIndirectCostId"].Value = IndirectCostId;
+                DGV_RegistBOQItem.Rows[rowindex].Cells["BoqResisterProjectCodeId"].Value = ProjectCodeId;
+                DGV_RegistBOQItem.Rows[rowindex].Cells["BoqResisterIndirectCostDescription"].Value = IndirectCostDescriptoin;
+                DGV_RegistBOQItem.Rows[rowindex].Cells["BoqResisterProjectCodeDescription"].Value = ProjectCodeDesscription;
             }
 
         }
@@ -387,7 +327,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         private void Frm_ItemsRegisterationBOQItems_Load(object sender, EventArgs e)
         {
             ClreaData();
-            CreateDataTable();
         }
 
         private void btn_Regiter_Click(object sender, EventArgs e)
@@ -508,5 +447,10 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 }
             }
         }
+
+        private void DGV_RegistBOQItem_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.Cancel = true;
+        }
     }
-}
+    }
