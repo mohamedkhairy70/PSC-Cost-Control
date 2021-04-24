@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\Unified_Code_by_Join.cs" />
     <Compile Include="Forms\Items Registeration\Frm_EditRegistertionIndirectCostItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +123,7 @@
     <Compile Include="Forms\Project Code\Frm_ProjectCode_Show.Designer.cs">
       <DependentUpon>Frm_ProjectCode_Show.cs</DependentUpon>
     </Compile>
+    <Compile Include="BL\Project_Code_by_Join.cs" />
     <Compile Include="Forms\Unified Code\Frm_Categories_UnifiedCode.cs">
       <SubType>Form</SubType>
     </Compile>
