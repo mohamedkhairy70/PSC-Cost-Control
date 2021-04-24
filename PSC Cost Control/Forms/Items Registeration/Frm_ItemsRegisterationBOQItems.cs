@@ -16,6 +16,8 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
     {
 
         ExternalAPIs _externalAPIs;
+        IProjectCodeService _IProjectCodeService;
+        IRegisterationService _RegisterationService;
         int ProjectId;
 
         public Frm_ItemsRegisterationBOQItems()
@@ -23,6 +25,8 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             InitializeComponent();
             
             _externalAPIs = new ExternalAPIs();
+            _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+            _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
         }
 
         #region My Method for my From
@@ -47,7 +51,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                         cm_BOQItem.ValueMember = "projectId";
                         cm_BOQItem.DisplayMember = "projectName";
                     }
-                    IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+                   
 
                     var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(ProjectId);
                     if (ResaultProjectCode.Any())
@@ -63,7 +67,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         }
         async void SearchDataProjectCode(int Project, string ProDescription)
         {
-            IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+           
             if (!string.IsNullOrEmpty(ProDescription))
             {
                
@@ -94,7 +98,7 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         }
         async void SearchDataBOQsItem(string BOQsIteme,int BOQs)
         {
-            IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
+            
             if (BOQs > 0)
             {
                 if (!string.IsNullOrEmpty(BOQsIteme))
@@ -135,8 +139,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             {
                 if (!string.IsNullOrEmpty(ItemDescription))
                 {
-                    IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
-                    IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
                     var ResaultBOQItem = await _externalAPIs.GetBOQ_ItemsAsync(BOQs);
                     var CustomResaultBOQItem = from boq in ResaultBOQItem
                                                select new
@@ -178,8 +180,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         {
             if (Project > 0)
             {
-                IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
-                IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
                 var ResaultBOQItem = await _externalAPIs.GetBOQ_ItemsAsync(BOQs);
                 var CustomResaultBOQItem = from boq in ResaultBOQItem
                                            select new
@@ -402,7 +402,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             {
                 if (DGV_RegistBOQItem.Rows.Count > 0)
                 {
-                    IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
                     int BOQItemId = 0, ProjectCodeId = 0, RegisterId = 0;
                     List<Models.C_Cost_Project_Codes_Items> RegisterItem = new List<Models.C_Cost_Project_Codes_Items>();
                     for (int i = 0; i < DGV_RegistBOQItem.RowCount; i++)
@@ -436,8 +435,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 try
                 {
                     Frm_EditRegistertionBOQItem frm_Edit = new Frm_EditRegistertionBOQItem();
-                    IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
-                    IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
                     frm_Edit.DGV_ProjectCode.DataSource = DGV_ProjectCode.DataSource;
 
                     var ResaultProjects = await _externalAPIs.SearchProjectsBYName(txt_Projects.Text);

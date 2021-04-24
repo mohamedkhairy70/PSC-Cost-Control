@@ -17,39 +17,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             InitializeComponent();
         }
 
-        #region My Method for my From
-
-
-        void Registretion()
-        {
-            
-             ProjectCodeDesscription = "";
-
-
-            for (int i = 0; i < DGV_ProjectCode.Rows.Count; i++)
-            {
-                if (DGV_ProjectCode.Rows.Count > 0)
-                {
-                    bool isSelected = Convert.ToBoolean(DGV_ProjectCode.Rows[i].Cells["ch_ProjectCode"].Value);
-                    if (isSelected)
-                    {
-                        ProjectCodeId = Convert.ToInt32(DGV_ProjectCode.Rows[i].Cells["ProjectCode_Id"].Value.ToString());
-                        ProjectCodeDesscription = DGV_ProjectCode.Rows[i].Cells["ProjectCode_Description"].Value.ToString();
-                        break;
-                    }
-
-                }
-
-            }
-
-            if ( !string.IsNullOrEmpty(ProjectCodeDesscription))
-            {
-                this.Close();
-            }
-
-        }
-        #endregion My Method for my Form
-
         private void DGV_BOQItem_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 

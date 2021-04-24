@@ -13,14 +13,16 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
 {
     public partial class Frm_ItemsRegisterationIndirectCostItem : DevExpress.XtraEditors.XtraForm
     {
-
+        IProjectCodeService _IProjectCodeService;
+        IRegisterationService _RegisterationService;
         ExternalAPIs _externalAPIs;
         int ProjectId;
 
         public Frm_ItemsRegisterationIndirectCostItem()
         {
             InitializeComponent();
-            
+            _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
+            _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
             _externalAPIs = new ExternalAPIs();
         }
 
@@ -46,8 +48,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                         cm_SearchByIndirectCost.DisplayMember = "projectName";
                     }
 
-                    IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
-
                     var ResaultProjectCode = await _IProjectCodeService.GetProjectCodes(ProjectId);
                     if (ResaultProjectCode.Any())
                     {
@@ -65,8 +65,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
         {
             if (Project > 0)
             {
-                IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
-                IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
                 var ResaultIndirectCostId = await _externalAPIs.GetIndirectItems(BOQs);
                 var CustomResaultBOQItem = from boq in ResaultIndirectCostId
                                            select new
@@ -100,7 +98,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
 
         async void SearchDataProjectCode(int Project, string ProDescription)
         {
-            IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
             if (!string.IsNullOrEmpty(ProDescription))
             {
 
@@ -132,7 +129,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
 
         async void SearchDataIndirectCost(string BOQsIteme, int BOQs)
         {
-            IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
             if (BOQs > 0)
             {
                 if (!string.IsNullOrEmpty(BOQsIteme))
@@ -182,8 +178,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             {
                 if (!string.IsNullOrEmpty(ItemDescription))
                 {
-                    IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
-                    IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
                     var ResaultIndirectCostId = await _externalAPIs.GetIndirectItems(BOQs);
                     var CustomResaultBOQItem = from boq in ResaultIndirectCostId
                                                select new
@@ -344,7 +338,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             {
                 if (DGV_RegistBOQItem.Rows.Count > 0)
                 {
-                    IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
                     int IndirectCostId = 0, ProjectCodeId = 0, RegisterId = 0;
                     List<Models.C_Cost_Indirect_Project_Code_Summerizing> RegisterItem = new List<Models.C_Cost_Indirect_Project_Code_Summerizing>();
                     for (int i = 0; i < DGV_RegistBOQItem.RowCount; i++)
@@ -378,8 +371,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
                 try
                 {
                     Frm_EditRegistertionIndirectCostItem frm_Edit = new Frm_EditRegistertionIndirectCostItem();
-                    IProjectCodeService _IProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
-                    IRegisterationService _RegisterationService = ServiceBuilder.Build<IRegisterationService>();
                     frm_Edit.DGV_ProjectCode.DataSource = DGV_ProjectCode.DataSource;
 
                     var ResaultProjects = await _externalAPIs.SearchProjectsBYName(txt_Projects.Text);

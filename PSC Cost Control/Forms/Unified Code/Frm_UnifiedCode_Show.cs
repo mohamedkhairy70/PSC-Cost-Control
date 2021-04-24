@@ -27,13 +27,16 @@ namespace PSC_Cost_Control.Forms.Unified_Code
     public partial class Frm_UnifiedCode_Show : DevExpress.XtraEditors.XtraForm
     {
         public ExternalAPIs _externalAPIs;
+        IUnifiedCodeCategoryService _categoryService;
+        IUnifiedCodeService _unifiedCodeService;
         int CountOfList = 0;
         readonly Static st = new Static();
         public Frm_UnifiedCode_Show()
         {
             InitializeComponent();
             _externalAPIs = new ExternalAPIs();
-
+            _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
+            _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
         }
 
         private void windowsUIButtonPanel1_ButtonClick(object sender, ButtonEventArgs e)
@@ -232,7 +235,6 @@ namespace PSC_Cost_Control.Forms.Unified_Code
         #region Methods For my Form
         async void ClearAllDataUnified()
         {
-            IUnifiedCodeCategoryService _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
             var ResualtCategories = await _categoryService.GetCategories();
             var CustomCategories = from cat in ResualtCategories
                                    select new
@@ -301,11 +303,6 @@ namespace PSC_Cost_Control.Forms.Unified_Code
         void AddRootUnifiedCode(string Category, string UnifiedCodeTitle, int CategoryId)
         {
             var _Tag = new Models.C_Cost_Unified_Codes { Category_Id = CategoryId, Title = UnifiedCodeTitle };
-            //TreeListNode newNode = tree_UnifiedCode.AppendNode(
-            //    nodeData: new object[] { "/" + (tree_UnifiedCode.Nodes.Count +1)
-            //    , Category, UnifiedCodeTitle },parentNode: null);
-            //tree_UnifiedCode.FocusedNode = newNode;
-
 
             tree_UnifiedCode.FocusedNode = tree_UnifiedCode.AppendNode(
                nodeData: new object[] {0, "/" + (tree_UnifiedCode.Nodes.Count +1)
@@ -322,9 +319,7 @@ namespace PSC_Cost_Control.Forms.Unified_Code
                 if (tree_UnifiedCode.FocusedNode.Level + 1 > 0)
                 {
                     var _Tag = new Models.C_Cost_Unified_Codes { Category_Id = CategoryId, Title = UnifiedCodeTitle };
-                    //var vs = tree_UnifiedCode.GetDataRecordByNode(tree_UnifiedCode.FocusedNode);
-                    //IList objectList = vs as IList;
-                    //string NodeCode = objectList[0].ToString();
+
                     IdNode = (tree_UnifiedCode.FocusedNode.Level.ToString()
                         + "/"
                         + (tree_UnifiedCode.FocusedNode.Nodes.Count + 1).ToString());
@@ -460,8 +455,7 @@ namespace PSC_Cost_Control.Forms.Unified_Code
 
         async void GetUnifiedCode()
         {
-            IUnifiedCodeCategoryService _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
-            IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
+            
             var ResualtCategory = await _categoryService.GetCategories();
             var ResualtUnifiedCode = await _unifiedCodeService.GetUnifiedCodes();
             var linqlisti = from p in ResualtUnifiedCode
@@ -543,7 +537,6 @@ namespace PSC_Cost_Control.Forms.Unified_Code
 
         async void SaveProectCode()
         {
-            IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
             var ResualtUnifiedCode = await _unifiedCodeService.GetUnifiedCodes();
             //var UnifiedList = innerJoin.ToList();
 
@@ -566,8 +559,6 @@ namespace PSC_Cost_Control.Forms.Unified_Code
         {
             if (e.HitInfo.Column.Name == "Edit")
             {
-                IUnifiedCodeCategoryService _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
-                IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
                 var ResaultTag = new Models.C_Cost_Project_Codes();
                 var _Tag = (Models.C_Cost_Unified_Codes)e.Node.Tag;
 

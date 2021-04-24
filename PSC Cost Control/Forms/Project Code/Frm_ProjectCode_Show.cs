@@ -28,12 +28,18 @@ namespace PSC_Cost_Control.Forms.Project_Code
     public partial class Frm_ProjectCode_Show : DevExpress.XtraEditors.XtraForm
     {
         public ExternalAPIs _externalAPIs;
+        IProjectCodeCategoryService _categoryService;
+        IUnifiedCodeService _unifiedCodeService;
+        IProjectCodeService _ProjectCodeService;
         readonly Static st = new Static();
         int CountOfList = 0; bool chcek = true;
         public Frm_ProjectCode_Show()
         {
             InitializeComponent();
             _externalAPIs = new ExternalAPIs();
+            _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
+            _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
+            _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
         }
         
         private void windowsUIButtonPanel1_ButtonClick(object sender, ButtonEventArgs e)
@@ -236,9 +242,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
         #region Methods For my Form
         async void ClearAllDataProject()
         {
-            IProjectCodeCategoryService _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
-            IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
-
             var ResualtCategories = await _categoryService.GetCategories();
             var CustomCategories = from cat in ResualtCategories
                                    select new
@@ -349,9 +352,7 @@ namespace PSC_Cost_Control.Forms.Project_Code
                 if (tree_ProjectCode.FocusedNode.Level+1 > 0)
                 {
                     var _Tag = new Models.C_Cost_Project_Codes { Category_Id = CategoryId, Description = ProjectCode_Description,Unified_Code_Id = UnidiedCodeId,Project_Id = ProjectId };
-                    //var vs = tree_ProjectCode.GetDataRecordByNode(tree_ProjectCode.FocusedNode);
-                    //IList objectList = vs as IList;
-                    //string NodeCode = objectList[0].ToString();
+
                     IdNode = (tree_ProjectCode.FocusedNode.Level.ToString()
                         + "/"
                         + (tree_ProjectCode.FocusedNode.Nodes.Count + 1).ToString());
@@ -511,9 +512,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
         
         async void GetProjectCode(int projectId)
         {
-            IProjectCodeCategoryService _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
-            IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
-            IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
             var ResualtCategory = await _categoryService.GetCategories();
             var ResualtProjectCode = await _ProjectCodeService.GetProjectCodes(projectId);
             var ResualtProject = await _externalAPIs.GetProjectsAsync();
@@ -598,9 +596,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
         async void SaveProectCode(int projectId)
         {
-
-            IProjectCodeService _ProjectCodeService = ServiceBuilder.Build<IProjectCodeService>();
-
             var ResualtProjectCode = await _ProjectCodeService.GetProjectCodes(projectId);
 
             var Resault = TreeListHandler.ToSequentialList<C_Cost_Project_Codes>(tree_ProjectCode).ToList();
@@ -643,8 +638,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
             if (e.HitInfo.Column.Name == "Edit")
             {
-                IProjectCodeCategoryService _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
-                IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
                 var ResaultTag = new Models.C_Cost_Project_Codes();
                 var _Tag = (Models.C_Cost_Project_Codes)e.Node.Tag;
                
@@ -667,16 +660,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
 
                 SaveProectCode(Convert.ToInt32(_Tag.Project_Id));
                 GetProjectCode(Convert.ToInt32(_Tag.Project_Id));
-
-
-                //TreeListNode parentNodej = tree_ProjectCode.AppendNode(
-                //        new object[] { _Tag.Id, _Tag.Code, _Description, _Title, _Categroy, _Tag.ParentId, "Edit" },parentNode: e.Node.ParentNode,tag: _TagEdit);
-
-
-
-                //e.Node.SetValue("ProjectCode_Description", _Description);
-                //e.Node.SetValue("ProjectCode_Title", _Title);
-                //e.Node.SetValue("Category_Name", _Categroy);
             }
         }
 

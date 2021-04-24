@@ -10,10 +10,11 @@ namespace PSC_Cost_Control.Forms.Unified_Code
 {
     public partial class Frm_Categories_UnifiedCode : DevExpress.XtraEditors.XtraForm
     {
-
+        IUnifiedCodeCategoryService _categoryService;
         public Frm_Categories_UnifiedCode()
         {
             InitializeComponent();
+            _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
         }
 
         #region My Method for my From
@@ -25,7 +26,7 @@ namespace PSC_Cost_Control.Forms.Unified_Code
         }
         async void GetAllData()
         {
-            IUnifiedCodeCategoryService _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
+            
             var ResualtCategories = await _categoryService.GetCategories();
             var CustomCategories = from cat in ResualtCategories
                                    select new
@@ -41,7 +42,6 @@ namespace PSC_Cost_Control.Forms.Unified_Code
             //check if name is not null
             if (ValidationData())
             {
-                IUnifiedCodeCategoryService _categoryService = ServiceBuilder.Build<IUnifiedCodeCategoryService>();
                 _categoryService.Add(_Neme);
                 MessageBox.Show("The data has been saved successfully. ");
                 GetAllData();

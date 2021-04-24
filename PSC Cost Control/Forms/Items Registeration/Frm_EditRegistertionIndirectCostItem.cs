@@ -18,15 +18,6 @@ namespace PSC_Cost_Control.Forms.Items_Registeration
             InitializeComponent();
         }
 
-        #region My Method for my From
-        void AddData(string _Neme)
-        {
-
-        }
-
-
-        #endregion My Method for my Form
-
         private void DGV_ProjectCode_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (DGV_ProjectCode.Columns[e.ColumnIndex].Name == "ch_RegisterProjectCode")

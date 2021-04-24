@@ -21,13 +21,16 @@ namespace PSC_Cost_Control.Forms.Project_Code
     public partial class Frm_ProjectCodeEdit : DevExpress.XtraEditors.XtraForm
     {
         ExternalAPIs _externalAPIs;
-        
+        IProjectCodeCategoryService _categoryService;
+        IUnifiedCodeService _unifiedCodeService;
         public string Discription = "",Title = "",Category = "";
         public int UnifiedId = 0, CategoryId = 0;
         public Frm_ProjectCodeEdit()
         {
             InitializeComponent();
             _externalAPIs = new ExternalAPIs();
+            _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
+            _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
         }
 
         #region My Method for my From
@@ -70,9 +73,6 @@ namespace PSC_Cost_Control.Forms.Project_Code
         #endregion My Method for my Form
         async void ClearAllDataProject()
         {
-            IProjectCodeCategoryService _categoryService = ServiceBuilder.Build<IProjectCodeCategoryService>();
-            IUnifiedCodeService _unifiedCodeService = ServiceBuilder.Build<IUnifiedCodeService>();
-
             var ResualtCategories = await _categoryService.GetCategories();
             var CustomCategories = from cat in ResualtCategories
                                    select new
